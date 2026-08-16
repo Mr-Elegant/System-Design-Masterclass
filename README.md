@@ -140,6 +140,8 @@ Contributions, feedback, and architecture suggestions are always welcome!
 
 <div align="center">
 
+<img src="./assets/preet_karwal.jpg" alt="Preet Karwal" width="140" style="border-radius: 50%; border: 3px solid #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);" />
+
 ### **Preet Karwal**
 *Distributed Systems Architect & Software Engineer*
 
