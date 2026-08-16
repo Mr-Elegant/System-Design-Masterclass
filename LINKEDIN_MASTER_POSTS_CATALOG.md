@@ -479,7 +479,7 @@ Debezium tails the database Transaction Log (PostgreSQL WAL / MySQL binlog) and 
 ---
 
 
-## 🏛️ Course: Grokking Low Level Design (LLD) with JavaScript 2026
+## 🏛️ Course: 04-Low-Level-Design-JavaScript
 
 ### 📌 Post #16: SOLID Principles in Modern JavaScript & TypeScript
 **Target File:** [`01 OOP Fundamentals & SOLID Principles in JavaScript.html`](01 OOP Fundamentals & SOLID Principles in JavaScript.html)

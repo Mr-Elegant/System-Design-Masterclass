@@ -39,7 +39,7 @@
             flex-direction: column;
             align-items: center;
             padding: 40px 20px;
-            /* Content Protection CSS */
+            /* Content Protection */
             user-select: none;
             -webkit-user-select: none;
         }
@@ -79,7 +79,7 @@
         }
 
         p.hero-desc {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-secondary);
             max-width: 800px;
             margin: 0 auto;
@@ -188,10 +188,7 @@
     </style>
     <!-- Content Protection Script -->
     <script>
-        // Disable Right-Click Context Menu
         document.addEventListener('contextmenu', e => e.preventDefault());
-
-        // Disable Keyboard Shortcuts for Inspect & Source View
         document.addEventListener('keydown', e => {
             if (e.key === 'F12' || 
                 (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
@@ -231,26 +228,26 @@
         <div class="courses-grid">
             <!-- Course 1 -->
             <div class="course-card">
-                <div class="course-icon">🏛️</div>
-                <h2 class="course-title">Grokking the System Design Interview</h2>
-                <p class="course-desc">Complete 7-Step FAANG framework, 39 classic/architect problems (TinyURL, Instagram, Dropbox, Uber H3, Ticketmaster, Figma CRDTs), 6 AI Flagships (ChatGPT, RAG, Copilot, Sora, Devin, Voice AI), and 11 Legendary Papers (Dynamo, Kafka, Raft, Bigtable, ZooKeeper).</p>
-                <a href="./Grokking%20the%20System%20Design%20Interview%202025-12/Grokking%20the%20System%20Design%20Interview.html" class="course-link">Launch Master Course &rarr;</a>
+                <div class="course-icon">⚙️</div>
+                <h2 class="course-title">System Design Fundamentals</h2>
+                <p class="course-desc">18 comprehensive chapters covering DNS, Load Balancing, Caching Topologies, Sharding, CAP/PACELC, Bloom Filters, Distributed Consensus, Security, Queues, and AI/LLM Hardware Fundamentals (PagedAttention, FlashAttention-3, Roofline Model).</p>
+                <a href="./01-System-Design-Fundamentals/Grokking%20System%20Design%20Fundamentals.html" class="course-link">Launch Course Hub &rarr;</a>
             </div>
 
             <!-- Course 2 -->
             <div class="course-card">
-                <div class="course-icon">⚙️</div>
-                <h2 class="course-title">Grokking System Design Fundamentals</h2>
-                <p class="course-desc">18 comprehensive chapters covering DNS, Load Balancing, Caching Topologies, Sharding, CAP/PACELC, Bloom Filters, Distributed Consensus, Security, Queues, and AI/LLM Hardware Fundamentals (PagedAttention, FlashAttention-3, Roofline Model).</p>
-                <a href="./Grokking%20System%20Design%20Fundamentals%202025-12/Grokking%20System%20Design%20Fundamentals.html" class="course-link">Launch Master Course &rarr;</a>
+                <div class="course-icon">🏛️</div>
+                <h2 class="course-title">System Design Interview &amp; Architecture</h2>
+                <p class="course-desc">Complete 7-Step FAANG framework, 39 classic/architect problems (TinyURL, Instagram, Dropbox, Uber H3, Ticketmaster, Figma CRDTs), 6 AI Flagships (ChatGPT, RAG, Copilot, Sora, Devin, Voice AI), and 11 Legendary Papers (Dynamo, Kafka, Raft, Bigtable, ZooKeeper).</p>
+                <a href="./02-System-Design-Interview/Grokking%20the%20System%20Design%20Interview.html" class="course-link">Launch Course Hub &rarr;</a>
             </div>
 
             <!-- Course 3 -->
             <div class="course-card">
                 <div class="course-icon">🧩</div>
-                <h2 class="course-title">Grokking Microservices Design Patterns</h2>
+                <h2 class="course-title">Microservices Design Patterns</h2>
                 <p class="course-desc">14 production microservices patterns: Strangler Fig, API Gateway, BFF, Service Discovery, Circuit Breakers, Bulkheads, Retry, Distributed Sagas, CQRS, Event-Driven Architecture, and Agentic Microservices Architecture.</p>
-                <a href="./Grokking%20Microservices%20Design%20Patterns%202025-11/Grokking%20Microservices%20Design%20Patterns.html" class="course-link">Launch Master Course &rarr;</a>
+                <a href="./03-Microservices-Design-Patterns/Grokking%20Microservices%20Design%20Patterns.html" class="course-link">Launch Course Hub &rarr;</a>
             </div>
 
             <!-- Course 4 -->
@@ -258,7 +255,7 @@
                 <div class="course-icon">💻</div>
                 <h2 class="course-title">Low Level Design (LLD) with JavaScript</h2>
                 <p class="course-desc">10 deep modules covering SOLID principles, GoF Design Patterns, Clean Code, Parking Lot, Elevator, Chess, Rate Limiters, Concurrency Locks, Domain-Driven Design, and FAANG SDKs in Modern JavaScript/TypeScript.</p>
-                <a href="./Grokking%20Low%20Level%20Design%20(LLD)%20with%20JavaScript%202026/01%20OOP%20Fundamentals%20%26%20SOLID%20Principles%20in%20JavaScript.html" class="course-link">Launch Master Course &rarr;</a>
+                <a href="./04-Low-Level-Design-JavaScript/01%20OOP%20Fundamentals%20%26%20SOLID%20Principles%20in%20JavaScript.html" class="course-link">Launch Course Hub &rarr;</a>
             </div>
         </div>
 
