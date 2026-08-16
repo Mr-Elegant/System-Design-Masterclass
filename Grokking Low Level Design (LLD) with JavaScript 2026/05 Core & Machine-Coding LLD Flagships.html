@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core &amp; Machine-Coding LLD Flagships — LLD Master Guide (MERN & ES6+ Edition)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: #1e1e2e;
+    --accent: #e8ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff6b6b;
+    --accent4: #b8a9ff;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+    --code-bg: #0d0d16;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.5;
+  }
+
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 280px; background: var(--surface); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 100; padding: 24px 0;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar-logo { padding: 0 24px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .sidebar-logo h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .sidebar-logo p { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  .nav-section {
+    padding: 8px 24px 4px; font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 12px;
+  }
+
+  .nav-item {
+    display: block; padding: 8px 24px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted); text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.4;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .nav-item:hover, .nav-item.active { color: var(--text); background: var(--surface2); border-left-color: var(--accent); }
+  .nav-item span { color: var(--accent); margin-right: 4px; }
+
+  .main { margin-left: 280px; min-height: 100vh; }
+  .hero { padding: 80px 80px 60px; position: relative; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .hero-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--accent); color: #000; padding: 4px 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(32px, 4vw, 54px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 650px; font-style: italic; }
+
+  .content { padding: 60px 80px; max-width: 1050px; }
+  .section { margin-bottom: 80px; padding-bottom: 60px; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .section-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #000; background: var(--accent); padding: 4px 10px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; color: var(--text); }
+
+  h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; margin: 36px 0 16px; color: var(--accent2); }
+  h3 { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 16px; margin: 24px 0 12px; color: var(--text); }
+  p { margin-bottom: 16px; font-size: 15.5px; color: #c8c8d8; }
+  ul, ol { margin-bottom: 20px; padding-left: 24px; color: #c8c8d8; font-size: 15px; }
+  li { margin-bottom: 8px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 24px 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); padding: 20px; position: relative; overflow: hidden; transition: all 0.2s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  .callout { padding: 18px 22px; margin: 24px 0; border-left: 3px solid; font-size: 14px; background: var(--surface2); border-radius: 0 6px 6px 0; }
+  .callout-tip { border-color: var(--accent); background: rgba(232,255,71,0.06); }
+  .callout-tip strong { color: var(--accent); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.1em; }
+  .callout-info { border-color: var(--accent2); background: rgba(71,200,255,0.06); }
+  .callout-info strong { color: var(--accent2); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.1em; }
+  .callout-warn { border-color: var(--accent3); background: rgba(255,107,107,0.06); }
+  .callout-warn strong { color: var(--accent3); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.1em; }
+
+  .code-block { background: var(--code-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 20px 24px; margin: 24px 0; overflow-x: auto; position: relative; border-radius: 4px; }
+  .code-label { position: absolute; top: 8px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #a8d8a8; line-height: 1.6; }
+
+  .diagram { background: var(--surface2); border: 1px solid var(--border); padding: 24px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent2); overflow-x: auto; border-radius: 4px; }
+  .diagram pre { line-height: 1.5; white-space: pre; }
+
+  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13.5px; }
+  th { background: var(--surface2); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 12px 16px; text-align: left; color: var(--accent); border-bottom: 2px solid var(--border); }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: #c0c0d0; vertical-align: top; }
+  tr:hover td { background: var(--surface2); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.accent { border-color: rgba(232,255,71,0.3); color: var(--accent); background: rgba(232,255,71,0.05); }
+  .tag.blue { border-color: rgba(71,200,255,0.3); color: var(--accent2); background: rgba(71,200,255,0.05); }
+  .tag.purple { border-color: rgba(184,169,255,0.3); color: var(--accent4); background: rgba(184,169,255,0.05); }
+  .tag.red { border-color: rgba(255,107,107,0.3); color: var(--accent3); background: rgba(255,107,107,0.05); }
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h2>LLD Master Guide</h2>
+    <p>// System Design v3 Edition</p>
+  </div>
+  <div class="nav-section">Module Curriculum</div>
+  <a class="nav-item" href="#chapter-03"><span>03</span> · Problem 3: Design Parking Lot (OOP/SOLID &amp; EV Charging)</a>
+<a class="nav-item" href="#chapter-05"><span>05</span> · Problem 5: Design Elevator (LOOK/SCAN Scheduler &amp; State Flow)</a>
+</nav>
+
+<div class="main">
+  <div class="hero">
+    <div class="hero-tag">Module 05 · Machine-Coding</div>
+    <h1>Core &amp; Machine-Coding LLD Flagships</h1>
+    <p>Complete Low Level Design (LLD) & Object-Oriented Engineering Textbook with Runnable ES6+ / TypeScript Code.</p>
+  </div>
+
+  <div class="content">
+    <div class="section" id="chapter-03">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Problem 3: Design Parking Lot (OOP/SOLID &amp; EV Charging)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">OOP/SOLID</span><span class="tag blue">Parking Lot</span><span class="tag purple">Dynamic Pricing</span></div>
+                <p>Multi-floor parking lot with EV charging spots, gate ticketing, vehicle hierarchies, dynamic hourly pricing strategies, and thread-safe spot locking.</p>
+
+                <h3>System Architecture & State Flow Diagram</h3>
+                <div class="diagram"><pre>
+  ┌───────────────────────────────────────────────────────────┐
+  │                 PARKING LOT DATAFLOW                       │
+  ├───────────────────────────────────────────────────────────┤
+  │ Vehicle Entrance Gate                                    │
+  │   │                                                       │
+  │   ▼                                                       │
+  │ Find Available Spot (Motorcycle, Car, Truck, EV)          │
+  │   │                                                       │
+  │   ▼                                                       │
+  │ Park Vehicle & Lock Spot State                            │
+  │   │                                                       │
+  │   ▼                                                       │
+  │ Issue Ticket (TicketID, EntryTimestamp, SpotRef)         │
+  │                                                           │
+  │ Vehicle Exit Gate                                         │
+  │   │                                                       │
+  │   ▼                                                       │
+  │ Compute Fee (Hourly Pricing Strategy per Vehicle Type)    │
+  │   │                                                       │
+  │   ▼                                                       │
+  │ Unlock Spot & Free Inventory                              │
+  └───────────────────────────────────────────────────────────┘</pre></div>
+
+                <h3>Line-by-Line Commented JavaScript Code</h3>
+                <div class="code-block"><span class="code-label">JavaScript ES6+ — Line-by-Line Commented Parking Lot</span><pre>
+// Define Immutable Enums for Spot and Vehicle Classifications
+const SpotType = Object.freeze({ SMALL: "SMALL", MEDIUM: "MEDIUM", LARGE: "LARGE", EV: "EV" });
+const VehicleType = Object.freeze({ MOTORCYCLE: "MOTORCYCLE", CAR: "CAR", TRUCK: "TRUCK", EV_CAR: "EV_CAR" });
+
+class ParkingSpot {
+    // Encapsulated Private Member Fields
+    #id;               // Unique Spot Identifier (e.g. "EV_FLOOR1_101")
+    #floor;            // Floor number where spot is located
+    #type;             // Spot classification from SpotType enum
+    #isOccupied = false; // Flag tracking availability
+    #currentVehicle = null; // Reference to parked vehicle instance
+
+    constructor(id, floor, type) {
+        this.#id = id;
+        this.#floor = floor;
+        this.#type = type;
+    }
+
+    // Evaluate compatibility between vehicle type and spot classification
+    canFit(vehicle) {
+        if (this.#isOccupied) return false; // Occupied spots cannot accept vehicles
+        if (vehicle.type === VehicleType.EV_CAR) return this.#type === SpotType.EV; // Require EV charging spot
+        if (vehicle.type === VehicleType.MOTORCYCLE) return true; // Motorcycles fit anywhere
+        if (vehicle.type === VehicleType.CAR) return this.#type !== SpotType.SMALL; // Cars fit in MEDIUM/LARGE
+        return this.#type === SpotType.LARGE; // Trucks require LARGE spots
+    }
+
+    // State Mutation: Park vehicle into spot
+    park(vehicle) {
+        if (!this.canFit(vehicle)) throw new Error(`Spot ${this.#id} cannot fit vehicle: ${vehicle.type}`);
+        this.#currentVehicle = vehicle;
+        this.#isOccupied = true; // Lock spot availability
+    }
+
+    // State Mutation: Free spot upon vehicle exit
+    unpark() {
+        const releasedVehicle = this.#currentVehicle;
+        this.#currentVehicle = null;
+        this.#isOccupied = false; // Unlock spot availability
+        return releasedVehicle;
+    }
+
+    getId() { return this.#id; }
+    getOccupiedStatus() { return this.#isOccupied; }
+}
+
+class HourlyPricingStrategy {
+    // Pricing rate table mapping vehicle type to hourly rate ($/hr)
+    #rateMap = { MOTORCYCLE: 5, CAR: 10, TRUCK: 20, EV_CAR: 15 };
+
+    calculateFee(ticket) {
+        // Calculate elapsed time in hours (rounded up to nearest full hour)
+        const durationMs = Date.now() - ticket.entryTime;
+        const hours = Math.max(1, Math.ceil(durationMs / 3600000));
+        
+        // Return computed fee
+        const hourlyRate = this.#rateMap[ticket.vehicle.type] || 10;
+        return hours * hourlyRate;
+    }
+}
+
+class ParkingLotController {
+    static #instance = null; // Singleton Instance Reference
+    #spots = [];             // Managed spot inventory array
+    #activeTickets = new Map(); // Ticket Map: ticketId -> Ticket Object
+    #pricingStrategy;
+
+    constructor(pricingStrategy = new HourlyPricingStrategy()) {
+        if (ParkingLotController.#instance) return ParkingLotController.#instance; // Enforce Singleton
+        this.#pricingStrategy = pricingStrategy;
+        ParkingLotController.#instance = this;
+    }
+
+    // Register a new spot into lot inventory
+    addSpot(spot) {
+        this.#spots.push(spot);
+    }
+
+    // Gate Operation: Issue ticket and park vehicle
+    issueTicket(vehicle) {
+        // Search spot inventory for first compatible available spot
+        const spot = this.#spots.find(s => s.canFit(vehicle));
+        if (!spot) throw new Error(`Parking Lot FULL for vehicle type: ${vehicle.type}`);
+
+        // Park vehicle into selected spot
+        spot.park(vehicle);
+
+        // Generate unique ticket record
+        const ticket = {
+            ticketId: `TICK_${Date.now()}_${Math.floor(Math.random()*1000)}`,
+            vehicle,
+            spot,
+            entryTime: Date.now()
+        };
+
+        // Persist ticket into active registry
+        this.#activeTickets.set(ticket.ticketId, ticket);
+        console.log(`🚗 [PARKED] ${vehicle.licensePlate} (${vehicle.type}) in Spot ${spot.getId()} | Ticket: ${ticket.ticketId}`);
+        return ticket;
+    }
+
+    // Gate Operation: Process exit, calculate fee, and release spot
+    processExit(ticketId) {
+        const ticket = this.#activeTickets.get(ticketId);
+        if (!ticket) throw new Error("Invalid or Expired Ticket ID!");
+
+        // Unpark vehicle to free spot
+        ticket.spot.unpark();
+
+        // Compute total fee via Strategy Pattern
+        const fee = this.#pricingStrategy.calculateFee(ticket);
+
+        // Remove ticket from active registry
+        this.#activeTickets.delete(ticketId);
+        console.log(`💳 [EXIT PROCESSED] Ticket: ${ticketId} | Fee: $${fee}`);
+        return fee;
+    }
+}
+
+// Runnable Verification Test
+const controller = new ParkingLotController();
+controller.addSpot(new ParkingSpot("EV_F1_01", 1, SpotType.EV));
+controller.addSpot(new ParkingSpot("CAR_F2_12", 2, SpotType.MEDIUM));
+
+const evCar = { licensePlate: "EV-999-XYZ", type: VehicleType.EV_CAR };
+const ticket = controller.issueTicket(evCar);
+controller.processExit(ticket.ticketId);</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-05">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Problem 5: Design Elevator (LOOK/SCAN Scheduler &amp; State Flow)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">Scheduling</span><span class="tag blue">Elevator</span><span class="tag purple">State Machine</span></div>
+                <p>Multi-elevator scheduling system using the LOOK/SCAN algorithm to minimize passenger wait times.</p>
+
+                <h3>Elevator State Machine Diagram</h3>
+                <div class="diagram"><pre>
+        ┌─────────────┐
+        │    IDLE     │
+        └──────┬──────┘
+         ┌─────┴─────┐
+         ▼           ▼
+    ┌────────┐   ┌──────────┐
+    │ MOVING │   │  MOVING  │
+    │   UP   │   │   DOWN   │
+    └───┬────┘   └────┬─────┘
+        │             │
+        └──────┬──────┘
+               ▼
+       ┌──────────────┐
+       │ OPEN DOORS   │
+       └──────────────┘</pre></div>
+
+                <h3>Line-by-Line Commented Elevator Code</h3>
+                <div class="code-block"><span class="code-label">JavaScript — Line-by-Line Commented Elevator</span><pre>
+const Direction = Object.freeze({ UP: "UP", DOWN: "DOWN", IDLE: "IDLE" });
+
+class ElevatorCar {
+    constructor(id) {
+        this.id = id;
+        this.currentFloor = 1;
+        this.direction = Direction.IDLE;
+        this.requests = new Set(); // Set storing unique requested target floors
+    }
+
+    // Register a new floor destination into request queue
+    addFloorRequest(floor) {
+        this.requests.add(floor);
+    }
+
+    // Step state machine forward by 1 tick unit
+    step() {
+        if (this.requests.size === 0) {
+            this.direction = Direction.IDLE; // Reset to idle when no pending requests
+            return;
+        }
+
+        // Sort requested floors in ascending numerical order
+        const floors = Array.from(this.requests).sort((a, b) => a - b);
+
+        // LOOK/SCAN Algorithm Decision Logic
+        if (this.direction === Direction.UP || this.direction === Direction.IDLE) {
+            // Find next target floor >= current floor
+            const next = floors.find(f => f >= this.currentFloor) || floors[floors.length - 1];
+            if (next > this.currentFloor) {
+                this.currentFloor++;
+                this.direction = Direction.UP;
+            } else if (next < this.currentFloor) {
+                this.currentFloor--;
+                this.direction = Direction.DOWN;
+            } else {
+                // Arrived at requested floor! Remove request and open doors
+                this.requests.delete(this.currentFloor);
+                console.log(`🛗 [ELEVATOR ${this.id}] Doors Opened at Floor ${this.currentFloor}`);
+            }
+        }
+    }
+}
+
+const el = new ElevatorCar(1);
+el.addFloorRequest(5);
+el.step(); console.log(`Elevator Current Floor: ${el.currentFloor}`);</pre></div>
+  </div>
+</div>
+  </div>
+</div>
+
+<script>
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>

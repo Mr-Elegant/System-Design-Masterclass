@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strangler Fig Pattern - Grokking Microservices Design Patterns</title>
+    <meta property="og:title" content="Strangler Fig Pattern - Microservices Design Patterns Guide">
+    <meta property="og:description" content="Interactive Microservices Design Patterns Study Guide featuring Dark Mode, Live Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Strangler Fig Pattern</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
+<li class="sidebar-item" data-num="02" data-title="the problem legacy systems"><a href="#chapter-02"><span class="chapter-num">02</span> The Problem Legacy Systems</a></li>
+<li class="sidebar-item" data-num="03" data-title="the strangler pattern a solution"><a href="#chapter-03"><span class="chapter-num">03</span> The Strangler Pattern A Solution</a></li>
+<li class="sidebar-item" data-num="04" data-title="the architecture of the strangler pattern"><a href="#chapter-04"><span class="chapter-num">04</span> The Architecture of the Strangler Pattern</a></li>
+<li class="sidebar-item" data-num="05" data-title="strangler pattern a detailed example"><a href="#chapter-05"><span class="chapter-num">05</span> Strangler Pattern A Detailed Example</a></li>
+<li class="sidebar-item" data-num="06" data-title="key insights and implications"><a href="#chapter-06"><span class="chapter-num">06</span> Key Insights and Implications</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p><strong>What is Strangler Fig Pattern?</strong> It is an approach used in software development when transitioning from a monolithic architecture to a microservices architecture. The pattern is named after the strangler fig tree, which gradually grows around and eventually replaces existing trees. In the context of software engineering, it refers to the gradual process of replacing parts of a legacy system with new applications and services.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Fig Tree</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>Imagine an ancient, humongous tree in a dense forest. This tree represents your old legacy system. One day, a new plant, the Strangler Fig, starts growing at the base of this tree. Over time, the fig grows, wrapping itself around the ancient tree. As it expands, it replaces more and more parts of the original tree until the old tree is entirely enveloped and replaced by the Strangler Fig.</p>
+<p>This tree is a metaphor for legacy systems. These systems, often outdated yet deeply integrated, support critical business operations. They&#x27;re like the old tree - rooted deeply within the organization&#x27;s architecture, its many branches representing the various functions it supports. And replacing these systems can be just as daunting as replacing the old tree.</p>
+<p>So how can we replace such deeply rooted legacy systems? There is a solution that allows you to gradually replace parts of the legacy system without causing business disruption. That solution is the Strangler Fig Pattern. It&#x27;s named after the Strangler Fig, a tree that grows by gradually enveloping other trees, eventually replacing them.</p>
+<p><strong>What&#x27;s It All About?</strong>
+The Strangler Fig Pattern in software design mimics the process of gradually replacing the legacy system. Instead of replacing a large, old system (the ancient tree) all at once, you build new parts (the Strangler Fig) alongside it. Gradually, the new system takes over functionalities from the old system until the old one can be safely retired.</p>
+<h2>Why Use the Strangler Fig Pattern?</h2>
+<p>With rapid technological advancement, organizations need to keep up with the latest technology to stay competitive. However, completely overhauling a legacy system can be risky and disruptive. Here&#x27;s where the Strangler Pattern shines - it allows for the gradual replacement of a system, mitigating risk and minimizing disruption.</p>
+<ol>
+<li><strong>Less Risky</strong>: You&#x27;re not ripping out the old system in one go. So there&#x27;s a safety net.</li>
+<li><strong>Flexibility</strong>: You can prioritize which parts to replace based on urgency or business needs.</li>
+<li><strong>No Big Bang Releases</strong>: Continuous delivery and gradual replacement mean less potential for massive failures.</li>
+<li><strong>Smooth Transition</strong>: Users might not even notice the shift as it&#x27;s gradual.</li>
+</ol></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">The Problem Legacy Systems</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p><strong>What are Legacy System?</strong>
+Legacy systems are old softwares, technologies, tools, or infrastructures used by an organization. They were often introduced ages ago and might be based on outdated technologies, but they continue to provide essential functions, and that&#x27;s why they&#x27;ve stuck around.</p>
+<h2>Challenges with Legacy Systems:</h2>
+<ol>
+<li>
+<p><strong>Technical Debt</strong>: Over the years, patches, fixes, and new features might have been added haphazardly, leading to a complex, hard-to-maintain codebase.</p>
+</li>
+<li>
+<p><strong>Obsolete Technology</strong>: The technology stack may no longer be in vogue, making it difficult to find experts or support.</p>
+</li>
+<li>
+<p><strong>Integration Issues</strong>: Modern tools and services might not easily integrate with older systems, causing silos of information.</p>
+</li>
+<li>
+<p><strong>Scalability Concerns</strong>: Legacy systems might not be designed to handle today&#x27;s scale or might not be cloud-ready.</p>
+</li>
+<li>
+<p><strong>Costly Maintenance</strong>: As the system ages, maintenance can become more expensive, both in terms of time and resources.</p>
+</li>
+<li>
+<p><strong>Security Vulnerabilities</strong>: Older systems may not have been designed with current security best practices in mind, making them susceptible to attacks.</p>
+</li>
+</ol>
+<h2>Why is Replacing Legacy Systems Hard?</h2>
+<ol>
+<li>
+<p><strong>Critical Operations</strong>: Many legacy systems are deeply embedded in an organization&#x27;s critical operations. Any disruption can have significant impacts.</p>
+</li>
+<li>
+<p><strong>Migration Risks</strong>: Data migration from old to new systems can be fraught with risks like data loss or corruption.</p>
+</li>
+<li>
+<p><strong>Training &amp; Adoption</strong>: Staff might be used to the old system. Introducing a new system requires training and can face resistance.</p>
+</li>
+<li>
+<p><strong>High Costs</strong>: Building a new system and ensuring it works as reliably as the old one can be expensive.</p>
+</li>
+<li>
+<p><strong>Unknown Unknowns</strong>: There may be undocumented features or behaviors in the legacy system that users have come to rely upon.</p>
+</li>
+</ol>
+<h2>Strangler Fig Pattern to the Rescue:</h2>
+<p>Here is how the strangler fig design pattern helps us replacing the legacy system:</p>
+<ol>
+<li>
+<p><strong>Incremental Replacement</strong>: Instead of a big bang approach, replace the legacy system piece by piece. This reduces risks and allows for iterative feedback.</p>
+</li>
+<li>
+<p><strong>Coexistence</strong>: The new and old systems run side-by-side. As features are moved to the new system, traffic is rerouted accordingly, ensuring operations continue without disruption.</p>
+</li>
+<li>
+<p><strong>Feedback Loops</strong>: By gradually transitioning users, feedback can be obtained early and often. This ensures the new system meets user needs.</p>
+</li>
+<li>
+<p><strong>Reduced Risk</strong>: If a part of the new system has issues, it&#x27;s easier to revert changes or fix them without affecting the entire system.</p>
+</li>
+<li>
+<p><strong>Flexibility</strong>: The pattern provides flexibility in adopting new technologies. As the industry evolves, the new system can evolve with it.</p>
+</li>
+<li>
+<p><strong>End Goal</strong>: Over time, the legacy system&#x27;s functionality is entirely replaced by the new system. Once the old system has no more active users or features, it can be safely retired.</p>
+</li>
+</ol></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">The Strangler Pattern A Solution</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The implementation of the Strangler Pattern begins by identifying a single functionality of the legacy system that can be rebuilt and redirected to the new system.</p>
+<p>Once a functionality is identified, it&#x27;s duplicated in the new system, and traffic is rerouted to the new implementation using a Facade interface. This interface is the gatekeeper, directing incoming requests either to the new system or to the old one. Over time, more and more functionality is migrated to the new system, and traffic to the old system decreases until it&#x27;s finally phased out.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Identify Entry Points</strong>: Choose parts of your legacy system you want to replace and build new services to replace old functionalities.</li>
+<li><strong>Route Traffic</strong>: Use a router/proxy to redirect traffic either to the old system or new service, based on what&#x27;s been migrated.</li>
+<li><strong>Incrementally Build &amp; Replace</strong>: Develop the new microservices and slowly replace old functionalities.</li>
+<li><strong>Retire the Old</strong>: Once all functionalities have been taken over by the new system, safely retire the old system.</li>
+</ol></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Fig Pattern</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>This progressive approach minimizes risk and allows for continuous delivery and integration, making it possible to replace the legacy system without disrupting normal business operations.</p></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">The Architecture of the Strangler Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><h2>A Layered Approach</h2>
+<p>The Strangler Pattern adopts a layered approach in its architecture. Imagine peeling an onion layer by layer, with each layer representing a part of the legacy system being replaced by the new system.</p>
+<h2>Facade Interface: The Gatekeeper</h2>
+<p>The central component in the Strangler Pattern&#x27;s architecture is the Facade Interface. This is the gatekeeper that decides whether a request should be handled by the new system or the legacy system. Let&#x27;s think of it as a traffic controller at an intersection, guiding cars (or in our case, requests) down the correct road.</p>
+<p>When a request arrives, the Facade Interface checks if the requested functionality has been migrated to the new system. If it has, the request is directed to the new system. If not, the request continues to be handled by the legacy system.</p>
+<h2>Phased Migration: One Step at a Time</h2>
+<p>The migration from the legacy system to the new system doesn&#x27;t happen all at once. It happens in a step-by-step process.</p>
+<p>The migration starts by identifying a piece of functionality that can be easily isolated and redirected from the legacy system to the new system. This piece of functionality is then rebuilt in the new system.</p>
+<p>Once it&#x27;s fully tested and ready to go live, the Facade Interface starts redirecting requests for this functionality to the new system, while still sending the remaining requests to the legacy system. This gradual shift of responsibilities from the old system to the new one forms the crux of the Strangler Pattern.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Pattern - Step by step migration</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p><strong>Strangler Fig: An Example</strong>:
+Imagine we have an old system for user management and we want to replace the &quot;getUserDetails&quot; function with a new service. We might use a simple router to decide which service to use:</p>
+<pre><div><div><code><span>class</span><span> </span><span>UserServiceRouter</span><span>:</span><span>
+</span>
+<span>    def </span><span>getUserDetails</span><span>(</span><span>self</span><span>,</span><span> userID</span><span>)</span><span>:</span><span>
+</span><span>        </span><span>if</span><span> self</span><span>.</span><span>useNewService</span><span>(</span><span>userID</span><span>)</span><span>:</span><span>
+</span><span>            </span><span>return</span><span> </span><span>NewUserService</span><span>(</span><span>)</span><span>.</span><span>getUserDetails</span><span>(</span><span>userID</span><span>)</span><span>
+</span><span>        </span><span>else</span><span>:</span><span>
+</span><span>            </span><span>return</span><span> </span><span>OldUserService</span><span>(</span><span>)</span><span>.</span><span>getUserDetails</span><span>(</span><span>userID</span><span>)</span><span>
+</span>
+<span>    def </span><span>useNewService</span><span>(</span><span>self</span><span>,</span><span> userID</span><span>)</span><span>:</span><span>
+</span><span>        # </span><span>Logic</span><span> to decide which service to use</span><span>.</span><span> 
+</span><span>        # </span><span>For</span><span> simplicity</span><span>,</span><span> </span><span>let</span><span>&#x27;s say we use the </span><span>new</span><span> </span><span>service</span><span> </span><span>for</span><span> even userIDs</span><span>.</span><span>
+</span><span>        </span><span>return</span><span> userID </span><span>%</span><span> </span><span>2</span><span> </span><span>==</span><span> </span><span>0</span><span>
+</span>
+<span></span><span>class</span><span> </span><span>OldUserService</span><span>:</span><span>
+</span><span>    def </span><span>getUserDetails</span><span>(</span><span>self</span><span>,</span><span> userID</span><span>)</span><span>:</span><span>
+</span><span>        # </span><span>Old</span><span> way </span><span>of</span><span> fetching user details
+</span>        pass
+
+<span></span><span>class</span><span> </span><span>NewUserService</span><span>:</span><span>
+</span><span>    def </span><span>getUserDetails</span><span>(</span><span>self</span><span>,</span><span> userID</span><span>)</span><span>:</span><span>
+</span><span>        # </span><span>New</span><span>,</span><span> improved way </span><span>of</span><span> fetching user details
+</span>        pass</code></div></div></pre>
+<p>As we become confident in <code>NewUserService</code>, we can adjust <code>useNewService</code> logic to send more traffic to the new service until <code>OldUserService</code> is no longer used.</p></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Strangler Pattern A Detailed Example</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Let&#x27;s work on a Java code example that puts the Strangler Pattern into action.</p>
+<h2>Setting the Stage: The Legacy System</h2>
+<p>First, let&#x27;s set the stage with a simple example of a legacy system. Imagine a basic class, <code>LegacySystem</code>, which has methods for <code>createAccount()</code>, <code>deposit()</code>, <code>withdraw()</code>, and <code>checkBalance()</code>. Here&#x27;s how this class might look:</p>
+<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>LegacySystem</span><span> </span><span>{</span><span>
+</span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>createAccount</span><span>(</span><span>String</span><span> name</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...Old logic for creating an account...</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>deposit</span><span>(</span><span>int amount</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...Old logic for depositing money...</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>withdraw</span><span>(</span><span>int amount</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...Old logic for withdrawing money...</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>public</span><span> int </span><span>checkBalance</span><span>(</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...Old logic for checking balance...</span><span>
+</span><span>        </span><span>return</span><span> </span><span>0</span><span>;</span><span> </span><span>// placeholder</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<h2>Creating the New System</h2>
+<p>Next, let&#x27;s introduce our new system, appropriately named <code>NewSystem</code>. It will have the same methods but with updated logic:</p>
+<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>NewSystem</span><span> </span><span>{</span><span>
+</span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>createAccount</span><span>(</span><span>String</span><span> name</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...New logic for creating an account...</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>deposit</span><span>(</span><span>int amount</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...New logic for depositing money...</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>withdraw</span><span>(</span><span>int amount</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...New logic for withdrawing money...</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>public</span><span> int </span><span>checkBalance</span><span>(</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...New logic for checking balance...</span><span>
+</span><span>        </span><span>return</span><span> </span><span>0</span><span>;</span><span> </span><span>// placeholder</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<h2>The Facade Interface</h2>
+<p>Now, it&#x27;s time to bring in our star player, the Facade Interface. This is the class that will be used by the outside world to interact with our system. It has an instance of both the legacy and the new system, and directs the requests accordingly.</p>
+<p>At first, all requests are sent to the legacy system. But as we implement new functionality in the new system, the Facade Interface starts redirecting those requests to the new system.</p>
+<p>Here&#x27;s what our <code>BankingFacade</code> could look like:</p>
+<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>BankingFacade</span><span> </span><span>{</span><span>
+</span><span>    </span><span>private</span><span> </span><span>LegacySystem</span><span> legacySystem</span><span>;</span><span>
+</span><span>    </span><span>private</span><span> </span><span>NewSystem</span><span> newSystem</span><span>;</span><span>
+</span>
+<span>    </span><span>public</span><span> </span><span>BankingFacade</span><span>(</span><span>LegacySystem</span><span> legacySystem</span><span>,</span><span> </span><span>NewSystem</span><span> newSystem</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>this</span><span>.</span><span>legacySystem</span><span> </span><span>=</span><span> legacySystem</span><span>;</span><span>
+</span><span>        </span><span>this</span><span>.</span><span>newSystem</span><span> </span><span>=</span><span> newSystem</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span>
+<span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>createAccount</span><span>(</span><span>String</span><span> name</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>if</span><span>(</span><span>newSystemReadyFor</span><span>(</span><span>&quot;createAccount&quot;</span><span>)</span><span>)</span><span>{</span><span>
+</span><span>            newSystem</span><span>.</span><span>createAccount</span><span>(</span><span>name</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span> </span><span>else</span><span> </span><span>{</span><span>
+</span><span>            legacySystem</span><span>.</span><span>createAccount</span><span>(</span><span>name</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>    </span><span>}</span><span>
+</span>
+<span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>deposit</span><span>(</span><span>int amount</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>if</span><span>(</span><span>newSystemReadyFor</span><span>(</span><span>&quot;deposit&quot;</span><span>)</span><span>)</span><span>{</span><span>
+</span><span>            newSystem</span><span>.</span><span>deposit</span><span>(</span><span>amount</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span> </span><span>else</span><span> </span><span>{</span><span>
+</span><span>            legacySystem</span><span>.</span><span>deposit</span><span>(</span><span>amount</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>    </span><span>}</span><span>
+</span>
+<span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>withdraw</span><span>(</span><span>int amount</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>if</span><span>(</span><span>newSystemReadyFor</span><span>(</span><span>&quot;withdraw&quot;</span><span>)</span><span>)</span><span>{</span><span>
+</span><span>            newSystem</span><span>.</span><span>withdraw</span><span>(</span><span>amount</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span> </span><span>else</span><span> </span><span>{</span><span>
+</span><span>            legacySystem</span><span>.</span><span>withdraw</span><span>(</span><span>amount</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>    </span><span>}</span><span>
+</span>
+<span>    </span><span>public</span><span> int </span><span>checkBalance</span><span>(</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>if</span><span>(</span><span>newSystemReadyFor</span><span>(</span><span>&quot;checkBalance&quot;</span><span>)</span><span>)</span><span>{</span><span>
+</span><span>            </span><span>return</span><span> newSystem</span><span>.</span><span>checkBalance</span><span>(</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span> </span><span>else</span><span> </span><span>{</span><span>
+</span><span>            </span><span>return</span><span> legacySystem</span><span>.</span><span>checkBalance</span><span>(</span><span>)</span><span>;</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>    </span><span>}</span><span>
+</span>
+<span>    </span><span>private</span><span> boolean </span><span>newSystemReadyFor</span><span>(</span><span>String</span><span> functionality</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>// ...Check if new system is ready for given functionality...</span><span>
+</span><span>        </span><span>return</span><span> </span><span>false</span><span>;</span><span> </span><span>// placeholder</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>The <code>BankingFacade</code> class directs the flow of operations between the old and new systems.</p>
+<h2>The Gradual Transition: Replacing Functionality</h2>
+<p>Now, let&#x27;s assume that we&#x27;ve replaced the <code>createAccount</code> functionality in the new system. We update the <code>newSystemReadyFor</code> method to return true for the <code>createAccount</code> functionality. And with that all <code>createAccount</code> requests are now directed to the new system.</p>
+<p>As we replace more functionalities, we keep updating the <code>newSystemReadyFor</code> method, and gradually, the new system takes over.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Key Insights and Implications</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Here are some critical insights into implementing Strangler Fig pattern effectively:</p>
+<ol>
+<li>
+<p><strong>Proxy Layer</strong>: At the heart of the Strangler Fig Pattern is the proxy or router layer. It&#x27;s like the gatekeeper of a magical castle, directing visitors (requests) to the right chamber (service). This layer needs to be robust and might have logic based on:</p>
+<ul>
+<li>Feature flags: Turning features on/off to test new functionalities.</li>
+<li>User segmentation: Routing certain users to new services for A/B testing or phased rollouts.</li>
+<li>API versioning: Directing requests based on version headers or paths.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Consistency</strong>: Often, one of the trickiest parts is managing data between the old and new systems, especially if both systems are writing to the database. You might need:</p>
+<ul>
+<li>Database replication.</li>
+<li>Synchronizing data changes between the two systems using events or shared queues.</li>
+<li>Adopting an &quot;Event-Driven&quot; approach where changes are propagated through events rather than direct database writes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Monitoring &amp; Feedback</strong>: This isn&#x27;t just about code—it&#x27;s about ensuring the new system meets or exceeds the old system&#x27;s performance, reliability, and usability.</p>
+<ul>
+<li>Implement comprehensive logging and monitoring.</li>
+<li>Collect feedback from users affected by the changes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Parallel Running</strong>: There&#x27;s a cost to running two systems in parallel. This includes infrastructure costs, complexity, and potential for data inconsistencies. The goal should always be to fully retire the old system as soon as feasible.</p>
+</li>
+<li>
+<p><strong>Decoupling</strong>: The older system might have tightly coupled components. Before introducing the new system, you may need to do some refactoring to decouple these components, making them easier to replace.</p>
+</li>
+</ol></div></div></div></div></div><div><div><div><div><div><ol>
+<li>
+<p><strong>State Management</strong>:</p>
+<ul>
+<li>As you transition, managing state between old and new systems becomes crucial.</li>
+<li><strong>Shared state</strong>: Systems might need to access shared caches or distributed storage to ensure both old and new parts can access and modify a unified state.</li>
+<li><strong>State synchronization</strong>: If each system maintains its own state, consider synchronization mechanisms like CRDTs (Conflict-free Replicated Data Types) to merge states without conflicts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Service Communication</strong>:</p>
+<ul>
+<li>As new microservices grow, they might need to communicate with each other and the old system.</li>
+<li><strong>Event sourcing</strong>: Store the state of business entities as a sequence of events. It allows new and old systems to consume and produce events ensuring data consistency.</li>
+<li><strong>Message Brokers</strong>: Systems like RabbitMQ or <a href="https://systemdesign.example.com/course-play/grokking-the-advanced-system-design-interview/doc/636d08a12d344b9f0c7d9ea0" target="_blank">Kafka</a> can be used to ensure proper communication between new microservices and the legacy system.</li>
+</ul>
+</li>
+<li>
+<p><strong>Rollback Strategy</strong>:</p>
+<ul>
+<li>Sometimes things go wrong. Prepare a rollback strategy to revert to the old system seamlessly if needed.</li>
+<li>Use feature toggles or dynamic routing to easily switch between systems.</li>
+</ul>
+</li>
+<li>
+<p><strong>Testing</strong>:</p>
+<ul>
+<li><strong>Contract Testing</strong>: As you strangle the monolith, ensure that the new microservices adhere to expected behaviors.</li>
+<li><strong>End-to-End Testing</strong>: Ensure the whole system (old + new) works harmoniously.</li>
+<li><strong>Performance Testing</strong>: The new services should not degrade performance. Load test them to make sure they&#x27;re up to the mark!</li>
+</ul>
+</li>
+</ol></div></div></div></div></div><div><div><div><div><div><ol>
+<li><strong>Zero-Downtime Migration</strong>:</li>
+</ol>
+<ul>
+<li>As you&#x27;re moving functionalities, it&#x27;s paramount to ensure users experience zero downtimes.</li>
+<li>Techniques like <strong>Blue-Green Deployment</strong> or <strong>Canary Releases</strong> can be used. For instance, roll out the new service to a small percentage of users, observe, and then increase the rollout gradually.</li>
+</ul>
+<ol>
+<li><strong>Data Transformation &amp; Migration</strong>:</li>
+</ol>
+<ul>
+<li>If the new system uses a different data model or database, you might need data transformation tools or middleware.</li>
+<li>Tools like Apache <strong>Kafka Connect</strong> can stream data between databases, transforming it on the fly.</li>
+</ul>
+<ol>
+<li><strong>Security Considerations</strong>:</li>
+</ol>
+<ul>
+<li>New microservices introduce new potential security vulnerabilities.</li>
+<li>Ensure security practices like API gateway throttling, service-to-service authentication (mTLS), and regular vulnerability scanning.</li>
+</ul>
+<h2>Organizational &amp; Cultural Aspects:</h2>
+<ol>
+<li>
+<p><strong>Cross-functional Teams</strong>: To strangle a monolith effectively, having teams with skills ranging from the legacy system to the new tech stack is beneficial. These teams can work together to ensure smooth transitions.</p>
+</li>
+<li>
+<p><strong>Feedback Loops</strong>: It&#x27;s not just about technology. Keep open communication channels with stakeholders, end-users, and operation teams. Their feedback will be invaluable.</p>
+</li>
+<li>
+<p><strong>Continuous Learning</strong>: As challenges arise, document them, and create knowledge bases. Encourage teams to learn from mistakes and celebrate successes.</p>
+</li>
+</ol></div></div></div></div></div></div></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_02_strangler_fig_pattern') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_02_strangler_fig_pattern', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

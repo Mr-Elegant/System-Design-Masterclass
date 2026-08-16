@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="100%" height="100%" style="background-color: #181818; font-family: 'Inter', sans-serif;">
+    <rect width="100%" height="100%" fill="#181818"/>
+    <text x="500" y="40" font-family="'Outfit', sans-serif" font-size="22" font-weight="700" fill="#38bdf8" text-anchor="middle">Concurrency Primitives &amp; Double-Booking Locks</text>
+
+    <!-- User A -->
+    <rect x="80" y="100" width="200" height="80" rx="8" fill="#1e1e1e" stroke="#38bdf8" stroke-width="2"/>
+    <text x="180" y="135" font-size="15" font-weight="700" fill="#e0e0e0" text-anchor="middle">User A (Book Seat 12)</text>
+    <text x="180" y="160" font-size="12" fill="#38bdf8" text-anchor="middle">Acquires Lock (Token A)</text>
+
+    <!-- User B -->
+    <rect x="80" y="240" width="200" height="80" rx="8" fill="#1e1e1e" stroke="#f43f5e" stroke-width="2"/>
+    <text x="180" y="275" font-size="15" font-weight="700" fill="#e0e0e0" text-anchor="middle">User B (Book Seat 12)</text>
+    <text x="180" y="300" font-size="12" fill="#f43f5e" text-anchor="middle">Lock Conflict -> Retry / Wait</text>
+
+    <!-- Central Lock Manager -->
+    <rect x="400" y="150" width="250" height="120" rx="8" fill="#1e1e1e" stroke="#fbbf24" stroke-width="2"/>
+    <text x="525" y="180" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="middle">Distributed Lock Engine</text>
+    <text x="525" y="210" font-size="13" fill="#a0a0a0" text-anchor="middle">SET seat_12 token_A NX EX 30</text>
+    <text x="525" y="235" font-size="12" fill="#4ade80" text-anchor="middle">Atomicity via Redis Lua / CAS</text>
+
+    <!-- DB Storage -->
+    <rect x="750" y="150" width="180" height="120" rx="8" fill="#1e1e1e" stroke="#4ade80" stroke-width="2"/>
+    <text x="840" y="195" font-size="15" font-weight="700" fill="#4ade80" text-anchor="middle">Database (SQL)</text>
+    <text x="840" y="225" font-size="12" fill="#a0a0a0" text-anchor="middle">Version = Version + 1</text>
+
+    <path d="M 280 140 L 400 190" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M 280 280 L 400 230" stroke="#f43f5e" stroke-width="2" stroke-dasharray="5,5"/>
+    <path d="M 650 210 L 750 210" stroke="#4ade80" stroke-width="2"/>
+</svg>

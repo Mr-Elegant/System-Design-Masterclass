@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Design Concepts &amp; Tradeoffs - System Design Interview Guide</title>
+    <meta property="og:title" content="System Design Concepts &amp; Tradeoffs - System Design Interview Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">System Design Concepts &amp; Tradeoffs</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="importance of discussing tradeoffs"><a href="#chapter-01"><span class="chapter-num">01</span> Importance of Discussing Tradeoffs</a></li>
+<li class="sidebar-item" data-num="02" data-title="strong vs eventual consistency"><a href="#chapter-02"><span class="chapter-num">02</span> Strong vs Eventual Consistency</a></li>
+<li class="sidebar-item" data-num="03" data-title="latency vs throughput"><a href="#chapter-03"><span class="chapter-num">03</span> Latency vs Throughput</a></li>
+<li class="sidebar-item" data-num="04" data-title="acid vs base properties in databases"><a href="#chapter-04"><span class="chapter-num">04</span> ACID vs BASE Properties in Databases</a></li>
+<li class="sidebar-item" data-num="05" data-title="readthrough vs writethrough cache"><a href="#chapter-05"><span class="chapter-num">05</span> ReadThrough vs WriteThrough Cache</a></li>
+<li class="sidebar-item" data-num="06" data-title="batch processing vs stream processing"><a href="#chapter-06"><span class="chapter-num">06</span> Batch Processing vs Stream Processing</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Importance of Discussing Tradeoffs</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Presenting trade-offs in a system design interview is highly significant for several reasons as it demonstrates a depth of understanding and maturity in design. Here’s why discussing trade-offs is important:</p>
+<h3>1. <strong>Shows Comprehensive Understanding</strong></h3>
+<ul>
+<li><strong>Balanced Perspective</strong>: Discussing trade-offs indicates that you understand there are multiple ways to approach a problem, each with its advantages and disadvantages.</li>
+<li><strong>Depth of Knowledge</strong>: It shows that you&#x27;re aware of different technologies, architectures, and methodologies, and understand how choices impact a system&#x27;s behavior and performance.</li>
+</ul>
+<h3>2. <strong>Highlights Critical Thinking and Decision-Making Skills</strong></h3>
+<ul>
+<li><strong>Analytical Approach</strong>: By evaluating trade-offs, you demonstrate an ability to analyze various aspects of a system, considering factors like scalability, performance, maintainability, and cost.</li>
+<li><strong>Informed Decision-Making</strong>: It shows that your design decisions are thoughtful and informed, rather than arbitrary.</li>
+</ul>
+<h3>3. <strong>Demonstrates Real-World Problem-Solving Skills</strong></h3>
+<ul>
+<li><strong>Practical Solutions</strong>: In the real world, every system design decision comes with trade-offs. Demonstrating this understanding aligns with practical, real-world scenarios where perfect solutions rarely exist.</li>
+<li><strong>Prioritization</strong>: Discussing trade-offs shows that you can prioritize certain aspects over others based on the requirements and constraints, which is a critical skill in system design.</li>
+</ul>
+<h3>4. <strong>Reveals Awareness of Business and Technical Constraints</strong></h3>
+<ul>
+<li><strong>Business Acumen</strong>: Understanding trade-offs indicates that you&#x27;re considering not just the technical but also the business implications of your design choices (like cost implications, time to market).</li>
+<li><strong>Adaptability</strong>: It shows you can adapt your design to meet different priorities and constraints, which is key in a dynamic business environment.</li>
+</ul>
+<h3>5. <strong>Facilitates Better Team Collaboration and Communication</strong></h3>
+<ul>
+<li><strong>Communication Skills</strong>: Clearly articulating trade-offs is a vital part of effective technical communication, crucial for collaborating with team members and stakeholders.</li>
+<li><strong>Expectation Management</strong>: It helps in setting realistic expectations and preparing for potential challenges in implementation.</li>
+</ul>
+<h3>6. <strong>Prepares for Scalability and Future Growth</strong></h3>
+<ul>
+<li><strong>Long-term Vision</strong>: Discussing trade-offs shows that you’re thinking about how the system will evolve over time and how early decisions might impact future changes or scalability.</li>
+</ul>
+<h3>7. <strong>Shows Maturity and Experience</strong></h3>
+<ul>
+<li><strong>Professional Maturity</strong>: Recognizing that every decision has pros and cons reflects professional maturity and experience in handling complex projects.</li>
+<li><strong>Learning from Experience</strong>: It can also indicate that you’ve learned from past experiences, applying these lessons to make better design choices.</li>
+</ul>
+<h3>Conclusion</h3>
+<p>In system design interviews, discussing trade-offs is not just about acknowledging that they exist, but about demonstrating a well-rounded and mature approach to system design. It reflects a candidate’s ability to make informed decisions, a deep understanding of technical principles, and an appreciation of the broader business context.</p>
+<p>Up next, let&#x27;s discuss some essential trade-offs that you can explore during a system design interview.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Strong vs Eventual Consistency</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Introduction</h2>
+<p>In distributed systems and databases, <strong>data consistency</strong> refers to the property that all copies of data (on different servers or nodes) reflect the same state. When multiple users or services access data spread across servers, we want them all to see <em>the same values</em>. Consistency is important because if one part of the system has outdated information while another has new information, it can lead to errors or confusion. For example, imagine an online store with inventory data replicated across servers: if one server thinks an item is in stock and another thinks it’s sold out, you might accidentally sell a product that isn’t actually available. Ensuring consistency means avoiding such conflicts by keeping data synchronized across the system. However, achieving perfect consistency in a distributed environment can be challenging – especially as systems grow and need to stay fast and available. This is where different consistency models come into play, the most common being <strong>strong consistency</strong> and <strong>eventual consistency</strong>.</p>
+<h2>What is Strong Consistency?</h2>
+<p><strong>Strong consistency</strong> (sometimes called <em>strict consistency</em> or <em>linearizability</em>) guarantees that any read of data will return the <em>most recent write</em>. In other words, once a write operation completes, <strong>all</strong> subsequent reads (from any user or any location) will see that update. There are no “stale” (out-of-date) reads under strong consistency – every read gets the latest committed data. To achieve this, systems often use <em>synchronous replication</em>: when data is written, it is simultaneously updated on multiple nodes, and the write is only confirmed when all nodes (or a majority, depending on the design) have the new data. This ensures that no matter which node a read comes from, the data is up-to-date.</p></div><div><p>In a strongly consistent system, a write operation is propagated to all replicas <strong>before</strong> it is considered successful. The above diagram shows a user writing a value to the <strong>US West</strong> database node, which then starts a transaction to update the <strong>US East</strong> and <strong>Europe</strong> nodes. The client only gets an “OK” after the data is committed everywhere. During this process, reads to that data are blocked on other nodes (and even on the writer node until commit) to avoid seeing partial updates. This adds some delay (e.g., the network latency between regions) and can cause concurrent writes to be serialized or one to fail (as shown by the second user’s write being blocked). The benefit is that any user reading after the commit will get the latest value, ensuring accuracy and eliminating stale data.</p>
+<p>Because every node agrees on the data before moving on, strong consistency gives a very intuitive guarantee: it feels like there is a single up-to-date copy of the data that everyone is reading from. The classic analogy is a <strong>banking transaction</strong>. When you withdraw money from an ATM, the banking system should update your account balance <em>immediately</em> on all servers. If you had $500 and withdrew $100, any bank teller or ATM anywhere should now see $400, not the old $500. A strongly consistent system ensures that once your withdrawal is processed, <strong>all future views of your balance reflect the withdrawal</strong>. This prevents issues like spending the same money twice or overdrawing due to inconsistent information.</p>
+<p>From a technical perspective, many traditional databases and some modern distributed databases provide strong consistency. For example, Google Spanner (a globally distributed SQL database) is designed so that reads across data centers still return the most up-to-date data. In a strongly consistent setup with a primary/leader database and replicas, a common approach is that all writes go through the primary and are synchronously replicated to secondaries. Only after the replicas acknowledge the update will the system consider the transaction committed. Thus, any read (often reads are either served by the primary or from replicas that have applied all updates) will see the latest data. This guarantee simplifies reasoning about data – developers don’t have to worry about reading stale information – but it comes with a cost.</p>
+<p><strong>Trade-offs of Strong Consistency:</strong> The main downside of strong consistency is <strong>latency and availability</strong>. Because a write must be confirmed by multiple nodes, it typically takes longer to complete. If you have servers in New York and London and you update a record, you might have to wait for the update to travel across the ocean and back before the user gets confirmation. This means writes (and sometimes reads) are slower compared to a system that doesn’t wait on multiple replicas. In practice, strong consistency <strong>sacrifices some performance and potentially availability for the sake of accuracy</strong>. If one of the replicas is down or there is a network partition, a strongly consistent system might block updates (or even reads) rather than risk inconsistency. For instance, if the network link to one data center is lost, the system may stop accepting writes to maintain consistency (trading availability for consistency). In summary, with strong consistency you get <strong>absolute correctness at the expense of response time and sometimes system availability</strong> during failures. This model is often chosen for systems where <strong>correctness is critical</strong> – we’ll discuss use cases in a moment.</p>
+<h2>What is Eventual Consistency?</h2>
+<p><strong>Eventual consistency</strong> is a looser model of consistency that guarantees that <em>if no new updates are made to a piece of data, all copies of that data will eventually become consistent (the same)</em>. The key word here is “eventually.” It doesn’t promise <em>immediate</em> consistency, only that given enough time (and no more changes), all nodes will converge to the latest value. In an eventually consistent system, it’s possible to read stale data temporarily, but over time all the nodes catch up to reflect the last write.</p>
+<p>How does this work in practice? Eventual consistency systems use <em>asynchronous replication</em>. When you write to one node, that node will apply the update, and then propagate the change to other nodes <strong>in the background</strong>, but it <strong>won’t wait for all the others to acknowledge the update</strong> before reporting success to the client. The write is considered successful as soon as it’s on that one node (sometimes maybe a couple, but not necessarily all), and other replicas will get the update shortly after. This means if you immediately read from another replica, you might not see the update – you’d get an older value. The system is okay with that, because it assumes that under the hood, the replicas are exchanging updates and will <em>eventually</em> sync up. As one article put it, <em>eventual consistency is an <strong>optimistic</strong> approach</em>: it responds quickly to operations, at the <strong>risk of returning stale data</strong> to some readers in the short term. You trade instantaneous accuracy for speed and partition tolerance. The upside is that <strong>performance is typically much better</strong> – reads and writes are fast since they often hit a local node and don’t have to wait for global coordination.</p></div><div><p>In an eventually consistent system, a write is confirmed without waiting for all replicas. The above diagram shows a user writing a value to the <strong>US West</strong> database, which immediately returns “OK” after storing the new value locally. That update (<code>x = 10</code> in this example) is then asynchronously replicated to other regions (US East, Europe) over time. During that time, another user reading from the Europe database might get the old value (stale data) until the update arrives. The note <em>“Data replication is asynchronous”</em> highlights that the changes flow in the background. Eventually, all users in every region will see <code>x = 10</code>, but <strong>there is a window where different users see different data</strong>.</p>
+<p>A real-world analogy for eventual consistency is a <strong>social media timeline</strong> or news feed. When you post a new photo, not all of your friends might see it at the exact same moment. Perhaps the data center serving your friend hasn’t received your update yet, so for a short time, one friend’s app still shows an old timeline (missing your photo) while others see the new post. After a little while (maybe a few seconds or more), everyone’s feed catches up and shows the same latest posts. That’s eventual consistency: <em>some delay is acceptable</em> as long as the system becomes consistent later. The system prioritizes availability and responsiveness – you were able to post quickly, and your friend could continue browsing (even if it was an outdated view) – over immediate synchronization. Many large-scale web systems work this way. For example, social networks and content distribution networks prefer to deliver content quickly from nearby servers even if it might be slightly out-of-date, rather than always waiting on a central source. Another everyday example is <strong>DNS (Domain Name System)</strong>. When a website’s IP address changes, that update takes time to propagate to DNS servers around the world. During that propagation, some users might still be directed to the old IP (stale data), but eventually all DNS servers get the new record. This DNS behavior is eventually consistent by design.</p>
+<p>In databases, many NoSQL and distributed databases use eventual consistency to achieve high performance and partition tolerance. For instance, Amazon’s DynamoDB and Apache Cassandra default to eventual consistency, meaning they do not guarantee that a read will see the very latest write unless you explicitly ask for stronger consistency. These systems allow temporary inconsistencies in exchange for being <strong>highly available and scalable</strong> across many nodes and regions. Under the hood, they handle conflict resolution (for example, if two updates occur on different replicas concurrently, they might use strategies like &quot;last write wins&quot; or merge the changes). The expectation is that conflicts are either rare or tolerable, and the system will resolve them to converge to a single state eventually. The big advantage is that even if some nodes are down or slow, the system can still accept writes and reads on the others, making it <em>fault-tolerant</em> and <em>fast</em>. The downside is, as noted, you might read data that isn’t the absolutely latest value if you happen to hit a lagging replica.</p>
+<p><strong>Trade-offs of Eventual Consistency:</strong> The mantra for eventual consistency is <strong>“fast and available, but maybe not up-to-date.”</strong> Clients get responses quickly, and the system remains operational even during network partitions or node failures (each node can operate somewhat independently). However, the cost is <strong>temporary inconsistency</strong> – different users might see different data for a short time. If your application can tolerate that (for example, showing yesterday’s count of Likes on a post instead of the one from a minute ago), then eventual consistency can dramatically improve throughput and fault tolerance. But if your application cannot tolerate any divergence in views (e.g. an account balance or a critical configuration setting), eventual consistency might cause problems. In short, eventual consistency favors <strong>availability, partition tolerance, and low latency</strong> over immediate accuracy. It&#x27;s a good choice when <em>speed and uptime matter more than perfect synchronization at every moment</em>.</p>
+<h2>Comparison: Strong vs. Eventual Consistency</h2>
+<p>Now that we’ve defined both models, let’s compare strong and eventual consistency side by side. Each model has its own guarantees and ideal use cases. Below is a summary of key differences:</p>
+<div><table><thead><tr><th><div><strong>Aspect</strong></div></th><th><strong>Strong Consistency</strong></th><th><strong>Eventual Consistency</strong></th></tr></thead><tbody><tr><td><strong>Data Guarantee</strong></td><td>Every read gets the <strong>latest write</strong> (no stale data). The system behaves like a single up-to-date copy of data.</td><td>Reads <strong>might be stale</strong> right after a write; data updates <strong>propagate over time</strong> until all nodes sync up. Eventually, all copies become consistent.</td></tr><tr><td><strong>Read/Write Latency</strong></td><td><strong>Higher latency</strong> – operations are slower because they wait for coordination (e.g., confirmations from other nodes). Users might notice a slight delay on writes or reads that require global agreement.</td><td><strong>Lower latency</strong> – operations are fast because they don’t wait on worldwide consensus. The system responds quickly using local data, at the risk of returning outdated info.</td></tr><tr><td><strong>Availability</strong></td><td>Can be <strong>reduced availability</strong> in the face of network issues. If some replicas or a network link are down, the system may refuse reads/writes (better to be unavailable than inconsistent).</td><td><strong>High availability</strong> – the system can operate even if some nodes are down or disconnected. Each node can accept writes and reads independently (but might serve old data until reconnection).</td></tr><tr><td><strong>Consistency Level</strong></td><td><strong>Strong</strong> (strict) – absolute consistency at all times. Think “all-or-nothing” for updates: either everyone sees it or no one does until it&#x27;s ready.</td><td><strong>Weak (Eventually Strong)</strong> – allows <strong>temporary inconsistency</strong>. Think “sooner or later everyone will see it, but maybe not instantly.”</td></tr><tr><td><strong>Use Cases</strong></td><td><strong>Critical data</strong> where accuracy is paramount: financial transactions, banking systems, inventory management, booking systems, and other scenarios where an outdated read could cause serious problems. Also common in traditional SQL databases and strongly consistent distributed systems (e.g., Spanner, etcd).</td><td><strong>High-volume or globally distributed systems</strong> where speed and uptime matter more than immediate consistency: social media feeds, messaging apps, content delivery networks (CDNs), cache systems, analytics data, and some e-commerce features (like product view counts or recommendations). Often used by NoSQL databases (Cassandra, DynamoDB, etc.) under the BASE philosophy (Basically Available, Soft state, Eventual consistency).</td></tr></tbody></table></div>
+<p>※ <strong>Note:</strong> These are the two extremes of a spectrum. In between, there are many <strong>intermediate consistency models</strong> (like <strong>“read-your-writes”</strong>, <strong>“causal consistency”</strong>, <strong>“bounded staleness”</strong>, etc.) that provide trade-offs between the strictness of strong consistency and the freedom of eventual consistency. Some databases (for example, Azure Cosmos DB or MongoDB) let you choose from multiple consistency levels depending on your needs. But for simplicity, strong vs. eventual are useful mental anchors for the ends of the spectrum.</p>
+<h2>When to Use Which?</h2>
+<p>Choosing the right consistency model depends on your application’s requirements and what trade-offs you’re willing to make. Here are some guidelines to help decide:</p>
+<ul>
+<li>
+<p><strong>Use Strong Consistency when correctness is critical:</strong> If your application cannot tolerate any divergence or stale reads, strong consistency is the way to go. This is often true for <strong>financial systems</strong> (banking, stock trading, payment processing) where every operation must see the latest state to prevent errors or fraud. For example, in an online banking app or an e-commerce checkout system, it’s crucial that once a payment is made or an item is sold, all parts of the system immediately reflect that change. Strong consistency is also important for things like <strong>inventory management</strong> (to avoid selling the last item twice), <strong>reservation/booking systems</strong> (to avoid double-booking a hotel room or airline seat), or <strong>any scenario involving balances, counts, or one-time use codes</strong>. If your users expect that once they perform an action, <em>everyone</em> (and every service) will see the result instantly and reliably, lean towards strong consistency. Keep in mind you may need to invest in more robust infrastructure (and possibly accept lower throughput) to achieve this level of consistency.</p>
+</li>
+<li>
+<p><strong>Use Eventual Consistency when you need high availability, low latency, and can tolerate slight delays in synchronization:</strong> For many applications, it’s okay if data is not perfectly in sync at every moment. If showing slightly out-of-date information won’t break the user experience or business logic, eventual consistency can dramatically improve performance and resilience. <strong>Social networks</strong> are a prime example: it&#x27;s better to allow users to post and interact quickly than to pause the whole system to make sure everyone’s view is perfectly updated in real-time. Minor inconsistencies (like a friend count that updates a few seconds later) are acceptable in that context. <strong>Content delivery</strong> and <strong>Caching</strong> systems also prefer eventual consistency — it’s more important that content is delivered fast from a nearby server than it is to be absolutely up-to-the-moment (think of how web caches might serve slightly old content to avoid slow fetches). <strong>Messaging apps</strong> and <strong>collaborative platforms</strong> often use eventual consistency under the hood for things like delivering messages or updates; as long as messages arrive and eventually order themselves correctly, the system can afford slight reordering or delays in reflecting message states (though often they add extra logic to handle ordering). If your application runs across multiple data centers or needs to stay available even when parts of the network fail, eventual consistency is a robust choice. It will keep working (with some delays) rather than shutting down. As a rule of thumb, ask: <em>“Is it okay if two different users see a different state of data for a brief time?”</em> If yes, eventual consistency might be suitable and will give you better latency and partition tolerance.</p>
+</li>
+<li>
+<p><strong>Consider a mix or tunable approach:</strong> In many real-world systems, it’s not an all-or-nothing decision. You might identify certain operations or data that require strong consistency and others that can be eventually consistent. For instance, a shopping website might use strong consistency for processing payments and inventory updates, but eventual consistency for showing product recommendations or the number of items left in stock (since that count could be a few seconds stale without harm). Some databases offer <strong>tunable consistency</strong>, where each read or write can choose a consistency level. For example, you could do a strongly consistent read for a critical piece of data and eventual (faster) reads for less critical data. Designing your system with this in mind can give you a good balance: strong consistency where absolutely needed, eventual where it’s safe. As one source notes, <em>the choice “obviously depends on the type of application” – use the model that fits your needs for accuracy vs. performance.</em> It’s a business decision as much as a technical one: decide what matters more for each part of your system (freshness or speed) and choose accordingly.</p>
+</li>
+</ul>
+<h2>Conclusion</h2>
+<p><strong>Strong consistency</strong> offers a guarantee that everyone sees the same data at the same time, which simplifies development and ensures correctness – at the cost of speed and sometimes availability. <strong>Eventual consistency</strong> relaxes the rules, allowing temporary differences in data across the system, which boosts performance, scalability, and fault tolerance – at the cost of requiring the application to tolerate out-of-sync data for a little while. There is no one “better” model; it truly comes down to what your application needs. If you’re building something like a banking ledger or a system where accuracy is non-negotiable, strong consistency is worth the trade-off. If you’re building a social app, a content feed, or a service that must stay up no matter what, eventual consistency is often the pragmatic choice.</p>
+<p>When designing your system, carefully evaluate how critical each piece of data is. Ask questions like: <em>What’s the impact if a user sees stale data for a moment? Will it harm the experience or business?</em> If yes, you should lean towards a strongly consistent approach for that data. If no, you can reap the benefits of eventual consistency. Often, the best architectures use a combination of both, applying strong consistency for core transactions and eventual consistency for derived or less critical data.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Latency vs Throughput</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Latency and throughput are two critical performance metrics in software systems, but they measure different aspects of the system&#x27;s performance.</p>
+<h2>Latency</h2>
+<ul>
+<li><strong>Definition</strong>: Latency measures delay—how long it takes for a single request to be processed from start to finish. In other words, it&#x27;s the delay between the initiation of a request and the receipt of the response. Think of it as the time you wait at a fast-food drive-thru to get your order.</li>
+<li><strong>Characteristics</strong>:
+<ul>
+<li>Measured in units of time (milliseconds, seconds).</li>
+<li>Lower latency indicates a more responsive system.</li>
+</ul>
+</li>
+<li><strong>Impact</strong>: Latency is particularly important in scenarios where real-time or near-real-time interaction or data transfer is crucial, such as in online gaming, video conferencing, or high-frequency trading.</li>
+<li><strong>Example</strong>: If you click a link on a website, the latency would be the time it takes from the moment you click the link to when the page starts loading.</li>
+</ul>
+<h2>Throughput</h2>
+<ul>
+<li><strong>Definition</strong>: Throughput refers to the amount of data transferred over a network or processed by a system in a given amount of time. It&#x27;s a measure of how much work or data processing is completed over a specific period.</li>
+<li><strong>Characteristics</strong>:
+<ul>
+<li>Measured in units of data per time (e.g., Mbps - Megabits per second).</li>
+<li>Higher throughput indicates a higher data processing capacity.</li>
+</ul>
+</li>
+<li><strong>Impact</strong>: Throughput is a critical measure in systems where the volume of data processing is significant, such as in data backup systems, bulk data processing, or video streaming services.</li>
+<li><strong>Example</strong>: In a video streaming service, throughput would be the rate at which video data is transferred from the server to your device.</li>
+</ul>
+<h2>Latency vs Throughput - Key Differences</h2>
+<ul>
+<li><strong>Focus</strong>: Latency is about the delay or time, focusing on speed. Throughput is about the volume of work or data, focusing on capacity.</li>
+<li><strong>Influence on User Experience</strong>: High latency can lead to a sluggish user experience, while low throughput can result in slow data transfer rates, affecting the efficiency of data-intensive operations.</li>
+<li><strong>Trade-offs</strong>: In some systems, improving throughput may increase latency, and vice versa. For instance, sending data in larger batches may improve throughput but could also result in higher latency.</li>
+</ul>
+<p>Improving latency and throughput often involves different strategies, as optimizing for one can sometimes impact the other. However, there are several techniques that can enhance both metrics:</p>
+<h2>How to Improve Latency</h2>
+<ol>
+<li><strong>Optimize Network Routes</strong>: Use Content Delivery Networks (CDNs) to serve content from locations geographically closer to the user. This reduces the distance data must travel, decreasing latency.</li>
+<li><strong>Caching Frequently Accessed Data</strong>: Cache frequently accessed data in memory to eliminate the need to fetch data from the original source repeatedly.</li>
+<li><strong>Upgrade Hardware</strong>: Faster processors, more memory, and quicker storage (like SSDs) can reduce processing time.</li>
+<li><strong>Use Faster Communication Protocols</strong>: Protocols like HTTP/2 can reduce latency through features like multiplexing and header compression.</li>
+<li><strong>Database Optimization</strong>: Use indexing, optimized queries, and in-memory databases to reduce data access and processing time.</li>
+<li><strong>Load Balancing</strong>: Distribute incoming requests efficiently among servers to prevent any single server from becoming a bottleneck.</li>
+<li><strong>Code Optimization</strong>: Optimize algorithms and remove unnecessary computations to speed up execution.</li>
+<li><strong>Minimize External Calls</strong>: Reduce the number of API calls or external dependencies in your application.</li>
+</ol>
+<h2>How to Improve Throughput</h2>
+<ol>
+<li><strong>Scale Horizontally</strong>: Add more servers to handle increased load. This is often more effective than vertical scaling (upgrading the capacity of a single server).</li>
+<li><strong>Implement Caching</strong>: Cache frequently accessed data in memory to reduce the need for repeated data processing.</li>
+<li><strong>Parallel Processing</strong>: Use parallel computing techniques where tasks are divided and processed simultaneously.</li>
+<li><strong>Batch Processing</strong>: For non-real-time data, processing in batches can be more efficient than processing each item individually.</li>
+<li><strong>Optimize Database Performance</strong>: Ensure efficient data storage and retrieval. This may include techniques like partitioning and sharding.</li>
+<li><strong>Asynchronous Processing</strong>: Use asynchronous processes for tasks that don’t need to be completed immediately.</li>
+<li><strong>Network Bandwidth</strong>: Increase the network bandwidth to accommodate higher data transfer rates.</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Low latency is crucial for applications requiring fast response times, while high throughput is vital for systems dealing with large volumes of data.</p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">ACID vs BASE Properties in Databases</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>When we use an application – whether it&#x27;s online banking or a shopping site – we expect the data to be correct and the system to work reliably. If you transfer money and a glitch happens, you wouldn’t want the bank to deduct money from your account without adding it to the recipient’s account. This is why database consistency and reliability matter so much. A reliable database ensures that even if something goes wrong (like a crash or network issue), your data isn’t lost or corrupted.</p>
+<p>In the world of databases, there are two common models for handling consistency and reliability: <strong>ACID</strong> and <strong>BASE</strong>. These acronyms stand for different approaches in database design. In simple terms, <strong>ACID</strong> is about keeping transactions <em>strictly correct and reliable</em>, while <strong>BASE</strong> is about keeping the system <em>basically available and scalable</em> (even if data might be briefly inconsistent). They’re often seen as opposites, but each has its own use cases and trade-offs. In this post, we’ll explain what each term means, give easy examples, compare their differences, and help you decide which approach fits which situation.</p>
+<h2>What is ACID?</h2>
+<p><strong>ACID</strong> is a set of properties that guarantee database transactions are processed reliably. A transaction is a unit of work (like transferring money or booking a ticket) that may involve multiple steps. ACID stands for <strong>Atomicity, Consistency, Isolation, Durability</strong>. These four properties ensure that even if multiple transactions occur or failures happen, the data remains correct and stable.</p></div><div><p><em>Atomicity, Consistency, Isolation, Durability (ACID) are four guarantees that make transactions reliable.</em> ACID-compliant systems make sure that transactions either happen completely or not at all, the database doesn’t violate its rules, concurrent operations don’t interfere with each other, and once a transaction is saved it won’t be lost. To understand ACID, let&#x27;s break down each property with a simple example:</p>
+<ul>
+<li><strong>Atomicity:</strong> <em>All-or-nothing</em>. A transaction is atomic if it executes completely or not at all – there are no partial completions. For example, in a reservation system, both steps – booking a seat <em>and</em> updating the customer’s details – must succeed together. If one part fails, the system will undo any partial changes so you don’t end up with a reserved seat under no name. In other words, you won’t have a situation where money is taken from an ATM but you get no cash; the whole operation is rolled back if any piece fails.</li>
+<li><strong>Consistency:</strong> <em>Valid state</em>. The database must abide by all defined rules (constraints) after the transaction. This means any transaction will bring the database from one valid state to another. For example, when transferring $100 from Account A to Account B, the total money across both accounts should remain the same before and after. If the total was $600, it stays $600 after the transfer (like $100 goes out of A and into B). The data won’t violate things like balance never going negative, etc.</li>
+<li><strong>Isolation:</strong> <em>Don’t interfere</em>. Even if multiple transactions are happening at the same time, each one should behave as if it’s the only one running until it’s finished. For instance, in an online inventory system, if one user is updating the stock count of a product, another user reading the stock at the same time should either see the <em>old</em> count or the <em>new</em> count, but nothing in-between. Each transaction’s intermediate steps are hidden from others to avoid confusion. This prevents concurrent operations from messing up each other’s data.</li>
+<li><strong>Durability:</strong> <em>Never lost</em>. Once a transaction is successfully completed (committed), its changes are permanent – they will survive power failures, crashes, or errors. For example, if a messaging app tells you that your message was sent, that message should be stored and never disappear even if the server crashes right after. The database will have saved the data to stable storage so it can recover to that state if needed.</li>
+</ul>
+<p>In essence, ACID makes sure that the database maintains integrity: transactions are all-or-nothing, always leave the data consistent, don’t step on each other, and don’t vanish after being applied. This is great for applications where accuracy is critical.</p>
+<h2>What is BASE?</h2>
+<p><strong>BASE</strong> is an alternative approach used mainly in many NoSQL and distributed databases. BASE stands for <strong>Basically Available, Soft state, Eventually consistent</strong>. It is almost the “opposite” of ACID in philosophy. Instead of enforcing strict consistency after every transaction, BASE systems prioritize availability and partition tolerance (being able to distribute data across many servers). The idea is that the system will be <em>basically available</em> at all times, and it accepts that the data might not be consistent immediately, as long as it <em>eventually</em> becomes consistent. Let’s break down the BASE properties with simple terms:</p>
+<ul>
+<li><strong>Basically Available:</strong> The system guarantees availability – it will always try to give you some response, even under heavy load or if parts of the system are down. It may not be the most up-to-date data, but the service remains up. For example, during a massive online sale, an e-commerce site using a BASE model will continue to accept orders and show products even if the inventory counts are slightly behind. You might be able to place an order even if one server hasn’t caught up to an out-of-stock status, because the system chooses to stay responsive rather than lock everything. The focus is on keeping the service running.</li>
+<li><strong>Soft State:</strong> The state of the system may change or fluctuate over time, even without new inputs, because updates propagate gradually. “Soft” means the data might be temporarily inconsistent or in flux. The database doesn’t enforce immediate consistency itself; instead, it’s understood that data will be updated over time and might require the application to handle interim inconsistencies. For example, if you edit a social media post, you might not see the update on your friend’s app instantly. The data is in a soft state – it’s changing in the background. After a short while, the changes will settle and everyone sees the same updated post, but in the meantime, different parts of the system might have slightly different information.</li>
+<li><strong>Eventually Consistent:</strong> This is the key idea – though the system may not be consistent at every moment, if you wait a bit (and no new updates occur), it will become consistent. All replicas or nodes will <strong>eventually</strong> hold the same data. For example, imagine a distributed document editing app where two people edit the same doc simultaneously. Initially, their copies might differ. But the system will merge changes, and after some time everyone sees the same final version. There’s no guarantee <em>when</em> it will become consistent, only that it will happen eventually. The data might go through some conflicts or merging, but it will converge in the end.</li>
+</ul></div><div><p>In summary, BASE systems give up the immediate consistency that ACID guarantees, in order to gain other benefits like high availability and scalability. They let data be inconsistent for a short time, under the assumption that it will fix itself soon. This approach is common in large, distributed systems (like big web services) where it’s more important to keep the system running than to have every user see the exact same data instantaneously.</p>
+<h2>ACID vs. BASE – Key Differences and Trade‑Offs</h2>
+<p>ACID and BASE represent two different priorities in database design. A famous concept in distributed systems, the <strong>CAP theorem</strong>, says that in the presence of network partitions you can’t have both perfect consistency and perfect availability at the same time. ACID and BASE basically choose different sides of this trade-off: <strong>ACID favors consistency</strong>, and <strong>BASE favors availability</strong>. Here are the key differences and trade-offs between ACID and BASE:</p></div><div><p><em>In the CAP theorem, a distributed system can only guarantee two out of three: Consistency, Availability, Partition tolerance. ACID systems choose consistency over absolute availability, while BASE systems choose availability and accept eventual consistency.</em> In practice, this means ACID databases ensure every transaction is strict and correct at the cost of some performance or uptime, whereas BASE databases ensure the system is always responsive and can scale out, at the cost of data being momentarily inconsistent.</p>
+<ul>
+<li><strong>Consistency vs. Availability:</strong> ACID provides <strong>strong consistency</strong> – data is correct and the same across the system right after each transaction. BASE provides <strong>high availability</strong>, often sacrificing immediate consistency. An ACID system might delay or block some operations to keep data perfectly in sync, while a BASE system would rather give a quick answer that might be slightly stale than make you wait or fail.</li>
+<li><strong>Timing of Consistency:</strong> In ACID, once a transaction commits, all users see its effects <em>immediately</em>. Reads will fetch the latest writes. In BASE, updates propagate slowly; users might see old data for a while. Consistency is only guaranteed <em>eventually</em>, not instantly. For example, a comment you post on a BASE-based social network might appear to you but take a few seconds to appear for your friends.</li>
+<li><strong>Transactional Approach:</strong> ACID is <strong>all-or-nothing</strong>. Transactions are completely rolled back if any part fails (ensuring atomicity). BASE can allow <strong>partial</strong> updates to be seen; it’s more flexible/loose in how transactions are handled. There isn’t usually a strict concept of a multi-step transaction in BASE – instead, it might update different pieces of data at different times and resolve inconsistencies later. This can make ACID safer for complex multi-step changes, while BASE is okay with simpler operations spread over time.</li>
+<li><strong>Performance and Scalability:</strong> ACID systems often trade some performance for accuracy. They may need locks or wait times to keep transactions isolated and consistent, which can slow things down when there’s a lot of traffic. They can also be harder to scale horizontally (across many servers) because of the need to coordinate every transaction globally. BASE systems, on the other hand, excel at <strong>scaling out</strong>. They can spread data across many nodes and don’t need to coordinate every single update immediately, leading to better throughput and fault tolerance under heavy load. This is why many large web applications use BASE-oriented databases – they can handle millions of users by spreading data, at the cost of having to manage eventual consistency.</li>
+<li><strong>Complexity and Handling Inconsistencies:</strong> With ACID, the database takes care of consistency automatically – developers can assume the DB will enforce the rules. With BASE, the burden of dealing with temporary inconsistencies often falls on the application developers. For instance, if two writes conflict or if data is out-of-sync, the system (or developer) must reconcile it later. The database doesn’t guarantee the data is the same everywhere at once. This makes ACID systems simpler to develop for in terms of data correctness, whereas BASE systems require careful design to handle eventual consistency (like conflict resolution or reminding the user that data may update shortly).</li>
+</ul>
+<p><strong>Use cases:</strong> Because of these differences, ACID and BASE tend to be used in different scenarios. If an application absolutely requires trustable, <strong>correct data at all times</strong>, ACID is the go-to model. For example, banks and financial systems almost exclusively use ACID-compliant databases – you can’t risk any inconsistency when dealing with money. A classic relational database (SQL database) in a banking system will ensure each transaction (withdrawal, transfer, etc.) is ACID so that errors like double-spending or lost transactions never happen. On the other hand, if an application needs to be <strong>highly available, scalable, and can tolerate slight delays in consistency</strong>, BASE is often chosen. For instance, large e-commerce websites or social media platforms with millions of users might use BASE principles – the priority is that the site is up and responsive globally, even if, say, a profile update or a product inventory change isn’t visible everywhere instantly. In an online shopping scenario, it might be more important that the website never goes down during a sale than every server knowing the exact stock count that very second.</p>
+<h2>Real-World Examples of ACID and BASE Databases</h2>
+<p>To cement the idea, let’s look at some real database systems that follow each model:</p>
+<ul>
+<li><strong>ACID-compliant databases:</strong> Most traditional <strong>SQL relational databases</strong> adhere to ACID properties. Examples include <strong>MySQL</strong>, <strong>PostgreSQL</strong>, <strong>Oracle Database</strong>, <strong>SQLite</strong>, and <strong>Microsoft SQL Server</strong> – these systems are built to ensure strict transactional consistency. They are commonly used for applications like banking systems, e-commerce orders, or any scenario where data integrity is paramount. When you use a MySQL or PostgreSQL database, you can usually rely on transactions to be fully ACID (for instance, wrapping a series of SQL statements in a transaction that either commits all or rolls back all if something fails). This makes them reliable for critical data. Some newer relational databases and even a few NoSQL ones can also provide ACID transactions (for example, MongoDB in certain configurations), but as a rule of thumb, <strong>SQL = ACID</strong> is a safe assumption.</li>
+<li><strong>BASE-oriented databases:</strong> Many <strong>NoSQL and distributed databases</strong> use the BASE philosophy. Examples include <strong>Apache Cassandra</strong>, <strong>Amazon DynamoDB</strong>, <strong>Couchbase</strong>, <strong>MongoDB</strong>, and <strong>Redis</strong>, among others. These databases are designed to run across clusters of machines, handle large volumes of data, and remain available under various conditions. They often give up ACID’s immediate consistency – for instance, Cassandra and DynamoDB provide eventual consistency (though some offer tunable consistency levels). These systems are typically used in big data, real-time web applications, content delivery networks, social networks, and other scenarios where scaling out and handling partitions are more important than instant consistency. For example, Cassandra is used by companies like Netflix and Facebook for its ability to store massive amounts of data across data centers while still being fast and available. DynamoDB (a NoSQL service by AWS) is used in many high-traffic websites where the data model can tolerate eventual consistency.</li>
+</ul>
+<h2>Conclusion – Choosing ACID or BASE</h2>
+<p>Both ACID and BASE have their strengths and weaknesses, and neither is “better” in all cases – it truly depends on your application’s needs. <strong>ACID</strong> guarantees a high level of data integrity and reliability (no half-finished transactions, no dirty reads, no lost updates), which is essential for scenarios like finance, healthcare, inventory management, or any system that can’t afford even minor inconsistencies. If your application demands <em>strict accuracy and safety</em> – for example, a banking app or an online order system – an ACID-compliant database (such as MySQL or PostgreSQL) is likely the right choice. The trade-off is that you might sacrifice some performance or flexibility in scaling, but you gain peace of mind that your data is always correct.</p>
+<p>On the other hand, <strong>BASE</strong> is often the right choice for distributed systems and applications where <em>availability and scaling are paramount</em>, and where the business can tolerate slight delays in data consistency. If you’re building the next social media platform, a global online game, or a large content service, you might choose a BASE-oriented database (like Cassandra or DynamoDB) to ensure the system stays responsive and can handle partitions or server failures gracefully. You accept that users might not see the latest update instantly in exchange for the system being highly scalable and fault-tolerant.</p>
+<p>In short, <strong>choose ACID</strong> when you need <em>guaranteed consistency and integrity</em> (and your data is structured in a way that fits a traditional database). <strong>Choose BASE</strong> when you need <em>scalability and availability</em> above all, and your use case can handle being “eventually” consistent. Many modern systems even blend the two approaches – for example, by using an ACID database for critical transactions and a BASE/NoSQL database for analytics or caching, finding a balance between consistency and performance. Understanding the differences between ACID and BASE helps you make an informed decision and design your data architecture with the right expectations. For a beginner, just remember: <strong>ACID = strong, immediate consistency (think banks)</strong>, <strong>BASE = flexibility and availability with eventual consistency (think big web apps)</strong>. By evaluating the needs of your project (do you need absolute accuracy, or can you afford some delay?), you can confidently choose the model that will keep your data safe <em>and</em> your users happy.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">ReadThrough vs WriteThrough Cache</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Read-through and write-through caching are two caching strategies used to manage how data is synchronized between a cache and a primary storage system. They play crucial roles in system performance optimization, especially in applications where data access speed is critical.</p>
+<h2>Read-Through Cache</h2></div><div><ul>
+<li>
+<p><strong>Definition</strong>: In a read-through cache, data is loaded into the cache on demand, typically when a read request occurs for data that is not already in the cache.</p>
+</li>
+<li>
+<p><strong>Process</strong>:</p>
+<ul>
+<li>When a read request is made, the cache first checks if the data is available (cache hit).</li>
+<li>If the data is not in the cache (cache miss), the cache system reads the data from the primary storage, stores it in the cache, and then returns the data to the client.</li>
+<li>Subsequent read requests for the same data will be served directly from the cache until the data expires or is evicted.</li>
+</ul>
+</li>
+<li>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li><strong>Transparency</strong>: The application only needs to interact with the cache, simplifying data access logic.</li>
+<li><strong>Reduced Latency on Hits</strong>: Frequently accessed data is served quickly from the cache.</li>
+<li><strong>Reduces Load on Primary Storage</strong>: Frequent read operations are offloaded from the primary storage.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li><strong>Cache Miss Penalty</strong>: The first request for data not in the cache incurs latency due to fetching from the data store.</li>
+</ul>
+</li>
+</ul>
+<h3>Read-Through Cache Example: Online Product Catalog</h3>
+<ul>
+<li><strong>Scenario</strong>: Imagine an e-commerce website with an extensive online product catalog.</li>
+<li><strong>Read-Through Process</strong>:
+<ul>
+<li><strong>Cache Miss</strong>: When a customer searches for a product that is not currently in the cache, the system experiences a cache miss.</li>
+<li><strong>Fetching and Caching</strong>: The system then fetches the product details from the primary database (like a SQL database) and stores this information in the cache.</li>
+<li><strong>Subsequent Requests</strong>: The next time any customer searches for the same product, the system delivers the product information directly from the cache, significantly faster than querying the primary database.</li>
+</ul>
+</li>
+<li><strong>Benefits in this Scenario</strong>:
+<ul>
+<li><strong>Reduced Database Load</strong>: Frequent queries for popular products are served from the cache, reducing the load on the primary database.</li>
+<li><strong>Improved Read Performance</strong>: After initial caching, product information retrieval is much faster.</li>
+</ul>
+</li>
+</ul>
+<h2>Write-Through Cache</h2></div><div><ul>
+<li>
+<p><strong>Definition</strong>: In a write-through cache, data is written simultaneously to the cache and the primary storage system. This approach ensures that the cache always contains the most recent data.</p>
+</li>
+<li>
+<p><strong>Process</strong>:</p>
+<ul>
+<li>When a write request is made, the data is first written to the cache.</li>
+<li>Simultaneously, the same data is written to the primary storage.</li>
+<li>Read requests can then be served from the cache, which contains the up-to-date data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li><strong>Data Consistency</strong>: Provides strong consistency between the cache and the primary storage.</li>
+<li><strong>No Data Loss on Crash</strong>: Since data is written to the primary storage, there’s no risk of data loss if the cache fails.</li>
+<li><strong>Simplified Writes</strong>: The application only interacts with the cache for write operations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li><strong>Latency on Write Operations</strong>: Each write operation incurs latency as it requires simultaneous writing to both the cache and the primary storage.</li>
+<li><strong>Higher Load on Primary Storage</strong>: Every write request impacts the primary storage.</li>
+</ul>
+</li>
+</ul>
+<h3>Write-Through Cache Example: Banking System Transaction</h3>
+<ul>
+<li><strong>Scenario</strong>: Consider a banking system processing financial transactions.</li>
+<li><strong>Write-Through Process</strong>:
+<ul>
+<li><strong>Transaction Execution</strong>: When a user makes a transaction, such as a deposit, the transaction details are written to the cache.</li>
+<li><strong>Simultaneous Database Write</strong>: Simultaneously, the transaction is also recorded in the primary database.</li>
+<li><strong>Consistent Data</strong>: This ensures that the cached data is always up-to-date with the database. If the user immediately checks their balance, the updated balance is already in the cache for fast retrieval.</li>
+</ul>
+</li>
+<li><strong>Benefits in this Scenario</strong>:
+<ul>
+<li><strong>Data Integrity</strong>: Crucial in banking, as it ensures that the cache and the primary database are always synchronized, reducing the risk of discrepancies.</li>
+<li><strong>Reliability</strong>: In the event of a cache system failure, the data is safe in the primary database.</li>
+</ul>
+</li>
+</ul>
+<h2>Key Differences</h2>
+<ul>
+<li>In the <strong>Read-Through Cache</strong> (Product Catalog), the emphasis is on efficiently loading and serving read-heavy data after the initial request, which is ideal for data that is read frequently but updated less often.</li>
+<li>In the <strong>Write-Through Cache</strong> (Banking System), the focus is on maintaining high data integrity and consistency between the cache and the database, which is essential for transactional data where every write is critical.</li>
+<li><strong>Data Synchronization Point</strong>: Read-through caching synchronizes data at the point of reading, while write-through caching synchronizes data at the point of writing.</li>
+<li><strong>Performance Impact</strong>: Read-through caching improves read performance after the initial load, whereas write-through caching ensures write reliability but may have slower write performance.</li>
+<li><strong>Use Case Alignment</strong>: Read-through is ideal for read-heavy workloads with infrequent data updates, whereas write-through is suitable for environments where data integrity and consistency are crucial, especially for write operations.</li>
+</ul>
+<h2><strong>When to Use Each Strategy</strong></h2>
+<ul>
+<li>
+<p><strong>Read-Through</strong>:</p>
+<ul>
+<li>Ideal when read operations are frequent, and data changes infrequently.</li>
+<li>Useful when you can tolerate eventual consistency for reads.</li>
+</ul>
+</li>
+<li>
+<p><strong>Write-Through</strong>:</p>
+<ul>
+<li>Suitable when data consistency is critical, and you cannot afford stale data.</li>
+<li>Necessary when the system requires immediate propagation of updates.</li>
+</ul>
+</li>
+</ul>
+<h2><strong>Summary Table</strong></h2>
+<div><table><thead><tr><th>Aspect</th><th>Read-Through</th><th>Write-Through</th></tr></thead><tbody><tr><td><strong>Focus</strong></td><td>Read operations</td><td>Write operations</td></tr><tr><td><strong>Data Retrieval</strong></td><td>Cache fetches from data store on misses</td><td>N/A</td></tr><tr><td><strong>Data Update</strong></td><td>N/A</td><td>Cache writes to data store synchronously</td></tr><tr><td><strong>Consistency</strong></td><td>May have stale data</td><td>Strong consistency</td></tr><tr><td><strong>Performance</strong></td><td>Fast reads on hits, slower on misses</td><td>Slower writes due to synchronous update</td></tr><tr><td><strong>Use Case</strong></td><td>Read-heavy applications</td><td>Applications requiring data integrity</td></tr></tbody></table></div>
+<h2>Conclusion</h2>
+<p>Read-through caching is optimal for scenarios where read performance is crucial and the data can be loaded into the cache on the first read request. Write-through caching is suited for applications where data integrity and consistency on write operations are paramount. Both strategies enhance performance but in different aspects of data handling – read-through for read efficiency, and write-through for reliable writes.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Batch Processing vs Stream Processing</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Batch processing and stream processing are two methods used for processing large volumes of data, each suited for different scenarios and data processing needs.</p></div><div><h2>Batch Processing</h2>
+<ul>
+<li><strong>Definition</strong>: Batch processing refers to processing data in large, discrete blocks (batches) at scheduled intervals or after accumulating a certain amount of data.</li>
+<li><strong>Characteristics</strong>:
+<ul>
+<li><strong>Delayed Processing</strong>: Data is collected over a period and processed all at once.</li>
+<li><strong>High Throughput</strong>: Efficient for processing large volumes of data where immediate action is not necessary.</li>
+</ul>
+</li>
+<li><strong>Example</strong>: Payroll processing in a company. Salary calculations are done at the end of each pay period (e.g., monthly). All employee data over the month is processed in one large batch to calculate salaries, taxes, and other deductions.</li>
+<li><strong>Pros</strong>:
+<ul>
+<li><strong>Resource Efficient</strong>: Can be more resource-efficient as the system can optimize for large data volumes.</li>
+<li><strong>Simplicity</strong>: Often simpler to implement and maintain than stream processing systems.</li>
+</ul>
+</li>
+<li><strong>Cons</strong>:
+<ul>
+<li><strong>Delay in Insights</strong>: Not suitable for scenarios requiring real-time data processing and action.</li>
+<li><strong>Inflexibility</strong>: Less flexible in handling real-time data or immediate changes.</li>
+</ul>
+</li>
+</ul>
+<h2>Stream Processing</h2>
+<ul>
+<li><strong>Definition</strong>: Stream processing involves continuously processing data in real-time as it arrives.</li>
+<li><strong>Characteristics</strong>:
+<ul>
+<li><strong>Immediate Processing</strong>: Data is processed immediately as it is generated or received.</li>
+<li><strong>Suitable for Real-Time Applications</strong>: Ideal for applications that require instantaneous data processing and decision-making.</li>
+</ul>
+</li>
+<li><strong>Example</strong>: Fraud detection in credit card transactions. Each transaction is immediately analyzed in real-time for suspicious patterns. If a transaction is flagged as fraudulent, the system can trigger an alert and take action immediately.</li>
+<li><strong>Pros</strong>:
+<ul>
+<li><strong>Real-Time Analysis</strong>: Enables immediate insights and actions.</li>
+<li><strong>Dynamic Data Handling</strong>: More adaptable to changing data and conditions.</li>
+</ul>
+</li>
+<li><strong>Cons</strong>:
+<ul>
+<li><strong>Complexity</strong>: Generally more complex to implement and manage than batch processing.</li>
+<li><strong>Resource Intensive</strong>: Can require significant resources to process data as it streams.</li>
+</ul>
+</li>
+</ul>
+<h2>Key Differences</h2>
+<ul>
+<li><strong>Data Handling</strong>: Batch processing handles data in large chunks after accumulating it over time, while stream processing handles data continuously and in real-time.</li>
+<li><strong>Timeliness</strong>: Batch processing is suited for scenarios where there&#x27;s no immediate need for data processing, whereas stream processing is used when immediate action is required based on the incoming data.</li>
+<li><strong>Complexity and Resources</strong>: Stream processing is generally more complex and resource-intensive, catering to real-time data, compared to the more straightforward and scheduled nature of batch processing.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>The choice between batch and stream processing depends on specific application requirements. Batch processing is suitable for large-scale data processing tasks that don&#x27;t require immediate action, like financial reporting. Stream processing is essential for real-time applications, like monitoring systems or real-time analytics, where immediate data processing and quick decision-making are crucial.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_03_system_design_concepts___tradeoffs') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_03_system_design_concepts___tradeoffs', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

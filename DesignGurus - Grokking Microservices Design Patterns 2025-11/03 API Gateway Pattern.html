@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Gateway Pattern - Grokking Microservices Design Patterns</title>
+    <meta property="og:title" content="API Gateway Pattern - Microservices Design Patterns Guide">
+    <meta property="og:description" content="Interactive Microservices Design Patterns Study Guide featuring Dark Mode, Live Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">API Gateway Pattern</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (7)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to the api gateway pattern"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to the API Gateway Pattern</a></li>
+<li class="sidebar-item" data-num="02" data-title="advantages of api gateway pattern"><a href="#chapter-02"><span class="chapter-num">02</span> Advantages of API Gateway Pattern</a></li>
+<li class="sidebar-item" data-num="03" data-title="api gateway pattern an example"><a href="#chapter-03"><span class="chapter-num">03</span> API Gateway Pattern An Example</a></li>
+<li class="sidebar-item" data-num="04" data-title="performance implications"><a href="#chapter-04"><span class="chapter-num">04</span> Performance Implications</a></li>
+<li class="sidebar-item" data-num="05" data-title="system design example"><a href="#chapter-05"><span class="chapter-num">05</span> System Design Example</a></li>
+<li class="sidebar-item" data-num="06" data-title="distributed idempotency &amp; deduplication engine"><a href="#chapter-06"><span class="chapter-num">06</span> Distributed Idempotency &amp; Deduplication Engine</a></li>
+<li class="sidebar-item" data-num="07" data-title="distributed rate limiting &amp; throttling algorithms"><a href="#chapter-07"><span class="chapter-num">07</span> Distributed Rate Limiting &amp; Throttling Algorithms</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to the API Gateway Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Imagine for a moment you’re ordering a burger at a fast-food restaurant. You go to the counter, place your order, pay for it, and then wait for your burger. Here, the counter where you place your order is like an API Gateway in microservices. It’s the single point where you, as a customer, interact with the restaurant&#x27;s services (kitchen, billing, etc.).</p>
+<p><strong>What is API Gateway Pattern?</strong>
+In microservice architecture, you have lots of different services doing their own thing. The API Gateway Pattern is about having a single entry point for external consumers to access these various services. This makes it easier to manage, secures your services, and provides a unified interface for the external world.</p>
+<h2>Why API Gateway Pattern?</h2>
+<p>In the world of software architecture, one trend that has become increasingly dominant over the past few years is the shift from monolithic structures to microservices architecture. This change, much like the shift from landlines to smartphones in telecommunications, has brought forth an array of benefits - enhanced scalability, increased flexibility, and more. However, as with any technological advancement, it also presents its own unique set of challenges.</p>
+<p>One of the biggest challenges of microservices is: How can we ensure effective and efficient communication between these large number of services? How do we manage the growing complexity that comes with the increasing number of interactions between services? This is where the API Gateway Pattern steps in. Let&#x27;s understand this with an example.</p>
+<p><strong>Example:</strong></p>
+<p>Think about Netflix. When you open Netflix on your TV or phone, it needs to get data like movie lists, user preferences, subtitles, etc. Netflix has a ton of microservices for these different pieces of data. Instead of your TV app calling each microservice separately, it calls a Netflix API Gateway, which then talks to the necessary microservices. Simpler for your TV app, right?</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>API Gateway</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h3>API Gateway Pattern: The Master Orchestrator</h3>
+<p>The API Gateway Pattern operates much like the conductor of an orchestra. It oversees and directs the entire ensemble of services, ensuring that each plays its part at the right time to produce a harmonious output. It serves as the single entry point for all client requests and routes these requests to the appropriate microservices. It then gathers the responses from the concerned microservices and delivers a unified response back to the client.</p>
+<p>The beauty of this pattern lies in its ability to mask the underlying complexity from the clients. As a client, you wouldn&#x27;t need to know how many services are involved or how they communicate with each other. All you need to do is make a request, and the API Gateway takes care of the rest. Isn&#x27;t that marvelously efficient and convenient?</p>
+<p><strong>Advantages of API Gateway</strong></p>
+<ul>
+<li><strong>Simplified Client</strong>: Clients interact with one gateway instead of multiple services.</li>
+<li><strong>Security</strong>: You can add authentication and authorization at the gateway level.</li>
+<li><strong>Performance</strong>: You can add caching, compress responses, and manage load balancing.</li>
+<li><strong>Cross-Cutting Concerns</strong>: Handle logging, analytics, and other stuff at one place.</li>
+</ul></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Advantages of API Gateway Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Imagine a city with lots of different services and places to visit. If you are a tourist and you have to interact with each service individually, it can get confusing and overwhelming very quickly. But, if there is a single information center that guides you and helps you interact with all these services, your life becomes a whole lot easier. That’s what the API Gateway does in the world of microservices.</p>
+<p>The API Gateway Pattern really is a powerhouse when it comes to organizing and simplifying interactions in a microservices architecture. Here are a few problems that it helps to solve:</p>
+<h3><strong>1. Complexity of Interactions</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: In a microservices architecture, there are many services talking to each other. If each service communicates with all the others directly, it can get very complex, very fast.</li>
+<li><strong>API Gateway Solution</strong>: The API Gateway simplifies this by being the central point of communication. Services talk to the Gateway, and the Gateway talks to other services.</li>
+</ul>
+<h3><strong>2. Inconsistency in Service Calls</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: Different services might require different ways of interaction, have different data formats, etc.</li>
+<li><strong>API Gateway Solution</strong>: It provides a consistent way to interact with all the services. The Gateway can translate calls and data formats, making life easier for the client.</li>
+</ul>
+<h3><strong>3. Security and Authentication</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: Handling security for each service individually can be a nightmare. You need to make sure each service is secure, and that’s a lot of work.</li>
+<li><strong>API Gateway Solution</strong>: It can handle authentication and authorization centrally. Clients authenticate with the Gateway, and then the Gateway ensures that the clients are who they say they are.</li>
+</ul></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>API Gateway</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h3><strong>4. Load Balancing</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: Some services might get more traffic than others, and you need to manage this traffic efficiently.</li>
+<li><strong>API Gateway Solution</strong>: It can distribute the incoming traffic evenly across services, ensuring no single service is overwhelmed.</li>
+</ul>
+<h3><strong>5. Performance Issues</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: Services might be spread out, and network calls between services can add delays.</li>
+<li><strong>API Gateway Solution</strong>: It can cache responses from services, reducing the need for repeated calls and improving performance.</li>
+</ul>
+<h3><strong>6. Cross-Cutting Concerns</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: Concerns like logging, monitoring, and analytics need to be implemented in every service.</li>
+<li><strong>API Gateway Solution</strong>: It can handle these concerns centrally, reducing the need to implement them in every single service.</li>
+</ul>
+<h3><strong>7. Managing Legacy Systems</strong>:</h3>
+<ul>
+<li><strong>Problem</strong>: You might have old services that need to be accessed in specific ways.</li>
+<li><strong>API Gateway Solution</strong>: It can interact with legacy services, providing a modern interface to them.</li>
+</ul>
+<h3><strong>8. Version Management:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Different clients might need to interact with different versions of a service.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can route requests to the appropriate version of a service based on the client’s needs.</li>
+</ul>
+<h3><strong>9. Aggregation of Results:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: A client might need information that is spread across multiple services. Getting this info could require multiple network calls, which can be inefficient.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can aggregate results from multiple services and send a consolidated response back to the client.</li>
+</ul>
+<h3><strong>10. Service Orchestration:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Some operations might require a series of service calls to be made in a particular order.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can orchestrate these calls and ensure they are made in the correct order, handling any necessary transformations along the way.</li>
+</ul>
+<h3><strong>11. Handling Partial Failures:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: In a distributed system, some services might fail while others are still functioning. Handling these partial failures gracefully is challenging.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can detect these failures and reroute requests or provide fallback responses to ensure the system remains robust.</li>
+</ul>
+<h3><strong>12. Request Transformation:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Different services might require requests to be formatted in different ways.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can transform incoming requests into the format expected by each service.</li>
+</ul>
+<h3><strong>13. Client-Specific Adaptations:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Different clients (mobile, web, etc.) might have different requirements.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can adapt responses to suit the needs of different clients.</li>
+</ul>
+<h3><strong>14. Centralized Logging and Monitoring:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Collecting logs and monitoring data from all services in a distributed system can be challenging.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can collect logs and monitoring data, providing a centralized point for observability.</li>
+</ul>
+<h3><strong>15. Handling Asynchronous Operations:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Some operations might take a long time to complete and shouldn’t block the client.</li>
+<li><strong>API Gateway Solution</strong>: The Gateway can handle these asynchronous operations, providing clients with a way to check on progress or receive a callback when the operation is complete.</li>
+</ul>
+<p>By addressing these issues, the API Gateway Pattern helps create a smoother, more reliable interaction layer for clients to communicate with a microservices architecture. It’s like having a super-efficient helper that takes care of all the nitty-gritty details, letting you enjoy a seamless experience.</p></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">API Gateway Pattern An Example</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Let&#x27;s go through a Java code example to demonstrate how the API Gateway pattern comes to life.</p>
+<h2>Setting Up the Scenario</h2>
+<p>Picture a library system where various clients – library users, staff, and management – interact with different microservices like the Catalogue Service, User Service, and Inventory Service. We&#x27;ll implement the API Gateway pattern in this scenario to handle and route client requests efficiently.</p>
+<h2>Defining the Services</h2>
+<p>Let&#x27;s first define our microsrvices, each service corresponds to a distinct area of the library&#x27;s functionality. For instance, the <code>CatalogueService</code> handles requests related to book searches, the <code>UserService</code> manages user profiles, and the <code>InventoryService</code> keeps track of book stock levels.</p>
+<p>In our Java implementation, each of these services could be represented by an interface with methods corresponding to potential client requests. For example, the <code>CatalogueService</code> might have methods like <code>searchByTitle(String title)</code> and <code>searchByAuthor(String author)</code>.</p>
+<h2>Creating the API Gateway</h2>
+<p>Next, we&#x27;ll create our API Gateway. This will be a separate Java class that acts as a single point of contact for all client requests. Think of it as a receptionist at the library, fielding questions from visitors and directing them to the right place.</p>
+<p>Our <code>ApiGateway</code> class will have methods corresponding to each client request, similar to the services. However, rather than handling these requests directly, these methods will delegate the work to the appropriate service.</p>
+<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>ApiGateway</span><span> </span><span>{</span><span>
+</span><span>    </span><span>private</span><span> </span><span>UserService</span><span> userService</span><span>;</span><span>
+</span><span>    </span><span>private</span><span> </span><span>CatalogueService</span><span> catalogueService</span><span>;</span><span>
+</span><span>    </span><span>private</span><span> </span><span>InventoryService</span><span> inventoryService</span><span>;</span><span>
+</span>    
+<span>    </span><span>public</span><span> </span><span>ApiGateway</span><span>(</span><span>UserService</span><span> userService</span><span>,</span><span> </span><span>CatalogueService</span><span> catalogueService</span><span>,</span><span> </span><span>InventoryService</span><span> inventoryService</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>this</span><span>.</span><span>userService</span><span> </span><span>=</span><span> userService</span><span>;</span><span>
+</span><span>        </span><span>this</span><span>.</span><span>catalogueService</span><span> </span><span>=</span><span> catalogueService</span><span>;</span><span>
+</span><span>        </span><span>this</span><span>.</span><span>inventoryService</span><span> </span><span>=</span><span> inventoryService</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span>    
+<span>    </span><span>public</span><span> </span><span>User</span><span> </span><span>getUserDetails</span><span>(</span><span>String</span><span> userId</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>return</span><span> userService</span><span>.</span><span>getUserDetails</span><span>(</span><span>userId</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span>    
+<span>    </span><span>public</span><span> </span><span>Book</span><span> </span><span>searchByTitle</span><span>(</span><span>String</span><span> title</span><span>)</span><span> </span><span>{</span><span>
+</span><span>        </span><span>return</span><span> catalogueService</span><span>.</span><span>searchByTitle</span><span>(</span><span>title</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span>    
+<span>    </span><span>// ...additional methods as needed...</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>In this snippet, the <code>ApiGateway</code> class receives a request for user details and passes it along to the <code>UserService</code>. The same process applies to a book title search, which is routed to the <code>CatalogueService</code>.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Performance Implications</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Every rose has its thorn, and the API Gateway Pattern is no different. While it solves many problems, it also introduces some challenges. Let’s take a closer look.</p>
+<h2>Problems Associated with API Gateway Pattern</h2>
+<h3>1. <strong>Single Point of Failure:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: If the API Gateway goes down, nothing can communicate.</li>
+<li><strong>Solution</strong>: Implement high availability and redundancy for the API Gateway. Monitor it diligently.</li>
+</ul>
+<h3>2. <strong>Potential Bottleneck:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: All requests go through the Gateway, which could cause delays.</li>
+<li><strong>Solution</strong>: Ensure the Gateway is highly performant, scale it horizontally, and optimize the code.</li>
+</ul>
+<h3>3. <strong>Complexity in Gateway:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: The Gateway could become too complex as it handles routes, security, transformations, etc.</li>
+<li><strong>Solution</strong>: Keep the Gateway’s responsibilities clear. Consider splitting it into multiple Gateways if necessary (per client type, per functionality, etc.).</li>
+</ul>
+<h3>4. <strong>Maintenance Overhead:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: As services evolve, maintaining the Gateway&#x27;s routes and rules can become challenging.</li>
+<li><strong>Solution</strong>: Automate as much as possible. Use patterns like Continuous Integration/Continuous Deployment (CI/CD) to ease the maintenance.</li>
+</ul>
+<h3>5. <strong>Security Risk:</strong></h3>
+<ul>
+<li><strong>Problem</strong>: Being the entry point, it’s a prime target for attacks.</li>
+<li><strong>Solution</strong>: Implement robust security practices, keep the Gateway updated, and monitor for any vulnerabilities.</li>
+</ul>
+<h2>Performance Implications and Solutions</h2>
+<h3>1. <strong>Latency:</strong></h3>
+<ul>
+<li><strong>Implication</strong>: The Gateway introduces an additional network hop.</li>
+<li><strong>Solution</strong>: Optimize the Gateway’s performance. Use techniques like caching and response compression.</li>
+</ul>
+<h3>2. <strong>Resource Utilization:</strong></h3>
+<ul>
+<li><strong>Implication</strong>: The Gateway might consume significant resources, affecting performance.</li>
+<li><strong>Solution</strong>: Ensure the Gateway has adequate resources. Monitor resource utilization and scale as necessary.</li>
+</ul>
+<h3>3. <strong>Content Aggregation Overhead:</strong></h3>
+<ul>
+<li><strong>Implication</strong>: Aggregating responses from multiple services at the Gateway can be resource-intensive.</li>
+<li><strong>Solution</strong>: Optimize aggregation logic. Use asynchronous operations where possible to prevent blocking.</li>
+</ul>
+<h3>4. <strong>Rate Limiting Challenges:</strong></h3>
+<ul>
+<li><strong>Implication</strong>: Implementing rate limiting at the Gateway might be complex, especially in distributed deployments.</li>
+<li><strong>Solution</strong>: Use advanced rate limiting algorithms, like token bucket or leaky bucket, that can handle distributed scenarios.</li>
+</ul>
+<h3>5. <strong>Load Balancing Overhead:</strong></h3>
+<ul>
+<li><strong>Implication</strong>: The Gateway needs to efficiently distribute incoming requests to prevent hotspots.</li>
+<li><strong>Solution</strong>: Implement smart load balancing algorithms. Consider using a service mesh for more granular load balancing.</li>
+</ul>
+<h3>6. <strong>Handling Asynchronous Operations:</strong></h3>
+<ul>
+<li><strong>Implication</strong>: Managing asynchronous operations at the Gateway can be complex and might affect performance.</li>
+<li><strong>Solution</strong>: Optimize the handling of asynchronous operations. Provide clear mechanisms for clients to check operation status or receive callbacks.</li>
+</ul>
+<p>In essence, while the API Gateway Pattern introduces some challenges and performance implications, with careful design, monitoring, and optimization, you can mitigate these issues and ensure a smooth, efficient system.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">System Design Example</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Let&#x27;s understand how a complex application like Instagram can utilize the API Gateway pattern.</p>
+<p>Instagram is a fantastic example to explain the API Gateway Pattern because it&#x27;s a complex application with millions of users and a myriad of features. Imagine Instagram as a bustling city with various services like user management, photo processing, notifications, etc. The API Gateway is like the main entrance to this city, directing traffic and making sure everything runs smoothly.</p>
+<h2><strong>Instagram System Design with API Gateway Pattern:</strong></h2>
+<h3><strong>1. API Gateway:</strong></h3>
+<ul>
+<li>This is the central point through which all client requests (from mobile apps, web browsers, etc.) pass.</li>
+<li>Responsibilities:
+<ul>
+<li><strong>Routing</strong>: Directing user requests to the appropriate microservice.</li>
+<li><strong>Aggregation</strong>: Combining data from multiple services to send a consolidated response to the client.</li>
+<li><strong>Authentication &amp; Authorization</strong>: Ensuring that users are who they say they are and that they have permission to access requested resources.</li>
+<li><strong>Rate Limiting</strong>: Preventing abuse by limiting how many requests a user can make in a certain timeframe.</li>
+<li><strong>Load Balancing</strong>: Distributing incoming requests across multiple instances of a service to ensure no single instance is overwhelmed.</li>
+<li><strong>Logging and Monitoring</strong>: Keeping track of what’s happening in the system for troubleshooting and performance monitoring.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>2. Microservices in Instagram:</strong></h3>
+<ul>
+<li><strong>User Management Service</strong>: Handles user profiles, relationships (followers/following), and account settings.</li>
+<li><strong>Photo Upload and Processing Service</strong>: Manages the uploading of photos, applies filters, and resizes images for different devices.</li>
+<li><strong>Feed Service</strong>: Generates and serves the user’s feed, showing photos from people they follow.</li>
+<li><strong>Notification Service</strong>: Sends notifications for new followers, likes, comments, etc.</li>
+<li><strong>Search Service</strong>: Handles queries for user profiles, hashtags, and locations.</li>
+<li><strong>Comment Service</strong>: Manages comments on photos.</li>
+</ul>
+<h2><strong>How the API Gateway Pattern is Applied:</strong></h2>
+<h3><strong>Scenario: Uploading a Photo</strong></h3>
+<ul>
+<li><strong>Step 1</strong>: The user uploads a photo via the Instagram app.</li>
+<li><strong>Step 2</strong>: The request hits the API Gateway.</li>
+<li><strong>Step 3</strong>: The API Gateway authenticates the user and checks if they are authorized to upload photos.</li>
+<li><strong>Step 4</strong>: Once authenticated, the API Gateway routes the request to the Photo Upload and Processing Service.</li>
+<li><strong>Step 5</strong>: The Photo Service processes the image, and once done, sends a response back to the API Gateway.</li>
+<li><strong>Step 6</strong>: The API Gateway then sends a confirmation back to the user&#x27;s app.</li>
+</ul>
+<h3><strong>Scenario: Viewing the Feed</strong></h3>
+<ul>
+<li><strong>Step 1</strong>: The user opens their Instagram app to view their feed.</li>
+<li><strong>Step 2</strong>: The request hits the API Gateway.</li>
+<li><strong>Step 3</strong>: The API Gateway authenticates the user.</li>
+<li><strong>Step 4</strong>: The API Gateway then makes parallel requests to:
+<ul>
+<li><strong>Feed Service</strong>: To get the list of recent photos from people the user follows.</li>
+<li><strong>Notification Service</strong>: To fetch any new notifications.</li>
+</ul>
+</li>
+<li><strong>Step 5</strong>: The API Gateway aggregates the responses from these services.</li>
+<li><strong>Step 6</strong>: The API Gateway sends a consolidated response back to the user&#x27;s app, showing the feed and notifications.</li>
+</ul>
+<p>By using the API Gateway Pattern, Instagram ensures that there’s a consistent, efficient, and secure way to handle all the interactions required to deliver a seamless experience to its millions of users. It also makes it easier to manage and scale the system as it grows.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Distributed Idempotency &amp;amp;amp;amp;amp;amp; Deduplication Engine</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. What is Idempotency in Distributed Systems?</h2>
+            <p>An operation is <strong>idempotent</strong> if executing it multiple times produces the exact same side-effects and state changes as executing it a single time. In distributed networks where retries, timeouts, and at-least-once delivery occur continuously, idempotency is mandatory for payment processing, order placement, and booking systems.</p>
+
+            <h2>2. Architecture of an Idempotency Engine</h2>
+            <p>Clients generate a unique <strong>Idempotency Key</strong> (UUID v4) for every mutating request (HTTP POST/PUT) and pass it in the HTTP request headers (<code>X-Idempotency-Key</code>).</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>System Action</th>
+                        <th>Storage State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Request Arrival</strong></td>
+                        <td>API Gateway checks Redis key: <code>SET key request_hash NX EX 86400</code>.</td>
+                        <td>Status: <code>IN_PROGRESS</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Duplicate Detected</strong></td>
+                        <td>If key exists & status is <code>COMPLETED</code>, return cached response directly. If <code>IN_PROGRESS</code>, return <code>409 Conflict</code>.</td>
+                        <td>No duplicate DB execution.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Processing Complete</strong></td>
+                        <td>Save response payload in Redis/DB with status <code>COMPLETED</code>.</td>
+                        <td>Status: <code>COMPLETED</code></td>
+                    </tr>
+                </tbody>
+            </table>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Distributed Rate Limiting &amp;amp;amp;amp;amp;amp; Throttling Algorithms</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. Why Distributed Rate Limiting is Critical</h2>
+            <p>Rate limiting protects backend microservices from DDoS attacks, API abuse, resource starvation, and cascading failures. In distributed environments, rate limiting must be coordinated across multiple gateway instances.</p>
+
+            <h2>2. Comparison of Core Rate Limiting Algorithms</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>How It Works</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Token Bucket</strong></td>
+                        <td>Tokens added at fixed rate. Requests consume 1 token. Allows burst capability up to bucket capacity.</td>
+                        <td>Memory efficient, handles traffic bursts well.</td>
+                        <td>Concurrency locks required for multi-threaded counters.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Leaky Bucket</strong></td>
+                        <td>Requests enter FIFO queue; processed at constant smooth output rate.</td>
+                        <td>Guarantees steady flow rate.</td>
+                        <td>Bursts are queued, increasing request latency.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sliding Window Counter</strong></td>
+                        <td>Combines Fixed Window and previous window weight to compute exact current window rate.</td>
+                        <td>Extremely memory efficient, smooth window boundaries.</td>
+                        <td>Approximation for sub-millisecond edge cases.</td>
+                    </tr>
+                </tbody>
+            </table>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_03_api_gateway_pattern') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_03_api_gateway_pattern', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

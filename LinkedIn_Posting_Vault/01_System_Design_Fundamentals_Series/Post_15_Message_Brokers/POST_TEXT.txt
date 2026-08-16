@@ -1,0 +1,31 @@
+=== LINKEDIN POST #15: Message Brokers: Apache Kafka vs RabbitMQ vs AWS SQS ===
+Target Chapter: 15 Messaging Systems and Queues.html
+
+--- [COPY POST BODY BELOW] ---
+
+📨 Kafka vs RabbitMQ vs SQS: How to choose the right messaging backbone for your architecture:
+
+Picking the wrong message broker can cause unmanageable queue backlogs or lost messages.
+
+1️⃣ RabbitMQ (Smart Broker, Dumb Consumer):
+• Routing: Rich AMQP routing exchanges (Direct, Fanout, Topic, Headers).
+• Message Life: Deletes messages immediately upon consumer acknowledgment.
+• Best for: Complex transactional routing, background tasks (Celery), and low-latency priority queues.
+
+2️⃣ Apache Kafka (Dumb Broker, Smart Consumer):
+• Model: Distributed, partitioned, immutable append-only commit log.
+• Retention: Retains messages on disk for days/weeks. Consumers track their own read offsets.
+• Replayability: Allows replaying historical event streams from any timestamp!
+• Best for: High-throughput event streaming (1M+ events/sec), Change Data Capture (CDC), and real-time analytics.
+
+3️⃣ AWS SQS:
+• Model: Fully managed serverless queue.
+• Best for: Cloud-native async task decoupling with zero infrastructure maintenance.
+
+💬 What is your primary queue technology: Kafka, RabbitMQ, SQS, or Redis Streams?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#ApacheKafka #RabbitMQ #MessagingQueues #EventDriven #SystemDesign #Backend
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

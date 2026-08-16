@@ -1,0 +1,29 @@
+=== LINKEDIN POST #17: Monolith vs Microservices vs Serverless: The Evolutionary Roadmap ===
+Target Chapter: 17 System Architecture Patterns.html
+
+--- [COPY POST BODY BELOW] ---
+
+🏛️ Monolith vs Microservices vs Serverless: When to evolve your architecture:
+
+Premature microservices adoption is the #1 killer of startup velocity. Here is the realistic evolutionary roadmap:
+
+1️⃣ The Majestic Modular Monolith (Phase 1):
+• Single deployable unit with strictly enforced domain boundaries (folders/modules).
+• Single ACID database. Zero distributed transaction overhead.
+• Best for: Startups, new products, small engineering teams (< 20 engineers).
+
+2️⃣ Microservices (Phase 2):
+• Decouples domain services with private databases when team size exceeds 50+ engineers to prevent merge conflicts and deployment gridlocks.
+• Requires investment in: Service Mesh, Distributed Tracing (OpenTelemetry), CI/CD pipelines, and Kafka event buses.
+
+3️⃣ Serverless & Edge Compute (Phase 3):
+• Event-driven ephemeral execution (AWS Lambda, Cloudflare Workers).
+• Best for: Spiky unpredictable traffic, image processing, webhook handlers, and edge personalization.
+
+💬 Is your team working on a Monolith or Microservices architecture?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Architecture #Microservices #Monolith #Serverless #DevOps #SoftwareEngineering
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging Systems &amp; Queues - System Design Guide</title>
+    <meta property="og:title" content="Messaging Systems &amp; Queues - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Messaging Systems &amp; Queues</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (7)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to kafka"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Kafka</a></li>
+<li class="sidebar-item" data-num="02" data-title="messaging patterns"><a href="#chapter-02"><span class="chapter-num">02</span> Messaging patterns</a></li>
+<li class="sidebar-item" data-num="03" data-title="popular messaging queue systems"><a href="#chapter-03"><span class="chapter-num">03</span> Popular Messaging Queue Systems</a></li>
+<li class="sidebar-item" data-num="04" data-title="rabbitmq vs kafka vs activemq"><a href="#chapter-04"><span class="chapter-num">04</span> RabbitMQ vs Kafka vs ActiveMQ</a></li>
+<li class="sidebar-item" data-num="05" data-title="scalability and performance (2)"><a href="#chapter-05"><span class="chapter-num">05</span> Scalability and Performance (2)</a></li>
+<li class="sidebar-item" data-num="06" data-title="what is a distributed file system"><a href="#chapter-06"><span class="chapter-num">06</span> What is a Distributed File System</a></li>
+<li class="sidebar-item" data-num="07" data-title="architecture of a distributed file system"><a href="#chapter-07"><span class="chapter-num">07</span> Architecture of a Distributed File System</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to Kafka</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>What is Kafka?</h2>
+<p>Apache Kafka is an open-source <strong>publish-subscribe</strong>-based messaging system. It is <strong>distributed</strong>, <strong>durable</strong>, <strong>fault-tolerant</strong>, and <strong>highly scalable</strong> by design. Fundamentally, it is a system that takes streams of messages from applications known as producers, stores them reliably on a central cluster (containing a set of brokers), and allows those messages to be received by applications (known as consumers) that process the messages.</p></div><div><h2>Background</h2>
+<p>Kafka was created at LinkedIn around 2010 to track various events, such as page views, messages from the messaging system, and logs from various services. Later, it was made open-source and developed into a comprehensive system which is used for:</p>
+<ol>
+<li>Reliably storing a huge amount of data.</li>
+<li>Enabling high throughput of message transfer between different entities.</li>
+<li>Streaming real-time data.</li>
+</ol>
+<p>At a high level, we can call Kafka a distributed <strong>Commit Log</strong>. A Commit Log (<em>also known as a Write-Ahead log or a Transactions log</em>) is an <strong>append-only</strong> data structure that can persistently store a sequence of records. Records are always appended to the end of the log, and once added, records cannot be deleted or modified. Reading from a commit log always happens from left to right (<em>or old to new</em>).</p></div><div><p>Kafka stores all of its messages on disk. Since all reads and writes happen in sequence, Kafka takes advantage of sequential disk reads (<em>more on this later</em>).</p>
+<h2>Kafka use cases</h2>
+<p>Kafka can be used for collecting big data and real-time analysis. Here are some of its top use cases:</p>
+<ol>
+<li><strong>Metrics</strong>: Kafka can be used to collect and aggregate monitoring data. Distributed services can push different operational metrics to Kafka servers. These metrics can then be pulled from Kafka to produce aggregated statistics.</li>
+<li><strong>Log Aggregation</strong>: Kafka can be used to collect logs from multiple sources and make them available in a standard format to multiple consumers.</li>
+<li><strong>Stream processing</strong>: Kafka is quite useful for use cases where the collected data undergoes processing at multiple stages. For example, the raw data consumed from a topic is transformed, enriched, or aggregated and pushed to a new topic for further consumption. This way of data processing is known as stream processing.</li>
+<li><strong>Commit Log</strong>: Kafka can be used as an external commit log for any distributed system. Distributed services can log their transactions to Kafka to keep track of what is happening. This transaction data can be used for replication between nodes and also becomes very useful for disaster recovery, for example, to help failed nodes to recover their states.</li>
+<li><strong>Website activity tracking</strong>: One of Kafka&#x27;s original use cases was to build a user activity tracking pipeline. User activities like page clicks, searches, etc., are published to Kafka into separate topics. These topics are available for subscription for a range of use cases, including real-time processing, real-time monitoring, or loading into <a href="https://hadoop.apache.org/" target="_blank">Hadoop</a> or data warehousing systems for offline processing and reporting.</li>
+<li><strong>Product suggestions</strong>: Imagine an online shopping site like amazon.com, which offers a feature of &#x27;similar products&#x27; to suggest lookalike products that a customer could be interested in buying. To make this work, we can track every consumer action, like search queries, product clicks, time spent on any product, etc., and record these activities in Kafka. Then, a consumer application can read these messages to find correlated products that can be shown to the customer in real-time. Alternatively, since all data is persistent in Kafka, a batch job can run overnight on the &#x27;similar product&#x27; information gathered by the system, generating an email for the customer with product suggestions.</li>
+</ol>
+<h2>Kafka common terms</h2>
+<p>Before digging deep into Kafka&#x27;s architecture, let&#x27;s first go through some of its common terms.</p>
+<h3>Brokers</h3>
+<p>A Kafka server is also called a broker. Brokers are responsible for reliably storing data provided by the producers and making it available to the consumers.</p>
+<h3>Records</h3>
+<p>A record is a message or an event that gets stored in Kafka. Essentially, it is the data that travels from producer to consumer through Kafka. A record contains a key, a value, a timestamp, and optional metadata headers.</p></div><div><h3>Topics</h3>
+<p>Kafka divides its messages into categories called Topics. In simple terms, a topic is like a table in a database, and the messages are the rows in that table.</p>
+<ul>
+<li>Each message that Kafka receives from a producer is associated with a topic.</li>
+<li>Consumers can subscribe to a topic to get notified when new messages are added to that topic.</li>
+<li>A topic can have multiple subscribers that read messages from it.</li>
+<li>In a Kafka cluster, a topic is identified by its name and must be unique.</li>
+</ul>
+<p>Messages in a topic can be read as often as needed — unlike traditional messaging systems, messages are not deleted after consumption. Instead, Kafka retains messages for a configurable amount of time or until a storage size is exceeded. Kafka&#x27;s performance is effectively constant with respect to data size, so storing data for a long time is perfectly fine.</p></div><div><h3>Producers</h3>
+<p>Producers are applications that publish (or write) records to Kafka.</p>
+<h3>Consumers</h3>
+<p>Consumers are the applications that subscribe to (read and process) data from Kafka topics. Consumers subscribe to one or more topics and consume published messages by pulling data from the brokers.</p>
+<p>In Kafka, producers and consumers are fully decoupled and agnostic of each other, which is a key design element to achieve the high scalability that Kafka is known for. For example, producers never need to wait for consumers.</p>
+<h2>High-level architecture</h2>
+<p>At a high level, applications (producers) send messages to a Kafka broker, and these messages are read by other applications called consumers. Messages get stored in a topic, and consumers subscribe to the topic to receive new messages.</p>
+<h3>Kafka cluster</h3>
+<p>Kafka is deployed as a cluster of one or more servers, where each server is responsible for running one Kafka broker.</p>
+<h3>ZooKeeper</h3>
+<p>ZooKeeper is a distributed key-value store and is used for coordination and storing configurations. It is highly optimized for reads. Kafka uses ZooKeeper to coordinate between Kafka brokers; ZooKeeper maintains metadata information about the Kafka cluster. We will be looking into this in detail later.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Messaging patterns</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Apache Kafka Partitioned Commit Log &amp; Consumer Group Offsets</div>
+    <div class="diagram-badge">Event Streaming Architecture</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradKafka" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Producers on Left -->
+  <g transform="translate(20, 60)">
+    <rect x="0" y="0" width="110" height="170" rx="8" fill="url(#gradKafka)" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="55" y="25" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">PRODUCERS</text>
+    
+    <rect x="15" y="45" width="80" height="30" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="55" y="65" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Web App</text>
+    
+    <rect x="15" y="90" width="80" height="30" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="55" y="110" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Order Svc</text>
+
+    <rect x="15" y="130" width="80" height="30" rx="4" fill="#0f172a" stroke="#475569"/>
+    <text x="55" y="150" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">IoT Stream</text>
+  </g>
+
+  <!-- Producer to Broker Arrow -->
+  <path d="M 135 145 L 205 145" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+
+  <!-- Kafka Cluster Topic -->
+  <g transform="translate(210, 20)">
+    <rect x="0" y="0" width="370" height="250" rx="10" fill="url(#gradKafka)" stroke="#f59e0b" stroke-width="2"/>
+    <text x="185" y="28" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">KAFKA TOPIC: "orders-placed" (LOG PARTITIONS)</text>
+
+    <!-- Partition 0 -->
+    <g transform="translate(20, 45)">
+      <text x="0" y="18" fill="#38bdf8" font-family="Fira Code, monospace" font-size="10" font-weight="700">Partition 0:</text>
+      <g transform="translate(90, 0)">
+        <rect x="0" y="0" width="35" height="26" fill="#1e1b4b" stroke="#38bdf8"/>
+        <text x="17" y="18" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#0</text>
+        <rect x="35" y="0" width="35" height="26" fill="#1e1b4b" stroke="#38bdf8"/>
+        <text x="52" y="18" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#1</text>
+        <rect x="70" y="0" width="35" height="26" fill="#1e1b4b" stroke="#38bdf8"/>
+        <text x="87" y="18" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#2</text>
+        <rect x="105" y="0" width="35" height="26" fill="#1e1b4b" stroke="#38bdf8"/>
+        <text x="122" y="18" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#3</text>
+        <rect x="140" y="0" width="35" height="26" fill="#312e81" stroke="#38bdf8" stroke-dasharray="2 2"/>
+        <text x="157" y="18" fill="#93c5fd" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#4</text>
+      </g>
+    </g>
+
+    <!-- Partition 1 -->
+    <g transform="translate(20, 100)">
+      <text x="0" y="18" fill="#10b981" font-family="Fira Code, monospace" font-size="10" font-weight="700">Partition 1:</text>
+      <g transform="translate(90, 0)">
+        <rect x="0" y="0" width="35" height="26" fill="#064e3b" stroke="#10b981"/>
+        <text x="17" y="18" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#0</text>
+        <rect x="35" y="0" width="35" height="26" fill="#064e3b" stroke="#10b981"/>
+        <text x="52" y="18" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#1</text>
+        <rect x="70" y="0" width="35" height="26" fill="#064e3b" stroke="#10b981"/>
+        <text x="87" y="18" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#2</text>
+        <rect x="105" y="0" width="35" height="26" fill="#064e3b" stroke="#10b981"/>
+        <text x="122" y="18" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#3</text>
+      </g>
+    </g>
+
+    <!-- Partition 2 -->
+    <g transform="translate(20, 155)">
+      <text x="0" y="18" fill="#c084fc" font-family="Fira Code, monospace" font-size="10" font-weight="700">Partition 2:</text>
+      <g transform="translate(90, 0)">
+        <rect x="0" y="0" width="35" height="26" fill="#4c1d95" stroke="#a855f7"/>
+        <text x="17" y="18" fill="#c084fc" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#0</text>
+        <rect x="35" y="0" width="35" height="26" fill="#4c1d95" stroke="#a855f7"/>
+        <text x="52" y="18" fill="#c084fc" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#1</text>
+        <rect x="70" y="0" width="35" height="26" fill="#4c1d95" stroke="#a855f7"/>
+        <text x="87" y="18" fill="#c084fc" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#2</text>
+        <rect x="105" y="0" width="35" height="26" fill="#4c1d95" stroke="#a855f7"/>
+        <text x="122" y="18" fill="#c084fc" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">#3</text>
+      </g>
+    </g>
+
+    <text x="185" y="225" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9.5" text-anchor="middle">Append-only sequential disk log | O(1) Reads by Offset</text>
+  </g>
+
+  <!-- Broker to Consumer Arrow -->
+  <path d="M 585 145 L 635 145" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+
+  <!-- Consumer Group on Right -->
+  <g transform="translate(640, 40)">
+    <rect x="0" y="0" width="180" height="210" rx="8" fill="url(#gradKafka)" stroke="#10b981" stroke-width="1.5"/>
+    <text x="90" y="25" fill="#10b981" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">CONSUMER GROUP</text>
+
+    <rect x="15" y="45" width="150" height="40" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="90" y="65" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Consumer A (P0)</text>
+    <text x="90" y="78" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Committed Offset: 3</text>
+
+    <rect x="15" y="98" width="150" height="40" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="90" y="118" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Consumer B (P1)</text>
+    <text x="90" y="131" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Committed Offset: 3</text>
+
+    <rect x="15" y="151" width="150" height="40" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="90" y="171" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Consumer C (P2)</text>
+    <text x="90" y="184" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Committed Offset: 2</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Kafka achieves massive horizontal throughput by partitioning topics into append-only sequential commit logs on disk, allowing independent consumer groups to track individual read offsets without mutating messages.
+  </div>
+</div>
+
+
+    <div><p>In distributed systems, <strong>messaging patterns</strong> define how components communicate via asynchronous messages. Understanding these patterns is crucial for designing scalable and reliable systems. Below, we cover five key messaging patterns, each with its core idea, characteristics, and practical examples.</p>
+<h2>1. Point-to-Point (Direct Messaging)</h2>
+<p>In a point-to-point pattern, each message is delivered to <strong>exactly one</strong> consumer. A producer sends messages into a queue (or similar channel), and one of the consumers reading from that queue will receive each message. This ensures no two consumers process the same message.</p>
+<ul>
+<li><strong>How it works:</strong> The message broker (e.g., RabbitMQ, Amazon SQS, JMS) routes each message to a single <strong>target queue</strong>. Consumers (possibly many) compete for messages from that queue, but each message is consumed by only one of them (often called <em>competing consumers</em> model).</li>
+<li><strong>Core characteristics:</strong> Ensures one-consumer-per-message, enabling <strong>load balancing</strong> across workers. The queue can buffer messages if consumers are busy, providing <strong>back-pressure</strong> and reliability. Order is usually FIFO (first-in-first-out) per queue, unless priority or other ordering is configured.</li>
+<li><strong>Use case:</strong> Useful for <strong>task distribution</strong> and work queues. For example, an image processing service might place jobs on a queue so that each job is picked up by one processing worker. This way, multiple workers can parallelize tasks without duplicating work.</li>
+<li><strong>Technologies:</strong> Implemented by nearly all message queue systems. RabbitMQ and ActiveMQ have <strong>queues</strong> for this pattern; Kafka achieves a similar one-consumer-per-message effect using a single <strong>consumer group</strong> (each message in a topic partition goes to one member of the group).</li>
+</ul>
+<h2>2. Publish-Subscribe (Pub/Sub)</h2>
+<p>The publish-subscribe pattern delivers each message to <strong>all interested subscribers</strong>. A publisher sends messages to a <em>topic</em> (or exchange), and <strong>multiple subscribers</strong> receive a copy of each message. Publishers and subscribers are decoupled — the publisher doesn’t know who receives the message.</p>
+<ul>
+<li><strong>How it works:</strong> The message broker (e.g., Kafka, RabbitMQ, Google Pub/Sub) broadcasts published messages to all queues or subscribers that have subscribed to the topic. In RabbitMQ, a <em>fanout</em> or <em>topic exchange</em> will forward messages to multiple queues (one per subscriber). In Kafka, each subscriber group that reads a topic gets its own copy of the message.</li>
+<li><strong>Core characteristics:</strong> <strong>One-to-many</strong> distribution. Every subscriber processes the message independently. This is great for <strong>event-driven architectures</strong> where an event (message) triggers different actions in different services. Publishers and consumers are loosely coupled – you can add new consumers without changing the publisher.</li>
+<li><strong>Use case:</strong> Useful when the same event needs to be acted on in different ways. For example, when a <strong>new user registers</strong> on a platform, a “User Registered” event might be published. Multiple subscribers can react: one service sends a welcome email, another logs the signup for analytics, and another updates a recommendation model. All get the event in parallel.</li>
+<li><strong>Technologies:</strong> Kafka is inherently a pub/sub system (topics with multiple consumer groups). RabbitMQ supports pub/sub via exchanges + queues (e.g., a <em>fanout exchange</em> sends to all bound queues). Cloud services like AWS SNS + SQS or Azure Service Bus Topics/Subscriptions are designed for pub/sub. Ensure subscribers are configured to handle the message flow (or else messages might be dropped if a subscriber isn’t listening and the broker doesn’t persist them).</li>
+</ul>
+<h2>3. Request-Reply (Request-Response)</h2>
+<p>The request-reply pattern is a <strong>two-part message exchange</strong>: a requester sends a message and expects a <strong>response message</strong> in return. It’s analogous to a function call or API request, but implemented asynchronously through messaging. This pattern allows a form of synchronous interaction on top of an asynchronous system.</p>
+<ul>
+<li><strong>How it works:</strong> The requester sends a <strong>request message</strong> (often into a point-to-point queue or directly to a specific service). Along with the request, it provides a <strong>return address</strong> (reply queue/topic) or a callback mechanism. The consuming service (replier) processes the request and sends back a <strong>reply message</strong> to the specified reply address. A <strong>correlation ID</strong> is usually included in both messages so the requester can match the reply to its original request.</li>
+<li><strong>Core characteristics:</strong> Enables <strong>two-way communication</strong> using messaging. Decouples the request and response in time — the requester can continue other work or handle other messages while waiting for the response. Requires correlation handling in application logic to match responses. Typically involves timeouts or retries in case a reply doesn’t arrive.</li>
+<li><strong>Use case:</strong> Useful when a service needs data or action from another service but you want to avoid tight coupling of direct calls. For example, a web service might enqueue a “generate report” request to a reporting microservice and continue. The reporting service eventually sends back a report ready message. The client receives the reply and then, say, notifies the user. In system design interviews, this pattern often comes up when designing <strong>async APIs</strong> or <strong>RPC over messaging</strong>.</li>
+<li><strong>Technologies:</strong> No single broker primitive does full request-reply automatically; it’s usually implemented at the application level. RabbitMQ supports a reply-to pattern (temporary reply queues) and correlation IDs via message headers. JMS messaging has request/reply helpers. With Kafka, one could use a dedicated reply topic partition and include a correlation key. Tools like <strong>RPC frameworks (gRPC)</strong> are direct request-response (not message-based), but in messaging systems you implement this pattern explicitly.</li>
+</ul>
+<h2>4. Fan-Out/Fan-In (Scatter-Gather)</h2>
+<p>Fan-Out/Fan-In (also known as <strong>Scatter-Gather</strong>) is a composite pattern where a message is <strong>scattered</strong> to multiple recipients in parallel (fan-out), and then the results are <strong>gathered</strong> back (fan-in). Essentially, one request triggers <strong>multiple parallel processes</strong> and an aggregator collects all the responses or outcomes.</p>
+<ul>
+<li><strong>How it works (Fan-Out):</strong> A component (dispatcher) takes an incoming message or request and duplicates or distributes it to multiple consumers or services. This could be done by publishing to a topic that multiple services subscribe to, or by sending individual point-to-point messages to several target queues. Each target processes the message independently.</li>
+<li><strong>How it works (Fan-In):</strong> Another component (aggregator) waits for responses from all the scattered requests (or a certain number of them, or a timeout). Once the responses arrive, the aggregator combines the results or otherwise processes them to form a single output. The aggregated result might be sent back to the original requester or trigger the next step.</li>
+<li><strong>Core characteristics:</strong> Achieves <strong>parallelism</strong> for potentially faster overall processing time when multiple independent tasks can run concurrently. Requires handling of partial failures or slow responders (e.g., using timeouts or default values if some responses don’t come). The aggregator needs logic to correlate multiple responses to the original request (similar to correlation ID, but tracking multiple sub-responses).</li>
+<li><strong>Use case:</strong> Common in scenarios like <strong>search</strong> or <strong>aggregation services</strong>. For example, a search query in a distributed search system can be fanned-out to multiple shard servers; each shard returns results which are then merged (fan-in) before returning the final combined result to the user. Another example is an analytics job that splits work into sub-tasks (map-reduce style) across many workers and then collects the results.</li>
+<li><strong>Technologies:</strong> This pattern is implemented at the architecture level. Message brokers help with the fan-out (e.g., using pub/sub topics to broadcast requests to multiple workers). The fan-in typically requires an aggregator service or function. Some frameworks (like Apache Camel or Azure Durable Functions) provide built-in support for scatter-gather, handling the collection of responses. When using raw messaging, you’d implement a coordinating service that sends out messages and listens for replies on a dedicated channel for aggregation.</li>
+</ul>
+<h2>5. Dead Letter Queue (DLQ)</h2>
+<p>A Dead Letter Queue is a <strong>safety net</strong> for messages that <strong>cannot be processed</strong> successfully. When a message continually fails processing (due to errors, format issues, or exceeding retry limits), it is moved to a special queue called the Dead Letter Queue instead of being lost or blocking the main queue. This pattern ensures problematic messages are isolated for later inspection or remediation.</p>
+<ul>
+<li><strong>How it works:</strong> Most message systems allow configuring a DLQ for each queue or topic. If a message is rejected by a consumer, or if it exceeds a maximum number of processing attempts, the broker reroutes it to the DLQ. The DLQ is essentially a holding area for <strong>“poison messages”</strong> (messages that consistently cause failures). They remain there until they are manually reviewed or automatically processed by some error-handling service.</li>
+<li><strong>Core characteristics:</strong> Improves system <strong>resilience and reliability</strong> by not discarding failed messages immediately. Prevents blocked queues – one bad message won’t jam the processing pipeline since it gets shunted to the DLQ. Typically accompanied by monitoring/alerts, because the presence of messages in a DLQ indicates issues that need attention. It’s a <strong>passive pattern</strong> (only used on failure) but critical for robust messaging setups.</li>
+<li><strong>Use case:</strong> Any critical system with asynchronous processing should use DLQs as a best practice. For instance, in an order processing system, if an order message has corrupt data and the order service throws exceptions every time it tries that message, after a few retries the message goes to the Dead Letter Queue. This allows the system to continue with other orders, and later the faulty message can be examined or fixed without data loss.</li>
+<li><strong>Technologies:</strong> Nearly all enterprise messaging systems support DLQs. In RabbitMQ, you set a <em>Dead Letter Exchange</em> on a queue to route failed messages to a dead-letter queue. Kafka doesn’t have a built-in DLQ mechanism at the broker level, but patterns using separate “error topics” are used (for example, consumers or Kafka Streams can send bad records to a designated dead-letter topic). AWS SQS and Azure Service Bus both natively support DLQs with configurable retry thresholds. The key is configuring the threshold for moving to DLQ (e.g., after 5 failed attempts) and ensuring someone or something processes or monitors the DLQ.</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Popular Messaging Queue Systems</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>In this section, we will discuss some popular messaging queue systems and provide a brief overview of their key features and use cases. The following messaging queue systems have gained popularity due to their robustness, scalability, and performance:</p>
+<h2>a. RabbitMQ</h2>
+<p>RabbitMQ is an open-source message broker that provides support for various messaging patterns, including publish-subscribe, request-reply, and point-to-point communication. Key features of RabbitMQ include:</p>
+<ul>
+<li>Flexibility: RabbitMQ supports various messaging patterns and protocols.</li>
+<li>Clustering and high availability: RabbitMQ can be deployed in clustered configurations for fault tolerance and load balancing.</li>
+<li>Extensibility: RabbitMQ provides a plugin system to extend its functionality, such as adding support for additional protocols.</li>
+<li>Monitoring and management: RabbitMQ includes built-in tools for monitoring and managing the message broker.</li>
+</ul>
+<h2>b. Apache Kafka</h2>
+<p>Apache Kafka is a distributed streaming platform designed for high-throughput, fault-tolerant, and scalable messaging. Kafka is widely used for stream processing, log aggregation, and event-driven architectures. Key features of Apache Kafka include:</p>
+<ul>
+<li>Distributed architecture: Kafka scales horizontally, allowing it to handle high-throughput and provide fault tolerance.</li>
+<li>Durability: Kafka stores messages persistently on disk, ensuring data durability and allowing for message replay.</li>
+<li>Low latency: Kafka is designed for real-time processing and provides low-latency messaging.</li>
+<li>Stream processing: Kafka includes a stream processing API for building real-time data processing applications.</li>
+</ul>
+<h2>c. Amazon Simple Queue Service (SQS)</h2>
+<p>Amazon SQS is a fully managed message queuing service provided by Amazon Web Services (AWS). It enables decoupling of components in a distributed system, ensuring reliable and scalable communication. Key features of Amazon SQS include:</p>
+<ul>
+<li>Scalability: SQS automatically scales with the number of messages and the number of consumers.</li>
+<li>Reliability: SQS guarantees at-least-once message delivery and provides visibility timeouts for message processing.</li>
+<li>Security: SQS integrates with AWS Identity and Access Management (IAM) to control access to queues and messages.</li>
+<li>Cost-effective: SQS operates on a pay-as-you-go pricing model, making it cost-effective for various workloads.</li>
+</ul>
+<h2>d. Apache ActiveMQ</h2>
+<p>Apache ActiveMQ is an open-source, multi-protocol message broker that supports a variety of messaging patterns. Key features of Apache ActiveMQ include:</p>
+<ul>
+<li>High availability: ActiveMQ provides support for primary-replica replication and network of brokers for increased availability and load balancing.</li>
+<li>Message persistence: ActiveMQ supports various persistence options, such as file-based, in-memory, and JDBC-based storage.</li>
+<li>Integration: ActiveMQ can be easily integrated with various platforms, such as Java EE and Spring.</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">RabbitMQ vs Kafka vs ActiveMQ</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Here are the top differences between RabbitMQ, Kafka, and ActiveMQ:</p>
+<ol>
+<li>
+<p><strong>Performance and Scalability:</strong> Kafka is designed for high throughput and horizontal scalability, making it well-suited for handling large volumes of data. RabbitMQ and ActiveMQ both offer high performance, but Kafka generally outperforms them in terms of throughput, particularly in scenarios with high data volume.</p>
+</li>
+<li>
+<p><strong>Message Ordering:</strong> RabbitMQ and ActiveMQ guarantee message ordering within a single queue or topic, respectively. Kafka ensures message ordering within a partition but not across partitions within a topic.</p>
+</li>
+<li>
+<p><strong>Message Priority:</strong> RabbitMQ and ActiveMQ support message prioritization, allowing messages with higher priority to be processed before those with lower priority. Kafka does not have built-in message priority support.</p>
+</li>
+<li>
+<p><strong>Message Model:</strong> RabbitMQ uses a queue-based message model following the Advanced Message Queuing Protocol (AMQP), while Kafka utilizes a distributed log-based model. ActiveMQ is built on the Java Message Service (JMS) standard and also uses a queue-based message model.</p>
+</li>
+<li>
+<p><strong>Durability:</strong> All three message brokers support durable messaging, ensuring that messages are not lost in case of failures. However, the mechanisms for achieving durability differ among the three, with RabbitMQ and ActiveMQ offering configurable durability options and Kafka providing built-in durability through log replication.</p>
+</li>
+<li>
+<p><strong>Message Routing:</strong> RabbitMQ provides advanced message routing capabilities through exchanges and bindings, while ActiveMQ uses selectors and topics for more advanced routing. Kafka&#x27;s message routing is relatively basic and relies on topic-based partitioning.</p>
+</li>
+<li>
+<p><strong>Replication:</strong> RabbitMQ supports replication through Mirrored Queues, while Kafka features built-in partition replication. ActiveMQ uses a Master-Slave replication mechanism.</p>
+</li>
+<li>
+<p><strong>Stream Processing:</strong> Kafka provides native stream processing capabilities through Kafka Streams, similarly
+RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libraries for stream processing.</p>
+</li>
+<li>
+<p><strong>Latency:</strong> RabbitMQ is designed for low-latency messaging, making it suitable for use cases requiring near-real-time processing.</p>
+</li>
+<li>
+<p><strong>License:</strong> RabbitMQ is licensed under the Mozilla Public License, while both Kafka and ActiveMQ are licensed under the Apache 2.0 License.</p>
+</li>
+</ol></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Scalability and Performance (2)</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Scalability and performance are critical aspects of designing messaging systems in distributed environments. Ensuring that a messaging system can handle a growing number of messages and maintain an acceptable level of performance is crucial for its success. In this section, we will explore different concepts related to scalability and performance for messaging systems, along with examples to illustrate their practical application.</p>
+<h2>a. Partitioning</h2>
+<p>Partitioning is the process of dividing a data set into smaller, manageable pieces called partitions. This approach is used in messaging systems to distribute messages evenly among multiple nodes, ensuring that the system can scale horizontally. For example, Apache Kafka uses partitions to divide a topic&#x27;s messages across multiple brokers, allowing the system to handle large amounts of data and maintain high throughput.</p>
+<h2>b. Consumer Groups</h2>
+<p>Consumer groups are a way to manage multiple consumers of a messaging system that work together to process messages from one or more topics. Each consumer group ensures that all messages in the topic are processed, and each message is processed by only one consumer within the group. This approach allows for parallel processing and load balancing among consumers. For example, in Apache Kafka, a consumer group can have multiple consumers that subscribe to the same topic, allowing the system to process messages in parallel and distribute the workload evenly.</p>
+<h2>c. Load Balancing and Parallel Processing</h2>
+<p>Load balancing refers to distributing incoming messages evenly among multiple consumers or processing units, while parallel processing involves processing multiple messages simultaneously. In messaging systems, load balancing and parallel processing are achieved through techniques like partitioning, sharding, and consumer groups. For instance, RabbitMQ uses a round-robin algorithm to distribute messages among available consumers, ensuring that the workload is balanced and messages are processed in parallel.</p>
+<h2>d. Message Batching and Compression</h2>
+<p>Message batching is the process of combining multiple messages into a single batch before processing or transmitting them. This approach can improve throughput and reduce the overhead of processing individual messages. Compression, on the other hand, reduces the size of the messages, leading to less network bandwidth usage and faster transmission. For example, Apache Kafka supports both batching and compression: Producers can batch messages together, and the system can compress these batches using various compression algorithms like Snappy or Gzip, reducing the amount of data transmitted and improving overall performance.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">What is a Distributed File System</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Distributed File Systems are a type of file system that manage the storage and retrieval of data across multiple servers and locations, making the distributed nature of the storage transparent to the user. These systems are designed to provide reliable, efficient access to files over a network, typically in a large-scale environment.</p>
+<h2>Key Characteristics</h2>
+<h3>Data Distribution</h3>
+<ul>
+<li>Files are stored across multiple physical servers, which may be spread across different geographic locations. This distribution enhances data availability and reliability.</li>
+</ul>
+<h3>Transparency</h3>
+<ul>
+<li>The complexity of the underlying distributed architecture is abstracted away from the user. Users interact with the system as if it were a local file system.</li>
+</ul>
+<h3>Scalability</h3>
+<ul>
+<li>They can handle large amounts of data and a large number of users or clients. The system can be scaled by adding more servers.</li>
+</ul>
+<h3>Fault Tolerance</h3>
+<ul>
+<li>Most distributed file systems are designed to handle failures gracefully. Data is often replicated across multiple nodes to ensure availability and durability.</li>
+</ul>
+<h3>Consistency</h3>
+<ul>
+<li>Ensures that file updates are propagated across the system, maintaining consistency. Some systems provide strong consistency while others offer eventual consistency.</li>
+</ul>
+<h2>Common Use Cases</h2>
+<ol>
+<li>
+<p><strong>Cloud Storage Services</strong>: Services like Google Drive, Dropbox, and others use distributed file systems to store user files across many servers.</p>
+</li>
+<li>
+<p><strong>Big Data Applications</strong>: Systems like Hadoop Distributed File System (HDFS) are specifically designed for storing and processing large datasets.</p>
+</li>
+<li>
+<p><strong>Content Delivery Networks</strong>: Distributing content across different regions to improve access speed and reliability.</p>
+</li>
+<li>
+<p><strong>High-Performance Computing</strong>: Where large datasets need to be accessed and processed concurrently by multiple systems.</p>
+</li>
+</ol>
+<h2>Examples of Distributed File Systems</h2>
+<ol>
+<li>
+<p><strong>Hadoop Distributed File System (HDFS)</strong>: Designed to store large data sets reliably and stream them at high bandwidth to user applications.</p>
+</li>
+<li>
+<p><strong>Google File System (GFS)</strong>: Optimized for Google&#x27;s own large-scale data processing needs.</p>
+</li>
+<li>
+<p><strong>Microsoft Distributed File System (DFS)</strong>: Used in Windows Server environments, allowing files distributed across multiple servers to appear as if they are in one place.</p>
+</li>
+<li>
+<p><strong>Amazon Elastic File System (EFS)</strong>: A cloud-based file storage service for use with Amazon EC2.</p>
+</li>
+<li>
+<p><strong>Ceph File System (CephFS)</strong>: A POSIX-compliant file system that uses the Ceph storage architecture to store data across a network.</p>
+</li>
+</ol>
+<h2>Challenges</h2>
+<ul>
+<li><strong>Data Synchronization</strong>: Keeping data synchronized across multiple nodes is challenging, especially under heavy load or in the event of network partitions.</li>
+<li><strong>Security</strong>: Ensuring data security across a distributed network can be complex.</li>
+<li><strong>Performance</strong>: Network latency can impact performance, especially when compared to local file systems.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Distributed File Systems are crucial for modern computing environments where large-scale data storage, high availability, and remote access are required. They provide an effective solution for managing data across multiple locations but come with challenges that need careful management, especially regarding synchronization, security, and performance.</p></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Architecture of a Distributed File System</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>The internal architecture of a distributed file system (DFS) is designed to manage data across a network of machines efficiently. While the specific architecture can vary depending on the particular DFS, there are common components and principles that many distributed file systems share.</p>
+<h2>Key Components of a Distributed File System</h2>
+<h3>1. Client Interface</h3>
+<ul>
+<li><strong>Function</strong>: Provides a way for clients (users or applications) to access and manipulate files as if they were on a local file system.</li>
+<li><strong>Implementation</strong>: Typically includes a set of APIs or command-line tools that interact with the DFS.</li>
+</ul>
+<h3>2. Metadata Servers</h3>
+<ul>
+<li><strong>Function</strong>: Manage metadata about files, such as location information, directory structures, permissions, and file attributes.</li>
+<li><strong>Characteristics</strong>: Often, metadata is separated from actual file data for efficiency. Metadata servers can be a single point of failure, so they are often replicated for reliability.</li>
+</ul>
+<h3>3. Data Nodes or Storage Nodes</h3>
+<ul>
+<li><strong>Function</strong>: Store the actual file data.</li>
+<li><strong>Characteristics</strong>: Data is often distributed across multiple nodes for redundancy and availability. These nodes handle read/write operations as instructed by the control plane (metadata servers).</li>
+</ul>
+<h3>4. Replication and Redundancy Mechanism</h3>
+<ul>
+<li><strong>Function</strong>: Ensures data availability and durability by replicating files across multiple nodes.</li>
+<li><strong>Characteristics</strong>: The system can automatically replicate data to handle node failures and ensure data integrity.</li>
+</ul>
+<h3>5. Load Balancer or Scheduler</h3>
+<ul>
+<li><strong>Function</strong>: Distributes workload evenly across different nodes and manages resource allocation.</li>
+<li><strong>Characteristics</strong>: Essential for optimizing performance and preventing any single node from becoming a bottleneck.</li>
+</ul>
+<h3>6. Network Infrastructure</h3>
+<ul>
+<li><strong>Function</strong>: Connects all components of the DFS and facilitates communication between them.</li>
+<li><strong>Characteristics</strong>: Reliability and speed of the network are crucial for the performance of a DFS.</li>
+</ul>
+<h3>7. Synchronization and Consistency Mechanisms</h3>
+<ul>
+<li><strong>Function</strong>: Ensures that all copies of a file are kept consistent across the system.</li>
+<li><strong>Characteristics</strong>: Different systems use various models of consistency (strong, eventual, etc.) and synchronization techniques.</li>
+</ul>
+<h3>8. Fault Tolerance and Recovery Mechanisms</h3>
+<ul>
+<li><strong>Function</strong>: Handles failures of nodes or network components without data loss or significant downtime.</li>
+<li><strong>Characteristics</strong>: Includes mechanisms for detecting failures, re-routing requests, and restoring data from backups or replicas.</li>
+</ul>
+<h3>9. Security Features</h3>
+<ul>
+<li><strong>Function</strong>: Protects data from unauthorized access and ensures secure communication across the network.</li>
+<li><strong>Characteristics</strong>: May include encryption, access control lists, authentication mechanisms, and secure protocols.</li>
+</ul>
+<h2>Example: Hadoop Distributed File System (HDFS)</h2>
+<p>To illustrate, let&#x27;s consider HDFS, a commonly used DFS:</p>
+<ul>
+<li><strong>Client Interface</strong>: HDFS provides interfaces for clients to interact with the file system.</li>
+<li><strong>NameNode</strong>: The central metadata server in HDFS, storing the file system tree and metadata for all files and directories.</li>
+<li><strong>DataNodes</strong>: Store actual data in HDFS. Each file is divided into blocks, and each block is stored on multiple DataNodes.</li>
+<li><strong>Replication</strong>: HDFS replicates each data block across multiple DataNodes to ensure fault tolerance.</li>
+<li><strong>YARN (Yet Another Resource Negotiator)</strong>: Responsible for managing resources in the Hadoop cluster and scheduling tasks.</li>
+</ul></div><div><h2>Conclusion</h2>
+<p>The architecture of a distributed file system is complex and involves multiple components working together to manage, store, and retrieve data efficiently across a network. This architecture allows DFS to provide high availability, scalability, and reliability, making it suitable for storing and processing large amounts of data in distributed computing environments.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_15_messaging_systems_and_queues') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_15_messaging_systems_and_queues', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

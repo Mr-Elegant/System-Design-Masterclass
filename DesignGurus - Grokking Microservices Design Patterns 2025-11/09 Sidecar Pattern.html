@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidecar Pattern - Grokking Microservices Design Patterns</title>
+    <meta property="og:title" content="Sidecar Pattern - Microservices Design Patterns Guide">
+    <meta property="og:description" content="Interactive Microservices Design Patterns Study Guide featuring Dark Mode, Live Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Sidecar Pattern</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (8)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to the sidecar pattern"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to the Sidecar Pattern</a></li>
+<li class="sidebar-item" data-num="02" data-title="the problem monolithic application management"><a href="#chapter-02"><span class="chapter-num">02</span> The Problem Monolithic Application Management</a></li>
+<li class="sidebar-item" data-num="03" data-title="a solution to the monolithic mayhem"><a href="#chapter-03"><span class="chapter-num">03</span> A Solution to the Monolithic Mayhem</a></li>
+<li class="sidebar-item" data-num="04" data-title="the architecture of the sidecar pattern"><a href="#chapter-04"><span class="chapter-num">04</span> The Architecture of the Sidecar Pattern</a></li>
+<li class="sidebar-item" data-num="05" data-title="sidecar pattern bringing theory to practice with an example"><a href="#chapter-05"><span class="chapter-num">05</span> Sidecar Pattern Bringing Theory to Practice with an Example</a></li>
+<li class="sidebar-item" data-num="06" data-title="performance implications"><a href="#chapter-06"><span class="chapter-num">06</span> Performance Implications</a></li>
+<li class="sidebar-item" data-num="07" data-title="system design examples bringing the sidecar pattern to life"><a href="#chapter-07"><span class="chapter-num">07</span> System Design Examples Bringing the Sidecar Pattern to Life</a></li>
+<li class="sidebar-item" data-num="08" data-title="service mesh architecture &amp; ambassador pattern"><a href="#chapter-08"><span class="chapter-num">08</span> Service Mesh Architecture &amp; Ambassador Pattern</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to the Sidecar Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The Sidecar Pattern is a popular design pattern, where a helper service is attached to a primary application service, providing supplementary features or handling cross-cutting concerns. This pattern takes its name from the concept of a motorcycle sidecar, where the sidecar is attached to and operates alongside the motorcycle.</p>
+<h2>The Sidekick Your Application Needs</h2>
+<p>The Sidecar Pattern, as the name suggests, is like having a sidekick, but for your service or application. It&#x27;s like Batman having Robin at his side, or Sherlock Holmes having Dr. Watson. Imagine having an aide that can handle specific tasks, operate autonomously, and yet be a part of a single, larger entity - wouldn&#x27;t that be a great asset? That&#x27;s essentially what the Sidecar Pattern brings to the table.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Sidecar</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>The Sidecar Pattern encapsulates the concept of modularity and separation of concerns. It involves deploying components of an application as separate processes that run alongside the main application. Each sidecar is dedicated to a specific function and provides its service to the main application. This allows developers to encapsulate the logic and complexities related to these functions in the sidecar, thus reducing the complexity of the main application.</p>
+<h2>Modularity, Scalability, and Versatility: The Strengths of the Sidecar Pattern</h2>
+<p>The beauty of the Sidecar Pattern lies in its simplicity and modularity. By keeping each function isolated in its own environment, it&#x27;s easier to develop, manage, and scale each component independently. This not only leads to cleaner and more maintainable code but also makes it possible to employ different technologies for different tasks, even within the same application.</p></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">The Problem Monolithic Application Management</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>One of the most significant challenges with monolithic applications is their lack of isolation. Since all components are closely intertwined, a failure in one component can potentially bring down the entire application. It&#x27;s like having all your eggs in one basket - if the basket falls, all the eggs break. This lack of fault isolation makes monolithic applications highly vulnerable and risky. It&#x27;s one of the reasons why developers started seeking alternatives.</p>
+<h2>Moving the Mountain: The Problem of Scalability</h2>
+<p>In today&#x27;s dynamic digital world, scalability is a must-have feature for any application. However, with monolithic applications, scaling is akin to moving a mountain. You cannot just scale a particular component or functionality; you need to scale the entire application, even if only one component needs it. This leads to unnecessary resource consumption and inefficient scaling, making it a significant roadblock in the path of application growth.</p>
+<h2>A Tangled Web: The Complexity Conundrum</h2>
+<p>As a monolithic application grows, so does its complexity. As more and more features get added, the codebase becomes a tangled web that&#x27;s increasingly difficult to understand, manage, or modify. This increased complexity makes maintenance a nightmare and significantly slows down the development process.</p>
+<h2>One Size Does Not Fit All: The Technology Constraint</h2>
+<p>With a monolithic application, you&#x27;re pretty much stuck with the technology stack you chose at the beginning. Want to integrate a new technology or switch to a more efficient one? Well, that&#x27;s going to be a mammoth task with a monolithic application. This lack of flexibility in choosing technologies is a significant constraint, especially considering the rapid pace at which technology evolves.</p>
+<p>So, it&#x27;s clear that while monolithic applications served us well in the past, they are not quite cut out for the demands of modern software development. We needed a hero, a solution that could take these challenges head-on and still come out on top. That&#x27;s where architectural patterns like the Sidecar Pattern step in.</p>
+<p>Just like a sidecar provides flexibility, isolation, and autonomy to the rider, the Sidecar Pattern promises to address the challenges posed by monolithic applications.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">A Solution to the Monolithic Mayhem</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The Sidecar Pattern proposes that each service in an application should be paired with a secondary component – a &#x27;sidecar&#x27; – that takes over some of the responsibilities of the main service. The sidecar and the main service run in the same process and communicate with each other directly, creating a self-contained module that&#x27;s easy to manage and scale.</p>
+<h2>Sidecar: The Flexible Warrior</h2>
+<p>Remember how we talked about the lack of flexibility being a major issue with monolithic applications. Well, the Sidecar Pattern tackles this head-on. By separating the main service from its secondary functions, the Sidecar Pattern makes it easier to update, modify, or replace individual components without affecting the others.</p>
+<p>Let&#x27;s say you want to update a specific functionality of your service. Instead of having to redeploy the entire application, you can simply update the relevant sidecar, leaving the rest of the application untouched.</p>
+<h2>Enhanced Scalability</h2>
+<p>Scalability was another mountain we needed to climb with monolithic applications. However, with the Sidecar Pattern, scaling becomes as easy as riding a motorcycle. Since each sidecar is a separate entity, you can scale each one independently, depending on the needs of your application.</p>
+<p>Do you need to handle a surge in user logins? Just scale up the authentication sidecar. Experiencing a high load on your data processing functions? Simply scale up the data processing sidecar. This independent scalability not only makes the process more efficient but also saves valuable resources.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Sidecar Pattern</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h2>The Isolation Idol</h2>
+<p>With monolithic applications, the lack of isolation was like putting all your eggs in one basket. However, the Sidecar Pattern changes the game by providing fault isolation. Since each sidecar is independent, a failure in one does not affect the others. It&#x27;s like having separate baskets for each of your eggs - if one basket falls, the rest are still safe!</p>
+<h2>The Complexity Conqueror</h2>
+<p>Remember the tangled web of complexity we faced with monolithic applications? Well, the Sidecar Pattern helps us cut through this web by reducing complexity. By breaking down the application into self-contained modules, each with its own sidecar, it makes the application easier to understand, manage, and maintain. It&#x27;s like clearing a path through the dense forest – you can finally see where you&#x27;re going!</p>
+<h2>The Tech-Savvy Trendsetter</h2>
+<p>One of the biggest constraints with monolithic applications was the inability to integrate new technologies. However, the Sidecar Pattern, with its independent and flexible structure, makes it possible to use different technologies for different sidecars. This allows you to always stay ahead of the curve and make the most of the latest technological advances.</p></div></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">The Architecture of the Sidecar Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><h2>The Containerized Confluence</h2>
+<p>One of the most distinctive features of the Sidecar Pattern&#x27;s architecture is its use of containers. The main application and its sidecar are deployed together in the same container, allowing them to share resources and communicate efficiently. This shared environment enables them to operate as a single unit while maintaining their individuality.</p>
+<h2>Sidecars Galore: A Multifaceted Approach</h2>
+<p>In the architecture of the Sidecar Pattern, you are not restricted to one sidecar per main application. In fact, you can have multiple sidecars, each addressing a specific functionality. This allows you to modularize your application, making it easier to manage and scale.</p>
+<p>Imagine a motorbike equipped with multiple sidecars - one for extra storage, one for an extra passenger, and one equipped with navigation aids. Each sidecar serves a distinct purpose, yet they all contribute to a smooth and efficient ride!</p>
+<h2>The Network Navigator</h2>
+<p>In the Sidecar Pattern architecture, the sidecar also plays an instrumental role in network communication. It intercepts all incoming and outgoing network traffic from the main application, effectively acting as a proxy. This means it can handle responsibilities such as load balancing, circuit breaking, and security, leaving the main application free to focus on delivering the primary service.</p>
+<h2>The Lifespan Link</h2>
+<p>The sidecar and the main application, while separate entities, share the same lifespan in the Sidecar Pattern architecture. This means they are created, deployed, and destroyed together. This synchronized lifespan ensures that the main application always has its sidecar at its side, ready to serve.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Sidecar Pattern Bringing Theory to Practice with an Example</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>In this section, we&#x27;ll bring the Sidecar Pattern to life, showing you just how it operates in a real-world scenario.</p>
+<h2>Creating the Main Application</h2>
+<p>First things first, we need an application. Let&#x27;s create a simple Java web application. This application will expose a RESTful API and will serve as our main application.</p>
+<p>Here is a simple Java web service using Spring Boot:</p>
+<pre><div><div><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>autoconfigure</span><span>.</span><span>SpringBootApplication</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>GetMapping</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>RestController</span><span>;</span><span>
+</span>
+<span>@</span><span>SpringBootApplication</span><span>
+</span><span>@</span><span>RestController</span><span>
+</span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>MainApplication</span><span> </span><span>{</span><span>
+</span>
+<span>  </span><span>public</span><span> </span><span>static</span><span> </span><span>void</span><span> </span><span>main</span><span>(</span><span>String</span><span>[</span><span>]</span><span> args</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    </span><span>SpringApplication</span><span>.</span><span>run</span><span>(</span><span>MainApplication</span><span>.</span><span>class</span><span>,</span><span> args</span><span>)</span><span>;</span><span>
+</span><span>  </span><span>}</span><span>
+</span>
+<span>  @</span><span>GetMapping</span><span>(</span><span>&quot;/api&quot;</span><span>)</span><span>
+</span><span>  </span><span>public</span><span> </span><span>String</span><span> </span><span>getData</span><span>(</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    </span><span>return</span><span> </span><span>&quot;Hello, Sidecar!&quot;</span><span>;</span><span>
+</span><span>  </span><span>}</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>This web service will return the string &quot;Hello, Sidecar!&quot; whenever we hit the &quot;/api&quot; endpoint.</p>
+<h2>Introducing the Sidecar</h2>
+<p>Now that we have our main application, it&#x27;s time to introduce the sidecar. In our case, let&#x27;s create a sidecar that will log every request to our &quot;/api&quot; endpoint. For simplicity, our sidecar will also be a Java application:</p>
+<pre><div><div><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>autoconfigure</span><span>.</span><span>SpringBootApplication</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>GetMapping</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>RestController</span><span>;</span><span>
+</span>
+<span>@</span><span>SpringBootApplication</span><span>
+</span><span>@</span><span>RestController</span><span>
+</span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>LoggingSidecar</span><span> </span><span>{</span><span>
+</span>
+<span>  </span><span>public</span><span> </span><span>static</span><span> </span><span>void</span><span> </span><span>main</span><span>(</span><span>String</span><span>[</span><span>]</span><span> args</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    </span><span>SpringApplication</span><span>.</span><span>run</span><span>(</span><span>LoggingSidecar</span><span>.</span><span>class</span><span>,</span><span> args</span><span>)</span><span>;</span><span>
+</span><span>  </span><span>}</span><span>
+</span>
+<span>  @</span><span>GetMapping</span><span>(</span><span>&quot;/log&quot;</span><span>)</span><span>
+</span><span>  </span><span>public</span><span> </span><span>String</span><span> </span><span>logRequest</span><span>(</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    </span><span>System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Request received at /api endpoint&quot;</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>return</span><span> </span><span>&quot;Logged!&quot;</span><span>;</span><span>
+</span><span>  </span><span>}</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>This sidecar will print a log message every time the &quot;/log&quot; endpoint is hit. We&#x27;ll use this endpoint to log requests to our main application&#x27;s &quot;/api&quot; endpoint.</p>
+<h2>Making the Sidecar and Main Application Work Together</h2>
+<p>Now, let&#x27;s make our main application and sidecar work together. We need to modify our main application to call the &quot;/log&quot; endpoint of the sidecar whenever the &quot;/api&quot; endpoint is hit.</p>
+<p>We&#x27;ll use <code>RestTemplate</code>, a Spring utility class for calling RESTful services:</p>
+<pre><div><div><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>autoconfigure</span><span>.</span><span>SpringBootApplication</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>http</span><span>.</span><span>ResponseEntity</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>GetMapping</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>RestController</span><span>;</span><span>
+</span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>client</span><span>.</span><span>RestTemplate</span><span>;</span><span>
+</span>
+<span>@</span><span>SpringBootApplication</span><span>
+</span><span>@</span><span>RestController</span><span>
+</span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>MainApplication</span><span> </span><span>{</span><span>
+</span>
+<span>  </span><span>private</span><span> </span><span>RestTemplate</span><span> restTemplate </span><span>=</span><span> </span><span>new</span><span> </span><span>RestTemplate</span><span>(</span><span>)</span><span>;</span><span>
+</span>
+<span>  </span><span>public</span><span> </span><span>static</span><span> </span><span>void</span><span> </span><span>main</span><span>(</span><span>String</span><span>[</span><span>]</span><span> args</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    </span><span>SpringApplication</span><span>.</span><span>run</span><span>(</span><span>MainApplication</span><span>.</span><span>class</span><span>,</span><span> args</span><span>)</span><span>;</span><span>
+</span><span>  </span><span>}</span><span>
+</span>
+<span>  @</span><span>GetMapping</span><span>(</span><span>&quot;/api&quot;</span><span>)</span><span>
+</span><span>  </span><span>public</span><span> </span><span>String</span><span> </span><span>getData</span><span>(</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    </span><span>ResponseEntity</span><span>&lt;</span><span>String</span><span>&gt;</span><span> response </span><span>=</span><span> restTemplate</span><span>.</span><span>getForEntity</span><span>(</span><span>&quot;http://localhost:8081/log&quot;</span><span>,</span><span> </span><span>String</span><span>.</span><span>class</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Response from sidecar: &quot;</span><span> </span><span>+</span><span> response</span><span>.</span><span>getBody</span><span>(</span><span>)</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>return</span><span> </span><span>&quot;Hello, Sidecar!&quot;</span><span>;</span><span>
+</span><span>  </span><span>}</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>Now, whenever the &quot;/api&quot; endpoint of our main application is hit, it will call the &quot;/log&quot; endpoint of our sidecar. The sidecar will log the request, and the main application will continue to process the request.</p>
+<h2>Keep in Mind: The Docker Factor</h2>
+<p>Remember, the sidecar and the main application need to be deployed within the same container to achieve the benefits of the Sidecar Pattern. While our Java example didn&#x27;t cover this aspect, in a production scenario, you&#x27;d use a container platform like Docker to deploy the main application and the sidecar in the same container.</p>
+<p>You&#x27;d also likely use Kubernetes as an orchestration tool to manage the deployment and scaling of your application and its sidecar. Kubernetes also has built-in support for sidecar containers, making it an ideal tool for implementing the Sidecar Pattern.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Performance Implications</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The Sidecar Pattern comes with unique performance implications and special considerations that you must be aware of when using this pattern. Understanding these details is key to leveraging the full potential of the Sidecar Pattern.</p>
+<h2>Understanding the Performance Implications</h2>
+<p>You might wonder, &quot;Does adding a sidecar to my application slow things down?&quot; A legitimate question, indeed. Let&#x27;s break it down.</p>
+<p>The Sidecar Pattern can have some impact on performance, but it&#x27;s a trade-off you need to consider. Remember, each sidecar is an additional process running alongside your main application. This means more CPU, more memory, and more network bandwidth.</p>
+<p>The sidecar&#x27;s resource usage may not be substantial in and of itself, but multiply that by the number of instances of your application, and it can add up quickly. Imagine, if you have hundreds or even thousands of instances of your application, each with its own sidecar, the cumulative resource usage can be significant.</p>
+<p>In terms of latency, having a sidecar can also introduce an additional network hop. This is because requests might need to go through the sidecar before reaching the main application or an external service. While the latency introduced is usually negligible, in high-performance, low-latency systems, this could potentially become an issue.</p>
+<p>However, remember that the slight performance impact often pales in comparison to the benefits. The sidecar enhances your application’s functionality and maintainability and improves the overall development and operational experience. You&#x27;ll need to balance these trade-offs.</p>
+<h2>Special Considerations: Tackling the Challenges Head-On</h2>
+<p>Now, let&#x27;s delve into some special considerations. To effectively leverage the Sidecar Pattern, there are specific aspects you need to pay attention to.</p>
+<p><strong>1. Sidecar and Main Application Versioning:</strong></p>
+<p>Versioning becomes more complex with sidecars. How so? You need to manage versions of both the main application and the sidecar. What if a new version of the sidecar is incompatible with an older version of the main application or vice versa? How do you roll out updates? These are questions that you need to think about when using the Sidecar Pattern.</p>
+<p><strong>2. Shared Resources:</strong></p>
+<p>Sidecars share resources with the main application, such as network and disk. It&#x27;s important to ensure that the sidecar doesn’t hog these resources, leaving nothing for the main application. You can manage this using resource limits and quotas at the container level.</p>
+<p><strong>3. Security:</strong></p>
+<p>Sidecars often need to have similar security permissions as the main application to perform their tasks. This increases the attack surface and is something you need to carefully consider when designing your sidecar.</p>
+<p><strong>4. Complexity:</strong></p>
+<p>Sidecars, while solving many problems, also add complexity. Developers and operators now need to understand and manage multiple parts instead of a single monolithic application.</p>
+<p>By now, you might be thinking, &quot;Is the Sidecar Pattern worth all these considerations?&quot; But remember, the Sidecar Pattern is not a one-size-fits-all solution. Like any architectural pattern, it has its strengths and weaknesses, and its effectiveness depends on your specific use case.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">System Design Examples Bringing the Sidecar Pattern to Life</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>You might be wondering, &quot;Where can I use this pattern?&quot; or &quot;How does it fit into my system&#x27;s design?&quot; Let&#x27;s explore this together through practical use cases and system design examples.</p>
+<h2>Use Cases: Where Does the Sidecar Pattern Shine?</h2>
+<p>The Sidecar Pattern is an incredible tool that can be used in a variety of scenarios. Here are some common use cases where the pattern truly shines:</p>
+<p><strong>1. Monitoring and Metrics Collection:</strong></p>
+<p>Imagine you&#x27;re running an application with multiple instances. You want to gather metrics from each instance, but embedding monitoring code in each application would make things complex. This is where a sidecar can come in handy. The sidecar can handle metrics collection, leaving your application code clean and focused on its core functionality.</p>
+<p><strong>2. Logging:</strong></p>
+<p>Logging is another area where the Sidecar Pattern can be incredibly useful. A sidecar can collect logs from the main application and forward them to a central logging system. This approach abstracts away the complexity of logging, making your application easier to manage.</p>
+<p><strong>3. Security and Authentication:</strong></p>
+<p>Security is paramount, right? Here, a sidecar can play an essential role. Instead of embedding security and authentication logic into your main application, you can delegate it to a sidecar. This simplifies your main application and makes security measures more consistent and easier to update.</p>
+<p><strong>4. Networking Features:</strong></p>
+<p>Networking is a complex beast. How about letting a sidecar take care of it? For example, a sidecar can handle service discovery, connection pooling, circuit-breaking, intelligent routing, and more. This allows your application to focus on its business logic without worrying about networking intricacies.</p>
+<p>Now that we&#x27;ve discussed some use cases, let&#x27;s take a look at some system design examples that illustrate the Sidecar Pattern in action.</p>
+<h2>System Design Examples: The Sidecar Pattern in Action</h2>
+<p>Here are some examples of how you might incorporate the Sidecar Pattern into your system design.</p>
+<p><strong>1. Microservices Architecture:</strong></p>
+<p>Microservices architecture is a perfect example of the Sidecar Pattern&#x27;s application. Each microservice, as a main application, can have a sidecar attached to it to provide ancillary services such as logging, monitoring, and service discovery.</p>
+<p>Let&#x27;s take a moment to visualize this. Imagine a fleet of ships, each ship representing a microservice. The sidecars are like little boats accompanying each ship, helping with navigation, communication, and maintenance, while the ships focus on their main task.</p>
+<p><strong>2. Kubernetes and Istio:</strong></p>
+<p>Another excellent example is Kubernetes, an open-source platform for managing containerized applications. In Kubernetes, the Sidecar Pattern is used extensively. One notable example is Istio, a service mesh for Kubernetes. Istio uses a sidecar proxy (Envoy) deployed alongside each service to handle all network communication, enforce policies, and collect telemetry data.</p>
+<p>Picture this as a busy highway system, where each car (service) has a dedicated assistant (Envoy sidecar) for navigation, communication, and safety, enabling the driver to concentrate on driving.</p>
+<p>In conclusion, the Sidecar Pattern is an incredibly powerful tool, but like all tools, it should be used wisely. As we&#x27;ve seen, it can greatly simplify your application and infrastructure management, but it also introduces new complexities. As always, it&#x27;s all about choosing the right tool for the job!</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">Service Mesh Architecture &amp;amp;amp;amp;amp;amp; Ambassador Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. Monolithic Sidecar vs. Service Mesh (Envoy & Istio)</h2>
+            <p>As microservice counts grow into hundreds or thousands of instances, managing cross-cutting network concerns (mTLS encryption, retries, rate limiting, distributed tracing, circuit breaking) inside application code becomes impossible.</p>
+            
+            <p>A <strong>Service Mesh</strong> decouples network communication entirely from application code by deploying a high-performance network proxy (e.g., Envoy) alongside every service instance as a <strong>Sidecar (Ambassador)</strong>.</p>
+
+            <h2>2. Control Plane vs. Data Plane</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plane</th>
+                        <th>Responsibilities</th>
+                        <th>Technologies</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Plane</strong></td>
+                        <td>High-speed proxying of network traffic, intercepting all inbound and outbound HTTP/gRPC requests, enforcing mTLS, executing retries.</td>
+                        <td>Envoy Proxy, Linkerd2-proxy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Control Plane</strong></td>
+                        <td>Translates high-level routing rules and security policies into configuration files and distributes them to Data Plane proxies.</td>
+                        <td>Istio (Pilot, Citadel), Consul, Kuma</td>
+                    </tr>
+                </tbody>
+            </table>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_09_sidecar_pattern') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_09_sidecar_pattern', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

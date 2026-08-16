@@ -1,0 +1,25 @@
+=== LINKEDIN SDI FLAGSHIP POST: Consistent Hashing with Virtual Nodes & Minimum Disruption ===
+Target Chapter: 02 Core Distributed System Building Blocks.html
+
+--- [COPY POST BODY BELOW] ---
+
+🔄 Why naive hash mod (hash(key) % N) breaks horizontal scaling in caching clusters:
+
+When a cache cluster has N servers, using `hash(key) % N` means that when 1 server crashes or is added, almost ALL keys (~100%) rehash to different servers, causing a catastrophic cache stampede on the primary database!
+
+💡 The Solution: Consistent Hashing on a $2^{128}$ Token Ring.
+
+1️⃣ Ring Topology: Both cache servers and data keys hash onto the same circular ring space [0, 2^128 - 1].
+2️⃣ Clockwise Routing: A key is assigned to the first server whose token is >= the key's hash.
+3️⃣ Minimum Disruption: When a server is added or removed, ONLY keys between adjacent nodes move (average K/N keys relocated instead of 100%).
+4️⃣ Virtual Nodes: Assigning 150-200 virtual tokens per physical server reduces load distribution variance below $\sigma \approx 1/\sqrt{V} \approx 7\%$.
+
+(Full Python & TypeScript consistent hashing ring implementation in the guide!)
+
+💬 Have you used Consistent Hashing in Redis Cluster, Cassandra, or Memcached?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#ConsistentHashing #Caching #DistributedSystems #Redis #SystemDesign #SoftwareArchitecture
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

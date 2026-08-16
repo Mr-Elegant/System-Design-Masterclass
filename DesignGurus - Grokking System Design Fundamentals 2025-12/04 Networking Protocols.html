@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Networking &amp; Protocols - System Design Guide</title>
+    <meta property="og:title" content="Networking &amp; Protocols - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Networking &amp; Protocols</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (4)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="http vs https"><a href="#chapter-01"><span class="chapter-num">01</span> HTTP vs HTTPS</a></li>
+<li class="sidebar-item" data-num="02" data-title="tcp vs udp"><a href="#chapter-02"><span class="chapter-num">02</span> TCP vs UDP</a></li>
+<li class="sidebar-item" data-num="03" data-title="http 10 vs 11 vs 20 vs 30"><a href="#chapter-03"><span class="chapter-num">03</span> HTTP 10 vs 11 vs 20 vs 30</a></li>
+<li class="sidebar-item" data-num="04" data-title="url vs uri vs urn"><a href="#chapter-04"><span class="chapter-num">04</span> URL vs URI vs URN</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">HTTP vs HTTPS</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>HTTP (Hypertext Transfer Protocol) and HTTPS (Hypertext Transfer Protocol Secure) are both protocols used for transmitting data over the internet, primarily used for loading webpages. While they are similar in many ways, the key difference lies in the security aspect provided by HTTPS. Let&#x27;s compare the two:</p>
+<h2>What is HTTP?</h2>
+<p><strong>HTTP</strong> stands for <strong>HyperText Transfer Protocol</strong>. It&#x27;s the foundational protocol used for transmitting data on the World Wide Web. When you enter a website address in your browser, HTTP is responsible for fetching and displaying that site.</p>
+<h3>Key Features of HTTP:</h3>
+<ul>
+<li><strong>Stateless Protocol:</strong> Each request from a client to a server is independent. The server doesn&#x27;t retain any session information between requests.</li>
+<li><strong>Text-Based:</strong> Data is transmitted in plain text, making it readable by both humans and machines.</li>
+<li><strong>Port 80:</strong> By default, HTTP uses port 80 for communication.</li>
+</ul>
+<h3>Practical Use Case:</h3>
+<p>Imagine you&#x27;re browsing a public blog without entering any personal information. HTTP suffices here because the data exchanged isn&#x27;t sensitive. The speed of HTTP can be advantageous in such scenarios where security isn&#x27;t a primary concern.</p>
+<h2>What is HTTPS?</h2>
+<p><strong>HTTPS</strong> stands for <strong>HyperText Transfer Protocol Secure</strong>. It&#x27;s an extension of HTTP with added security measures to protect data during transmission.</p>
+<h3>Key Features of HTTPS:</h3>
+<ul>
+<li><strong>Encryption:</strong> Uses protocols like SSL/TLS to encrypt data, ensuring that any intercepted information remains unreadable.</li>
+<li><strong>Authentication:</strong> Verifies that the website you&#x27;re connecting to is legitimate, preventing man-in-the-middle attacks.</li>
+<li><strong>Data Integrity:</strong> Ensures that data isn&#x27;t tampered with during transmission.</li>
+<li><strong>Port 443:</strong> HTTPS operates over port 443.</li>
+</ul>
+<h3>Practical Use Case:</h3>
+<p>When you&#x27;re shopping online, entering personal details, or accessing your bank account, HTTPS is essential. It safeguards your sensitive information from potential eavesdroppers and ensures that your data reaches the intended server securely.</p>
+<h2>Key Differences Between HTTP and HTTPS</h2>
+<div><table><thead><tr><th>Feature</th><th>HTTP</th><th>HTTPS</th></tr></thead><tbody><tr><td><strong>Security</strong></td><td>No encryption; data is sent in plain text</td><td>Encrypted using SSL/TLS protocols</td></tr><tr><td><strong>Port</strong></td><td>80</td><td>443</td></tr><tr><td><strong>Performance</strong></td><td>Slightly faster due to lack of encryption overhead</td><td>Slightly slower due to encryption processes</td></tr><tr><td><strong>SEO Ranking</strong></td><td>Lower search engine ranking</td><td>Higher search engine ranking</td></tr><tr><td><strong>Use Cases</strong></td><td>Non-sensitive data transmission</td><td>Sensitive transactions (e.g., banking, e-commerce)</td></tr></tbody></table></div>
+<h2>Why Does HTTPS Matter?</h2>
+<ol>
+<li><strong>Security:</strong> In an age where cyber threats are prevalent, HTTPS provides a necessary shield against data breaches and cyber-attacks.</li>
+<li><strong>Trust:</strong> Users are more likely to trust and engage with websites that display security indicators (like the padlock icon in browsers).</li>
+<li><strong>SEO Benefits:</strong> Search engines prioritize secure websites, meaning HTTPS can improve your site&#x27;s visibility and ranking.</li>
+<li><strong>Compliance:</strong> Many regulations require the protection of user data, making HTTPS a necessity for compliance.</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Understanding the difference between HTTP and HTTPS is fundamental for software engineers and web developers. While HTTP serves as the backbone of web communication, HTTPS adds a critical layer of security that protects both users and data. In today&#x27;s digital landscape, where security breaches can have significant repercussions, adopting HTTPS is not just recommended—it&#x27;s essential.</p>
+<h1>Quick Reference</h1>
+<ul>
+<li>
+<p><strong>HTTP:</strong></p>
+<ul>
+<li><strong>Full Form:</strong> HyperText Transfer Protocol</li>
+<li><strong>Port:</strong> 80</li>
+<li><strong>Security:</strong> None</li>
+<li><strong>Use Case:</strong> Public blogs, informational websites</li>
+</ul>
+</li>
+<li>
+<p><strong>HTTPS:</strong></p>
+<ul>
+<li><strong>Full Form:</strong> HyperText Transfer Protocol Secure</li>
+<li><strong>Port:</strong> 443</li>
+<li><strong>Security:</strong> Encrypted (SSL/TLS)</li>
+<li><strong>Use Case:</strong> E-commerce, banking, any site handling sensitive data</li>
+</ul>
+</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">TCP vs UDP</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">TCP 3-Way Handshake &amp; HTTP/2 Multiplexing Pipeline</div>
+    <div class="diagram-badge">Network Deep Dive</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradNet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: TCP 3-Way Handshake -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="380" height="240" rx="10" fill="url(#gradNet)" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="190" y="28" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">TCP 3-WAY HANDSHAKE (SYN ➔ SYN-ACK ➔ ACK)</text>
+
+    <!-- Client & Server Columns -->
+    <rect x="40" y="50" width="60" height="25" rx="4" fill="#334155"/>
+    <text x="70" y="67" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">CLIENT</text>
+    <line x1="70" y1="80" x2="70" y2="225" stroke="#475569" stroke-width="2" stroke-dasharray="3 3"/>
+
+    <rect x="280" y="50" width="60" height="25" rx="4" fill="#334155"/>
+    <text x="310" y="67" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">SERVER</text>
+    <line x1="310" y1="80" x2="310" y2="225" stroke="#475569" stroke-width="2" stroke-dasharray="3 3"/>
+
+    <!-- 1. SYN -->
+    <path d="M 70 100 L 310 130" fill="none" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <rect x="150" y="98" width="80" height="18" rx="3" fill="#0f172a" stroke="#38bdf8" stroke-width="0.8"/>
+    <text x="190" y="111" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">1. SYN (seq=x)</text>
+
+    <!-- 2. SYN-ACK -->
+    <path d="M 310 145 L 70 175" fill="none" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+    <rect x="130" y="145" width="120" height="18" rx="3" fill="#0f172a" stroke="#10b981" stroke-width="0.8"/>
+    <text x="190" y="158" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">2. SYN-ACK (ack=x+1, y)</text>
+
+    <!-- 3. ACK -->
+    <path d="M 70 190 L 310 220" fill="none" stroke="#a855f7" stroke-width="2.5" class="flow-line"/>
+    <rect x="145" y="193" width="90" height="18" rx="3" fill="#0f172a" stroke="#a855f7" stroke-width="0.8"/>
+    <text x="190" y="206" fill="#a855f7" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">3. ACK (ack=y+1)</text>
+  </g>
+
+  <!-- Right: HTTP/2 Multiplexing vs HTTP/1.1 HOL Blocking -->
+  <g transform="translate(420, 20)">
+    <rect x="0" y="0" width="400" height="240" rx="10" fill="url(#gradNet)" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="200" y="28" fill="#a855f7" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">HTTP/2 MULTIPLEXING (SINGLE TCP PIPE)</text>
+
+    <!-- Single TCP Tunnel -->
+    <rect x="40" y="60" width="320" height="150" rx="8" fill="rgba(168, 85, 247, 0.08)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="200" y="80" fill="#c084fc" font-family="Fira Code, monospace" font-size="10" font-weight="600" text-anchor="middle">Single Persistent TCP Connection</text>
+
+    <!-- Stream 1 (HTML) -->
+    <rect x="60" y="95" width="130" height="24" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+    <text x="125" y="111" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Stream 1 [index.html]</text>
+    <path d="M 195 107 L 330 107" fill="none" stroke="#38bdf8" stroke-width="2" class="flow-line"/>
+
+    <!-- Stream 2 (CSS) -->
+    <rect x="60" y="128" width="130" height="24" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="125" y="144" fill="#10b981" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Stream 2 [styles.css]</text>
+    <path d="M 195 140 L 330 140" fill="none" stroke="#10b981" stroke-width="2" class="flow-line"/>
+
+    <!-- Stream 3 (Images) -->
+    <rect x="60" y="161" width="130" height="24" rx="4" fill="#78350f" stroke="#f59e0b"/>
+    <text x="125" y="177" fill="#f59e0b" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Stream 3 [hero.png]</text>
+    <path d="M 195 173 L 330 173" fill="none" stroke="#f59e0b" stroke-width="2" class="flow-line"/>
+
+    <text x="200" y="222" fill="#10b981" font-family="Inter, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">✔ Zero Head-of-Line Blocking at Application Layer</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> TCP establishes reliable byte streams via SYN/ACK handshakes, while modern HTTP/2 interleaves multiple bidirectional binary request/response streams over a single connection to eliminate application-layer head-of-line blocking.
+  </div>
+</div>
+
+
+    <div><p>TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are two of the main protocols used for transmitting data over the internet. Each has its characteristics, advantages, and disadvantages, making them suitable for different types of applications.</p>
+<h2>TCP (Transmission Control Protocol)</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>TCP</strong> is a connection-oriented protocol that ensures reliable, ordered, and error-checked delivery of a stream of bytes between applications.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Reliability</strong>: TCP ensures that data is delivered accurately and in order, retransmitting lost or corrupted packets.</li>
+<li><strong>Connection-Oriented</strong>: Establishes a connection between sender and receiver before transmitting data.</li>
+<li><strong>Flow Control</strong>: Manages data transmission rate to prevent network congestion.</li>
+<li><strong>Congestion Control</strong>: Adjusts the transmission rate based on network traffic conditions.</li>
+<li><strong>Acknowledgements and Retransmissions</strong>: Uses acknowledgments to confirm receipt of data and retransmits if necessary.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Applications where reliability and order are critical, like web browsing (HTTP/HTTPS), email (SMTP, POP3, IMAP), and file transfers (FTP).</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>Loading a webpage: TCP is used to ensure all web content is loaded correctly and in the right order.</li>
+</ul>
+<h2>UDP (User Datagram Protocol)</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>UDP</strong> is a connectionless protocol that sends messages, called datagrams, without establishing a prior connection and without guaranteeing reliability or order.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Low Overhead</strong>: Does not establish a connection, leading to lower overhead and latency.</li>
+<li><strong>Unreliable Delivery</strong>: Does not guarantee message delivery, order, or error checking.</li>
+<li><strong>Speed</strong>: Faster than TCP due to its simplicity and lack of retransmission mechanisms.</li>
+<li><strong>No Congestion Control</strong>: Does not reduce transmission rates under network congestion.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Applications that require speed and can tolerate some loss of data, like streaming video or audio, online gaming, or VoIP (Voice over Internet Protocol).</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>Streaming a live sports event: UDP is used for faster transmission, even if it means occasional pixelation or minor video artifacts.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Reliability</strong>:</p>
+<ul>
+<li><strong>TCP</strong>: Reliable transmission, ensuring data is delivered accurately and in order.</li>
+<li><strong>UDP</strong>: Unreliable transmission; data may be lost or arrive out of order.</li>
+</ul>
+</li>
+<li>
+<p><strong>Connection</strong>:</p>
+<ul>
+<li><strong>TCP</strong>: Connection-oriented; establishes a connection before transmitting data.</li>
+<li><strong>UDP</strong>: Connectionless; sends data without establishing a connection.</li>
+</ul>
+</li>
+<li>
+<p><strong>Speed and Overhead</strong>:</p>
+<ul>
+<li><strong>TCP</strong>: Slower due to handshaking, acknowledgments, and congestion control.</li>
+<li><strong>UDP</strong>: Faster with minimal overhead, suitable for real-time applications.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Integrity</strong>:</p>
+<ul>
+<li><strong>TCP</strong>: High data integrity, suitable for applications like file transfers and web browsing.</li>
+<li><strong>UDP</strong>: Lower data integrity, acceptable for applications like streaming where perfect accuracy is less critical.</li>
+</ul>
+</li>
+<li>
+<p><strong>Use Case Suitability</strong>:</p>
+<ul>
+<li><strong>TCP</strong>: Used when data accuracy is more critical than speed.</li>
+<li><strong>UDP</strong>: Used when speed is more critical than accuracy.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>TCP is used for applications where reliable and accurate data transmission is crucial, whereas UDP is chosen for applications where speed is more important than reliability, and some loss of data is acceptable.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">HTTP 10 vs 11 vs 20 vs 30</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>The <strong>HyperText Transfer Protocol (HTTP)</strong> is the backbone of data communication on the World Wide Web. Over the years, HTTP has evolved through various versions—<strong>1.0</strong>, <strong>1.1</strong>, <strong>2.0</strong>, and <strong>3.0</strong>—each introducing enhancements to improve performance, security, and efficiency. Understanding these versions is essential for software engineers to design and optimize web applications effectively.</p>
+<h2>Overview of HTTP Versions</h2>
+<ol>
+<li><strong>HTTP/1.0</strong> (Released in 1996)</li>
+<li><strong>HTTP/1.1</strong> (Released in 1997, updated multiple times)</li>
+<li><strong>HTTP/2.0</strong> (Released in 2015)</li>
+<li><strong>HTTP/3.0</strong> (Released in 2020)</li>
+</ol>
+<h2>HTTP/1.0</h2>
+<h3>Key Features:</h3>
+<ul>
+<li><strong>Simple Request-Response Model:</strong> Each request opens a new TCP connection, and the connection is closed after the response.</li>
+<li><strong>Stateless Protocol:</strong> Does not retain session information between requests.</li>
+<li><strong>Basic Headers:</strong> Supports essential headers for content negotiation and caching.</li>
+</ul>
+<h3>Improvements Over Previous Protocols:</h3>
+<ul>
+<li>Introduced the concept of persistent connections, albeit limited.</li>
+<li>Allowed for more structured and standardized requests and responses compared to earlier, more primitive protocols.</li>
+</ul>
+<h3>Practical Use Case:</h3>
+<p>In the early days of the web, HTTP/1.0 was sufficient for serving simple web pages with minimal resources. For example, static websites or early blogs that didn’t require dynamic content benefited from HTTP/1.0’s straightforward approach.</p>
+<h2>HTTP/1.1</h2>
+<h3>Key Features:</h3>
+<ul>
+<li><strong>Persistent Connections:</strong> Keeps the TCP connection open for multiple requests/responses, reducing latency.</li>
+<li><strong>Chunked Transfer Encoding:</strong> Allows data to be sent in chunks, enabling the server to start sending a response before knowing its total size.</li>
+<li><strong>Enhanced Caching Mechanisms:</strong> Improved headers for better caching strategies.</li>
+<li><strong>Host Header:</strong> Supports virtual hosting by allowing multiple domains to share the same IP address.</li>
+</ul>
+<h3>Improvements Over HTTP/1.0:</h3>
+<ul>
+<li><strong>Reduced Latency:</strong> Persistent connections minimize the overhead of establishing new connections for each request.</li>
+<li><strong>Better Resource Management:</strong> More efficient use of network resources through pipelining (though limited in practice).</li>
+<li><strong>Support for Virtual Hosting:</strong> Enables hosting multiple websites on a single server/IP address.</li>
+</ul>
+<h3>Practical Use Case:</h3>
+<p>Modern websites rely heavily on HTTP/1.1 for handling multiple simultaneous requests efficiently. For instance, an e-commerce site serving product images, scripts, and stylesheets benefits from persistent connections to load resources faster.</p>
+<h2>HTTP/2.0</h2>
+<h3>Key Features:</h3>
+<ul>
+<li><strong>Binary Protocol:</strong> Translates HTTP into a binary format, making it more efficient to parse and less error-prone.</li>
+<li><strong>Multiplexing:</strong> Allows multiple requests and responses to be in flight simultaneously over a single connection, eliminating head-of-line blocking.</li>
+<li><strong>Header Compression (HPACK):</strong> Reduces the size of HTTP headers, decreasing bandwidth usage.</li>
+<li><strong>Server Push:</strong> Enables servers to send resources to clients proactively, anticipating future requests.</li>
+</ul>
+<h3>Improvements Over HTTP/1.1:</h3>
+<ul>
+<li><strong>Performance Boost:</strong> Significant reductions in page load times due to multiplexing and header compression.</li>
+<li><strong>Efficient Resource Utilization:</strong> Better management of network resources with a single connection handling multiple streams.</li>
+<li><strong>Enhanced User Experience:</strong> Faster interactions and smoother performance for users accessing complex web applications.</li>
+</ul>
+<h3>Practical Use Case:</h3>
+<p>High-traffic websites like social media platforms, streaming services, and large e-commerce sites leverage HTTP/2.0 to deliver rich, interactive content swiftly. For example, streaming a high-definition video on a platform like YouTube benefits from HTTP/2.0’s ability to handle multiple data streams efficiently.</p>
+<h2>HTTP/3.0</h2>
+<h3>Key Features:</h3>
+<ul>
+<li><strong>Built on QUIC Protocol:</strong> Utilizes QUIC (Quick UDP Internet Connections) instead of TCP, enhancing speed and reliability.</li>
+<li><strong>Improved Latency:</strong> Faster connection establishment with 0-RTT (Zero Round Trip Time) handshake.</li>
+<li><strong>Better Handling of Packet Loss:</strong> Enhanced resilience to network issues, maintaining performance even in unstable conditions.</li>
+<li><strong>Built-in Encryption:</strong> QUIC integrates TLS 1.3, ensuring secure data transmission by default.</li>
+</ul>
+<h3>Improvements Over HTTP/2.0:</h3>
+<ul>
+<li><strong>Faster Connections:</strong> QUIC’s UDP-based approach allows quicker data transfer and reduced latency.</li>
+<li><strong>Enhanced Security:</strong> Built-in encryption simplifies secure communication without additional overhead.</li>
+<li><strong>Superior Performance in Real-World Conditions:</strong> More robust against packet loss and varying network conditions, ensuring consistent performance.</li>
+</ul>
+<h3>Practical Use Case:</h3>
+<p>Applications requiring real-time data transmission, such as online gaming, video conferencing, and live streaming, greatly benefit from HTTP/3.0. For instance, video conferencing tools like Zoom or Microsoft Teams can achieve lower latency and smoother video streams using HTTP/3.0’s QUIC protocol.</p>
+<h2>Key Differences Summary</h2>
+<div><table><thead><tr><th>Feature</th><th>HTTP/1.0</th><th>HTTP/1.1</th><th>HTTP/2.0</th><th>HTTP/3.0</th></tr></thead><tbody><tr><td><strong>Release Year</strong></td><td>1996</td><td>1997</td><td>2015</td><td>2020</td></tr><tr><td><strong>Connection Model</strong></td><td>New connection per request</td><td>Persistent connections</td><td>Multiplexed streams over single connection</td><td>Single connection using QUIC (UDP)</td></tr><tr><td><strong>Protocol Type</strong></td><td>Text-based</td><td>Text-based</td><td>Binary</td><td>Binary</td></tr><tr><td><strong>Latency</strong></td><td>Higher due to multiple connections</td><td>Reduced with persistent connections</td><td>Lower with multiplexing</td><td>Even lower with QUIC’s faster handshake</td></tr><tr><td><strong>Header Compression</strong></td><td>No</td><td>Limited</td><td>Yes (HPACK)</td><td>Enhanced (QPACK in QUIC)</td></tr><tr><td><strong>Security</strong></td><td>Optional (usually none)</td><td>Optional (usually none)</td><td>Optional (usually with TLS)</td><td>Mandatory (integrated TLS 1.3)</td></tr><tr><td><strong>Performance in Packet Loss</strong></td><td>Poor</td><td>Poor</td><td>Better</td><td>Excellent</td></tr><tr><td><strong>Use Cases</strong></td><td>Simple, static websites</td><td>Dynamic websites, e-commerce</td><td>High-traffic, interactive web apps</td><td>Real-time applications, streaming</td></tr></tbody></table></div>
+<h2>Why Upgrade to Newer HTTP Versions?</h2>
+<ol>
+<li><strong>Performance Enhancements:</strong> Newer versions significantly reduce load times and improve user experience.</li>
+<li><strong>Security Improvements:</strong> Enhanced encryption and secure protocols protect data better.</li>
+<li><strong>Scalability:</strong> Efficient handling of multiple requests supports larger, more complex applications.</li>
+<li><strong>Future-Proofing:</strong> Adopting the latest standards ensures compatibility with emerging technologies and user expectations.</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The evolution of HTTP from <strong>1.0</strong> to <strong>3.0</strong> showcases the web’s ongoing quest for speed, efficiency, and security. Each version builds upon its predecessor, introducing features that address the growing demands of modern web applications. As a software engineer, leveraging the advancements in HTTP protocols can lead to more robust, performant, and secure applications.</p>
+<h2>Quick Reference</h2>
+<ul>
+<li>
+<p><strong>HTTP/1.0</strong></p>
+<ul>
+<li><strong>Release Year:</strong> 1996</li>
+<li><strong>Connection:</strong> New per request</li>
+<li><strong>Use Case:</strong> Simple, static websites</li>
+</ul>
+</li>
+<li>
+<p><strong>HTTP/1.1</strong></p>
+<ul>
+<li><strong>Release Year:</strong> 1997</li>
+<li><strong>Connection:</strong> Persistent</li>
+<li><strong>Use Case:</strong> Dynamic websites, e-commerce</li>
+</ul>
+</li>
+<li>
+<p><strong>HTTP/2.0</strong></p>
+<ul>
+<li><strong>Release Year:</strong> 2015</li>
+<li><strong>Connection:</strong> Multiplexed streams</li>
+<li><strong>Use Case:</strong> High-traffic, interactive web apps</li>
+</ul>
+</li>
+<li>
+<p><strong>HTTP/3.0</strong></p>
+<ul>
+<li><strong>Release Year:</strong> 2020</li>
+<li><strong>Connection:</strong> QUIC (UDP-based)</li>
+<li><strong>Use Case:</strong> Real-time applications, streaming</li>
+</ul>
+</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">URL vs URI vs URN</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Understanding the differences between URL, URI, and URN can be crucial in web development and networking. Let&#x27;s break down these concepts:</p>
+<h2>URL (Uniform Resource Locator):</h2>
+<ul>
+<li><strong>Definition</strong>: A URL is a specific type of URI that not only identifies a resource on the internet but also provides a method to locate it by describing its primary access mechanism, usually its network location.</li>
+<li><strong>Components</strong>: It typically includes a protocol (such as HTTP, HTTPS, FTP), domain name, and path, optionally followed by query parameters or a fragment identifier.</li>
+<li><strong>Example</strong>: <code>https://www.example.com/path?query=term#section</code></li>
+<li><strong>Key Characteristics</strong>:
+<ul>
+<li>Specifies how the resource can be accessed (protocol).</li>
+<li>Includes the location of the resource (like a web address).</li>
+</ul>
+</li>
+</ul>
+<h2>URI (Uniform Resource Identifier):</h2>
+<ul>
+<li><strong>Definition</strong>: A URI is a generic term used to identify a resource either by location, name, or both. It serves as a universal identifier for resources on the internet.</li>
+<li><strong>Scope</strong>: All URLs and URNs are URIs, but not all URIs are URLs or URNs.</li>
+<li><strong>Example</strong>: A URL <code>https://www.example.com</code> is also a URI, and a URN like <code>urn:isbn:0451450523</code> (identifying a book by its ISBN) is also a URI.</li>
+<li><strong>Key Characteristics</strong>:
+<ul>
+<li>A more general concept than both URL and URN.</li>
+<li>It can be either a locator (URL), a name (URN), or both.</li>
+</ul>
+</li>
+</ul>
+<h2>URN (Uniform Resource Name):</h2>
+<ul>
+<li><strong>Definition</strong>: A URN is a type of URI that names a resource without describing how to locate it. It’s used to assign a unique and persistent identifier to a resource.</li>
+<li><strong>Example</strong>: <code>urn:isbn:0451450523</code> uniquely identifies a book using its ISBN, irrespective of where it exists.</li>
+<li><strong>Key Characteristics</strong>:
+<ul>
+<li>Provides a unique and persistent identifier.</li>
+<li>Does not specify a location or method to access the resource.</li>
+</ul>
+</li>
+</ul>
+<h2>Summary of Differences:</h2>
+<ul>
+<li><strong>URL</strong>: Specifies both the identity and the location of a resource (How and Where).</li>
+<li><strong>URI</strong>: A more comprehensive term covering both URLs (identifying and locating) and URNs (just identifying).</li>
+<li><strong>URN</strong>: Focuses only on uniquely identifying a resource, not on where it is located or how to access it.</li>
+</ul>
+<p>In practical terms, when you’re browsing the internet, you&#x27;re mostly dealing with URLs. URIs and URNs come more into play in specific contexts like software development, digital libraries, and systems where unique and persistent identification of a resource is crucial.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_04_networking_protocols') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_04_networking_protocols', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture Patterns - System Design Guide</title>
+    <meta property="og:title" content="System Architecture Patterns - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">System Architecture Patterns</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="synchronous vs asynchronous communication"><a href="#chapter-01"><span class="chapter-num">01</span> Synchronous vs Asynchronous Communication</a></li>
+<li class="sidebar-item" data-num="02" data-title="push vs pull notification systems"><a href="#chapter-02"><span class="chapter-num">02</span> Push vs Pull Notification Systems</a></li>
+<li class="sidebar-item" data-num="03" data-title="microservices vs serverless architecture"><a href="#chapter-03"><span class="chapter-num">03</span> Microservices vs Serverless Architecture</a></li>
+<li class="sidebar-item" data-num="04" data-title="message queues vs service bus"><a href="#chapter-04"><span class="chapter-num">04</span> Message Queues vs Service Bus</a></li>
+<li class="sidebar-item" data-num="05" data-title="stateful vs stateless architecture"><a href="#chapter-05"><span class="chapter-num">05</span> Stateful vs Stateless Architecture</a></li>
+<li class="sidebar-item" data-num="06" data-title="eventdriven vs polling architecture"><a href="#chapter-06"><span class="chapter-num">06</span> EventDriven vs Polling Architecture</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Synchronous vs Asynchronous Communication</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Lambda Architecture (Speed Layer + Batch Layer + Serving Views)</div>
+    <div class="diagram-badge">Data Architecture</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradArch" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Input Ingestion Stream -->
+  <g transform="translate(20, 90)">
+    <rect x="0" y="0" width="120" height="85" rx="8" fill="url(#gradArch)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="60" y="32" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RAW EVENT</text>
+    <text x="60" y="48" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">INGESTION</text>
+    <text x="60" y="70" fill="#94a3b8" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Apache Kafka</text>
+  </g>
+
+  <!-- Split to Batch & Speed Layers -->
+  <path d="M 145 115 C 180 115, 185 65, 220 65" stroke="#38bdf8" stroke-width="2" class="flow-line"/>
+  <path d="M 145 145 C 180 145, 185 195, 220 195" stroke="#10b981" stroke-width="2" class="flow-line"/>
+
+  <!-- Batch Layer (Top) -->
+  <g transform="translate(225, 25)">
+    <rect x="0" y="0" width="310" height="80" rx="8" fill="url(#gradArch)" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="155" y="24" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">BATCH LAYER (ACCURATE / COMPLETE)</text>
+    <rect x="15" y="38" width="280" height="30" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+    <text x="155" y="58" fill="#93c5fd" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Immutable Master Dataset (HDFS / S3) + Spark</text>
+  </g>
+
+  <!-- Speed Layer (Bottom) -->
+  <g transform="translate(225, 155)">
+    <rect x="0" y="0" width="310" height="80" rx="8" fill="url(#gradArch)" stroke="#10b981" stroke-width="1.5"/>
+    <text x="155" y="24" fill="#10b981" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SPEED LAYER (LOW LATENCY REAL-TIME)</text>
+    <rect x="15" y="38" width="280" height="30" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="155" y="58" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Real-time Stream Processor (Apache Flink)</text>
+  </g>
+
+  <!-- Confluence to Serving Layer -->
+  <path d="M 540 65 C 570 65, 575 115, 605 115" stroke="#38bdf8" stroke-width="2" class="flow-line"/>
+  <path d="M 540 195 C 570 195, 575 145, 605 145" stroke="#10b981" stroke-width="2" class="flow-line"/>
+
+  <!-- Serving Layer (Right) -->
+  <g transform="translate(610, 60)">
+    <rect x="0" y="0" width="200" height="145" rx="8" fill="url(#gradArch)" stroke="#a855f7" stroke-width="2"/>
+    <text x="100" y="30" fill="#c084fc" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SERVING LAYER</text>
+    
+    <rect x="15" y="45" width="170" height="36" rx="4" fill="#4c1d95"/>
+    <text x="100" y="68" fill="#e9d5ff" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Batch Views + Realtime Views</text>
+
+    <rect x="15" y="90" width="170" height="36" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+    <text x="100" y="113" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="9.5" font-weight="600" text-anchor="middle">Unified Query Response</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Lambda architecture combines a real-time stream processing layer (low latency, approximate views) with an immutable batch layer (high accuracy, complete views) to deliver unified, fault-tolerant analytics.
+  </div>
+</div>
+
+
+    <div><p>Synchronous and asynchronous communication are two fundamental methods of transmitting information, particularly in the context of computing and telecommunications. Each has its characteristics and is suited for different scenarios.</p>
+<h2>Synchronous Communication</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Synchronous Communication</strong> refers to a method of communication where the sender and receiver are both present and active at the same time. In computing, it often involves a process that waits for a response before moving forward.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Real-Time Interaction</strong>: Involves immediate response and real-time data exchange.</li>
+<li><strong>Waiting for Response</strong>: The sender typically waits for the receiver to receive and possibly respond to the message before continuing.</li>
+<li><strong>Examples</strong>: Phone calls, live chats, video conferencing, and real-time data processing systems.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Situations where immediate feedback is necessary.</li>
+<li>Systems where processes need to be executed in a specific order.</li>
+</ul>
+<h3>Pros and Cons</h3>
+<ul>
+<li><strong>Pros</strong>: Immediate data transfer and feedback, leading to quick resolution and decision-making.</li>
+<li><strong>Cons</strong>: Can be resource-intensive, as it requires the sender to wait or be blocked until the operation completes.</li>
+</ul>
+<h2>Asynchronous Communication</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Asynchronous Communication</strong> is where the sending and receiving of information do not occur at the same time. The sender and receiver don&#x27;t need to be actively engaged simultaneously.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Delayed Response</strong>: Responses can be delayed; the sender doesn’t wait for an immediate response.</li>
+<li><strong>Independence</strong>: The sender and receiver operate independently.</li>
+<li><strong>Examples</strong>: Email, forums, messaging apps, background data processing tasks.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Situations where immediate response is not required.</li>
+<li>Systems where operations can occur independently without needing instant coordination.</li>
+</ul>
+<h3>Pros and Cons</h3>
+<ul>
+<li><strong>Pros</strong>: More flexible and efficient in terms of resource utilization, as it doesn&#x27;t block the sender while waiting for a response.</li>
+<li><strong>Cons</strong>: Delay in feedback; the process might not be suitable for scenarios where immediate action is required.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Timing of Communication</strong>:</p>
+<ul>
+<li><strong>Synchronous</strong>: Occurs in real-time; sender and receiver must be present simultaneously.</li>
+<li><strong>Asynchronous</strong>: Does not occur in real-time; sender and receiver do not need to be concurrently engaged.</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource Utilization</strong>:</p>
+<ul>
+<li><strong>Synchronous</strong>: Can be resource-heavy as it requires active engagement from both parties.</li>
+<li><strong>Asynchronous</strong>: More efficient in resource use, as it allows for delayed responses.</li>
+</ul>
+</li>
+<li>
+<p><strong>Feedback and Responsiveness</strong>:</p>
+<ul>
+<li><strong>Synchronous</strong>: Offers immediate feedback and responsiveness.</li>
+<li><strong>Asynchronous</strong>: Feedback is delayed, leading to potential lag in communication.</li>
+</ul>
+</li>
+<li>
+<p><strong>Complexity</strong>:</p>
+<ul>
+<li><strong>Synchronous</strong>: Often simpler in concept but can be complex in resource management.</li>
+<li><strong>Asynchronous</strong>: Can be more complex to implement but offers greater flexibility.</li>
+</ul>
+</li>
+<li>
+<p><strong>Use Case Suitability</strong>:</p>
+<ul>
+<li><strong>Synchronous</strong>: Ideal for scenarios requiring real-time data exchange and immediate decision-making.</li>
+<li><strong>Asynchronous</strong>: Suitable for scenarios where immediate response is not critical, and flexibility is desired.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Choosing between synchronous and asynchronous communication depends on the specific needs of the application or scenario. Synchronous communication is essential for tasks requiring immediate interaction, while asynchronous communication is beneficial for reducing wait times and improving overall efficiency in situations where immediate responses are not crucial.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Push vs Pull Notification Systems</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Push and pull notification systems are two distinct methods used in software and web applications for updating users with new information. Understanding the differences between them is crucial for designing effective and user-friendly notification mechanisms.</p>
+<h2>Push Notification System</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Push Notifications</strong> involve sending information to users proactively from a server. The server initiates the data transmission.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Proactive</strong>: The server sends notifications without the user requesting them.</li>
+<li><strong>Real-Time</strong>: Offers near-instant delivery of messages, making it suitable for timely alerts.</li>
+<li><strong>User Engagement</strong>: Can enhance user engagement but requires careful management to avoid overwhelming users.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>New email or instant message alerts.</li>
+<li>Social media updates (like new posts or interactions).</li>
+<li>App-specific alerts, like a ride-sharing app notifying users of ride status.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A weather app sends a push notification about a sudden weather change.</li>
+</ul>
+<h3>Pros and Cons</h3>
+<ul>
+<li><strong>Pros</strong>: Immediate information delivery; no action required from users to receive updates.</li>
+<li><strong>Cons</strong>: Can be intrusive; relies on users granting permission to receive notifications.</li>
+</ul>
+<h2>Pull Notification System</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Pull Notifications</strong> require the user or client to actively request or check for new information.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Reactive</strong>: The user must initiate the process to check for new updates.</li>
+<li><strong>Manual Refresh</strong>: Users may need to refresh or query the server for the latest updates.</li>
+<li><strong>Control</strong>: Users have more control over when they receive information.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Checking for new emails by refreshing the email client.</li>
+<li>Manually updating a news app to see the latest articles.</li>
+<li>Polling a server for the latest updates in a collaborative application.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A user opens a social media app to check for new messages or notifications.</li>
+</ul>
+<h3>Pros and Cons</h3>
+<ul>
+<li><strong>Pros</strong>: Less intrusive; users access information at their convenience.</li>
+<li><strong>Cons</strong>: Not suitable for urgent updates; relies on user action to receive new information.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Initiation</strong>:</p>
+<ul>
+<li><strong>Push</strong>: Server-initiated.</li>
+<li><strong>Pull</strong>: Client/user-initiated.</li>
+</ul>
+</li>
+<li>
+<p><strong>Timeliness</strong>:</p>
+<ul>
+<li><strong>Push</strong>: Notifications are instant and automatic.</li>
+<li><strong>Pull</strong>: Updates are obtained on demand, possibly leading to delays.</li>
+</ul>
+</li>
+<li>
+<p><strong>User Engagement</strong>:</p>
+<ul>
+<li><strong>Push</strong>: Can increase engagement through timely and relevant notifications.</li>
+<li><strong>Pull</strong>: Requires active user engagement to seek out information.</li>
+</ul>
+</li>
+<li>
+<p><strong>Intrusiveness</strong>:</p>
+<ul>
+<li><strong>Push</strong>: Potentially more intrusive, can lead to notification fatigue.</li>
+<li><strong>Pull</strong>: Less intrusive, as users control when they receive updates.</li>
+</ul>
+</li>
+<li>
+<p><strong>Internet Dependency</strong>:</p>
+<ul>
+<li><strong>Push</strong>: Requires a constant internet connection for real-time updates.</li>
+<li><strong>Pull</strong>: Users can check for updates whenever they have internet access.</li>
+</ul>
+</li>
+<li>
+<p><strong>Implementation Complexity</strong>:</p>
+<ul>
+<li><strong>Push</strong>: Generally more complex to implement; requires maintaining connections and managing permissions.</li>
+<li><strong>Pull</strong>: Simpler to implement; typically involves standard request-response models.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The choice between push and pull notification systems depends on the application&#x27;s nature, the type of information being disseminated, and user preferences. Push notifications are ideal for critical and time-sensitive updates, while pull notifications are better suited for non-urgent information that users can access at their leisure.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Microservices vs Serverless Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Microservices and Serverless Architecture are two popular approaches in designing scalable, modern applications. They share some principles but differ significantly in how they are structured and managed.</p>
+<h2>Microservices</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Microservices</strong> architecture is a method of developing software systems that structures an application as a collection of loosely coupled services, which are fine-grained and independently deployable.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Modularity</strong>: The application is broken down into smaller, independent services.</li>
+<li><strong>Scalability</strong>: Each service can be scaled independently, based on demand.</li>
+<li><strong>Deployment</strong>: Services are deployed individually, allowing for continuous integration and continuous delivery (CI/CD).</li>
+<li><strong>Language Agnostic</strong>: Each microservice can be written in a different programming language, depending on its requirements.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Large applications where different modules have differing requirements or scaling needs.</li>
+<li>Teams that prefer to work independently on different parts of an application.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>An e-commerce application where inventory management, order processing, and user authentication are developed and operated as separate microservices.</li>
+</ul>
+<h2>Serverless Architecture</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Serverless Architecture</strong> refers to a cloud computing model where the cloud provider dynamically manages the allocation and provisioning of servers. A serverless model allows developers to build and run applications without managing infrastructure.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>No Server Management</strong>: Developers don&#x27;t need to manage the server infrastructure.</li>
+<li><strong>Auto-scaling</strong>: Automatically scales up or down to handle the workload.</li>
+<li><strong>Cost-Effective</strong>: Generally billed based on the actual usage, not on pre-allocated capacity.</li>
+<li><strong>Event-Driven</strong>: Often used for applications that respond to events and triggers.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Applications with variable or unpredictable workloads.</li>
+<li>Lightweight APIs, web apps, or automated tasks that run in response to events or requests.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A photo processing function that automatically resizes images when uploaded to a cloud storage, triggered each time a new photo is uploaded.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Infrastructure Management</strong>:</p>
+<ul>
+<li><strong>Microservices</strong>: Requires managing the infrastructure, although this can be abstracted away using containers and orchestration tools like Kubernetes.</li>
+<li><strong>Serverless</strong>: No infrastructure management; the cloud provider handles it.</li>
+</ul>
+</li>
+<li>
+<p><strong>Scalability</strong>:</p>
+<ul>
+<li><strong>Microservices</strong>: Scalability is managed by the development team, although it allows for fine-tuned control.</li>
+<li><strong>Serverless</strong>: Automatic scalability based on demand.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cost Model</strong>:</p>
+<ul>
+<li><strong>Microservices</strong>: Costs are based on the infrastructure provisioned, regardless of usage.</li>
+<li><strong>Serverless</strong>: Pay-per-use model, often based on the number of executions and the duration of execution.</li>
+</ul>
+</li>
+<li>
+<p><strong>Development and Operational Complexity</strong>:</p>
+<ul>
+<li><strong>Microservices</strong>: Higher operational complexity due to the need to manage multiple services and their interactions.</li>
+<li><strong>Serverless</strong>: Simpler from an operational standpoint, but can have limitations in terms of function execution times and resource limits.</li>
+</ul>
+</li>
+<li>
+<p><strong>Use Case Suitability</strong>:</p>
+<ul>
+<li><strong>Microservices</strong>: Suitable for large, complex applications where each service may have different resource requirements.</li>
+<li><strong>Serverless</strong>: Ideal for event-driven scenarios, short-lived jobs, or applications with highly variable traffic.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>While both microservices and serverless architectures offer ways to build scalable, modern applications, they cater to different needs. Microservices provide greater control over each service component but require managing the infrastructure. Serverless architectures abstract away the infrastructure concerns, offering a simpler model for deploying code, especially for event-driven applications or those with fluctuating workloads. The choice between the two often depends on the specific requirements of the application, team capabilities, and the desired level of control over the infrastructure.</p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Message Queues vs Service Bus</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Message Queues and Service Buses are both important components in software architecture for managing communication between different parts of a system, especially in distributed environments. While they share some similarities, they have distinct features and are suited for different scenarios.</p>
+<h2>Message Queues</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Message Queues</strong> are a form of asynchronous service-to-service communication used in serverless and microservices architectures. They allow applications to communicate and process operations asynchronously through messages.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Point-to-Point Communication</strong>: Messages are typically sent from one sender to one receiver.</li>
+<li><strong>Simplicity</strong>: Generally simpler and easier to implement.</li>
+<li><strong>Decoupling</strong>: Senders and receivers do not need to interact with the message queue simultaneously.</li>
+<li><strong>Ordering</strong>: Some message queues guarantee the order of message processing.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li><strong>Task Queuing</strong>: Offloading tasks to be processed asynchronously.</li>
+<li><strong>Load Balancing</strong>: Distributing tasks evenly across multiple workers.</li>
+<li><strong>Decoupling of Services</strong>: Allowing parts of a system to operate independently.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A web application sends a message to a queue to process a user’s image upload, while the user is immediately given a response.</li>
+</ul>
+<h2>Service Bus</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Service Bus</strong>, often referred to as an Enterprise Service Bus (ESB), provides a more complex set of middleware capabilities for message routing, transformation, and orchestration.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Multiple Communication Patterns</strong>: Supports various patterns like publish/subscribe, request/response, and more.</li>
+<li><strong>Integration</strong>: Facilitates the integration of different applications and services, often involving complex business logic.</li>
+<li><strong>Advanced Features</strong>: Includes features like message routing, transformation, and protocol mediation.</li>
+<li><strong>Centralization</strong>: Acts as a central hub for communication.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li><strong>Enterprise Application Integration</strong>: Connecting and coordinating interaction among various applications.</li>
+<li><strong>Complex Business Processes</strong>: Managing complex workflows and data transformation.</li>
+<li><strong>Service Orchestration</strong>: Coordinating multiple service interactions in a workflow.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>In an e-commerce system, the service bus manages communications between the inventory, order processing, and billing services, transforming and routing messages as necessary.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Complexity and Capability</strong>:</p>
+<ul>
+<li><strong>Message Queues</strong>: More straightforward, focused on delivering messages between services.</li>
+<li><strong>Service Bus</strong>: More complex, offering advanced integration and orchestration capabilities.</li>
+</ul>
+</li>
+<li>
+<p><strong>Communication Patterns</strong>:</p>
+<ul>
+<li><strong>Message Queues</strong>: Typically supports point-to-point communication.</li>
+<li><strong>Service Bus</strong>: Supports a variety of patterns, including publish/subscribe and more complex integrations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Use Case</strong>:</p>
+<ul>
+<li><strong>Message Queues</strong>: Best for simple task queuing and decoupling services.</li>
+<li><strong>Service Bus</strong>: Suited for complex enterprise-level integrations and workflows.</li>
+</ul>
+</li>
+<li>
+<p><strong>Scalability and Overhead</strong>:</p>
+<ul>
+<li><strong>Message Queues</strong>: More lightweight, easier to scale horizontally.</li>
+<li><strong>Service Bus</strong>: Potentially high overhead, more challenging to scale due to its centralized nature.</li>
+</ul>
+</li>
+<li>
+<p><strong>Message Management</strong>:</p>
+<ul>
+<li><strong>Message Queues</strong>: Basic message delivery, often FIFO (First-In-First-Out) order.</li>
+<li><strong>Service Bus</strong>: Advanced message routing, transformation, and protocol conversion.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Choosing between a message queue and a service bus depends on the specific needs of your system. For simpler, point-to-point, asynchronous communication, a message queue is often sufficient and more efficient. However, for more complex scenarios involving multiple applications and services, especially where advanced message processing and orchestration are required, a service bus is more appropriate.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Stateful vs Stateless Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Stateful and Stateless architectures represent two different approaches to managing user information and server interactions in software design, particularly in web services and applications. Understanding the distinctions between them is crucial for designing systems that efficiently handle user sessions and data.</p>
+<h2>Stateful Architecture</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Stateful Architecture</strong> means the server retains a record of previous interactions and uses this information for subsequent transactions. Each session is unique to a user, and the server stores the session state.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Session Memory</strong>: The server remembers previous interactions and may store data like user preferences or activity history.</li>
+<li><strong>Resource Usage</strong>: Typically requires more resources to maintain state information.</li>
+<li><strong>User Experience</strong>: Can offer a more personalized user experience as it retains user context.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Applications requiring a persistent user state, like online banking or e-commerce sites where a user&#x27;s logged-in session and shopping cart need to be maintained.</li>
+<li>Real-time applications where the current state is critical, like online gaming.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A shopping website where your shopping cart is remembered across different pages and visits during the same session.</li>
+</ul></div><div><h2>Stateless Architecture</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Stateless Architecture</strong> means the server does not retain any memory of past interactions. Each request from a user must contain all the information necessary to understand and complete the request.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>No Session Memory</strong>: The server treats each request as independent; no session information is stored between requests.</li>
+<li><strong>Scalability</strong>: More scalable as less information is retained by the server.</li>
+<li><strong>Simplicity and Performance</strong>: Generally simpler and can offer better performance, as there’s no need to synchronize session data across servers.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>RESTful APIs, where each HTTP request contains all necessary information, making it stateless.</li>
+<li>Microservices architecture, where stateless services are preferred for scalability and simplicity.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A stateless API where each HTTP request for user data includes an authentication token and all necessary parameters.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Session Memory</strong>:</p>
+<ul>
+<li><strong>Stateful</strong>: Maintains user state and session data.</li>
+<li><strong>Stateless</strong>: Does not store user state; each request is independent.</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource Usage</strong>:</p>
+<ul>
+<li><strong>Stateful</strong>: Higher resource usage due to session memory.</li>
+<li><strong>Stateless</strong>: Lower resource usage, as no session data is maintained.</li>
+</ul>
+</li>
+<li>
+<p><strong>Scalability</strong>:</p>
+<ul>
+<li><strong>Stateful</strong>: Less scalable as maintaining state across a distributed system can be complex.</li>
+<li><strong>Stateless</strong>: More scalable as each request is self-contained.</li>
+</ul>
+</li>
+<li>
+<p><strong>Complexity</strong>:</p>
+<ul>
+<li><strong>Stateful</strong>: More complex due to the need for session management.</li>
+<li><strong>Stateless</strong>: Simpler, with each request being independent and self-contained.</li>
+</ul>
+</li>
+<li>
+<p><strong>User Experience</strong>:</p>
+<ul>
+<li><strong>Stateful</strong>: Can offer a more personalized experience with session history.</li>
+<li><strong>Stateless</strong>: Offers a consistent experience without personalization based on past interactions.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Stateful architectures are well-suited for applications where user history and session data are important, while stateless architectures are ideal for services where scalability and simplicity are priorities, and each request can be treated independently.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">EventDriven vs Polling Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Event-Driven and Polling architectures represent two different approaches to monitoring and responding to changes or new data in software systems. Each has its characteristics, benefits, and best use cases.</p>
+<h2>Event-Driven Architecture</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Event-Driven Architecture</strong> is a design pattern in which a component executes in response to receiving one or more event notifications. Events are emitted by a source (like user actions or system triggers), and event listeners or handlers react to these events.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Reactive</strong>: The system reacts to events as they occur.</li>
+<li><strong>Asynchronous</strong>: Event handling is typically non-blocking and asynchronous.</li>
+<li><strong>Loose Coupling</strong>: The event producers and consumers are loosely coupled, enhancing flexibility and scalability.</li>
+<li><strong>Real-Time Processing</strong>: Ideal for scenarios requiring immediate action in response to changes.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Real-time user interfaces, where user actions trigger immediate system responses.</li>
+<li>Complex event processing in distributed systems.</li>
+<li>Implementing microservices communication via message brokers like Kafka or RabbitMQ.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>In a smart home system, a temperature sensor detects a change in room temperature and emits an event. The heating system subscribes to these events and reacts by adjusting the temperature.</li>
+</ul>
+<h2>Polling Architecture</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Polling Architecture</strong> involves a design where a component frequently checks (polls) a source to detect if any new data or change in state has occurred, and then acts on the change.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Active Checking</strong>: The system regularly queries or checks a source for changes.</li>
+<li><strong>Synchronous</strong>: Polling is often a synchronous and blocking operation.</li>
+<li><strong>Simple to Implement</strong>: Easier to implement than event-driven systems but can be less efficient.</li>
+<li><strong>Predictable Load</strong>: The polling interval sets a predictable load on the system.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Checking for new emails or updates in applications where real-time processing is not critical.</li>
+<li>Monitoring system status or performing routine checks where events are infrequent.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A backup software that checks every 24 hours to see if new files need to be backed up.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Response to Changes</strong>:</p>
+<ul>
+<li><strong>Event-Driven</strong>: Responds immediately to events as they occur.</li>
+<li><strong>Polling</strong>: Checks for changes at regular intervals.</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource Utilization</strong>:</p>
+<ul>
+<li><strong>Event-Driven</strong>: Generally more efficient with system resources, as it only reacts to changes.</li>
+<li><strong>Polling</strong>: Can be resource-intensive, especially with frequent polling intervals.</li>
+</ul>
+</li>
+<li>
+<p><strong>Complexity</strong>:</p>
+<ul>
+<li><strong>Event-Driven</strong>: Can be more complex to implement, requiring robust event handling and management.</li>
+<li><strong>Polling</strong>: Simpler to implement but may not be as responsive or efficient.</li>
+</ul>
+</li>
+<li>
+<p><strong>Real-Time Capability</strong>:</p>
+<ul>
+<li><strong>Event-Driven</strong>: Suitable for real-time applications.</li>
+<li><strong>Polling</strong>: More suitable for applications where real-time response is not critical.</li>
+</ul>
+</li>
+<li>
+<p><strong>Scalability</strong>:</p>
+<ul>
+<li><strong>Event-Driven</strong>: Scales well, especially in distributed systems with many events.</li>
+<li><strong>Polling</strong>: Scaling can be challenging, particularly if the polling frequency is high.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Choosing between event-driven and polling architectures depends on the specific requirements of the application. Event-driven architectures are ideal for systems where immediate responsiveness to changes is critical, and efficiency and scalability are important. Polling architectures, while simpler, are best suited for scenarios where events are less frequent or real-time responsiveness is not a necessity.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_17_system_architecture_patterns') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_17_system_architecture_patterns', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

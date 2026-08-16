@@ -1,0 +1,28 @@
+=== LINKEDIN POST #01: Scalability, Latency vs Throughput & High Availability SLAs ===
+Target Chapter: 01 System Design Fundamentals.html
+
+--- [COPY POST BODY BELOW] ---
+
+📐 Latency vs Throughput: The most common confusion in System Design Interviews:
+
+Most engineers think making a system faster (lower latency) automatically increases throughput. But in distributed systems, they are two completely different dimensions:
+
+⏱️ Latency: The time taken to process a single request (e.g. 50ms P99 response time).
+⚡ Throughput: The number of requests processed per second (e.g. 100,000 QPS).
+
+💡 The Classic Pipeline Tradeoff:
+• Batching requests (e.g. waiting 10ms to group 100 events) increases Throughput by 5x, but slightly increases individual Latency!
+• Streaming requests one-by-one gives minimum Latency, but reduces overall Throughput due to network framing overhead.
+
+📊 Availability "The 9's" Quick Sizing:
+• 99.9% (Three 9s) = 8.76 hours downtime/year.
+• 99.99% (Four 9s - Standard FAANG SLA) = 52.6 minutes downtime/year.
+• 99.999% (Five 9s - Mission Critical) = 5.26 minutes downtime/year!
+
+💬 How do you measure latency in production: P90, P95, or P99?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#SystemDesign #Latency #Throughput #DistributedSystems #Performance #SoftwareEngineering
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

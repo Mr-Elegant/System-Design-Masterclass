@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Design &amp; Architecture Masterclass - Enterprise Curriculum</title>
+    <meta property="og:title" content="System Design & Architecture Masterclass">
+    <meta property="og:description" content="616 Topics, 108 Animated Diagrams, Polyglot Implementations (Python + JS), AI/LLM Systems & 11 Distributed Systems Papers.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1d;
+            --bg-card: #111827;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --accent-cyan: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-amber: #f59e0b;
+            --accent-emerald: #10b981;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            /* Content Protection CSS */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        p.hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.12);
+        }
+
+        .course-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .course-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .course-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .course-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .course-link:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            width: 100%;
+        }
+    </style>
+    <!-- Content Protection Script -->
+    <script>
+        // Disable Right-Click Context Menu
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Disable Keyboard Shortcuts for Inspect & Source View
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">Master Curriculum 2026 Edition</div>
+            <h1>System Design &amp; Architecture Masterclass</h1>
+            <p class="hero-desc">The complete Staff &amp; Principal-level engineering library covering distributed building blocks, classic FAANG interview flagships, AI/LLM generative architectures, microservices patterns, and the 11 legendary distributed systems papers.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num">616</div>
+                <div class="stat-label">Total Verified Topics</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">108</div>
+                <div class="stat-label">Animated 60 FPS SVGs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">39</div>
+                <div class="stat-label">Polyglot Code Flagships</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">11</div>
+                <div class="stat-label">Legendary Systems Papers</div>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            <!-- Course 1 -->
+            <div class="course-card">
+                <div class="course-icon">🏛️</div>
+                <h2 class="course-title">Grokking the System Design Interview</h2>
+                <p class="course-desc">Complete 7-Step FAANG framework, 39 classic/architect problems (TinyURL, Instagram, Dropbox, Uber H3, Ticketmaster, Figma CRDTs), 6 AI Flagships (ChatGPT, RAG, Copilot, Sora, Devin, Voice AI), and 11 Legendary Papers (Dynamo, Kafka, Raft, Bigtable, ZooKeeper).</p>
+                <a href="./DesignGurus%20-%20Grokking%20the%20System%20Design%20Interview%202025-12/Grokking%20the%20System%20Design%20Interview.html" class="course-link">Launch Master Course &rarr;</a>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-card">
+                <div class="course-icon">⚙️</div>
+                <h2 class="course-title">Grokking System Design Fundamentals</h2>
+                <p class="course-desc">18 comprehensive chapters covering DNS, Load Balancing, Caching Topologies, Sharding, CAP/PACELC, Bloom Filters, Distributed Consensus, Security, Queues, and AI/LLM Hardware Fundamentals (PagedAttention, FlashAttention-3, Roofline Model).</p>
+                <a href="./DesignGurus%20-%20Grokking%20System%20Design%20Fundamentals%202025-12/Grokking%20System%20Design%20Fundamentals.html" class="course-link">Launch Master Course &rarr;</a>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-card">
+                <div class="course-icon">🧩</div>
+                <h2 class="course-title">Grokking Microservices Design Patterns</h2>
+                <p class="course-desc">14 production microservices patterns: Strangler Fig, API Gateway, BFF, Service Discovery, Circuit Breakers, Bulkheads, Retry, Distributed Sagas, CQRS, Event-Driven Architecture, and Agentic Microservices Architecture.</p>
+                <a href="./DesignGurus%20-%20Grokking%20Microservices%20Design%20Patterns%202025-11/Grokking%20Microservices%20Design%20Patterns.html" class="course-link">Launch Master Course &rarr;</a>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-card">
+                <div class="course-icon">💻</div>
+                <h2 class="course-title">Low Level Design (LLD) with JavaScript</h2>
+                <p class="course-desc">10 deep modules covering SOLID principles, GoF Design Patterns, Clean Code, Parking Lot, Elevator, Chess, Rate Limiters, Concurrency Locks, Domain-Driven Design, and FAANG SDKs in Modern JavaScript/TypeScript.</p>
+                <a href="./Grokking%20Low%20Level%20Design%20(LLD)%20with%20JavaScript%202026/01%20OOP%20Fundamentals%20%26%20SOLID%20Principles%20in%20JavaScript.html" class="course-link">Launch Master Course &rarr;</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 System Design &amp; Architecture Masterclass. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

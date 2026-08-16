@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Partitioning &amp; Sharding - System Design Guide</title>
+    <meta property="og:title" content="Data Partitioning &amp; Sharding - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Data Partitioning &amp; Sharding</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (5)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to data partitioning"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Data Partitioning</a></li>
+<li class="sidebar-item" data-num="02" data-title="partitioning methods"><a href="#chapter-02"><span class="chapter-num">02</span> Partitioning Methods</a></li>
+<li class="sidebar-item" data-num="03" data-title="data sharding techniques"><a href="#chapter-03"><span class="chapter-num">03</span> Data Sharding Techniques</a></li>
+<li class="sidebar-item" data-num="04" data-title="benefits of data partitioning"><a href="#chapter-04"><span class="chapter-num">04</span> Benefits of Data Partitioning</a></li>
+<li class="sidebar-item" data-num="05" data-title="common problems associated with data partitioning"><a href="#chapter-05"><span class="chapter-num">05</span> Common Problems Associated with Data Partitioning</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to Data Partitioning</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Data partitioning is a technique used in distributed systems and databases to divide a large dataset into smaller, more manageable parts, referred to as partitions. Each partition is independent and contains a subset of the overall data.</p>
+<p>In data partitioning, the dataset is typically partitioned based on a certain criterion, such as data range, data size, or data type. Each partition is then assigned to a separate processing node, which can perform operations on its assigned data subset independently of the others.</p>
+<p>Data partitioning can help improve the performance and scalability of large-scale data processing applications, as it allows processing to be distributed across multiple nodes, minimizing data transfer and reducing processing time. Secondly, by distributing the data across multiple nodes or servers, the workload can be balanced, and the system can handle more requests and process data more efficiently.</p>
+<h2>Key terminology and concepts</h2>
+<ul>
+<li>
+<p><strong>Partition:</strong> A partition is a smaller, more manageable part of a larger dataset, created as a result of data partitioning.</p>
+</li>
+<li>
+<p><strong>Partition key:</strong> The partition key is a data attribute used to determine how data is distributed across partitions. An effective partition key should provide an even distribution of data and support efficient query patterns.</p>
+</li>
+<li>
+<p><strong>Shard:</strong> A shard is a term often used interchangeably with a partition, particularly in the context of horizontal partitioning (will be discussed later).</p>
+</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Partitioning Methods</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Designing an effective partitioning scheme can be challenging and requires careful consideration of the application requirements and the characteristics of the data being processed. Below are three of the most popular schemes used by various large-scale applications.</p>
+<h2>a. Horizontal Partitioning</h2>
+<p>Also known as sharding, horizontal data partitioning involves dividing a database table into multiple partitions or shards, with each partition containing a subset of rows. Each shard is typically assigned to a different database server, which allows for parallel processing and faster query execution times.</p>
+<p>For example, consider a social media platform that stores user data in a database table. The platform might partition the user table horizontally based on the geographic location of the users, so that users in the United States are stored in one shard, users in Europe are stored in another shard, and so on. This way, when a user logs in and their data needs to be accessed, the query can be directed to the appropriate shard, minimizing the amount of data that needs to be scanned.</p>
+<p>The key problem with this approach is that if the value whose range is used for partitioning isn’t chosen carefully, then the partitioning scheme will lead to unbalanced servers. For instance, partitioning users based on their geographic location assumes an even distribution of users across different regions, which may not be valid due to the presence of densely or sparsely populated areas.</p></div><div><h2>b. Vertical Partitioning</h2>
+<p>Vertical data partitioning involves splitting a database table into multiple partitions or shards, with each partition containing a subset of columns. This technique can help optimize performance by reducing the amount of data that needs to be scanned, especially when certain columns are accessed more frequently than others.</p>
+<p>For example, consider an e-commerce website that stores customer data in a database table. The website might partition the customer table vertically based on the type of data, so that personal information such as name and address are stored in one shard, while order history and payment information are stored in another shard. This way, when a customer logs in and their order history needs to be accessed, the query can be directed to the appropriate shard, minimizing the amount of data that needs to be scanned.</p>
+<h2>c. Hybrid Partitioning</h2>
+<p>Hybrid data partitioning combines both horizontal and vertical partitioning techniques to partition data into multiple shards. This technique can help optimize performance by distributing the data evenly across multiple servers, while also minimizing the amount of data that needs to be scanned.</p>
+<p>For example, consider a large e-commerce website that stores customer data in a database table. The website might partition the customer table horizontally based on the geographic location of the customers, and then partition each shard vertically based on the type of data. This way, when a customer logs in and their data needs to be accessed, the query can be directed to the appropriate shard, minimizing the amount of data that needs to be scanned. Additionally, each shard can be stored on a different database server, allowing for parallel processing and faster query execution times.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Data Sharding Techniques</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Consistent Hashing Ring &amp; Virtual Nodes Key Distribution</div>
+    <div class="diagram-badge">Partitioning Architecture</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 310" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradHashRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: Consistent Hashing Ring -->
+  <g transform="translate(180, 155)">
+    <!-- 360 Degree Circle -->
+    <circle cx="0" cy="0" r="110" fill="none" stroke="#475569" stroke-width="6" stroke-dasharray="6 6"/>
+    <circle cx="0" cy="0" r="110" fill="none" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+
+    <!-- Center Ring Info -->
+    <circle cx="0" cy="0" r="50" fill="url(#gradHashRing)" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="0" y="-8" fill="#818cf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">HASH RING</text>
+    <text x="0" y="10" fill="#94a3b8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">[0 ➔ 2³² - 1]</text>
+    <text x="0" y="24" fill="#38bdf8" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">Clockwise Lookup</text>
+
+    <!-- Node A (Top) -->
+    <circle cx="0" cy="-110" r="18" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2.5"/>
+    <text x="0" y="-105" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Node A</text>
+
+    <!-- Node B (Right) -->
+    <circle cx="110" cy="0" r="18" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/>
+    <text x="110" y="5" fill="#10b981" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Node B</text>
+
+    <!-- Node C (Bottom) -->
+    <circle cx="0" cy="110" r="18" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="0" y="115" fill="#f59e0b" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Node C</text>
+
+    <!-- Node D (Left) -->
+    <circle cx="-110" cy="0" r="18" fill="#581c87" stroke="#c084fc" stroke-width="2.5"/>
+    <text x="-110" y="5" fill="#c084fc" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Node D</text>
+
+    <!-- Key k1 (between Node D and Node A) -->
+    <circle cx="-60" cy="-85" r="7" fill="#ef4444"/>
+    <text x="-75" y="-95" fill="#f87171" font-family="Fira Code, monospace" font-size="9" font-weight="600">k1 ➔ Node A</text>
+    <path d="M -60 -85 C -45 -100, -25 -105, -18 -110" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+    <!-- Key k2 (between Node A and Node B) -->
+    <circle cx="75" cy="-75" r="7" fill="#ef4444"/>
+    <text x="90" y="-85" fill="#f87171" font-family="Fira Code, monospace" font-size="9" font-weight="600">k2 ➔ Node B</text>
+  </g>
+
+  <!-- Right: Benefits & Vnodes Breakdown -->
+  <g transform="translate(420, 25)">
+    <rect x="0" y="0" width="390" height="255" rx="10" fill="url(#gradHashRing)" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="195" y="30" fill="#818cf8" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">WHY CONSISTENT HASHING MATTERS</text>
+
+    <rect x="20" y="50" width="350" height="55" rx="6" fill="#1e1b4b" stroke="#38bdf8" stroke-width="0.8"/>
+    <text x="35" y="70" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700">1. Minimal Key Migration on Scaling</text>
+    <text x="35" y="90" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">When adding/removing a node, only k/N keys relocate (vs 100% in Modulo N).</text>
+
+    <rect x="20" y="115" width="350" height="55" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+    <text x="35" y="135" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700">2. Virtual Nodes (vnodes) Prevent Hotspots</text>
+    <text x="35" y="155" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">Each physical server maps to 100+ virtual tokens to ensure uniform load balance.</text>
+
+    <rect x="20" y="180" width="350" height="55" rx="6" fill="#78350f" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="35" y="200" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700">3. Used in Production Flagships</text>
+    <text x="35" y="220" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">DynamoDB, Apache Cassandra, Memcached, Akamai CDN Edge Routing.</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Consistent hashing distributes keys around a 360° integer ring using virtual nodes, ensuring that adding or removing a cluster node only migrates k/N keys rather than triggering a full rehash.
+  </div>
+</div>
+
+
+    <div><p>Data sharding, a type of horizontal partitioning, is a technique used to distribute large datasets across multiple storage resources, often referred to as shards. By dividing data into smaller, more manageable pieces, sharding can improve performance, scalability, and resource utilization. Below are several data sharding techniques with examples:</p>
+<h2>1. Range-based Sharding</h2>
+<p>In range-based sharding, data is divided into shards based on a specific range of values for a given partitioning key. Each shard is responsible for a specific range, ensuring that the data is distributed in a predictable manner.</p>
+<p><strong>Example:</strong> An e-commerce platform stores order data and decides to shard it based on order dates. Shards can be created for specific date ranges, such as monthly or yearly intervals. When a query targets a specific date range, only the relevant shard needs to be accessed, which improves query performance.</p></div><div><h2>2. Hash-based Sharding</h2>
+<p>Hash-based sharding involves applying a consistent hash function to the partitioning key, which generates a hash value that determines the destination shard for each data entry. This method ensures an even distribution of data across shards and is particularly useful when the partitioning key has a large number of distinct values or is not easily divided into ranges.</p>
+<p><strong>Example:</strong> A social media platform stores user data and decides to shard it based on user IDs. The platform applies a hash function to the user ID, generating a hash value that determines the shard for each user’s data. This approach ensures an even distribution of data across shards, optimizing storage efficiency and query performance.</p>
+<h2>3. Directory-based Sharding</h2>
+<p>Directory-based sharding uses a lookup table, often referred to as a directory, to map each data entry to a specific shard. This method offers greater flexibility, as shards can be added, removed, or reorganized without the need to rehash or reorganize the entire dataset. However, it introduces an additional layer of complexity, as the directory must be maintained and kept consistent.</p>
+<p><strong>Example:</strong> An online gaming platform stores player data and decides to use directory-based sharding. The platform maintains a directory that maps each player’s username to a specific shard. When a query targets a specific player’s data, the system first consults the directory to determine the relevant shard, then retrieves the data from that shard.</p></div><div><h2>4. Geographical Sharding</h2>
+<p>Geographical sharding involves partitioning data based on geographical locations, such as countries or regions. This method can help reduce latency and improve performance for users in specific locations by storing their data closer to them.</p>
+<p><strong>Example:</strong> A global streaming service stores user data and decides to shard it based on the user’s country. Each shard contains data for users from a specific country, and these shards are stored in data centers located within or near that country. This approach ensures that users can access their data with lower latency, improving the streaming experience.</p>
+<h2>5. Dynamic Sharding</h2>
+<p>Dynamic sharding is an adaptive approach that automatically adjusts the number of shards based on the data’s size and access patterns. This method can help optimize resource utilization and performance by creating shards as needed and merging or splitting them as the data grows or shrinks.</p>
+<p><strong>Example:</strong> An Internet of Things (IoT) platform collects sensor data from a large number of devices. The platform uses dynamic sharding to automatically adjust the number of shards based on the volume and frequency of incoming data. As more devices are added or removed, the platform can create or merge shards accordingly, ensuring optimal resource utilization and performance.</p></div><div><h2>6. Hybrid Sharding: The Best of Many Worlds</h2>
+<p>Why stick to one method when you can combine a few and get the best results? Hybrid Sharding is a blend of multiple sharding strategies to optimize performance. It might combine Geo-based with Directory-based sharding, or any other mix that suits a system&#x27;s needs.<br>
+<strong>Its Strength:</strong> By tailoring solutions and leveraging the strengths of different techniques, systems can achieve unprecedented efficiency levels.<br>
+<strong>Snapshot:</strong> Many cloud service providers, given their diverse clientele and global infrastructure, adopt hybrid sharding. It&#x27;s their secret sauce to ensure consistent, high-speed services across the board.</br></br></p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Benefits of Data Partitioning</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Data partitioning offers a wide range of benefits that can significantly improve the performance, scalability, and resilience of data-driven systems. By understanding the various advantages and their real-world applications, we can effectively implement data partitioning strategies tailored to our specific needs, resulting in more efficient and reliable data management. Here are the top benefits of data partitioning:</p>
+<h2>1. Improved Query Performance</h2>
+<p>Data partitioning can significantly improve query performance by reducing the amount of data that needs to be processed for a given query. When data is partitioned, queries can be targeted at specific partitions, enabling the system to retrieve only the necessary data and ignore irrelevant partitions.</p>
+<p><strong>Example:</strong> An online bookstore uses range partitioning to divide its inventory data based on book genres. When a customer searches for mystery novels, the system only needs to query the mystery partition, avoiding the need to search through data for other genres, such as romance or science fiction.</p>
+<h2>2. Enhanced Scalability</h2>
+<p>Partitioning data across multiple storage resources allows for greater system scalability. As the dataset grows, new partitions can be added to accommodate the additional data, without negatively impacting the performance of existing partitions.</p>
+<p><strong>Example:</strong> A social media platform uses horizontal partitioning to divide user data based on the user’s registration date. As more users join the platform, new partitions are created to store the data for these new users, ensuring that the system remains scalable and responsive as it grows.</p>
+<h2>3. Load Balancing</h2>
+<p>Data partitioning helps distribute the workload evenly across multiple storage nodes or servers. This load balancing ensures that no single node becomes a bottleneck, leading to better overall system performance and reliability.</p>
+<p><strong>Example:</strong> A messaging service uses round-robin partitioning to distribute messages across multiple storage nodes. Each message is assigned to a different node in a cyclic manner, ensuring that the workload is balanced and no single node is overwhelmed with too many messages.</p>
+<h2>4. Data Isolation</h2>
+<p>Partitioning data can provide a level of data isolation, where the failure or corruption of one partition does not necessarily impact the other partitions. This isolation can help improve the overall robustness and resilience of the system.</p>
+<p><strong>Example:</strong> A financial institution uses vertical partitioning to separate sensitive customer information, such as social security numbers and account numbers, from less sensitive data, such as transaction history. In the event of a data breach, the impact can be limited to only the affected partition, protecting the remaining data from potential exposure.</p>
+<h2>5. Parallel Processing</h2>
+<p>Data partitioning enables parallel processing, where multiple partitions can be processed simultaneously by different processors or systems. This parallelism can lead to significant performance improvements, especially for large-scale data processing tasks.</p>
+<p><strong>Example:</strong> An e-commerce company uses horizontal partitioning to divide customer order data based on geographical regions. During peak sales periods, each regional partition can be processed by a separate server, allowing for faster processing of orders and reduced system bottlenecks.</p>
+<h2>6. Storage Efficiency</h2>
+<p>By partitioning data based on usage patterns or data relevance, organizations can achieve more efficient storage utilization. Frequently accessed data can be stored on faster, more expensive storage resources, while less critical data can be stored on cheaper, slower storage resources.</p>
+<p><strong>Example:</strong> A video streaming service uses vertical partitioning to store high-resolution video files separately from lower-resolution versions. By storing high-resolution files on high-performance storage resources and lower-resolution files on more cost-effective storage resources, the service can optimize storage efficiency while maintaining high-quality streaming for users.</p>
+<h2>7. Simplified Data Management</h2>
+<p>Data partitioning can make data management tasks, such as backup, archiving, and maintenance, more manageable and efficient. By dealing with smaller, more focused partitions, these tasks can be performed more quickly and with less impact on overall system performance.</p>
+<p><strong>Example:</strong> An online news platform uses range partitioning to store articles based on their publication dates. This approach allows the platform to easily archive older articles or perform backups on specific date ranges without affecting the performance of the entire dataset.</p>
+<h2>8. Better Resource Utilization</h2>
+<p>Partitioning data based on specific attributes or access patterns can lead to better resource utilization. By aligning the data with the appropriate storage and processing resources, organizations can maximize the performance and efficiency of their data-driven systems.</p>
+<p><strong>Example:</strong> A weather forecasting service uses horizontal partitioning to store weather data based on geographical locations. This allows the service to allocate more resources to process data for areas with higher user demand, ensuring that resources are used efficiently and in line with user needs.</p>
+<h2>9. Improved Data Security</h2>
+<p>Data partitioning can help enhance data security by segregating sensitive information from less sensitive data. By isolating sensitive data in separate partitions, organizations can implement stronger security measures for those partitions, minimizing the risk of unauthorized access or data breaches.</p>
+<p><strong>Example:</strong> A healthcare provider uses vertical partitioning to separate patient medical records from demographic data. By storing sensitive medical records in a separate partition with strict access controls and encryption, the provider can better protect patient privacy and comply with data protection regulations.</p>
+<h2>10. Faster Data Recovery</h2>
+<p>In the event of a system failure or data loss, partitioning can help speed up the data recovery process. By focusing on recovering specific partitions rather than the entire dataset, organizations can reduce downtime and restore critical data more quickly.</p>
+<p><strong>Example:</strong> A multinational corporation uses horizontal partitioning to store sales data based on regional markets. If a system failure occurs, the company can prioritize the recovery of the most critical regional partitions, ensuring that essential operations can be resumed as soon as possible.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Common Problems Associated with Data Partitioning</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>While data partitioning offers numerous benefits, it also comes with some disadvantages and challenges that organizations must consider when implementing partitioning strategies. Some of these drawbacks include:</p>
+<h2>1. Complexity</h2>
+<p>Data partitioning adds complexity to system architecture, design, and management. Organizations must carefully plan and implement partitioning strategies, taking into account the unique requirements of their data and systems. This added complexity can lead to increased development and maintenance efforts, as well as a steeper learning curve for team members.</p>
+<h2>2. Data Skew</h2>
+<p>In some cases, data partitioning can result in uneven data distribution across partitions, known as data skew. This can happen when the chosen partitioning key or method does not distribute data evenly, leading to some partitions being larger or more heavily accessed than others. Data skew can result in reduced performance and resource utilization, negating the benefits of partitioning. For instance, if you were to shard a global customer database based on countries, and a vast majority of your users are from the US, then the shard containing US data might get overwhelmed.</p>
+<h2>3. Partitioning Key Selection</h2>
+<p>Choosing the appropriate partitioning key is crucial for achieving the desired benefits of data partitioning. An unsuitable partitioning key can lead to inefficient data distribution, performance bottlenecks, and increased management complexity. Selecting the right key requires a deep understanding of the data and its access patterns, which can be challenging for some organizations.</p>
+<h2>4. Cross-Partition Queries</h2>
+<p>When queries need to access data across multiple partitions, performance can suffer, as the system must search through and aggregate data from several partitions. This can result in increased query latency and reduced overall performance, especially when compared to a non-partitioned system.</p>
+<h2>5. Data Migration</h2>
+<p>Partitioning can sometimes require significant data migration efforts, especially when changing partitioning schemes or adding new partitions. This can be time-consuming and resource-intensive, potentially causing disruptions to normal system operation.</p>
+<h2>6. Partition Maintenance</h2>
+<p>Managing and maintaining partitions can be a challenging and resource-intensive task. As the data grows and evolves, organizations may need to reevaluate their partitioning strategies, which can involve repartitioning, merging, or splitting partitions. This can result in additional maintenance overhead and increased complexity. Here are a few other maintenance challenges:</p>
+<p><strong>Backup Challenges:</strong> Performing backups isn&#x27;t straightforward anymore. You need to ensure data consistency across all shards.</p>
+<p><strong>Patch Management:</strong> When a security update rolls out, it needs to be applied across all shards, sometimes simultaneously, to maintain compatibility and security.</p>
+<p><strong>Monitoring Woes:</strong> Instead of one set of metrics, DB administrators now need to monitor multiple, making anomaly detection a more daunting task.</p>
+<h2>7. Cost</h2>
+<p>Implementing a data partitioning strategy may require additional hardware, software, or infrastructure, leading to increased costs. Furthermore, the added complexity of managing a partitioned system may result in higher operational expenses.</p>
+<h1>Conclusion</h1>
+<p>Despite these disadvantages, data partitioning can still offer significant benefits in terms of performance, scalability, and resource utilization when implemented and managed effectively. Organizations must carefully weigh the potential drawbacks against the benefits to determine if data partitioning is the right solution for their specific needs.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_07_data_partitioning_and_sharding') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_07_data_partitioning_and_sharding', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+=== LINKEDIN POST #08: Forward Proxy vs Reverse Proxy vs VPN: The Structural Differences ===
+Target Chapter: 08 Proxies and VPN.html
+
+--- [COPY POST BODY BELOW] ---
+
+🛡️ Forward Proxy vs Reverse Proxy vs VPN: Clear architectural breakdown:
+
+Engineers often mix up Proxies and VPNs. Here is the definitive difference:
+
+1️⃣ Forward Proxy (Protects the Client):
+• Sits in front of client devices (e.g. corporate office).
+• Intercepts outbound traffic to block malicious sites, cache external content, and mask employee IP addresses.
+• Server sees the Proxy's IP, NOT the client's.
+
+2️⃣ Reverse Proxy (Protects the Server):
+• Sits in front of backend servers (e.g. NGINX, HAProxy).
+• Intercepts inbound traffic from the internet to load balance, terminate SSL, and cache responses.
+• Client sees the Proxy's IP, NOT the internal backend servers!
+
+3️⃣ Virtual Private Network (VPN):
+• Encrypts ALL device network traffic at the OS network interface level (Layer 3/4) through a secure tunnel (WireGuard/IPSec) into a private network.
+
+💬 Do you use NGINX, Envoy, or Caddy as your reverse proxy of choice?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Networking #Security #NGINX #Proxy #DevOps #SystemDesign
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

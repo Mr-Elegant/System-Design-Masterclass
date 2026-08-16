@@ -1,0 +1,30 @@
+=== LINKEDIN POST #18: AI & LLM System Fundamentals: PagedAttention, FlashAttention & KV-Cache ===
+Target Chapter: 18 AI & Large Language Model (LLM) System Fundamentals.html
+
+--- [COPY POST BODY BELOW] ---
+
+🤖 The Hardware & System Architecture of LLM Inference (FlashAttention & PagedAttention):
+
+Why is LLM generation so computationally expensive, and how do modern serving engines optimize it?
+
+💡 3 Breakthrough Systems Innovations:
+
+1️⃣ KV-Cache & Memory Bottleneck:
+In Autoregressive LLM generation, past Key and Value attention tensors are cached in GPU VRAM to avoid recalculating all tokens. At batch size 64 with 4k context: KV-Cache consumes 30GB+ of VRAM!
+
+2️⃣ PagedAttention (vLLM):
+Traditional allocators reserve contiguous VRAM for maximum context length, wasting 60-80% of GPU memory (internal fragmentation). PagedAttention manages KV-cache using virtual memory pages, boosting throughput by 4x!
+
+3️⃣ FlashAttention-3:
+Tiling the Attention matrix to fit entirely into fast on-chip GPU SRAM (100 TB/s bandwidth), avoiding slow High-Bandwidth Memory (HBM) round-trips!
+
+4️⃣ Speculative Decoding:
+A small 1B draft model generates 4 candidate tokens; a large 70B target model validates them in a single forward pass, yielding a 2.5x to 3x latency speedup!
+
+💬 Have you optimized LLM inference in production using vLLM or TensorRT-LLM?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#GenerativeAI #LLM #FlashAttention #vLLM #MachineLearning #SystemDesign
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

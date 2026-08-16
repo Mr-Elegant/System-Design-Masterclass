@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%" style="background-color: #181818; font-family: 'Inter', sans-serif;">
+    <rect width="100%" height="100%" fill="#181818"/>
+    <text x="500" y="45" font-family="'Outfit', sans-serif" font-size="24" font-weight="700" fill="#38bdf8" text-anchor="middle">Multi-Floor Parking Lot UML Class Diagram</text>
+
+    <!-- Manager Box -->
+    <rect x="350" y="80" width="300" height="120" rx="8" fill="#1e1e1e" stroke="#38bdf8" stroke-width="2"/>
+    <text x="500" y="105" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="middle">ParkingLotManager (Singleton)</text>
+    <line x1="350" y1="115" x2="650" y2="115" stroke="#38bdf8" stroke-width="1"/>
+    <text x="365" y="135" font-size="12" fill="#a0a0a0">- spots: List&lt;ParkingSpot&gt;</text>
+    <text x="365" y="152" font-size="12" fill="#a0a0a0">- tickets: Map&lt;String, Ticket&gt;</text>
+    <text x="365" y="175" font-size="12" fill="#4ade80">+ parkVehicle(vehicle): Ticket</text>
+
+    <!-- Spot Box -->
+    <rect x="100" y="260" width="240" height="160" rx="8" fill="#1e1e1e" stroke="#818cf8" stroke-width="2"/>
+    <text x="220" y="285" font-size="15" font-weight="700" fill="#818cf8" text-anchor="middle">ParkingSpot</text>
+    <line x1="100" y1="295" x2="340" y2="295" stroke="#818cf8" stroke-width="1"/>
+    <text x="115" y="315" font-size="12" fill="#a0a0a0">- spotId: String</text>
+    <text x="115" y="332" font-size="12" fill="#a0a0a0">- spotType: SpotType</text>
+    <text x="115" y="349" font-size="12" fill="#a0a0a0">- isOccupied: boolean</text>
+    <text x="115" y="375" font-size="12" fill="#4ade80">+ canFit(vehicle): bool</text>
+    <text x="115" y="392" font-size="12" fill="#4ade80">+ park(vehicle) / unpark()</text>
+
+    <!-- Vehicle Box -->
+    <rect x="660" y="260" width="240" height="160" rx="8" fill="#1e1e1e" stroke="#fbbf24" stroke-width="2"/>
+    <text x="780" y="285" font-size="15" font-weight="700" fill="#fbbf24" text-anchor="middle">Vehicle (Abstract Class)</text>
+    <line x1="660" y1="295" x2="900" y2="295" stroke="#fbbf24" stroke-width="1"/>
+    <text x="675" y="315" font-size="12" fill="#a0a0a0"># licensePlate: String</text>
+    <text x="675" y="332" font-size="12" fill="#a0a0a0"># vehicleType: VehicleType</text>
+    <line x1="660" y1="345" x2="900" y2="345" stroke="#fbbf24" stroke-width="1"/>
+    <text x="780" y="370" font-size="12" fill="#e0e0e0" text-anchor="middle">Car | Motorcycle | Truck</text>
+
+    <!-- Relationships -->
+    <path d="M 350 140 L 220 260" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5,5"/>
+    <path d="M 650 140 L 780 260" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5,5"/>
+</svg>

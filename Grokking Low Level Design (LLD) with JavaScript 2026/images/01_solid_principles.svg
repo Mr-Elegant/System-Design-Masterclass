@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%" style="background-color: #181818; font-family: 'Inter', sans-serif;">
+    <rect width="100%" height="100%" fill="#181818"/>
+    <text x="500" y="45" font-family="'Outfit', sans-serif" font-size="24" font-weight="700" fill="#38bdf8" text-anchor="middle">S.O.L.I.D Principles &amp; Decoupled Architecture</text>
+    
+    <!-- SRP Box -->
+    <rect x="50" y="80" width="260" height="170" rx="10" fill="#1e1e1e" stroke="#38bdf8" stroke-width="2"/>
+    <text x="180" y="110" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="middle">[S] Single Responsibility</text>
+    <rect x="70" y="130" width="220" height="35" rx="5" fill="#2d2d2d" stroke="#475569"/>
+    <text x="180" y="152" font-size="13" fill="#e0e0e0" text-anchor="middle">UserRepository (DB)</text>
+    <rect x="70" y="175" width="220" height="35" rx="5" fill="#2d2d2d" stroke="#475569"/>
+    <text x="180" y="197" font-size="13" fill="#e0e0e0" text-anchor="middle">EmailService (Email)</text>
+    <rect x="70" y="220" width="220" height="20" rx="4" fill="none"/>
+    <text x="180" y="232" font-size="11" fill="#a0a0a0" text-anchor="middle">Single Reason to Change</text>
+
+    <!-- OCP Box -->
+    <rect x="370" y="80" width="260" height="170" rx="10" fill="#1e1e1e" stroke="#818cf8" stroke-width="2"/>
+    <text x="500" y="110" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="middle">[O] Open / Closed</text>
+    <rect x="390" y="130" width="220" height="35" rx="5" fill="#2d2d2d" stroke="#818cf8"/>
+    <text x="500" y="152" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">PaymentStrategy (Interface)</text>
+    <path d="M 440 165 L 440 200" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M 560 165 L 560 200" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="390" y="200" width="100" height="35" rx="5" fill="#2d2d2d" stroke="#475569"/>
+    <text x="440" y="222" font-size="11" fill="#e0e0e0" text-anchor="middle">CreditCard</text>
+    <rect x="510" y="200" width="100" height="35" rx="5" fill="#2d2d2d" stroke="#475569"/>
+    <text x="560" y="222" font-size="11" fill="#e0e0e0" text-anchor="middle">CryptoPay</text>
+
+    <!-- LSP Box -->
+    <rect x="690" y="80" width="260" height="170" rx="10" fill="#1e1e1e" stroke="#4ade80" stroke-width="2"/>
+    <text x="820" y="110" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="middle">[L] Liskov Substitution</text>
+    <rect x="710" y="130" width="220" height="35" rx="5" fill="#2d2d2d" stroke="#4ade80"/>
+    <text x="820" y="152" font-size="13" fill="#e0e0e0" text-anchor="middle">Shape.getArea()</text>
+    <text x="820" y="195" font-size="12" fill="#a0a0a0" text-anchor="middle">Subtypes Substitutable</text>
+    <text x="820" y="215" font-size="12" fill="#4ade80" font-weight="600" text-anchor="middle">Without Altering Correctness</text>
+
+    <!-- ISP Box -->
+    <rect x="200" y="290" width="270" height="170" rx="10" fill="#1e1e1e" stroke="#f43f5e" stroke-width="2"/>
+    <text x="335" y="320" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="middle">[I] Interface Segregation</text>
+    <rect x="220" y="340" width="105" height="35" rx="5" fill="#2d2d2d" stroke="#f43f5e"/>
+    <text x="272" y="362" font-size="12" fill="#e0e0e0" text-anchor="middle">CanFly Mixin</text>
+    <rect x="345" y="340" width="105" height="35" rx="5" fill="#2d2d2d" stroke="#f43f5e"/>
+    <text x="397" y="362" font-size="12" fill="#e0e0e0" text-anchor="middle">CanSwim Mixin</text>
+    <text x="335" y="415" font-size="12" fill="#a0a0a0" text-anchor="middle">Small, Focused Role Interfaces</text>
+
+    <!-- DIP Box -->
+    <rect x="530" y="290" width="270" height="170" rx="10" fill="#1e1e1e" stroke="#a855f7" stroke-width="2"/>
+    <text x="665" y="320" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="middle">[D] Dependency Inversion</text>
+    <rect x="550" y="340" width="230" height="35" rx="5" fill="#2d2d2d" stroke="#a855f7"/>
+    <text x="665" y="362" font-size="13" font-weight="600" fill="#38bdf8" text-anchor="middle">High-Level App (OrderService)</text>
+    <path d="M 665 375 L 665 405" stroke="#a855f7" stroke-width="2"/>
+    <rect x="550" y="405" width="230" height="35" rx="5" fill="#2d2d2d" stroke="#475569"/>
+    <text x="665" y="427" font-size="13" fill="#e0e0e0" text-anchor="middle">Injected DB Abstraction</text>
+</svg>

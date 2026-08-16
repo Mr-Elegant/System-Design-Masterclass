@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senior Clean Code &amp; System Architecture Principles — LLD Master Guide (MERN & ES6+ Edition)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: #1e1e2e;
+    --accent: #e8ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff6b6b;
+    --accent4: #b8a9ff;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+    --code-bg: #0d0d16;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.5;
+  }
+
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 280px; background: var(--surface); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 100; padding: 24px 0;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar-logo { padding: 0 24px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .sidebar-logo h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .sidebar-logo p { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  .nav-section {
+    padding: 8px 24px 4px; font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 12px;
+  }
+
+  .nav-item {
+    display: block; padding: 8px 24px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted); text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.4;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .nav-item:hover, .nav-item.active { color: var(--text); background: var(--surface2); border-left-color: var(--accent); }
+  .nav-item span { color: var(--accent); margin-right: 4px; }
+
+  .main { margin-left: 280px; min-height: 100vh; }
+  .hero { padding: 80px 80px 60px; position: relative; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .hero-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--accent); color: #000; padding: 4px 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(32px, 4vw, 54px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 650px; font-style: italic; }
+
+  .content { padding: 60px 80px; max-width: 1050px; }
+  .section { margin-bottom: 80px; padding-bottom: 60px; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .section-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #000; background: var(--accent); padding: 4px 10px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; color: var(--text); }
+
+  h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; margin: 32px 0 16px; color: var(--accent2); }
+  h3 { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 16px; margin: 24px 0 12px; color: var(--text); }
+  p { margin-bottom: 16px; font-size: 15.5px; color: #c8c8d8; }
+  ul, ol { margin-bottom: 20px; padding-left: 24px; color: #c8c8d8; font-size: 15px; }
+  li { margin-bottom: 6px; }
+
+  /* Cards */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); padding: 20px; position: relative; overflow: hidden; transition: all 0.2s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  /* Callout Box */
+  .callout { padding: 16px 20px; margin: 20px 0; border-left: 3px solid; font-size: 14px; background: var(--surface2); }
+  .callout-tip { border-color: var(--accent); background: rgba(232,255,71,0.06); }
+  .callout-tip strong { color: var(--accent); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .callout-info { border-color: var(--accent2); background: rgba(71,200,255,0.06); }
+  .callout-info strong { color: var(--accent2); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .callout-warn { border-color: var(--accent3); background: rgba(255,107,107,0.06); }
+  .callout-warn strong { color: var(--accent3); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  /* Code Block */
+  .code-block { background: var(--code-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 20px 24px; margin: 20px 0; overflow-x: auto; position: relative; }
+  .code-label { position: absolute; top: 8px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #a8d8a8; line-height: 1.6; }
+
+  /* Diagram Box */
+  .diagram { background: var(--surface2); border: 1px solid var(--border); padding: 24px; margin: 20px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent2); overflow-x: auto; }
+  .diagram pre { line-height: 1.5; white-space: pre; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13.5px; }
+  th { background: var(--surface2); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 10px 14px; text-align: left; color: var(--accent); border-bottom: 2px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: #c0c0d0; vertical-align: top; }
+  tr:hover td { background: var(--surface2); }
+
+  /* Tag Pills */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.accent { border-color: rgba(232,255,71,0.3); color: var(--accent); background: rgba(232,255,71,0.05); }
+  .tag.blue { border-color: rgba(71,200,255,0.3); color: var(--accent2); background: rgba(71,200,255,0.05); }
+  .tag.purple { border-color: rgba(184,169,255,0.3); color: var(--accent4); background: rgba(184,169,255,0.05); }
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h2>LLD Master Guide</h2>
+    <p>// System Design v3 Edition</p>
+  </div>
+  <div class="nav-section">Module Curriculum</div>
+  <a class="nav-item" href="#chapter-01"><span>01</span> · Code Smells &amp; Refactoring (Shotgun Surgery, Feature Envy, Primitive Obsession)</a>
+</nav>
+
+<div class="main">
+  <div class="hero">
+    <div class="hero-tag">Module 03 · Senior Architecture</div>
+    <h1>Senior Clean Code &amp; System Architecture Principles</h1>
+    <p>Complete Low Level Design (LLD) & Object-Oriented Engineering Textbook with Runnable ES6+ / TypeScript Code.</p>
+  </div>
+
+  <div class="content">
+    <div class="section" id="chapter-01">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Code Smells &amp; Refactoring (Shotgun Surgery, Feature Envy, Primitive Obsession)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">Clean Code</span><span class="tag red">Refactoring</span><span class="tag blue">Code Smells</span></div>
+                    <p>Clean code techniques eliminate technical debt and ensure software remain maintainable under rapid feature development.</p>
+  </div>
+</div>
+  </div>
+</div>
+
+<script>
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>

@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Databases &amp; Indexing - System Design Guide</title>
+    <meta property="og:title" content="Databases &amp; Indexing - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Databases &amp; Indexing</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (13)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to databases"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Databases</a></li>
+<li class="sidebar-item" data-num="02" data-title="sql databases"><a href="#chapter-02"><span class="chapter-num">02</span> SQL Databases</a></li>
+<li class="sidebar-item" data-num="03" data-title="nosql databases"><a href="#chapter-03"><span class="chapter-num">03</span> NoSQL Databases</a></li>
+<li class="sidebar-item" data-num="04" data-title="sql vs nosql"><a href="#chapter-04"><span class="chapter-num">04</span> SQL vs NoSQL</a></li>
+<li class="sidebar-item" data-num="05" data-title="acid vs base properties"><a href="#chapter-05"><span class="chapter-num">05</span> ACID vs BASE Properties</a></li>
+<li class="sidebar-item" data-num="06" data-title="realworld examples and case studies"><a href="#chapter-06"><span class="chapter-num">06</span> RealWorld Examples and Case Studies</a></li>
+<li class="sidebar-item" data-num="07" data-title="sql normalization and denormalization"><a href="#chapter-07"><span class="chapter-num">07</span> SQL Normalization and Denormalization</a></li>
+<li class="sidebar-item" data-num="08" data-title="inmemory database vs ondisk database"><a href="#chapter-08"><span class="chapter-num">08</span> InMemory Database vs OnDisk Database</a></li>
+<li class="sidebar-item" data-num="09" data-title="data replication vs data mirroring"><a href="#chapter-09"><span class="chapter-num">09</span> Data Replication vs Data Mirroring</a></li>
+<li class="sidebar-item" data-num="10" data-title="database federation"><a href="#chapter-10"><span class="chapter-num">10</span> Database Federation</a></li>
+<li class="sidebar-item" data-num="11" data-title="what are indexes"><a href="#chapter-11"><span class="chapter-num">11</span> What are Indexes</a></li>
+<li class="sidebar-item" data-num="12" data-title="types of indexes"><a href="#chapter-12"><span class="chapter-num">12</span> Types of Indexes</a></li>
+<li class="sidebar-item" data-num="13" data-title="vector databases, embeddings &amp; modern storage engines"><a href="#chapter-13"><span class="chapter-num">13</span> Vector Databases, Embeddings &amp; Modern Storage Engines</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to Databases</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>A database is an organized collection of structured data that is stored and managed electronically. Databases are essential tools for managing, storing, and retrieving data efficiently, and they play a vital role in modern applications.</p>
+<h2>Database Management Systems (DBMS)</h2>
+<p>A Database Management System (DBMS) is software that interacts with users, applications, and the database itself to capture, store, and manage data. It provides an interface for performing various operations on the data, such as inserting, updating, deleting, and retrieving data. The primary goal of a DBMS is to ensure that data remains consistent, secure, and easily accessible.</p>
+<p>There are two main types of DBMSs:</p>
+<ul>
+<li>
+<p><strong>Relational Database Management Systems (RDBMS):</strong> These systems store data in tables with predefined relationships between them. The most common query language for RDBMSs is SQL (Structured Query Language).</p>
+</li>
+<li>
+<p><strong>Non-Relational Database Management Systems (NoSQL):</strong> These systems store data in various formats, such as key-value, document, column-family, or graph. NoSQL databases are known for their ability to scale horizontally and handle unstructured or semi-structured data.</p>
+</li>
+</ul>
+<h2>Overview of SQL and NoSQL databases</h2>
+<p>Databases can be broadly classified into two categories: SQL (Structured Query Language) and NoSQL (Not only SQL) databases. SQL databases, also known as relational databases, are based on the relational model, where data is stored in tables with predefined schema and relationships between them. Some popular SQL databases include MySQL, PostgreSQL, Microsoft SQL Server, and Oracle. SQL databases are known for their consistency, reliability, and powerful query capabilities.</p>
+<p>On the other hand, NoSQL databases are a diverse group of non-relational databases that prioritize flexibility, scalability, and performance under specific workloads. NoSQL databases can be further categorized into document databases, key-value stores, column-family stores, and graph databases, each with their unique data models and use cases. Some widely-used NoSQL databases are MongoDB, Redis, Apache Cassandra, and Neo4j.</p>
+<h2>High level differences between SQL and NoSQL</h2>
+<p><strong>1. Storage:</strong> SQL stores data in tables where each row represents an entity and each column represents a data point about that entity; for example, if we are storing a car entity in a table, different columns could be ‘Color’, ‘Make’, ‘Model’, and so on.</p>
+<p>NoSQL databases have different data storage models. The main ones are key-value, document, graph, and columnar. We will discuss differences between these databases below.</p>
+<p><strong>2. Schema:</strong> In SQL, each record conforms to a fixed schema, meaning the columns must be decided and chosen before data entry and each row must have data for each column. The schema can be altered later, but it involves modifying the whole database and going offline.</p>
+<p>In NoSQL, schemas are dynamic. Columns can be added on the fly and each ‘row’ (or equivalent) doesn’t have to contain data for each ‘column.&#x27;</p>
+<p><strong>3. Querying:</strong> SQL databases use SQL (structured query language) for defining and manipulating the data, which is very powerful. In a NoSQL database, queries are focused on a collection of documents. Sometimes it is also called UnQL (Unstructured Query Language). Different databases have different syntax for using UnQL.</p>
+<p><strong>4. Scalability:</strong> In most common situations, SQL databases are vertically scalable, i.e., by increasing the horsepower (higher Memory, CPU, etc.) of the hardware, which can get very expensive. It is possible to scale a relational database across multiple servers, but this is a challenging and time-consuming process.</p>
+<p>On the other hand, NoSQL databases are horizontally scalable, meaning we can add more servers easily in our NoSQL database infrastructure to handle a lot of traffic. Any cheap commodity hardware or cloud instances can host NoSQL databases, thus making it a lot more cost-effective than vertical scaling. A lot of NoSQL technologies also distribute data across servers automatically.</p>
+<p><strong>5. Reliability or ACID Compliancy (Atomicity, Consistency, Isolation, Durability):</strong> The vast majority of relational databases are ACID compliant. So, when it comes to data reliability and safe guarantee of performing transactions, SQL databases are still the better bet.</p>
+<p>Most of the NoSQL solutions sacrifice ACID compliance for availability, performance, and scalability.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">SQL Databases</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>SQL (Structured Query Language) databases, also known as relational databases, are the most commonly used type of databases in software applications. They store data in tables, where each table consists of rows and columns. Relationships between tables are established using primary and foreign keys. SQL databases follow the ACID properties (Atomicity, Consistency, Isolation, Durability) to ensure reliable data transactions.</p>
+<h2>RDBMS Concepts</h2>
+<ul>
+<li>
+<p><strong>Tables:</strong> The fundamental building blocks of relational databases, tables represent the structure of the data. Each table contains rows (records) and columns (fields) that store individual pieces of data.</p>
+</li>
+<li>
+<p><strong>Primary Key:</strong> A unique identifier for each row in a table. A primary key enforces uniqueness and ensures that no two rows share the same identifier.</p>
+</li>
+<li>
+<p><strong>Foreign Key:</strong> A column (or a set of columns) in a table that refers to the primary key of another table. Foreign keys are used to establish relationships between tables and enforce referential integrity.</p>
+</li>
+<li>
+<p><strong>Indexes:</strong> Database indexes are data structures that help to speed up data retrieval operations. They work similarly to the index in a book, allowing for faster lookups and searches.</p>
+</li>
+<li>
+<p><strong>Normalization:</strong> The process of organizing a database into tables, columns, and relationships to reduce data redundancy and improve data integrity.</p>
+</li>
+</ul>
+<h2>SQL Language</h2>
+<p>SQL is a standardized language for managing and querying relational databases. It provides a powerful and flexible way to interact with the data. The language consists of several components, including:</p>
+<ul>
+<li>
+<p><strong>Data Definition Language (DDL):</strong> Allows for the creation, modification, and deletion of database structures, such as tables, indexes, and constraints.</p>
+</li>
+<li>
+<p><strong>Data Manipulation Language (DML):</strong> Enables data insertion, updating, deletion, and retrieval operations on database tables.</p>
+</li>
+<li>
+<p><strong>Data Control Language (DCL):</strong> Deals with user permissions and access control for database objects.</p>
+</li>
+<li>
+<p><strong>Transaction Control Language (TCL):</strong> Manages database transactions and ensures ACID compliance.</p>
+</li>
+</ul>
+<h2>Popular SQL Databases</h2>
+<p>Several well-known SQL databases are available, each with its own features and use cases. Some popular SQL databases include:</p>
+<ul>
+<li>
+<p><strong>MySQL:</strong> An open-source, widely used RDBMS, MySQL is popular for web applications and is a component of the LAMP (Linux, Apache, MySQL, PHP/Perl/Python) stack.</p>
+</li>
+<li>
+<p><strong>PostgreSQL:</strong> Another open-source RDBMS that focuses on extensibility, standards compliance, and performance. PostgreSQL is well-regarded for its advanced features, such as support for custom data types, full-text search, and spatial data operations.</p>
+</li>
+<li>
+<p><strong>Microsoft SQL Server:</strong> A commercial RDBMS developed by Microsoft, featuring a comprehensive set of tools and features for enterprise-level applications. SQL Server is known for its tight integration with other Microsoft products, security features, and business intelligence capabilities.</p>
+</li>
+<li>
+<p><strong>Oracle Database:</strong> A widely-used commercial RDBMS that offers high performance, advanced features, and scalability. Oracle is popular in large organizations and mission-critical applications due to its robustness, reliability, and comprehensive toolset.</p>
+</li>
+</ul>
+<h2>Pros and cons of using SQL databases</h2>
+<ol>
+<li><strong>ACID properties and consistency:</strong> SQL databases adhere to the ACID (Atomicity, Consistency, Isolation, Durability) properties, which ensure the reliability of transactions and the consistency of the data. These properties guarantee that any operation on the data will either be completed in its entirety or not at all, and that the data will always remain in a consistent state.</li>
+<li><strong>Structured schema:</strong> SQL databases enforce a predefined schema for the data, which ensures that the data is structured, consistent, and follows specific rules. This structured schema can make it easier to understand and maintain the data model, as well as optimize queries for performance.</li>
+<li><strong>Query language and optimization:</strong> SQL is a powerful and expressive query language that allows developers to perform complex operations on the data, such as filtering, sorting, grouping, and joining multiple tables based on specified conditions. SQL databases also include query optimizers, which analyze and optimize queries for improved performance.</li>
+<li><strong>Scalability and performance:</strong> SQL databases can be scaled vertically by adding more resources (such as CPU, memory, and storage) to a single server. However, horizontal scaling, or distributing the data across multiple servers, <a href="https://systemdesign.example.com/blog/Scaling-SQL-Databases" target="_blank">can be more challenging</a> due to the relational nature of the data and the constraints imposed by the ACID properties. This can lead to performance bottlenecks and difficulties in scaling for large-scale applications with high write loads or massive amounts of data.</li>
+</ol></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">NoSQL Databases</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>NoSQL databases, also known as &quot;Not Only SQL&quot; databases, are a diverse group of non-relational databases designed to address the limitations of traditional SQL databases, particularly in terms of scalability, flexibility, and performance under specific workloads. NoSQL databases do not adhere to the relational model and typically do not use SQL as their primary query language. Instead, they employ various data models and query languages, depending on the specific type of NoSQL database being used.</p>
+<p>The key characteristics of NoSQL databases include their schema-less design, which allows for greater flexibility in handling data; horizontal scalability, which makes it easier to distribute data across multiple servers; and their ability to perform well under specific workloads, such as high write loads or large-scale data storage and retrieval.</p>
+<h2>Types of NoSQL Databases</h2>
+<p>NoSQL databases can be broadly categorized into the following six types, each with its unique data model and use cases:</p>
+<h3>1. Key-value databases</h3>
+<p>Key-value databases store data as key-value pairs, where the key is a unique identifier and the value is the associated data. These databases excel in scenarios requiring high write and read performance for simple data models, such as session management and real-time analytics.</p>
+<p><strong>Use cases:</strong> Session management, user preferences, and product recommendations.</p>
+<p><strong>Examples:</strong> Amazon DynamoDB (in the cloud), Azure Cosmos DB, Redis.</p>
+<h3>2. In-memory key-value databases</h3>
+<p>The data is primarily stored in memory, unlike disk-based databases. By eliminating disk access, these databases enable minimal response times. Because all data is stored in main memory, in-memory databases risk losing data upon a process or server failure. In-memory databases can persist data on disks by storing each operation in a log or by taking snapshots.</p>
+<p><strong>Examples:</strong> Redis, Memcached, Amazon Elasticache.</p></div><div><h3>3. Document databases</h3>
+<p>Document databases are structured similarly to key-value databases except that keys and values are stored in documents written in a markup language like JSON, BSON, XML, or YAML. Each document can contain nested fields, arrays, and other complex data structures, providing a high degree of flexibility in representing hierarchical and related data.</p>
+<p><strong>Use cases:</strong> User profiles, product catalogs, and content management.</p>
+<p><strong>Examples:</strong> MongoDB, Amazon DocumentDB, CouchDB.</p>
+<h3>4. Wide-column databases</h3>
+<p>Wide column databases are based on tables but without a strict column format. Rows do not need a value in every column, and segments of rows and columns containing different data formats can be combined.</p>
+<p><strong>Use cases:</strong> Telemetry, analytics data, messaging, and time-series data.</p>
+<p><strong>Examples:</strong> Cassandra, Accumulo, Azure Table Storage, HBase.</p>
+<h3>5. Graph databases</h3>
+<p>Graph databases map the relationships between data using nodes and edges. Nodes are the individual data values, and edges are the relationships between those values.</p>
+<p><strong>Use cases:</strong> Social graphs, recommendation engines, and fraud detection.</p>
+<p><strong>Examples:</strong> Neo4j, Amazon Neptune, Cosmos DB through Azure Gremlin.</p>
+<h3>6. Time series databases</h3>
+<p>These databases store data in time-ordered streams. Data is not sorted by value or id but by the time of collection, ingestion, or other timestamps included in the metadata.</p>
+<p><strong>Use cases:</strong> Industrial telemetry, DevOps, and Internet of Things (IOT) applications.</p>
+<p><strong>Examples:</strong> Graphite, Prometheus, Amazon Timestream.</p>
+<h2>Popular NoSQL Databases</h2>
+<p>Here are some well-known NoSQL databases:</p>
+<ul>
+<li>
+<p><strong>MongoDB:</strong> A document-oriented database that uses the BSON format for data storage and supports horizontal scaling through sharding.</p>
+</li>
+<li>
+<p><strong>Redis:</strong> An in-memory, key-value store that supports various data structures and offers fast performance for caching, message queues, and real-time analytics.</p>
+</li>
+<li>
+<p><strong>Apache Cassandra:</strong> A highly scalable, distributed wide-column store that provides high availability and fault tolerance, designed for handling large-scale data across many commodity servers.</p>
+</li>
+<li>
+<p><strong>Neo4j:</strong> A graph database that offers powerful query capabilities for traversing complex relationships and analyzing connected data.</p>
+</li>
+</ul>
+<h2>Pros and cons of using NoSQL databases</h2>
+<ol>
+<li>
+<p><strong>Flexibility and schema-less design:</strong> One of the primary advantages of NoSQL databases is their schema-less design, which allows for greater flexibility in handling diverse and dynamic data models. This makes it easier to adapt to changing requirements and accommodate new data types without the need for extensive schema modifications, as is often the case with SQL databases.</p>
+</li>
+<li>
+<p><strong>Horizontal scalability:</strong> NoSQL databases are designed to scale horizontally, enabling the distribution of data across multiple servers, often with built-in support for data replication, sharding, and partitioning. This makes NoSQL databases well-suited for large-scale applications with high write loads or massive amounts of data, where traditional SQL databases may struggle to maintain performance and consistency.</p>
+</li>
+<li>
+<p><strong>Performance under specific workloads:</strong> NoSQL databases can offer superior performance under specific workloads, such as high write loads, large-scale data storage and retrieval, and complex relationships. By choosing a NoSQL database tailored to the needs of a particular application, developers can optimize performance and resource utilization while maintaining an appropriate level of data consistency and reliability.</p>
+</li>
+<li>
+<p><strong>CAP theorem and trade-offs:</strong> The CAP theorem states that a distributed data store can provide only two of the following three guarantees: Consistency, Availability, and Partition Tolerance. NoSQL databases often prioritize Availability and Partition Tolerance over Consistency, resulting in a trade-off known as “eventual consistency.” While this may be acceptable in some applications, it can lead to challenges in maintaining data integrity and reconciling conflicting updates in scenarios where strong consistency is required.</p>
+</li>
+<li>
+<p><strong>Query complexity and expressiveness:</strong> While some NoSQL databases offer powerful query languages and capabilities, they may not be as expressive or versatile as SQL when it comes to complex data manipulation and analysis. This can be a limiting factor in applications that require sophisticated querying, joining, or aggregation of data. Additionally, developers may need to learn multiple query languages and paradigms when working with different types of NoSQL databases.</p>
+</li>
+</ol></div><div><h2>When to Use NoSQL (and When Not To)</h2>
+<p>Now the big question: given these pros and cons, <strong>when is a NoSQL database a good fit for your project, and when should you stick (or switch back) to SQL?</strong> There is no one-size-fits-all answer, but we can outline common scenarios for each.</p>
+<h3>Scenarios Where NoSQL Excels (Good Fits)</h3>
+<p>You should consider a NoSQL database (or a specific type of NoSQL) when your application or use-case has these characteristics:</p>
+<ul>
+<li>
+<p><strong>Huge Scale of Data or Traffic:</strong> If you expect to handle <strong>very large volumes of data</strong> (think terabytes to petabytes) or sustain very high read/write throughput (thousands or millions of operations per second), NoSQL databases are generally better equipped for horizontal scaling. For example, if you’re building the next Facebook or a global IoT sensor network, a single SQL server likely won’t cut it. NoSQL systems like Cassandra, DynamoDB, or MongoDB Atlas can partition data across many servers and keep performance up. In fact, many big companies (Amazon, Google, Netflix, Facebook) rely on NoSQL for their core data because of the sheer scale. If you anticipate “web scale” growth, NoSQL is a strong contender.</p>
+</li>
+<li>
+<p><strong>Flexible or Evolving Schema Needs:</strong> If your data model is likely to <strong>evolve</strong> rapidly or each entity is slightly different (sparse attributes), a document store or other schema-less NoSQL can save you a lot of headache. Startups and agile teams often don’t want to lock down a schema on day one. NoSQL lets you adjust as you learn more about your data. Also, if you are dealing with <strong>unstructured data</strong> (text, logs, JSON from external sources) that doesn’t fit neatly into columns, a NoSQL store will accommodate it easily. For example, storing user-generated content or JSON configurations – it’s more natural to put those in a document DB or key-value store without forcing structure.</p>
+</li>
+<li>
+<p><strong>Data is Naturally a Collection of Documents or Objects:</strong> If your data can be thought of as self-contained documents (like catalog entries, user profiles, blog posts, etc.), a document database may align better with your use case. You’ll be able to retrieve or update a whole document in one operation, which often corresponds nicely to how your application works (e.g., fetch the whole profile in one go). Similarly, if your data is a graph of relationships or a series of time-stamped events, a graph DB or wide-column DB (respectively) might be the intuitive choice because they model the domain more closely.</p>
+</li>
+<li>
+<p><strong>High Availability and Geo-Distribution are Priorities:</strong> When you need an always-on, globally distributed system, NoSQL designs (which often replicate data to multiple nodes and even multiple data centers) shine. For instance, if you want a database that can stay up even if one data center goes down, some NoSQL databases can replicate across data centers with eventual consistency. Or if you need low latency for users on different continents, a multi-region distributed NoSQL store might serve reads from the nearest region. Some SQL databases can do multi-region, but typically with more complexity or cost. NoSQL often makes this a core feature (e.g., CouchDB replication, Cosmos DB offering global distribution with tunable consistency).</p>
+</li>
+<li>
+<p><strong>Cache or Real-Time Analytics Layer:</strong> NoSQL is a great choice for caching and real-time analytics due to speed. Using an in-memory NoSQL like Redis as a cache in front of a relational DB is a common pattern (best of both worlds). For real-time analytics on streaming data (click streams, logs), a combination of a wide-column store (like HBase) or a document store can ingest at high rates. Some modern “NewSQL” or streaming systems blur this, but if you’re piecing your architecture, NoSQL components are well-suited to these parts.</p>
+</li>
+<li>
+<p><strong>Specific use cases that map to NoSQL types:</strong></p>
+<ul>
+<li>If you need <strong>full-text search</strong> or complex text queries, a search engine like Elasticsearch (often categorized with NoSQL stores) might be used – it’s a specialized document store optimized for text querying.</li>
+<li>If you need to store <strong>sessions, user cache, feature flags</strong>, etc., a key-value store (Redis, etc.) is typically a good fit.</li>
+<li>If you’re implementing something like an <strong>event-sourced system or logging</strong> where you append lots of events, a wide-column or document store can keep these events and let you query by key (like by user or aggregate id).</li>
+<li><strong>Graph-based problem:</strong> If your main problem is graph-like (social network, recommendation with relationships, network graph), a graph DB will likely simplify your life compared to contorting a SQL DB for the same.</li>
+</ul>
+</li>
+</ul>
+<p>In short, use NoSQL when it <strong>solves a problem that is hard to solve with SQL</strong>. A good litmus test: Ask “what requirement do I have that a relational DB cannot easily fulfill?”. If you have a clear answer (like “I need to handle 100k writes a second on a flexible schema across 5 regions”), that points toward NoSQL. NoSQL is often the <strong>right tool for big, messy, or fast-changing data</strong> needs.</p>
+<h3>Scenarios Where NoSQL May Not Be the Best Choice (When to Avoid or Be Cautious)</h3>
+<p>You might <strong>avoid using NoSQL</strong> or at least not replace your SQL database in scenarios like these:</p>
+<ul>
+<li>
+<p><strong>Strong Need for Multi-Object Transactions and Consistency:</strong> If your application absolutely requires <strong>consistent, transactional updates to multiple pieces of data</strong>, a traditional RDBMS is still the gold standard. For example, in <strong>financial systems</strong> (banking, accounting) where accuracy and consistency are paramount, the ACID transactions of SQL databases prevent errors (e.g., not losing money between accounts during a transfer). Can it be done with NoSQL? Sometimes yes, but it’s more complex and risky. If each step of a business operation must commit or roll back all-or-nothing, SQL is often simpler. NoSQL with eventual consistency could allow states that violate business rules temporarily. So, for things like inventory management, banking, or any system where you cannot tolerate anomaly, SQL might be safer unless the NoSQL database explicitly supports the needed level of ACID and you trust it.</p>
+</li>
+<li>
+<p><strong>Relational Data with Complex Queries:</strong> If your data is inherently relational and you need to do a lot of <strong>JOINs or aggregations across different entities</strong>, a relational database might serve you better. Think of analytics dashboards that join customers, orders, products, etc., or an app that frequently does complex filters and grouping on data. SQL databases and their query optimizers are very good at these tasks. NoSQL solutions often require workarounds like doing multiple queries and merging in code, or maintaining redundant data specifically for certain queries. If you find yourself needing ad-hoc reporting or the flexibility to ask new questions of the data via queries, SQL is extremely powerful. NoSQL might feel limiting in such exploratory or highly relational querying scenarios. For example, an e-commerce team using a SQL data warehouse can write arbitrary SQL to get insights. If the data were in a pure NoSQL store, they might have to export it to analyze it.</p>
+</li>
+<li>
+<p><strong>Small or Medium Scale Applications (when relational is enough):</strong> If your application is not hitting scaling limits, a single (or replicated) relational database is often simpler and perfectly adequate. There’s a famous saying in engineering: <em>“You are not Google.”</em> It means that the scale problems Google or Amazon face are extreme edge cases – <strong>99% of applications can run fine on a well-tuned relational database</strong>. If you have, say, a few million records and moderate traffic, Postgres or MySQL can handle that on a single server or a simple cluster. Introducing NoSQL might add unnecessary complexity. Many projects prematurely adopt NoSQL out of hype and then struggle with its constraints, when an SQL database would have been easier and just as effective for their size. So if you’re dealing with data that comfortably fits in one machine’s RAM/disk and load that one machine can handle, the need for NoSQL’s horizontal scaling may not justify the cost of its limitations.</p>
+</li>
+<li>
+<p><strong>Need for Ad-hoc Analytics or BI:</strong> Organizations that rely heavily on ad-hoc queries, data analysis, and use tools like Tableau or PowerBI usually prefer SQL databases or data warehouses. While some NoSQL (like MongoDB) provide connectors for BI tools (by presenting a SQL interface or exporting data), it can be kludgy. If your use case involves a lot of <strong>reporting, joins across multiple data sets, and complex calculations on the fly</strong>, a relational setup (or a hybrid approach where NoSQL data is periodically copied to a relational store for analysis) might be better. NoSQL is not a replacement for analytical databases (OLAP systems) in many cases – those often still use columnar SQL databases (like Snowflake, etc.). So consider what you’ll do with the data. If analysis is key, you might avoid going full NoSQL.</p>
+</li>
+<li>
+<p><strong>Tight Consistency or Validation Requirements:</strong> If your data model benefits from the <strong>enforcement of schema and constraints</strong> (like foreign keys, uniqueness, data type enforcement), SQL is ideal because it won’t let bad data in easily. NoSQL, being schema-less, might allow all sorts of inconsistent data unless your application checks everything. For example, in a SQL DB, you can declare that every order must have a valid customer_id that references an existing customer, and the database will enforce that. In a NoSQL, you have to implement such checks in your code and maybe backfill when inconsistencies inevitably occur. If the risk of inconsistent or invalid data is a big concern (say, in healthcare or finance records), the guardrails of SQL are very valuable. It might be better not to remove those guardrails by going NoSQL.</p>
+</li>
+<li>
+<p><strong>Team’s Familiarity and Operational Considerations:</strong> If your development and operations team is very experienced with SQL databases and not with the particular NoSQL technology, and if the learning curve could cause delays or mistakes, weigh that in. SQL is tried-and-true; NoSQL might require new skills (data modeling differently, understanding eventual consistency issues, etc.). Operating a large NoSQL cluster can also be non-trivial (though managed cloud services ease that). If you don’t have a clear need for NoSQL, introducing it just adds a new technology to maintain. As one Stack Overflow discussion pointed out, sometimes it’s easier to find an SQL DBA or developer than a specialized NoSQL one. So consider the human factor: use the tool your team can excel with, unless the project’s needs push you elsewhere.</p>
+</li>
+<li>
+<p><strong>Systems with Stable, Structured Schema:</strong> If your data is well-structured and unlikely to change often – essentially if a fixed schema isn’t a problem but actually a feature (for data integrity) – there’s less reason to go NoSQL. A well-defined schema can be an advantage for ensuring all data conforms. For example, if you have a core business data (like product catalog with well-defined attributes, or a banking system with fixed fields), a relational schema ensures every record has the required fields and types. In NoSQL you might inadvertently miss adding a field in some records and not know until later.</p>
+</li>
+</ul>
+<p>In summary, avoid or rethink NoSQL when <strong>your problem can be handled elegantly by a relational database and you gain no strong upside from NoSQL</strong>. Don’t use NoSQL just because it’s trendy – use it because it’s necessary. A common sensible approach is to start with relational (if it fits initially) and only move to NoSQL if and when you identify concrete needs that relational can’t meet (scale, flexibility, etc.). There’s also the approach of <strong>polyglot persistence</strong>: using multiple databases for different purposes in the same application. For instance, using a SQL database for core transactional data, but a NoSQL database for a caching layer or for logging or for a recommendation engine. That way you get each technology for what it’s best at.</p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">SQL vs NoSQL</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>As a software engineer preparing for system design interviews, understanding when to use SQL (relational) databases and when to use NoSQL databases is crucial. Both database types have their strengths and weaknesses, and the choice depends on your specific use case and requirements.</p>
+<h2>1. Data Model and Schema</h2>
+<p>One of the primary factors to consider when selecting a database is the data model and structure of the information you plan to store. Understanding the complexity, diversity, and relationships within the data will help you determine the most appropriate database type.</p>
+<p><strong>SQL databases:</strong> SQL databases are best suited for structured data with a well-defined schema that can be represented in tables with rows and columns. The schema is enforced, and any changes to the schema require modifications to the entire database structure. This works well for applications with a well-defined, predictable data model, such as inventory management systems, where each product has a specific set of attributes (name, price, quantity, etc.).</p>
+<p><strong>NoSQL databases:</strong> NoSQL databases are designed for unstructured or semi-structured data, and they generally do not require a fixed schema. This allows for greater flexibility in handling data model changes or when working with varied data types. This is beneficial for applications with evolving data models or diverse datasets, such as social networks, where user-generated content can vary greatly in format and structure. If your application needs to store and manage data that does not fit neatly into a table structure, NoSQL databases are a better fit.</p>
+<h2>2. Scalability</h2>
+<p>Evaluating your application’s scalability needs, both in terms of data volume and read/write load, is crucial in choosing the right database.</p>
+<p><strong>SQL databases:</strong> SQL databases are known for their vertical scalability, which means adding more resources (CPU, RAM, storage) to a single server to handle increased workload. This can be suitable for applications with moderate scaling requirements, such as small to medium-sized web applications or internal company tools. However, this approach can be expensive and has limitations as the server&#x27;s capacity is finite.</p>
+<p><strong>NoSQL databases:</strong> NoSQL databases provide horizontal scalability, allowing you to distribute data across multiple servers, making it easier to handle large volumes of data or high traffic loads. This is advantageous for large-scale applications with high throughput and data volume requirements, such as big data analytics, real-time data processing, or Internet of Things (IoT) applications. If your application requires easy scaling to accommodate growing data or user bases, NoSQL databases are a better choice.</p>
+<h2>3. Consistency and Transactions</h2>
+<p>The level of consistency and reliability required by your application plays a significant role in determining the most suitable database type.</p>
+<p><strong>SQL databases:</strong> SQL databases provide strong consistency and full ACID (Atomicity, Consistency, Isolation, Durability) compliance for transactions. If your application requires strict data consistency and transactional guarantees, such as banking or e-commerce systems, an SQL database is a better fit.</p>
+<p><strong>NoSQL databases:</strong> NoSQL databases often sacrifice consistency for availability and partition tolerance, following the CAP theorem. Most NoSQL databases provide eventual consistency and partial ACID compliance. For applications where data consistency can be relaxed in favor of availability and performance, such as social networks, analytics, or recommendation engines, NoSQL databases are a better choice.</p>
+<h2>4. Query Complexity and Frequency</h2>
+<p>Assessing the complexity and frequency of queries your application will perform is essential in selecting the right database.</p>
+<p><strong>SQL databases:</strong> SQL databases offer powerful and expressive querying capabilities with the SQL language, which allows for complex filtering, joining, and aggregation operations. This makes them a suitable choice for applications that rely heavily on analytics, reporting, or data warehousing, where complex data retrieval and filtering are necessary. If your application requires advanced querying and reporting features, SQL databases are a better fit.</p>
+<p><strong>NoSQL databases:</strong> NoSQL databases have diverse querying capabilities depending on the database type, but generally, they lack the full range of features provided by SQL databases. NoSQL databases are better suited for simple or specialized queries that match the underlying data model, such as key-value lookups, graph traversals, or document searches.</p>
+<h2>5. Performance and latency</h2>
+<p>Considering the performance and latency requirements of your application is critical when choosing a database.</p>
+<p><strong>SQL databases:</strong> SQL databases can provide robust, general-purpose performance for a wide range of applications. While they may not be optimized for specific workloads or access patterns, they offer a consistent and reliable performance profile for most use cases.</p>
+<p><strong>NoSQL databases:</strong> If you need high performance and low latency for specific workloads or data access patterns, choose a NoSQL database that is optimized for those scenarios. NoSQL databases can offer superior performance under certain workloads, such as high write loads, large-scale data storage, and complex relationships.</p>
+<h2>6. Operational complexity and maintenance</h2>
+<p>Finally, take into account the operational complexity and maintenance requirements of your chosen database. This includes factors such as deployment, monitoring, backup, and recovery. Choose a database that aligns with your team’s expertise, tools, and processes.</p>
+<ul>
+<li><strong>Deployment:</strong> Consider the ease of deployment and integration with your existing infrastructure. Some databases may require more complex setup and configuration, while others offer streamlined deployment processes or managed services that handle the operational aspects for you.</li>
+<li><strong>Monitoring:</strong> Evaluate the monitoring capabilities of the database, including performance metrics, error tracking, and log analysis. A database with comprehensive monitoring tools can help you identify and address issues proactively, ensuring the smooth operation of your application.</li>
+<li><strong>Backup and recovery:</strong> Assess the backup and recovery features of the database, including the ease of creating and restoring backups, as well as the ability to handle disaster recovery scenarios. A robust backup and recovery strategy is essential to protect your data and maintain business continuity in case of unforeseen events.</li>
+<li><strong>Security:</strong> Investigate the security features of the database, such as encryption, access control, and auditing. A secure database can help protect your sensitive data from unauthorized access and mitigate potential risks associated with data breaches.</li>
+<li><strong>Community and support:</strong> Consider the community and support ecosystem surrounding the database. A vibrant community can provide valuable resources, such as documentation, tutorials, and forums, while a strong support ecosystem can offer professional assistance and guidance when needed.</li>
+<li><strong>Cost:</strong> Finally, take into account the cost of using the chosen database, including licensing, hardware, and operational expenses. Depending on your budget and requirements, you may need to weigh the benefits of various databases against their associated costs to make an informed decision.</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">ACID vs BASE Properties</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>When we use an application – whether it&#x27;s online banking or a shopping site – we expect the data to be correct and the system to work reliably. If you transfer money and a glitch happens, you wouldn’t want the bank to deduct money from your account without adding it to the recipient’s account. This is why database consistency and reliability matter so much. A reliable database ensures that even if something goes wrong (like a crash or network issue), your data isn’t lost or corrupted.</p>
+<p>In the world of databases, there are two common models for handling consistency and reliability: <strong>ACID</strong> and <strong>BASE</strong>. These acronyms stand for different approaches in database design. In simple terms, <strong>ACID</strong> is about keeping transactions <em>strictly correct and reliable</em>, while <strong>BASE</strong> is about keeping the system <em>basically available and scalable</em> (even if data might be briefly inconsistent). They’re often seen as opposites, but each has its own use cases and trade-offs. In this post, we’ll explain what each term means, give easy examples, compare their differences, and help you decide which approach fits which situation.</p>
+<h2>What is ACID?</h2>
+<p><strong>ACID</strong> is a set of properties that guarantee database transactions are processed reliably. A transaction is a unit of work (like transferring money or booking a ticket) that may involve multiple steps. ACID stands for <strong>Atomicity, Consistency, Isolation, Durability</strong>. These four properties ensure that even if multiple transactions occur or failures happen, the data remains correct and stable.</p></div><div><p><em>Atomicity, Consistency, Isolation, Durability (ACID) are four guarantees that make transactions reliable.</em> ACID-compliant systems make sure that transactions either happen completely or not at all, the database doesn’t violate its rules, concurrent operations don’t interfere with each other, and once a transaction is saved it won’t be lost. To understand ACID, let&#x27;s break down each property with a simple example:</p>
+<ul>
+<li><strong>Atomicity:</strong> <em>All-or-nothing</em>. A transaction is atomic if it executes completely or not at all – there are no partial completions. For example, in a reservation system, both steps – booking a seat <em>and</em> updating the customer’s details – must succeed together. If one part fails, the system will undo any partial changes so you don’t end up with a reserved seat under no name. In other words, you won’t have a situation where money is taken from an ATM but you get no cash; the whole operation is rolled back if any piece fails.</li>
+<li><strong>Consistency:</strong> <em>Valid state</em>. The database must abide by all defined rules (constraints) after the transaction. This means any transaction will bring the database from one valid state to another. For example, when transferring $100 from Account A to Account B, the total money across both accounts should remain the same before and after. If the total was $600, it stays $600 after the transfer (like $100 goes out of A and into B). The data won’t violate things like balance never going negative, etc.</li>
+<li><strong>Isolation:</strong> <em>Don’t interfere</em>. Even if multiple transactions are happening at the same time, each one should behave as if it’s the only one running until it’s finished. For instance, in an online inventory system, if one user is updating the stock count of a product, another user reading the stock at the same time should either see the <em>old</em> count or the <em>new</em> count, but nothing in-between. Each transaction’s intermediate steps are hidden from others to avoid confusion. This prevents concurrent operations from messing up each other’s data.</li>
+<li><strong>Durability:</strong> <em>Never lost</em>. Once a transaction is successfully completed (committed), its changes are permanent – they will survive power failures, crashes, or errors. For example, if a messaging app tells you that your message was sent, that message should be stored and never disappear even if the server crashes right after. The database will have saved the data to stable storage so it can recover to that state if needed.</li>
+</ul>
+<p>In essence, ACID makes sure that the database maintains integrity: transactions are all-or-nothing, always leave the data consistent, don’t step on each other, and don’t vanish after being applied. This is great for applications where accuracy is critical.</p>
+<h2>What is BASE?</h2>
+<p><strong>BASE</strong> is an alternative approach used mainly in many NoSQL and distributed databases. BASE stands for <strong>Basically Available, Soft state, Eventually consistent</strong>. It is almost the “opposite” of ACID in philosophy. Instead of enforcing strict consistency after every transaction, BASE systems prioritize availability and partition tolerance (being able to distribute data across many servers). The idea is that the system will be <em>basically available</em> at all times, and it accepts that the data might not be consistent immediately, as long as it <em>eventually</em> becomes consistent. Let’s break down the BASE properties with simple terms:</p>
+<ul>
+<li><strong>Basically Available:</strong> The system guarantees availability – it will always try to give you some response, even under heavy load or if parts of the system are down. It may not be the most up-to-date data, but the service remains up. For example, during a massive online sale, an e-commerce site using a BASE model will continue to accept orders and show products even if the inventory counts are slightly behind. You might be able to place an order even if one server hasn’t caught up to an out-of-stock status, because the system chooses to stay responsive rather than lock everything. The focus is on keeping the service running.</li>
+<li><strong>Soft State:</strong> The state of the system may change or fluctuate over time, even without new inputs, because updates propagate gradually. “Soft” means the data might be temporarily inconsistent or in flux. The database doesn’t enforce immediate consistency itself; instead, it’s understood that data will be updated over time and might require the application to handle interim inconsistencies. For example, if you edit a social media post, you might not see the update on your friend’s app instantly. The data is in a soft state – it’s changing in the background. After a short while, the changes will settle and everyone sees the same updated post, but in the meantime, different parts of the system might have slightly different information.</li>
+<li><strong>Eventually Consistent:</strong> This is the key idea – though the system may not be consistent at every moment, if you wait a bit (and no new updates occur), it will become consistent. All replicas or nodes will <strong>eventually</strong> hold the same data. For example, imagine a distributed document editing app where two people edit the same doc simultaneously. Initially, their copies might differ. But the system will merge changes, and after some time everyone sees the same final version. There’s no guarantee <em>when</em> it will become consistent, only that it will happen eventually. The data might go through some conflicts or merging, but it will converge in the end.</li>
+</ul></div><div><p>In summary, BASE systems give up the immediate consistency that ACID guarantees, in order to gain other benefits like high availability and scalability. They let data be inconsistent for a short time, under the assumption that it will fix itself soon. This approach is common in large, distributed systems (like big web services) where it’s more important to keep the system running than to have every user see the exact same data instantaneously.</p>
+<h2>ACID vs. BASE – Key Differences and Trade‑Offs</h2>
+<p>ACID and BASE represent two different priorities in database design. A famous concept in distributed systems, the <strong>CAP theorem</strong>, says that in the presence of network partitions you can’t have both perfect consistency and perfect availability at the same time. ACID and BASE basically choose different sides of this trade-off: <strong>ACID favors consistency</strong>, and <strong>BASE favors availability</strong>. Here are the key differences and trade-offs between ACID and BASE:</p></div><div><p><em>In the CAP theorem, a distributed system can only guarantee two out of three: Consistency, Availability, Partition tolerance. ACID systems choose consistency over absolute availability, while BASE systems choose availability and accept eventual consistency.</em> In practice, this means ACID databases ensure every transaction is strict and correct at the cost of some performance or uptime, whereas BASE databases ensure the system is always responsive and can scale out, at the cost of data being momentarily inconsistent.</p>
+<ul>
+<li><strong>Consistency vs. Availability:</strong> ACID provides <strong>strong consistency</strong> – data is correct and the same across the system right after each transaction. BASE provides <strong>high availability</strong>, often sacrificing immediate consistency. An ACID system might delay or block some operations to keep data perfectly in sync, while a BASE system would rather give a quick answer that might be slightly stale than make you wait or fail.</li>
+<li><strong>Timing of Consistency:</strong> In ACID, once a transaction commits, all users see its effects <em>immediately</em>. Reads will fetch the latest writes. In BASE, updates propagate slowly; users might see old data for a while. Consistency is only guaranteed <em>eventually</em>, not instantly. For example, a comment you post on a BASE-based social network might appear to you but take a few seconds to appear for your friends.</li>
+<li><strong>Transactional Approach:</strong> ACID is <strong>all-or-nothing</strong>. Transactions are completely rolled back if any part fails (ensuring atomicity). BASE can allow <strong>partial</strong> updates to be seen; it’s more flexible/loose in how transactions are handled. There isn’t usually a strict concept of a multi-step transaction in BASE – instead, it might update different pieces of data at different times and resolve inconsistencies later. This can make ACID safer for complex multi-step changes, while BASE is okay with simpler operations spread over time.</li>
+<li><strong>Performance and Scalability:</strong> ACID systems often trade some performance for accuracy. They may need locks or wait times to keep transactions isolated and consistent, which can slow things down when there’s a lot of traffic. They can also be harder to scale horizontally (across many servers) because of the need to coordinate every transaction globally. BASE systems, on the other hand, excel at <strong>scaling out</strong>. They can spread data across many nodes and don’t need to coordinate every single update immediately, leading to better throughput and fault tolerance under heavy load. This is why many large web applications use BASE-oriented databases – they can handle millions of users by spreading data, at the cost of having to manage eventual consistency.</li>
+<li><strong>Complexity and Handling Inconsistencies:</strong> With ACID, the database takes care of consistency automatically – developers can assume the DB will enforce the rules. With BASE, the burden of dealing with temporary inconsistencies often falls on the application developers. For instance, if two writes conflict or if data is out-of-sync, the system (or developer) must reconcile it later. The database doesn’t guarantee the data is the same everywhere at once. This makes ACID systems simpler to develop for in terms of data correctness, whereas BASE systems require careful design to handle eventual consistency (like conflict resolution or reminding the user that data may update shortly).</li>
+</ul>
+<p><strong>Use cases:</strong> Because of these differences, ACID and BASE tend to be used in different scenarios. If an application absolutely requires trustable, <strong>correct data at all times</strong>, ACID is the go-to model. For example, banks and financial systems almost exclusively use ACID-compliant databases – you can’t risk any inconsistency when dealing with money. A classic relational database (SQL database) in a banking system will ensure each transaction (withdrawal, transfer, etc.) is ACID so that errors like double-spending or lost transactions never happen. On the other hand, if an application needs to be <strong>highly available, scalable, and can tolerate slight delays in consistency</strong>, BASE is often chosen. For instance, large e-commerce websites or social media platforms with millions of users might use BASE principles – the priority is that the site is up and responsive globally, even if, say, a profile update or a product inventory change isn’t visible everywhere instantly. In an online shopping scenario, it might be more important that the website never goes down during a sale than every server knowing the exact stock count that very second.</p>
+<h2>Real-World Examples of ACID and BASE Databases</h2>
+<p>To cement the idea, let’s look at some real database systems that follow each model:</p>
+<ul>
+<li><strong>ACID-compliant databases:</strong> Most traditional <strong>SQL relational databases</strong> adhere to ACID properties. Examples include <strong>MySQL</strong>, <strong>PostgreSQL</strong>, <strong>Oracle Database</strong>, <strong>SQLite</strong>, and <strong>Microsoft SQL Server</strong> – these systems are built to ensure strict transactional consistency. They are commonly used for applications like banking systems, e-commerce orders, or any scenario where data integrity is paramount. When you use a MySQL or PostgreSQL database, you can usually rely on transactions to be fully ACID (for instance, wrapping a series of SQL statements in a transaction that either commits all or rolls back all if something fails). This makes them reliable for critical data. Some newer relational databases and even a few NoSQL ones can also provide ACID transactions (for example, MongoDB in certain configurations), but as a rule of thumb, <strong>SQL = ACID</strong> is a safe assumption.</li>
+<li><strong>BASE-oriented databases:</strong> Many <strong>NoSQL and distributed databases</strong> use the BASE philosophy. Examples include <strong>Apache Cassandra</strong>, <strong>Amazon DynamoDB</strong>, <strong>Couchbase</strong>, <strong>MongoDB</strong>, and <strong>Redis</strong>, among others. These databases are designed to run across clusters of machines, handle large volumes of data, and remain available under various conditions. They often give up ACID’s immediate consistency – for instance, Cassandra and DynamoDB provide eventual consistency (though some offer tunable consistency levels). These systems are typically used in big data, real-time web applications, content delivery networks, social networks, and other scenarios where scaling out and handling partitions are more important than instant consistency. For example, Cassandra is used by companies like Netflix and Facebook for its ability to store massive amounts of data across data centers while still being fast and available. DynamoDB (a NoSQL service by AWS) is used in many high-traffic websites where the data model can tolerate eventual consistency.</li>
+</ul>
+<h2>Conclusion – Choosing ACID or BASE</h2>
+<p>Both ACID and BASE have their strengths and weaknesses, and neither is “better” in all cases – it truly depends on your application’s needs. <strong>ACID</strong> guarantees a high level of data integrity and reliability (no half-finished transactions, no dirty reads, no lost updates), which is essential for scenarios like finance, healthcare, inventory management, or any system that can’t afford even minor inconsistencies. If your application demands <em>strict accuracy and safety</em> – for example, a banking app or an online order system – an ACID-compliant database (such as MySQL or PostgreSQL) is likely the right choice. The trade-off is that you might sacrifice some performance or flexibility in scaling, but you gain peace of mind that your data is always correct.</p>
+<p>On the other hand, <strong>BASE</strong> is often the right choice for distributed systems and applications where <em>availability and scaling are paramount</em>, and where the business can tolerate slight delays in data consistency. If you’re building the next social media platform, a global online game, or a large content service, you might choose a BASE-oriented database (like Cassandra or DynamoDB) to ensure the system stays responsive and can handle partitions or server failures gracefully. You accept that users might not see the latest update instantly in exchange for the system being highly scalable and fault-tolerant.</p>
+<p>In short, <strong>choose ACID</strong> when you need <em>guaranteed consistency and integrity</em> (and your data is structured in a way that fits a traditional database). <strong>Choose BASE</strong> when you need <em>scalability and availability</em> above all, and your use case can handle being “eventually” consistent. Many modern systems even blend the two approaches – for example, by using an ACID database for critical transactions and a BASE/NoSQL database for analytics or caching, finding a balance between consistency and performance. Understanding the differences between ACID and BASE helps you make an informed decision and design your data architecture with the right expectations. For a beginner, just remember: <strong>ACID = strong, immediate consistency (think banks)</strong>, <strong>BASE = flexibility and availability with eventual consistency (think big web apps)</strong>. By evaluating the needs of your project (do you need absolute accuracy, or can you afford some delay?), you can confidently choose the model that will keep your data safe <em>and</em> your users happy.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">RealWorld Examples and Case Studies</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Understanding the theoretical differences between SQL and NoSQL databases is essential, but examining real-world examples and case studies can provide valuable insights into how these databases are used in practice. This section will explore various use cases where SQL and NoSQL databases have been successfully implemented, highlighting their respective strengths and showcasing how they can be employed to address specific application requirements. Additionally, we will discuss hybrid solutions that combine the capabilities of both database types to create robust and versatile systems. By exploring these real-world scenarios, you can gain a deeper understanding of how to select the appropriate database in your system design interview.</p>
+<h2>A. SQL Databases in Action</h2>
+<ol>
+<li><strong>E-commerce platforms:</strong> SQL databases are widely used in e-commerce platforms, where structured data and well-defined relationships are the norm. For example, an online store’s database may have tables for customers, products, orders, and shipping details, all with established relationships. SQL databases enable efficient querying and data manipulation, making it easier for e-commerce platforms to manage inventory, customer data, and order processing.</li>
+<li><strong>Financial systems:</strong> Financial applications, such as banking and trading platforms, rely on SQL databases to maintain transactional consistency, ensure data integrity, and support complex queries. The ACID properties of SQL databases are crucial in this context, as they guarantee the correct processing of transactions and safeguard against data corruption.</li>
+<li><strong>Content Management Systems (CMS):</strong> Many popular CMS platforms, such as WordPress and Joomla, use SQL databases to store content, user data, and configuration information. The structured nature of the data and the powerful query capabilities of SQL databases make them well-suited for managing content and serving dynamic web pages.</li>
+</ol>
+<h2>B. NoSQL Databases in Action</h2>
+<ol>
+<li><strong>Social media platforms:</strong> NoSQL databases, particularly graph databases, are ideal for managing complex relationships and interconnected data found in social media platforms. For example, Facebook uses a custom graph database called TAO to store user profiles, friend connections, and other social graph data. This allows Facebook to efficiently query and traverse the massive social graph, providing features like friend recommendations and newsfeed personalization.</li>
+<li><strong>Big data analytics:</strong> NoSQL databases, such as Hadoop’s HBase and Apache Cassandra, are commonly used for big data analytics, where large-scale data storage and processing are required. These databases are designed to scale horizontally, enabling them to handle vast amounts of data and high write loads. For example, Netflix uses Apache Cassandra to manage its customer data and viewing history, which helps the streaming service to provide personalized content recommendations to its users.</li>
+<li><strong>Internet of Things (IoT):</strong> IoT applications generate massive volumes of data from various devices and sensors, often with varying data structures and formats. NoSQL databases like MongoDB and Amazon DynamoDB are suitable for handling this diverse and dynamic data, providing flexible data modeling and high-performance storage capabilities. For example, Philips Hue, a smart lighting system, uses Amazon DynamoDB to store and manage data generated by its connected light bulbs and devices.</li>
+</ol>
+<h2>C. Hybrid Solutions</h2>
+<ol>
+<li><strong>Gaming industry:</strong> In the gaming industry, developers often use a combination of SQL and NoSQL databases to support different aspects of their applications. For instance, an SQL database may be employed to manage user accounts, in-game purchases, and other transactional data, while a NoSQL database like Redis can be used to store real-time game state information and leaderboards.</li>
+<li><strong>E-commerce with personalized recommendations:</strong> Some e-commerce platforms combine SQL databases for transactional data and inventory management with NoSQL databases for personalized recommendations. This hybrid approach allows the platform to leverage the strengths of both database types, ensuring efficient data storage, querying, and analysis for various aspects of the application.</li>
+</ol></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">SQL Normalization and Denormalization</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>SQL Normalization</h2>
+<p>Normalization in SQL is a database design technique that organizes tables in a manner that reduces redundancy and dependency. It involves dividing a database into two or more tables and defining relationships between them to achieve a more efficient database structure.</p>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Reduces Redundancy</strong>: Avoids duplication of data.</li>
+<li><strong>Improves Data Integrity</strong>: Ensures data accuracy and consistency.</li>
+<li><strong>Database Design</strong>: Involves creating tables and establishing relationships through primary and foreign keys.</li>
+</ul>
+<h3>Example: Customer Orders Database</h3>
+<h3>Original Table (Before Normalization)</h3>
+<p>Imagine a single table that stores all customer orders:</p>
+<div><table><thead><tr><th>Customer ID</th><th>Customer Name</th><th>Customer Address</th><th>Order ID</th><th>Order Date</th><th>Product</th></tr></thead><tbody><tr><td>001</td><td>John Doe</td><td>123 Apple St.</td><td>1001</td><td>2021-08-01</td><td>Laptop</td></tr><tr><td>001</td><td>John Doe</td><td>123 Apple St.</td><td>1002</td><td>2021-08-05</td><td>Phone</td></tr><tr><td>002</td><td>Jane Smith</td><td>456 Orange Ave.</td><td>1003</td><td>2021-08-03</td><td>Tablet</td></tr></tbody></table></div>
+<p>This table has redundancy (notice how customer details are repeated) and is not normalized.</p>
+<h3>After Normalization</h3>
+<p>To normalize this, we would split it into two or more tables to reduce redundancy.</p>
+<p><strong>Customers Table (1NF, 2NF, 3NF)</strong></p>
+<div><table><thead><tr><th>Customer ID</th><th>Customer Name</th><th>Customer Address</th></tr></thead><tbody><tr><td>001</td><td>John Doe</td><td>123 Apple St.</td></tr><tr><td>002</td><td>Jane Smith</td><td>456 Orange Ave.</td></tr></tbody></table></div>
+<p><strong>Orders Table (1NF, 2NF, 3NF)</strong></p>
+<div><table><thead><tr><th>Order ID</th><th>Order Date</th><th>Product</th><th>Customer ID</th></tr></thead><tbody><tr><td>1001</td><td>2021-08-01</td><td>Laptop</td><td>001</td></tr><tr><td>1002</td><td>2021-08-05</td><td>Phone</td><td>001</td></tr><tr><td>1003</td><td>2021-08-03</td><td>Tablet</td><td>002</td></tr></tbody></table></div>
+<p>In the normalized structure, we&#x27;ve eliminated redundancy (each customer&#x27;s details are listed only once) and established a relationship between the two tables via <code>CustomerID</code>.</p>
+<h3>Levels (Normal Forms)</h3>
+<ul>
+<li><strong>1NF (First Normal Form)</strong>: Data is stored in atomic form with no repeating groups.</li>
+<li><strong>2NF (Second Normal Form)</strong>: Meets 1NF and has no partial dependency on any candidate key.</li>
+<li><strong>3NF (Third Normal Form)</strong>: Meets 2NF and has no transitive dependency.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Ideal for complex systems where data integrity is critical, like financial or enterprise applications.</li>
+</ul>
+<h2>SQL Denormalization</h2>
+<p>Denormalization, on the other hand, is the process of combining tables to reduce the complexity of database queries. This can introduce redundancy but may lead to improved performance by reducing the number of joins required.</p>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Increases Redundancy</strong>: May involve some data duplication.</li>
+<li><strong>Improves Query Performance</strong>: Reduces the complexity of queries by reducing the number of joins.</li>
+<li><strong>Data Retrieval</strong>: Optimized for read-heavy operations.</li>
+</ul>
+<h3>Denormalization Example</h3>
+<p>Denormalization would involve combining these tables back into a single table to optimize read performance. Taking the above table:</p>
+<p><strong>Denormalized Orders Table</strong></p>
+<div><table><thead><tr><th>Customer ID</th><th>Customer Name</th><th>Customer Address</th><th>Order ID</th><th>Order Date</th><th>Product</th></tr></thead><tbody><tr><td>001</td><td>John Doe</td><td>123 Apple St.</td><td>1001</td><td>2021-08-01</td><td>Laptop</td></tr><tr><td>001</td><td>John Doe</td><td>123 Apple St.</td><td>1002</td><td>2021-08-05</td><td>Phone</td></tr><tr><td>002</td><td>Jane Smith</td><td>456 Orange Ave.</td><td>1003</td><td>2021-08-03</td><td>Tablet</td></tr></tbody></table></div>
+<p>Here, we&#x27;re back to the original structure. The benefit of this denormalized table is that it can make queries faster since all the information is in one place, reducing the need for JOIN operations. However, the downside is the redundancy of customer information, which can take up more space and potentially lead to inconsistencies if not managed properly.</p>
+<h3>When to Use</h3>
+<ul>
+<li>In read-heavy database systems where query performance is a priority.</li>
+<li>In systems where data changes are infrequent and a slightly less normalized structure doesn&#x27;t compromise data integrity.</li>
+</ul>
+<h2>Key Differences</h2>
+<h3>1. <strong>Purpose</strong></h3>
+<ul>
+<li>Normalization aims to minimize data redundancy and improve data integrity.</li>
+<li>Denormalization aims to improve query performance.</li>
+</ul>
+<h3>2. <strong>Data Redundancy</strong></h3>
+<ul>
+<li>Normalization reduces redundancy.</li>
+<li>Denormalization may introduce redundancy.</li>
+</ul>
+<h3>3. <strong>Performance</strong></h3>
+<ul>
+<li>Normalization can lead to a larger number of tables and more complex queries, potentially affecting read performance.</li>
+<li>Denormalization can improve read performance but may affect write performance due to data redundancy.</li>
+</ul>
+<h3>4. <strong>Complexity</strong></h3>
+<p>Normalization makes writes faster but reads slower whereas denormalization makes writes slower but reads faster. Lets understand this with an example.</p>
+<h4>Normalization</h4>
+<p>Imagine you run a bookstore, and you store all the info about customers and orders in a neat way. Instead of writing a customer&#x27;s name, address, and phone number every time they order something, you just save it once in a &quot;customer&quot; list. When someone orders a book, you only link to their entry in the customer list.</p>
+<ul>
+<li>
+<p><strong>Effect on Write Operations</strong>: When you <strong>write</strong> data (like adding a new order), you only store the order info, not all the customer info. This makes writing faster and easier because there’s no duplicate info.</p>
+</li>
+<li>
+<p><strong>Effect on Read Operations</strong>: But when you <strong>read</strong> the data, it takes more work. If you want to see everything about an order and the customer who made it, you have to look in multiple places (one for the order, one for the customer details). So, reads can be slower because the database has to gather info from different tables.</p>
+</li>
+</ul>
+<h4>Denormalization</h4>
+<p>Now, imagine you’re tired of looking in different places to find info about an order. You decide to save everything in one place: each order will have the customer&#x27;s name, address, and phone number. No more linking back to a customer list!</p>
+<ul>
+<li>
+<p><strong>Effect on Write Operations</strong>: Writing gets more complicated and slower. If a customer changes their address, you now have to update every single order that includes the old address. There’s a lot of duplicate data, and changes require updating multiple records.</p>
+</li>
+<li>
+<p><strong>Effect on Read Operations</strong>: But reading becomes much faster! Since all the information is in one place, you don’t have to jump around to gather it. You get everything you need in one go, so reads are quick and easy.</p>
+</li>
+</ul>
+<h2>Conclusion</h2>
+<ul>
+<li><strong>Normalization</strong> is about reducing redundancy and improving data integrity but can lead to more complex queries.</li>
+<li><strong>Denormalization</strong> simplifies queries but at the cost of increased data redundancy and potential maintenance challenges.</li>
+</ul>
+<p>The choice between the two depends on the specific requirements of your database system, considering factors like the frequency of read vs. write operations, and the importance of query performance vs. data integrity.</p></div>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">InMemory Database vs OnDisk Database</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>In-memory databases and on-disk databases are two types of database systems designed for storing and managing data, but they fundamentally differ in how and where they store their data. Understanding these differences is key to choosing the right type of database for a specific application or workload.</p>
+<h2>In-Memory Database (IMDB)</h2>
+<h3>Storage Mechanism:</h3>
+<ul>
+<li><strong>Data Storage</strong>: Primarily stores data in the main memory (RAM) of the server.</li>
+<li><strong>Persistence</strong>: Some in-memory databases can persist data on disk, but the primary data access and manipulation happen in memory.</li>
+</ul>
+<h3>Performance:</h3>
+<ul>
+<li><strong>Speed</strong>: Offers high performance and low latency, as accessing data in RAM is significantly faster than disk access.</li>
+<li><strong>Efficiency</strong>: Especially efficient for read-heavy operations and complex, real-time computations.</li>
+</ul>
+<h3>Use Cases:</h3>
+<ul>
+<li><strong>Real-Time Analytics</strong>: Ideal for applications that require real-time analysis and reporting.</li>
+<li><strong>Caching</strong>: Commonly used for caching where quick data retrieval is crucial.</li>
+<li><strong>Session Storage</strong>: Used in web applications for session management.</li>
+</ul>
+<h3>Limitations:</h3>
+<ul>
+<li><strong>Cost</strong>: Generally more expensive due to the high cost of RAM.</li>
+<li><strong>Scalability</strong>: Scaling large volumes of data can be challenging and costly.</li>
+<li><strong>Data Volatility</strong>: In the event of power loss or system crash, data stored only in memory can be lost unless the database is designed with persistence mechanisms.</li>
+</ul>
+<h3>Examples of In-Memory Databases</h3>
+<ol>
+<li>
+<p><strong>Redis</strong>:</p>
+<ul>
+<li>A widely used in-memory data store, often employed as a distributed cache, message broker, and for quick read/write operations. Redis supports various data structures such as strings, hashes, lists, sets, and sorted sets.</li>
+</ul>
+</li>
+<li>
+<p><strong>Memcached</strong>:</p>
+<ul>
+<li>A high-performance, distributed memory caching system, originally intended for speeding up dynamic web applications by alleviating database load.</li>
+</ul>
+</li>
+<li>
+<p><strong>SAP HANA</strong>:</p>
+<ul>
+<li>An in-memory, column-oriented, relational database management system. HANA is known for advanced analytics processing, such as OLAP and OLTP processing on the same platform.</li>
+</ul>
+</li>
+<li>
+<p><strong>Apache Ignite</strong>:</p>
+<ul>
+<li>A memory-centric distributed database, caching, and processing platform for transactional, analytical, and streaming workloads.</li>
+</ul>
+</li>
+<li>
+<p><strong>Hazelcast IMDG</strong>:</p>
+<ul>
+<li>An in-memory data grid that offers distributed data structures and computing utilities. It&#x27;s often used for scalable caching and in-memory data storage.</li>
+</ul>
+</li>
+</ol>
+<h2>On-Disk Database</h2>
+<h3>Storage Mechanism:</h3>
+<ul>
+<li><strong>Data Storage</strong>: Stores data on persistent disk storage (HDD or SSD).</li>
+<li><strong>Persistence</strong>: Data is inherently persistent and does not require additional mechanisms to survive system restarts.</li>
+</ul>
+<h3>Performance:</h3>
+<ul>
+<li><strong>Speed</strong>: Generally slower compared to in-memory databases due to the time required for disk I/O operations.</li>
+<li><strong>Suitability</strong>: More suited for applications where the speed of data access is less critical.</li>
+</ul>
+<h3>Use Cases:</h3>
+<ul>
+<li><strong>Transactional Systems</strong>: Widely used in transactional applications (OLTP systems), where data persistence is key.</li>
+<li><strong>Large Data Sets</strong>: Ideal for applications with large data sets that cannot be cost-effectively stored in memory.</li>
+<li><strong>General-Purpose Databases</strong>: Most traditional databases (like MySQL, PostgreSQL) are on-disk and cater to a wide range of applications.</li>
+</ul>
+<h3>Limitations:</h3>
+<ul>
+<li><strong>Speed</strong>: The speed can be a limiting factor, especially for applications requiring real-time response.</li>
+<li><strong>I/O Bottlenecks</strong>: Performance can be bottlenecked by disk I/O, particularly in high-throughput scenarios.</li>
+</ul>
+<h3>Examples of On-Disk Databases</h3>
+<ol>
+<li>
+<p><strong>MySQL</strong>:</p>
+<ul>
+<li>One of the most popular open-source relational database management systems. MySQL is widely used for web applications and supports a broad array of features.</li>
+</ul>
+</li>
+<li>
+<p><strong>PostgreSQL</strong>:</p>
+<ul>
+<li>An advanced open-source relational database. PostgreSQL is known for its robustness, scalability, and support for advanced data types and features.</li>
+</ul>
+</li>
+<li>
+<p><strong>MongoDB</strong>:</p>
+<ul>
+<li>A leading NoSQL database that stores data in JSON-like documents. It is designed for ease of development and scaling.</li>
+</ul>
+</li>
+<li>
+<p><strong>Oracle Database</strong>:</p>
+<ul>
+<li>A multi-model database management system known for its feature-rich, enterprise-grade capabilities, widely used in large organizations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Microsoft SQL Server</strong>:</p>
+<ul>
+<li>A relational database management system developed by Microsoft, offering a wide range of data analytics, business intelligence, and transaction processing capabilities.</li>
+</ul>
+</li>
+<li>
+<p><strong>SQLite</strong>:</p>
+<ul>
+<li>A C-language library that implements a small, fast, self-contained, high-reliability SQL database engine. It&#x27;s widely used in applications where an embedded, lightweight database is needed.</li>
+</ul>
+</li>
+</ol>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Data Storage Location</strong>:</p>
+<ul>
+<li>IMDB: Main memory (RAM).</li>
+<li>On-Disk Database: Persistent disk storage.</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>IMDB: Faster read/write operations.</li>
+<li>On-Disk Database: Slower, depending on disk I/O.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cost and Scalability</strong>:</p>
+<ul>
+<li>IMDB: Higher cost, scaling large data sets is more challenging.</li>
+<li>On-Disk Database: More cost-effective for large data volumes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Persistence</strong>:</p>
+<ul>
+<li>IMDB: Requires mechanisms for data durability.</li>
+<li>On-Disk Database: Inherently persistent.</li>
+</ul>
+</li>
+<li>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>IMDB: Real-time processing, caching, session storage.</li>
+<li>On-Disk Database: Transactional systems, large data storage, general-purpose usage.</li>
+</ul>
+</li>
+</ol>
+<p>Each type of database serves different needs: in-memory databases are optimal for scenarios requiring rapid data access and processing, while on-disk databases are better suited for applications needing reliable data persistence and management of large data volumes. The choice depends on specific application requirements, including performance needs, data size, and persistence considerations.</p></div>
+  </div>
+</section>
+
+<section id="chapter-09" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">09</span>
+    <h1 class="chapter-title">Data Replication vs Data Mirroring</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Data replication and data mirroring are both methods used in managing and safeguarding data, particularly in the context of databases and storage systems. While they share similarities in creating copies of data, they serve different purposes and have distinct operational characteristics.</p>
+<h2>Data Replication</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Data Replication</strong> involves copying data from one location to another. The replication can be synchronous or asynchronous.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Asynchronous/Synchronous</strong>: Data replication can be done in real-time (synchronous) or with some delay (asynchronous).</li>
+<li><strong>Multiple Copies</strong>: Often creates multiple copies of data, which can be stored across different servers or locations.</li>
+<li><strong>Purpose</strong>: Enhances data availability and accessibility, used for load balancing, and enables data analysis without impacting the primary data source.</li>
+<li><strong>Use Cases</strong>: In distributed databases, backup systems, and data warehouses.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A company might replicate its database across multiple data centers to ensure that if one data center goes down, the others can still serve the data.</li>
+</ul>
+<h2>Data Mirroring</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Data Mirroring</strong> refers to the process of creating an exact replica of a database or storage system, usually in real-time.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Synchronous</strong>: Mirroring is typically synchronous, meaning the data in the primary and mirror locations are always in sync.</li>
+<li><strong>Redundancy for High Availability</strong>: Primarily used for redundancy and high availability.</li>
+<li><strong>Mirror Copy</strong>: Usually involves a one-to-one relationship between the original and the mirror. If data changes in the original location, it is immediately written to the mirror.</li>
+<li><strong>Use Cases</strong>: In critical applications requiring high availability and data integrity, such as financial transaction systems.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A financial services firm may use data mirroring to ensure that all transactional data is instantly copied to a secondary server, which can take over with no data loss in case the primary server fails.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Real-Time Synchronization</strong>:</p>
+<ul>
+<li><strong>Replication</strong>: Can be either synchronous or asynchronous.</li>
+<li><strong>Mirroring</strong>: Typically synchronous.</li>
+</ul>
+</li>
+<li>
+<p><strong>Purpose and Use</strong>:</p>
+<ul>
+<li><strong>Replication</strong>: Used for load balancing, data localization, and reporting.</li>
+<li><strong>Mirroring</strong>: Primarily for disaster recovery and high availability.</li>
+</ul>
+</li>
+<li>
+<p><strong>Number of Copies</strong>:</p>
+<ul>
+<li><strong>Replication</strong>: Can create multiple copies of data in different locations.</li>
+<li><strong>Mirroring</strong>: Usually involves a single mirror copy.</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance Impact</strong>:</p>
+<ul>
+<li><strong>Replication</strong>: Can be designed to minimize performance impact.</li>
+<li><strong>Mirroring</strong>: Since it’s synchronous, it might have a more significant impact on performance.</li>
+</ul>
+</li>
+<li>
+<p><strong>Flexibility</strong>:</p>
+<ul>
+<li><strong>Replication</strong>: More flexible in terms of configuration and use cases.</li>
+<li><strong>Mirroring</strong>: More rigid, focused on creating a real-time exact copy for redundancy.</li>
+</ul>
+</li>
+</ol>
+<p>Choosing between data replication and data mirroring depends on the specific requirements of the system in terms of availability, performance, and the nature of the data being managed. In many systems, both techniques are used in conjunction to achieve both scalability and high availability.</p></div>
+  </div>
+</section>
+
+<section id="chapter-10" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">10</span>
+    <h1 class="chapter-title">Database Federation</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p><strong>Database federation</strong> (also known as a <em>federated database system</em>) is an approach where multiple independent databases are virtually integrated to appear as one single database to the end user. Each underlying database (often called a <em>component database</em> or <em>data source</em>) remains autonomous and self-contained – it keeps its own data, schema, and database engine. The federation layer or system acts as a coordinator, so when an application issues a query, it doesn’t need to know which database holds the data. The federated system will route the request to the appropriate source(s) and combine the results for the application.</p>
+<p>In simpler terms, database federation is like having a <em>virtual single database</em> on top of many databases. For example, imagine a city library system with several branch libraries. Each branch library has its own catalog of books (akin to separate databases). Database federation is like a <strong>unified catalog</strong> that lets you search all branch libraries at once. You submit one book query, and the system figures out which branches have that book and brings the information back to you, as if you searched one big library. From the user’s perspective, it all feels like one database, even though the data is actually distributed across multiple libraries.</p>
+<p><strong>Key characteristics of federated databases</strong> include transparency, heterogeneity, and autonomy:</p>
+<ul>
+<li><strong>Transparency:</strong> The federation hides the complexity from users – you don’t need to know where the data lives or which database engine is used. The separate data sources are masked behind a unified interface.</li>
+<li><strong>Heterogeneity:</strong> The different databases in the federation can be of various types or vendors (SQL, NoSQL, different schemas, etc.). A well-designed federated system can handle different hardware, DBMS software, or data models and still query them together.</li>
+<li><strong>Autonomy:</strong> Each component database operates independently and is not modified by the federation. They maintain their own schemas and controls. The federated layer doesn’t force a single schema on all members; instead, it maps or translates between the sources and the unified view.</li>
+</ul>
+<p>Another term you might hear is <strong>functional partitioning</strong>, which refers to a form of federation where databases are split by function or domain. For instance, an e-commerce system might have separate databases for user accounts, orders, and product catalog. Through federation, these can function together as one logical database, even though they serve different functions.</p></div><div><h3>How Does Database Federation Work? (High-Level Overview)</h3>
+<p>At a high level, a federated database system works as a <em>mediator</em> between the application and the multiple databases. The process can be broken down into a few key steps that occur when a query is executed through a federated system:</p>
+<ol>
+<li><strong>Unified Query Submission:</strong> The user or application issues a query to the federated database as if querying a single database. For example, a query might ask for a customer’s profile (from a user database) along with their order history (from an orders database) in one go.</li>
+<li><strong>Query Analysis and Routing:</strong> The federated <strong>query engine</strong> (sometimes called the <em>federated database management system</em>, or FDBMS) analyzes the query to figure out which database(s) contain the required data. It essentially acts like a smart dispatcher. In our example, it realizes customer info lives in the user DB and orders live in the orders DB.</li>
+<li><strong>Query Translation:</strong> If the underlying databases use different query languages or schemas, the federated engine translates the original query into appropriate sub-queries for each target database. This may involve converting a standard SQL query into the specific dialect or API of each system. Think of this like a translator who speaks to each data source in its native language so they understand the request.</li>
+<li><strong>Distributed Query Execution:</strong> The system sends the sub-queries to the respective databases. Each database executes its part of the query on its local data and returns results back to the federation layer. In our example, the user DB returns the customer’s profile, and the orders DB returns that customer’s orders.</li>
+<li><strong>Data Merging and Response:</strong> The federated layer takes the results from the multiple databases and combines or merges them into a single cohesive result set. This might involve joining data from different sources or simply concatenating results. The unified result is then returned to the application as the answer to the original query. Continuing the example, the system would merge the profile data with the order history into one result, perhaps a combined view of the customer and their orders.</li>
+</ol>
+<p>From the application’s perspective, this all happens “behind the scenes” – it receives one unified answer. No manual intervention is needed to query each database separately or reconcile the data; the federation layer handles that complexity.</p>
+<p>To use an analogy, consider federation like asking a travel agent to plan a multi-country trip for you. You (the user) make one request – “I want to visit London, Paris, and Rome.” The agent breaks this into sub-tasks: contact the London office for hotel and tour info, the Paris office for theirs, and Rome’s for theirs. Each local office (database) provides its info. The agent then collects all the info and presents you with a single, consolidated itinerary. In this story, you didn’t have to coordinate with each office yourself – the travel agent (federation system) did it and gave you one combined result.</p>
+<h3>Architecture Components</h3>
+<ul>
+<li><strong>Underlying Databases (Data Sources):</strong> These autonomous databases hold the real data, possibly differing by vendor or location.</li>
+<li><strong>Federation Layer (Middleware or FDBMS):</strong> A mediator that parses and decomposes queries, coordinates sub-queries, and merges results.</li>
+<li><strong>Global (Federated) Schema:</strong> A unified view mapping data from each source.</li>
+<li><strong>Connectors/Adapters:</strong> Handle communication and translation between the federated system and each database.</li>
+<li><strong>Federated Query Optimizer:</strong> Determines how best to split queries across sources, sometimes pushing filters or partial joins down to reduce data movement.</li>
+</ul>
+<p>Each database remains autonomous and can still function alone. Federation focuses on query integration rather than merging or replacing individual systems.</p>
+<h3>Benefits of Database Federation</h3>
+<ul>
+<li><strong>Unified View of Data:</strong> Combines diverse datasets under one interface, avoiding the need to query each source separately.</li>
+<li><strong>Real-Time Access:</strong> Queries hit live, current data rather than static copies.</li>
+<li><strong>Heterogeneous Support:</strong> Lets different database technologies coexist yet still be queried together.</li>
+<li><strong>Preserved Autonomy &amp; Flexibility:</strong> Each source retains its own management and can be added or removed without major rework.</li>
+<li><strong>Potentially Lower Latency Than ETL:</strong> Direct queries to each source can yield near real-time results, though this depends on network and query complexity.</li>
+<li><strong>Security and Governance:</strong> Data remains at the source, preserving local controls; the federation layer can centralize access.</li>
+<li><strong>Scalability in Homogeneous Setups:</strong> Can act like sharding, where each database handles part of the load.</li>
+</ul>
+<h3>Challenges and Limitations</h3>
+<ul>
+<li><strong>Performance Issues:</strong> Multiple network calls and merging large sets can be slow. Distributed joins are expensive, and the federation layer can become a bottleneck.</li>
+<li><strong>Single Point of Failure &amp; Source Dependencies:</strong> If the federation layer or a key data source goes down, queries fail.</li>
+<li><strong>Complex Query Planning:</strong> The federator might not fully optimize across multiple engines or push down all operations.</li>
+<li><strong>Schema Differences:</strong> Aligning data types and schemas is time-consuming, especially across diverse systems.</li>
+<li><strong>Limited Transaction and Consistency Guarantees:</strong> Federation generally focuses on reading data. Global transactions across sources are complex and often not supported.</li>
+</ul>
+<h3>When to Use Database Federation</h3>
+<ul>
+<li><strong>Heterogeneous Environments:</strong> Ideal when integrating varied databases without migrating them all.</li>
+<li><strong>Real-Time Analytics:</strong> Useful for up-to-date views from multiple sources (e.g., global fraud detection).</li>
+<li><strong>Geo-Distributed Systems:</strong> Lets data remain near each region or comply with local regulations.</li>
+<li><strong>Microservices with Separate Databases:</strong> Provides a single interface for data scattered across services.</li>
+</ul>
+<p>In essence, database federation offers a <strong>single, integrated view</strong> across multiple autonomous databases, enabling real-time queries without forcing a centralized repository. While it simplifies data access, designers must weigh the performance, complexity, and consistency trade-offs to determine if federation fits their particular use case.</p></div>
+  </div>
+</section>
+
+<section id="chapter-11" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">11</span>
+    <h1 class="chapter-title">What are Indexes</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">B-Tree (Read-Heavy SQL) vs. LSM-Tree (Write-Heavy NoSQL) Engines</div>
+    <div class="diagram-badge">Database Storage Engines</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradIdx" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: B-Tree Index (Read Optimized) -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="380" height="250" rx="10" fill="url(#gradIdx)" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="190" y="28" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">B-TREE INDEX (IN-PLACE READ-HEAVY)</text>
+
+    <!-- Root Page -->
+    <rect x="135" y="48" width="110" height="32" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+    <text x="190" y="68" fill="#38bdf8" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">Root: [ 20 | 50 ]</text>
+
+    <!-- Branch Pointers -->
+    <path d="M 155 80 L 85 110" stroke="#475569" stroke-width="1.5"/>
+    <path d="M 190 80 L 190 110" stroke="#475569" stroke-width="1.5"/>
+    <path d="M 225 80 L 295 110" stroke="#475569" stroke-width="1.5"/>
+
+    <!-- Internal Branches -->
+    <rect x="35" y="110" width="100" height="28" rx="4" fill="#1e293b" stroke="#64748b"/>
+    <text x="85" y="128" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">[ 5 | 12 ]</text>
+
+    <rect x="145" y="110" width="90" height="28" rx="4" fill="#1e293b" stroke="#64748b"/>
+    <text x="190" y="128" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">[ 30 | 42 ]</text>
+
+    <rect x="245" y="110" width="100" height="28" rx="4" fill="#1e293b" stroke="#64748b"/>
+    <text x="295" y="128" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">[ 65 | 88 ]</text>
+
+    <!-- Leaf Pages -->
+    <rect x="25" y="170" width="330" height="40" rx="6" fill="#064e3b" stroke="#10b981"/>
+    <text x="190" y="195" fill="#34d399" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Leaf Pages: Linked Sequential Range Pointers ➔ Disk</text>
+
+    <text x="190" y="235" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">✔ O(log N) Reads | Traditional SQL (Postgres, MySQL InnoDB)</text>
+  </g>
+
+  <!-- Right: LSM-Tree (Write Optimized) -->
+  <g transform="translate(420, 20)">
+    <rect x="0" y="0" width="400" height="250" rx="10" fill="url(#gradIdx)" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="200" y="28" fill="#a855f7" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">LSM-TREE (LOG-STRUCTURED WRITE-HEAVY)</text>
+
+    <!-- RAM Layer -->
+    <rect x="20" y="45" width="360" height="55" rx="6" fill="#1e1b4b" stroke="#a855f7"/>
+    <text x="200" y="65" fill="#c084fc" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RAM: MemTable (Concurrent SkipList) + WAL on Disk</text>
+    <text x="200" y="85" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Writes are sequential appends in RAM (O(1) Ultra Fast)</text>
+
+    <!-- Flush Arrow -->
+    <path d="M 200 100 L 200 130" stroke="#a855f7" stroke-width="2" class="flow-line"/>
+    <text x="260" y="118" fill="#a855f7" font-family="Fira Code, monospace" font-size="8.5">Flush Immutable</text>
+
+    <!-- Disk SSTables -->
+    <rect x="20" y="130" width="360" height="85" rx="6" fill="#0f172a" stroke="#475569"/>
+    <text x="200" y="150" fill="#f59e0b" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">DISK: Sorted String Tables (SSTables)</text>
+    
+    <rect x="35" y="160" width="95" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+    <text x="82" y="175" fill="#94a3b8" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">SSTable L0</text>
+
+    <rect x="145" y="160" width="95" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+    <text x="192" y="175" fill="#94a3b8" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">SSTable L1</text>
+
+    <rect x="255" y="160" width="110" height="22" rx="3" fill="#1e293b" stroke="#10b981"/>
+    <text x="310" y="175" fill="#10b981" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Compacted L2 ♻️</text>
+
+    <text x="200" y="205" fill="#34d399" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">Background Leveled Compaction merges sorted runs</text>
+    <text x="200" y="235" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">✔ Ultra Fast Writes | Cassandra, RocksDB, ScyllaDB, LevelDB</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> B-Trees organize pages hierarchically on disk for fast O(log N) point and range queries, whereas LSM-Trees append writes rapidly to in-memory MemTables and flush immutable SSTables with background compaction for high-throughput write workloads.
+  </div>
+</div>
+
+
+    <div><p>Indexes are well known when it comes to databases. Sooner or later there comes a time when database performance is no longer satisfactory. One of the very first things you should turn to when that happens is database indexing.</p>
+<p>The goal of creating an index on a particular table in a database is to make it faster to search through the table and find the row or rows that we want. Indexes can be created using one or more columns of a database table, providing the basis for both rapid random lookups and efficient access of ordered records.</p>
+<h2>Example: A library catalog</h2>
+<p>A library catalog is a register that contains the list of books found in a library. The catalog is organized like a database table generally with four columns: book title, writer, subject, and date of publication. There are usually two such catalogs: one sorted by the book title and one sorted by the writer name. That way, you can either think of a writer you want to read and then look through their books or look up a specific book title you know you want to read in case you don’t know the writer’s name. These catalogs are like indexes for the database of books. They provide a sorted list of data that is easily searchable by relevant information.</p>
+<p>Simply saying, an index is a data structure that can be perceived as a table of contents that points us to the location where actual data lives. So when we create an index on a column of a table, we store that column and a pointer to the whole row in the index. Let&#x27;s assume a table containing a list of books, the following diagram shows how an index on the &#x27;Title&#x27; column looks like:</p></div><div><p>Just like a traditional relational data store, we can also apply this concept to larger datasets. The trick with indexes is that we must carefully consider how users will access the data. In the case of data sets that are many terabytes in size, but have very small payloads (e.g., 1 KB), indexes are a necessity for optimizing data access. Finding a small payload in such a large dataset can be a real challenge, since we can’t possibly iterate over that much data in any reasonable time. Furthermore, it is very likely that such a large data set is spread over several physical devices—this means we need some way to find the correct physical location of the desired data. Indexes are the best way to do this.</p>
+<h2>Purpose of Database Indexes</h2>
+<p><strong>a. Faster Data Retrieval:</strong> Indexes significantly speed up query execution by providing a more efficient means of locating data, which can lead to a reduction in the number of disk I/O operations and CPU usage.</p>
+<p><strong>b. Sorting and Ordering:</strong> Indexes can be used to quickly sort and order the data in a table based on specific criteria, which can be useful for reporting or displaying data in a specific order.</p>
+<h2>How Indexes Improve Query Performance</h2>
+<p><strong>a. Reduced Table Scans:</strong> By using an index, the database can avoid full table scans, which require reading every row in a table. Instead, the database can directly access the indexed columns, reducing the amount of data that needs to be read and processed.</p>
+<p><strong>b. Efficient Data Access:</strong> Indexes provide a more efficient means of accessing data by organizing it in a way that allows the database to quickly locate the rows that meet the query criteria.</p>
+<p><strong>c. Index Selectivity:</strong> Indexes with high selectivity can improve query performance by reducing the number of rows that need to be accessed. High selectivity means that the index can effectively filter out a large number of rows, thereby reducing the amount of work required to process a query.</p>
+<h2>How Indexes decrease write performance?</h2>
+<p>It&#x27;s important to note that while indexes can significantly improve query performance, they also come with some overhead. Indexes require additional storage space and can slow down write operations, such as INSERT, UPDATE, and DELETE, since the indexes must be updated along with the table data. Therefore, it&#x27;s essential to strike a balance between the number of indexes and their impact on query performance and storage requirements.</p>
+<p>When adding rows or making updates to existing rows for a table with an active index, we not only have to write the data but also have to update the index. This will decrease the write performance. This performance degradation applies to all insert, update, and delete operations for the table. For this reason, adding unnecessary indexes on tables should be avoided and indexes that are no longer used should be removed.</p>
+<p>To summarize, adding indexes is about improving the performance of search queries. If the goal of the database is to provide a data store that is often written to and rarely read from, in that case, decreasing the performance of the more common operation, which is writing, is probably not worth the increase in performance we get from reading.</p></div>
+  </div>
+</section>
+
+<section id="chapter-12" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">12</span>
+    <h1 class="chapter-title">Types of Indexes</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Database indexes are designed to improve the speed and efficiency of data retrieval operations. They function by maintaining a separate structure that points to the rows in a table, allowing the database to look up data more quickly without scanning the entire table.</p>
+<p>There are various types of database indexes, each with its unique characteristics and use cases. Understanding these different index types is crucial for optimizing the performance of database systems and ensuring efficient data retrieval.</p>
+<p>In this section, we will explore several common types of database indexes.</p></div><div><h2>Primary Index</h2>
+<p>A <strong>Primary Index</strong> is the index on a table’s primary key. The primary key is a column (or set of columns) that uniquely identifies each row. Most relational databases automatically create an index on the primary key to enforce uniqueness and allow fast lookup by the primary key. There can only be one primary index per table because a table has only one primary key. This index usually organizes the data by the primary key values, especially in systems where the primary key index is also the clustered index (e.g. InnoDB in MySQL or MS SQL Server by default).</p>
+<p><strong>Performance considerations:</strong> A primary index provides very efficient access to records by the primary key. Lookups and joins based on the primary key are fast because the index is typically a B-tree optimized for finding the exact key. Since the primary index is unique by definition, the database can stop searching as soon as it finds the one matching row. Maintaining a primary index has minimal overhead beyond any other index – inserts and updates to primary-key values (which are rare, since primary keys seldom change) will update the index. The primary index also helps enforce referential integrity (foreign keys often reference a primary key index for fast checks). In summary, the primary index <strong>improves read performance for identifying specific rows</strong>, with very little downside since every table usually needs a primary key.</p>
+<p><strong>Use cases:</strong> Use a primary index on the main identifier of the table. This is usually done automatically by declaring a PRIMARY KEY. For example, an <code>Employees</code> table might use an <code>EmployeeID</code> as the primary key; the database will create a primary index on <code>EmployeeID</code> so that queries like <code>SELECT * FROM Employees WHERE EmployeeID = 123</code> are very fast. Essentially <strong>every relational table</strong> that has a primary key will have a primary index – it’s the foundational index for uniquely identifying rows.</p>
+<p><strong>Example:</strong> Creating a table with a primary key will automatically create a primary index on that key. For instance, in SQL:</p>
+<pre><div><div><code><span>CREATE</span><span> </span><span>TABLE</span><span> Customers </span><span>(</span><span>
+</span><span>  CustomerID </span><span>INT</span><span> </span><span>PRIMARY</span><span> </span><span>KEY</span><span>,</span><span>
+</span><span>  Name       </span><span>VARCHAR</span><span>(</span><span>100</span><span>)</span><span>,</span><span>
+</span><span>  Address    </span><span>VARCHAR</span><span>(</span><span>200</span><span>)</span><span>
+</span><span></span><span>)</span><span>;</span></code></div></div></pre>
+<p>Here, <code>CustomerID</code> is the primary key, and the database builds a primary index on it so that any lookup by a specific <code>CustomerID</code> is efficient.</p>
+<h2>Unique Index</h2>
+<p>A <strong>Unique Index</strong> ensures that all values in the indexed column (or combination of columns) are distinct. In other words, it enforces a uniqueness constraint – no two rows can have the same key value. Database systems often automatically create a unique index when you define a UNIQUE constraint or a primary key (primary keys are by nature unique). You can also create additional unique indexes on other columns that must be unique (for example, a username or email address in a users table). A unique index functions like a regular index for lookup performance, but with the added rule that duplicate values are not allowed.</p>
+<p><strong>Performance considerations:</strong> Unique indexes speed up read queries just as non-unique indexes do, and in addition they guarantee data integrity by preventing duplicates. Reads (SELECTs) using a unique index are very efficient – and the database also knows that at most one row will match, which can slightly optimize certain plans. The trade-off is on writes: whenever a new row is inserted or an indexed column is updated, the database must check the unique index to ensure no duplicate value exists, which adds a small overhead. This means inserts/updates can be a bit slower due to the uniqueness check. However, this cost is usually worth it to maintain data correctness. Storage overhead for a unique index is similar to a normal index.</p>
+<p><strong>Use cases:</strong> Use unique indexes for any column that requires unique values. Besides primary keys, this includes candidate keys or business rules – e.g. an email address in a users table (to ensure no two users share the same email), or a social security number field that must be unique per person. Unique indexes are optimal when you frequently query by that column as well, because they both enforce integrity and accelerate lookups. Keep in mind that you can have multiple unique indexes per table (unlike primary index which is one).</p>
+<p><strong>Example:</strong> Creating a unique index (or constraint) on a column. Suppose we have a <code>Users</code> table and want <code>Email</code> to be unique:</p>
+<pre><div><div><code><span>-- Create a unique index on the Email column to prevent duplicates</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>UNIQUE</span><span> </span><span>INDEX</span><span> idx_users_email </span><span>ON</span><span> Users</span><span>(</span><span>Email</span><span>)</span><span>;</span></code></div></div></pre>
+<p>After this, any <code>SELECT</code> or join by <code>Email</code> can use the index, and any attempt to insert a duplicate email will be blocked by the index. Thus, queries like <code>SELECT * FROM Users WHERE Email = &#x27;alice@example.com&#x27;</code> are fast, and the index ensures there’s at most one <code>&#x27;alice@example.com&#x27;</code> in the table.</p>
+<h2>Clustered Index</h2>
+<p>A <strong>Clustered Index</strong> determines the physical order of data in the table. In a clustered index, the table’s rows are stored on disk in the same order as the index key (essentially the index <em>is</em> the table). This means that there is no separate structure holding pointers to data – the index’s leaf nodes contain the actual data rows. Because of this, a table can have only one clustered index (the data can only be sorted one way on disk). Often, the primary key serves as the clustered index by default (e.g. in SQL Server or InnoDB), but it can be a different column if chosen. If a table has a clustered index, other indexes on that table are called <strong>non-clustered</strong> (or secondary) indexes.</p>
+<p><strong>Performance considerations:</strong> Clustered indexes are very efficient for range queries and sorting on the indexed key, because the data is already ordered on disk. For example, if you query a range of values (say, all records between two dates on a date-column clustered index), the database can retrieve that continuous block of rows directly from disk with minimal seeking. Similarly, retrieving data in sorted order on the cluster key is fast (no extra sorting step) because the rows are stored sorted. Clustered indexes thus <strong>shine for range scans, ordering, and grouping by the indexed column</strong>. They also tend to improve locality of reference – adjacent rows (by index order) are stored near each other, which can benefit I/O when reading many sequential rows.</p>
+<p>However, clustered indexes have some trade-offs. Writing data can be slower if new rows need to be inserted in sorted order; inserting a row in the middle of existing data may require shifting rows or splitting data pages to maintain the order. Updates to the cluster key (if they occur) are expensive for the same reason (the row might move). Also, since there can be only one clustered index, you must choose it wisely based on query patterns. If you frequently need data sorted or ranged by a particular column, that’s a good candidate. If not, many systems default to clustering on the primary key. Additionally, non-clustered indexes on a clustered table use the clustered key as a pointer to locate data (instead of a direct physical pointer), which adds a bit of size to those indexes.</p>
+<p><strong>Use cases:</strong> Use a clustered index for columns on which you often retrieve ordered data or ranges of data. A classic use case is a date/timestamp column for a log or history table – clustering on the date makes it efficient to fetch a time range or the latest records. Similarly, if you always query a customer table sorted by <code>LastName</code>, a clustered index on <code>LastName</code> makes sense (as long as insert patterns are manageable). Many OLTP databases cluster on an auto-incrementing ID (primary key) because new inserts then append to the end (minimizing reorganization), and joins by ID are fast. In data warehouses, clustering on a date or other sequential key can benefit range queries. If a table is small, clustering is less critical, but on large tables the choice of clustered index can significantly impact performance for certain queries.</p>
+<p><strong>Example:</strong> In SQL Server (or other systems that support explicit clustered indexes), you can create one like so:</p>
+<pre><div><div><code><span>-- Cluster the Customer table by last name, then first name (alphabetical order)</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>CLUSTERED</span><span> </span><span>INDEX</span><span> idx_cust_name </span><span>ON</span><span> Customers</span><span>(</span><span>LastName </span><span>ASC</span><span>,</span><span> FirstName </span><span>ASC</span><span>)</span><span>;</span></code></div></div></pre>
+<p>This physically sorts the <code>Customers</code> table by last name and first name. Queries such as <code>SELECT * FROM Customers ORDER BY LastName, FirstName</code> or range queries like “LastName BETWEEN &#x27;A&#x27; and &#x27;C&#x27;” will be very efficient because the data is stored in sorted order. Keep in mind that only one clustered index (here on LastName+FirstName) can exist – if the primary key is different, that primary key would be supported by a non-clustered unique index instead.</p>
+<h2>Non-Clustered Index</h2>
+<p>A <strong>Non-Clustered Index</strong> (also called a secondary index) is a standard index separate from the actual data storage. In a non-clustered index, the index structure (typically a B-tree) stores the indexed column values and pointers (references) to the actual table rows that contain the rest of the data. The table’s data is not sorted by this index; instead, the index is like a lookup table that can quickly find the locations of rows matching a given key. Non-clustered indexes are analogous to an index in a book – the book’s content is in its original order, and the separate index lists keywords with pointers (page numbers) to where those topics are found. A table can have multiple non-clustered indexes on different columns, since they don’t dictate physical order.</p>
+<p><strong>Performance considerations:</strong> A non-clustered index greatly speeds up queries that filter or join on the indexed column, by allowing the database to jump directly to matching records instead of scanning the whole table. For example, an index on <code>LastName</code> in an <code>Employees</code> table lets a query <code>WHERE LastName = &#x27;Smith&#x27;</code> quickly find all “Smith” entries. Non-clustered indexes are very flexible – you can create many of them to support different queries – but each additional index adds storage overhead and slows down writes (each insert/update/delete must update all relevant indexes). When a query uses a non-clustered index, the database will traverse the index to find matching key values, then follow the pointers to retrieve the full rows. If the index covers the query (contains all needed columns), it may not need to fetch the table rows (see <strong>Covering Index</strong> below); otherwise, there is an extra step (called a bookmark lookup or index-to-table lookup) to get the remaining data. This lookup is generally fast for a few records, but if a non-clustered index returns many matches, the benefit may diminish because each row retrieval incurs additional I/O.</p>
+<p>Compared to clustered indexes, non-clustered indexes do <strong>not</strong> guarantee physical locality of data – the rows may be scattered – so range scans will fetch each matching row via pointers. If many rows qualify, a table scan might even be cheaper, which the optimizer will consider. Thus, non-clustered indexes are best for selective queries (that return a small percentage of the table). They are not helpful for queries that return a very large fraction of the table (in such cases, a full table scan is usually more efficient than hopping through the index).</p>
+<p><strong>Use cases:</strong> Virtually any column that is frequently used in <code>WHERE</code> clauses, join conditions (<code>ON</code> clauses), or used for sorting (<code>ORDER BY</code>) is a candidate for a non-clustered index if it isn’t already the clustered (or primary) index. For example, if you often query an <code>Orders</code> table by <code>CustomerID</code>, and the table is not clustered by customer, you would create a non-clustered index on <code>CustomerID</code> to speed up those lookups. Similarly, an index on <code>LastName</code> in an <code>Employees</code> table helps searches by last name, and an index on <code>ProductCategory</code> in a <code>Products</code> table accelerates filtering by category. You can have multiple non-clustered indexes per table, so you tailor them to your query patterns. Just be cautious with creating too many; each index will need maintenance on writes and consumes disk/RAM.</p>
+<p><strong>Example:</strong> Creating a non-clustered index on a single column is straightforward:</p>
+<pre><div><div><code><span>-- Create a non-clustered index on the LastName column of Employees</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_emp_lastname </span><span>ON</span><span> Employees</span><span>(</span><span>LastName</span><span>)</span><span>;</span></code></div></div></pre>
+<p>This index allows fast searches by last name. For instance, <code>SELECT * FROM Employees WHERE LastName = &#x27;Doe&#x27;</code> will use the index to find pointers to all &quot;Doe&quot; records and then retrieve them. The <code>Employees</code> data itself remains in its original order (perhaps clustered by another key or as inserted), but this index serves as a quick lookup structure for the LastName field.</p>
+<h2>Composite Index</h2>
+<p>A <strong>Composite Index</strong> (also called a multi-column index or concatenated index) is an index on two or more columns combined. The index treats the combined set of columns as a single search key. For example, an index on <code>(LastName, FirstName)</code> in a table effectively sorts by LastName then FirstName together. Composite indexes can speed up queries that involve conditions on multiple columns because the query can use one index lookup instead of having to combine results from separate single-column indexes.</p>
+<p><strong>Performance considerations:</strong> A well-chosen composite index can significantly improve performance for multi-column queries. If a query has a <code>WHERE</code> clause involving both column A and B, a composite index on (A, B) can directly locate the matching <code>(A,B)</code> pairs. In contrast, using separate single-column indexes might require the database to perform an index intersection or do additional filtering. Composite indexes also help with sorting and grouping on multiple columns. They can even act as a covering index if they include all columns the query needs (either as index keys or included columns). Additionally, composite indexes can <strong>save space and maintenance cost</strong> by consolidating into one index what might otherwise require two or more indexes. For instance, instead of having one index on A and another on B, a composite on (A,B) might serve both needs if queries commonly use both columns together.</p>
+<p>However, the order of columns in a composite index is crucial. Most databases use a <strong>leftmost prefix</strong> rule: the index can be used for a query that filters on the first column, or on the first and second, etc., but not solely on a later column without the earlier one. For example, an index on (A, B) can be used for a query on A alone, or A and B together, but <em>typically</em> not for a query on B alone (if A is not specified). (Some databases have optimizations like index skip scans, but those are exceptions.) This means if you create a composite index, you should list the columns in the order that matches your common query patterns. Composite indexes tend to be larger (since they store multiple values per entry) and will incur overhead on any operation that changes any of the indexed columns.</p>
+<p><strong>Use cases:</strong> Use composite indexes for queries that consistently involve multiple columns. A classic example is a table of addresses with columns (City, State); queries often filter by State and City together, so an index on (State, City) makes sense. Another example is an <code>Orders</code> table where queries ask for orders by Customer within a certain Date – an index on (CustomerID, OrderDate) would efficiently support <code>WHERE CustomerID = ? AND OrderDate BETWEEN ...</code>. Composite indexes are also useful for enforcing uniqueness across a combination of fields (e.g. an index on (FirstName, LastName) if you wanted to ensure no two people share the same full name in a table – though that’s a business requirement not commonly enforced, it illustrates the point). Always consider how the columns are used: if a composite index’s first column isn’t used alone in queries, it may not be helpful to have a separate single-column index on it, whereas if the second column is also frequently queried by itself, you might need an additional index just on that second column.</p>
+<p><strong>Example:</strong> Suppose we have an <code>Orders</code> table frequently queried by Customer and Date. We can create a composite index:</p>
+<pre><div><div><code><span>-- Composite index on CustomerID and OrderDate</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_orders_cust_date </span><span>ON</span><span> Orders</span><span>(</span><span>CustomerID</span><span>,</span><span> OrderDate</span><span>)</span><span>;</span></code></div></div></pre>
+<p>This single index can accelerate queries like <code>SELECT * FROM Orders WHERE CustomerID = 42 AND OrderDate &gt;= &#x27;2024-01-01&#x27; AND OrderDate &lt; &#x27;2024-02-01&#x27;;</code> because it will find the customer 42’s orders and then filter by the date range in one index traversal. It will also help a query <code>WHERE CustomerID = 42</code> alone (using the leftmost <code>CustomerID</code> part). However, a query filtering only by <code>OrderDate</code> (without CustomerID) cannot use this index efficiently because <code>OrderDate</code> is the second component. In summary, this composite index targets queries that specify a customer <em>and</em> a date or date range.</p>
+<h2>Full-Text Index</h2>
+<p>A <strong>Full-Text Index</strong> is a specialized index for text search. Unlike a normal index which treats an entire column value as a single entry, a full-text index breaks text data into <strong>words or tokens</strong> and indexes those for rapid substring and keyword searches. Full-text indexes are typically implemented as an <em>inverted index</em>: it maps each word (term) to a list of documents or rows that contain that word. This allows efficient search for documents containing one or more words, supporting features like phrase searches, boolean text searches, and relevancy ranking. Full-text indexing is essential for searching large text fields such as articles, product descriptions, documents, or comments, where queries might ask for &quot;rows that contain the word X&quot;.</p>
+<p><strong>Performance considerations:</strong> Full-text indexes greatly improve the performance of text searches. For example, a query to find all articles containing the word “database” can use the full-text index to directly retrieve matches, instead of scanning every article’s text. Traditional B-tree indexes cannot efficiently handle <code>LIKE &#x27;%keyword%&#x27;</code> searches because they are not optimized for arbitrary substring matches. A full-text index, by indexing individual words, can handle such queries in sub-linear time. However, maintaining a full-text index has a cost. Building the index initially can be resource-intensive (as it involves parsing all text, removing common stop-words, stemming words depending on language, etc.), and updates to text columns require updating the inverted index. In many systems, full-text index updates might be batch-processed or asynchronous to mitigate overhead. Full-text indexes also consume additional storage, as they store a lot of tokens (though often with compression). Another consideration is that full-text search engines typically operate with specific queries (e.g., using <code>MATCH() ... AGAINST()</code> in MySQL or <code>CONTAINS()</code> in SQL Server) – the query engine needs to use the full-text search mechanism explicitly.</p>
+<p>Despite the overhead, for applications that need to search text, full-text indexes are the only practical way to achieve good performance. They often support advanced features: ranking results by relevance, ignoring common “noise” words, support for inflection or stemming (searching “run” also finds “running”), etc., which go beyond what a basic index does.</p>
+<p><strong>Use cases:</strong> Use a full-text index for columns containing large unstructured text that users need to search through. Typical use cases are: article or blog content, product descriptions (for e-commerce search), document repositories, comment or message text, etc. For example, a support knowledge base might have a full-text index on the article text so that a query for certain error keywords returns relevant articles quickly. Full-text search is also used in implementing search boxes on websites or applications – e.g., searching all fields of a customer profile for a keyword. If your queries are only looking for exact matches or simple prefixes, a regular index might suffice, but for sophisticated text queries (multiple keywords, any position in text, relevance scoring), full-text is ideal.</p>
+<p><strong>Example:</strong> In MySQL, you can create a full-text index on a text column like this:</p>
+<pre><div><div><code><span>-- Full-text index on the Content column of an Articles table (MySQL example)</span><span>
+</span><span></span><span>CREATE</span><span> FULLTEXT </span><span>INDEX</span><span> idx_articles_content </span><span>ON</span><span> Articles</span><span>(</span><span>Content</span><span>)</span><span>;</span></code></div></div></pre>
+<p>Once created, queries can use <code>MATCH(Content) AGAINST(&#x27;database&#x27;)</code> to efficiently find articles that mention “database”. In SQL Server, full-text indexing involves creating a full-text catalog and index, and then using the <code>CONTAINS</code> or <code>FREETEXT</code> predicates for querying. The idea in all cases is the same: the text is tokenized and indexed by terms, enabling fast searches for those terms in the text data (far faster than wildcard LIKE queries on large text).</p>
+<h2>Hash Index</h2>
+<p>A <strong>Hash Index</strong> uses a hash table internally for indexing, rather than a tree structure. In a hash index, the index key (e.g., a value from a column) is run through a hash function which determines which &quot;bucket&quot; or slot the pointer to the row will be stored in. Hash indexes are excellent for <strong>equality lookups</strong> – i.e., queries that ask for records matching a specific value (using <code>=</code> or <code>IN</code> comparisons). The hash function computation leads directly to the location of the matching entries, giving average <em>O(1)</em> lookup time, which can be faster than traversing a B-tree (O(log N)) for very large datasets. However, hash indexes do not maintain any order among the keys, so they cannot be used for range scans (<code>&lt;</code>, <code>&gt;</code>, BETWEEN queries) or for sorting.</p>
+<p><strong>Performance considerations:</strong> For exact-match queries, a hash index is extremely fast. If you query <code>WHERE AccountNumber = 12345</code>, a hash index on AccountNumber can compute the hash and jump directly to the matching entry (if any) in constant time. This makes hash indexes attractive for workloads that are heavily key-value oriented (many lookups by exact key). Additionally, the performance of hash indexes doesn’t degrade much even as the table grows, except that a very full hash table might have collisions (multiple values hashing to the same bucket) which the index must handle (commonly via linked list or overflow areas). In case of collisions, lookup becomes a bit slower because the index might need to check a few entries, but a good hash function minimizes this.</p>
+<p>On the downside, because hash indexes lack ordering, they <strong>cannot be used for range queries or ORDER BY</strong> operations. If you do <code>WHERE Name &gt; &#x27;M&#x27;</code> or <code>ORDER BY Name</code>, a hash index on Name is useless – the database would have to scan the table because the hash index doesn’t store keys in sequence. Also, hash indexes typically only support simple equality, not even prefix matches (like <code>LIKE &#x27;John%&#x27;</code> cannot use a hash index effectively). Another consideration is that some databases do not support general hash indexes, or they have limitations. For example, PostgreSQL supports hash indexes but for many years they were not WAL-logged (meaning they weren’t crash-safe) until recent versions; even now, B-tree indexes are usually preferred unless you have a very specific need. MySQL’s Memory engine uses hash indexes by default for in-memory tables, because memory tables are often used as fast lookup caches. But InnoDB (the main storage engine) doesn’t allow user-created hash indexes explicitly – it relies on B-trees, sometimes using adaptive hashing behind the scenes for frequently accessed pages. So, the availability of hash indexes depends on the database system.</p>
+<p>In terms of maintenance, updating a hash index on inserts and deletes is generally fast (compute a hash and insert or remove an entry). If the hash table grows too full, it might need resizing (rehashing), which can be an expensive operation, but that’s not frequent if sized well. Hash indexes also typically don’t provide any statistical information about data distribution (which query optimizers use for planning) beyond perhaps the number of entries, whereas B-trees inherently have some ordering structure that can be exploited.</p>
+<p><strong>Use cases:</strong> Use a hash index when you have a very large table and frequently need to retrieve or check existence of records by a specific key value, and you <strong>never</strong> need to do range queries on that key. This is common in key-value stores or certain NoSQL systems, but in SQL/RDBMS it’s less common since B-tree indexes handle most use cases well. That said, a hash index might be beneficial for something like an in-memory lookup table, or a table that serves as a cache of key-to-value mappings where each query is an exact key lookup. Another scenario is indexing cryptographic hashes or uniformly distributed identifiers – if you frequently look up by a long hash value, a hash index would directly target that value. In PostgreSQL, if you have a table where only equality searches are used on a particular column and performance is critical, you could consider a hash index for that column (after ensuring it’s supported and advantageous).</p>
+<p><strong>Example:</strong> In PostgreSQL, creating a hash index explicitly looks like:</p>
+<pre><div><div><code><span>-- PostgreSQL: Create a hash index on the CustomerCode column</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_customer_code_hash </span><span>ON</span><span> Customers </span><span>USING</span><span> </span><span>HASH</span><span>(</span><span>CustomerCode</span><span>)</span><span>;</span></code></div></div></pre>
+<p>This creates a hash-based index on <code>CustomerCode</code>. Now a query <code>SELECT * FROM Customers WHERE CustomerCode = &#x27;ABC123&#x27;</code> will use the hash index to directly hash <code>&#x27;ABC123&#x27;</code> and find the matching row(s) very quickly. But a query with a range or inequality on <code>CustomerCode</code> (e.g. <code>CustomerCode &lt; &#x27;ABC999&#x27;</code>) cannot use this index. In MySQL (Memory engine), if you create a table <code>ENGINE=MEMORY</code>, any index you create on it is a hash index by default, optimized for fast lookups in RAM. For disk-based tables, MySQL doesn’t allow specifying <code>USING HASH</code> (as of current versions) – it sticks to B-trees. Always consider whether your queries are exclusively equality lookups; if so, and your DB supports it, a hash index can be a powerful tool for performance.</p></div>
+  </div>
+</section>
+
+<section id="chapter-13" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">13</span>
+    <h1 class="chapter-title">Vector Databases, Embeddings &amp;amp;amp;amp;amp;amp; Modern Storage Engines</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="chapter-body-content">
+  <p>With the rise of Generative AI, Large Language Models (LLMs), and Retrieval-Augmented Generation (RAG), <strong>Vector Databases</strong> have emerged as a critical database category designed for high-dimensional geometric search.</p>
+
+  <h2>1. What is a Vector Database?</h2>
+  <p>Unlike relational databases that index scalar values (numbers, strings) using B-Trees, vector databases index <strong>dense mathematical vectors (embeddings)</strong> generated by machine learning models (e.g. OpenAI <code>text-embedding-3</code>, CLIP for images).</p>
+
+  
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Vector Embedding Search &amp; HNSW Indexing Graph</div>
+    <div class="diagram-badge">AI / RAG Storage Engine</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradVec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="20" y="20" width="800" height="220" rx="10" fill="url(#gradVec)" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="420" y="48" fill="#c084fc" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">VECTOR EMBEDDING SEARCH &amp; HNSW GRAPH INDEXING</text>
+
+  <!-- Step 1: Text to Embeddings -->
+  <g transform="translate(40, 70)">
+    <rect x="0" y="0" width="200" height="140" rx="8" fill="#1e1b4b" stroke="#38bdf8"/>
+    <text x="100" y="25" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1. EMBEDDING PIPELINE</text>
+    <rect x="15" y="40" width="170" height="25" rx="4" fill="#0f172a"/>
+    <text x="100" y="56" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Text: "distributed cache"</text>
+    <path d="M 100 68 L 100 85" stroke="#38bdf8" stroke-width="1.5" class="flow-line"/>
+    <rect x="15" y="88" width="170" height="40" rx="4" fill="#0369a1"/>
+    <text x="100" y="104" fill="#e0f2fe" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">1536-dim Vector Array</text>
+    <text x="100" y="118" fill="#93c5fd" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">[0.024, -0.912, 0.441, ...]</text>
+  </g>
+
+  <!-- Step 2: HNSW Graph Layers -->
+  <g transform="translate(270, 70)">
+    <rect x="0" y="0" width="280" height="140" rx="8" fill="#064e3b" stroke="#10b981"/>
+    <text x="140" y="25" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">2. HNSW HIERARCHICAL GRAPH</text>
+    
+    <!-- Layer 2 (Top sparse) -->
+    <circle cx="60" cy="50" r="8" fill="#10b981"/>
+    <circle cx="220" cy="50" r="8" fill="#10b981"/>
+    <line x1="68" y1="50" x2="212" y2="50" stroke="#34d399" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="25" y="53" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8">L2</text>
+
+    <!-- Layer 0 (Dense) -->
+    <circle cx="40" cy="105" r="6" fill="#10b981"/>
+    <circle cx="90" cy="95" r="6" fill="#10b981"/>
+    <circle cx="150" cy="115" r="6" fill="#10b981"/>
+    <circle cx="200" cy="95" r="6" fill="#10b981"/>
+    <circle cx="250" cy="110" r="6" fill="#10b981"/>
+    <line x1="46" y1="105" x2="84" y2="95" stroke="#34d399" stroke-width="1"/>
+    <line x1="96" y1="95" x2="144" y2="115" stroke="#34d399" stroke-width="1"/>
+    <line x1="156" y1="115" x2="194" y2="95" stroke="#34d399" stroke-width="1"/>
+    <line x1="206" y1="95" x2="244" y2="110" stroke="#34d399" stroke-width="1"/>
+    <text x="20" y="108" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8">L0</text>
+  </g>
+
+  <!-- Step 3: Cosine Similarity Matching -->
+  <g transform="translate(580, 70)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#4c1d95" stroke="#c084fc"/>
+    <text x="110" y="25" fill="#e9d5ff" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">3. SIMILARITY OUTPUT</text>
+    <rect x="15" y="40" width="190" height="36" rx="4" fill="#2e1065"/>
+    <text x="105" y="55" fill="#fbcfe8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Doc: "Redis In-Memory Cache"</text>
+    <text x="105" y="68" fill="#34d399" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Cosine Similarity: 0.94</text>
+
+    <rect x="15" y="85" width="190" height="36" rx="4" fill="#2e1065"/>
+    <text x="105" y="100" fill="#fbcfe8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Doc: "Memcached Clustering"</text>
+    <text x="105" y="113" fill="#34d399" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Cosine Similarity: 0.88</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Vector databases use Approximate Nearest Neighbor (ANN) graphs like HNSW (Hierarchical Navigable Small World) to navigate 1536-dimensional space in sub-10ms logarithmic time.
+  </div>
+</div>
+
+
+  <h2>2. Vector Indexing: HNSW vs. IVFFlat</h2>
+  <ul>
+    <li><strong>IVFFlat (Inverted File Flat):</strong> Divides vector space into clusters using Voronoi cells. Fast training and low memory, but lower recall on boundary vectors.</li>
+    <li><strong>HNSW (Hierarchical Navigable Small World):</strong> Constructs a multi-layer geometric skip-list graph. Top layers contain long-range highway edges; bottom layers contain dense local connections. Delivers <strong>99%+ recall</strong> and ultra-low search latency at the cost of higher RAM usage.</li>
+  </ul>
+
+  <h2>3. Top Vector Database Technologies in Production</h2>
+  <ul>
+    <li><strong>Dedicated Vector DBs:</strong> Pinecone (Serverless Cloud), Milvus (Kubernetes distributed cluster), Qdrant (Rust-based high performance), Weaviate.</li>
+    <li><strong>Vector Extensions on Classic DBs:</strong> <code>pgvector</code> (PostgreSQL extension for unified relational + vector queries), Redis VSS (Vector Similarity Search in RAM).</li>
+  </ul>
+</div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_11_databases_and_indexing') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_11_databases_and_indexing', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

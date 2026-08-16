@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulkhead Pattern - Grokking Microservices Design Patterns</title>
+    <meta property="og:title" content="Bulkhead Pattern - Microservices Design Patterns Guide">
+    <meta property="og:description" content="Interactive Microservices Design Patterns Study Guide featuring Dark Mode, Live Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Bulkhead Pattern</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (9)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
+<li class="sidebar-item" data-num="02" data-title="the problem failure propagation in distributed systems"><a href="#chapter-02"><span class="chapter-num">02</span> The Problem Failure Propagation in Distributed Systems</a></li>
+<li class="sidebar-item" data-num="03" data-title="the bulkhead pattern a solution"><a href="#chapter-03"><span class="chapter-num">03</span> The Bulkhead Pattern A Solution</a></li>
+<li class="sidebar-item" data-num="04" data-title="the architecture"><a href="#chapter-04"><span class="chapter-num">04</span> The Architecture</a></li>
+<li class="sidebar-item" data-num="05" data-title="the inner workings"><a href="#chapter-05"><span class="chapter-num">05</span> The Inner Workings</a></li>
+<li class="sidebar-item" data-num="06" data-title="bulkhead pattern an example"><a href="#chapter-06"><span class="chapter-num">06</span> Bulkhead Pattern An Example</a></li>
+<li class="sidebar-item" data-num="07" data-title="performance implications and special considerations"><a href="#chapter-07"><span class="chapter-num">07</span> Performance Implications and Special Considerations</a></li>
+<li class="sidebar-item" data-num="08" data-title="system design examples"><a href="#chapter-08"><span class="chapter-num">08</span> System Design Examples</a></li>
+<li class="sidebar-item" data-num="09" data-title="conclusion"><a href="#chapter-09"><span class="chapter-num">09</span> Conclusion</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The Bulkhead pattern is a strategy used in the design of distributed systems to prevent failures from propagating across different parts of the system. The name &quot;bulkhead&quot; is inspired by a nautical term. On a ship, bulkheads are compartments designed to contain water in case of a hull breach. If water enters one compartment, the bulkhead prevents it from flooding the entire ship, hence limiting the damage.</p>
+<p>How does this concept relate to distributed systems? In a distributed system, a bulkhead is a mechanism that isolates different parts of the system so that if one part fails, it doesn&#x27;t cause the rest of the system to fail.</p>
+<h2>The Challenge of Cascading Failures</h2>
+<p>Think of a common scenario in a distributed system where you have multiple services interacting with each other. Each service has its own responsibilities, resources, and potential failure modes. In an ideal world, these services would operate perfectly all the time. But in real world, services can and do fail, for a variety of reasons - bugs, resource exhaustion, network issues, and more.</p>
+<p>When a service fails, it can cause a ripple effect, where the failure of one service leads to the failure of other services that depend on it. This is what we call a cascading failure, and it&#x27;s one of the biggest challenges in distributed systems design. How can we prevent such cascading failures? How can we contain the impact of a failure to the part of the system where it originated? This is where the Bulkhead pattern comes into play.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">The Problem Failure Propagation in Distributed Systems</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Imagine you&#x27;re on a large ship, cruising across the vast ocean. Suddenly, there&#x27;s a breach in the hull, and water starts pouring into the ship. What do you think will happen? The ship will start to sink, right? But, does the whole ship sink immediately? Thanks to the architecture of modern ships, the answer is no. The ship is divided into several watertight compartments or &#x27;bulkheads&#x27;. If water floods one compartment, the others remain unaffected, at least for some time, buying valuable time for rescue efforts.</p>
+<p>But what if our ship didn&#x27;t have these bulkheads? The water would quickly flood the entire ship, causing it to sink rapidly. The failure (hull breach) would propagate across the entire ship, leading to a total system failure (the ship sinking). This is an example of a cascading failure in a physical system.</p>
+<p>Now, let&#x27;s bring this concept back to distributed systems. Like our ship, a distributed system consists of multiple components (services, processes, etc.). Ideally, these components work together seamlessly to provide a functional system. But, in reality, failures can and do occur.</p>
+<h2>Cascading Failures in Distributed Systems</h2>
+<p>A cascading failure in a distributed system is similar to a ship sinking. When one component fails, the failure can propagate to other components, leading to a widespread system failure.</p>
+<p>Let&#x27;s take an example to illustrate this point. Imagine a microservices-based e-commerce platform. You have separate services for user management, inventory management, payment processing, and so on. Now, suppose the inventory service fails due to a database outage. The user service, which relies on the inventory service to display product availability, also starts failing. The payment service, which checks inventory before processing payments, likewise fails.</p>
+<p>In a short time, the entire platform becomes unavailable, all because of a failure in one service. This is a classic example of a cascading failure.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">The Bulkhead Pattern A Solution</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The essence of the Bulkhead pattern lies in isolation. Like the watertight compartments in a ship, the Bulkhead pattern partitions the components of a system into isolated units or &#x27;bulkheads&#x27;. Each bulkhead is designed to operate independently of the others. So, if one bulkhead fails, the others can continue to function, thus preventing the failure from spreading across the system.</p>
+<p>You can think of bulkheads as a form of &#x27;failure containment&#x27;. By isolating different parts of the system, bulkheads limit the scope of any potential failures. A failure in one part of the system doesn&#x27;t automatically mean a failure in the entire system. The unaffected parts can still provide some level of service, maintaining system availability as much as possible.</p>
+<h2>A Solution to the Problem of Failure Propagation</h2>
+<p>The Bulkhead pattern directly addresses the problem of failure propagation. By isolating system components, it prevents a failure in one component from impacting the others. In doing so, it significantly reduces the risk of a cascading failure.</p>
+<p>Returning to our e-commerce platform example, let&#x27;s see how the Bulkhead pattern might help. If we had isolated the inventory service into its own bulkhead, the failure of this service wouldn&#x27;t directly impact the user and payment services. They could continue to operate, providing limited functionality (such as browsing products or viewing past orders), despite the failure of the inventory service.</p>
+<p>Moreover, by preventing the inventory service failure from consuming system-wide resources (like CPU or memory), the Bulkhead pattern ensures that these resources are available for the remaining services. This further helps to maintain system availability in the face of component failures.</p>
+<h2>Real-world Analogy Continued: Compartments in a Ship</h2>
+<p>Continuing with our ship analogy, you can think of the Bulkhead pattern as creating watertight compartments within your distributed system. Just as the ship&#x27;s compartments contain water and prevent it from flooding the entire ship, your system&#x27;s bulkheads contain failures and prevent them from impacting the entire system.</p>
+<p>Of course, bulkheads aren&#x27;t a magic solution that makes failures disappear. If our ship has a significant hull breach, it might eventually sink, despite its bulkheads. Likewise, if a distributed system experiences a major failure (like a network outage), it might become unavailable, despite its bulkheads. However, by buying time and maintaining some level of service, bulkheads can significantly mitigate the impact of failures.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">The Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Now that we understand the basics of the Bulkhead pattern, it&#x27;s time to explore its architecture. How are bulkheads designed within a distributed system? How do they interact with other components? Let&#x27;s explore these questions and more in this section.</p>
+<h2>The Building Blocks of the Bulkhead Pattern</h2>
+<p>The architecture of the Bulkhead pattern revolves around two key concepts: isolation and resources. To implement the Bulkhead pattern, we need to create isolated units within our system (the bulkheads) and allocate resources to these units.</p>
+<p>At a high level, a bulkhead is simply a partition within the system. It could be a separate service, a group of related processes, a set of threads, or even a dedicated CPU or memory area. The key is that each bulkhead operates independently of the others.</p>
+<p>Resources, on the other hand, could include anything the bulkheads need to function, such as CPU time, memory, network bandwidth, database connections, and so on. Each bulkhead gets a dedicated share of these resources, ensuring that a failure in one bulkhead doesn&#x27;t consume all the system&#x27;s resources.</p>
+<h2>Isolating System Components into Bulkheads</h2>
+<p>The first step in implementing the Bulkhead pattern is to divide your system into bulkheads. How you do this depends on the specifics of your system and the nature of the potential failures you want to isolate.</p>
+<p>For instance, you might isolate services that are prone to failure or that handle particularly resource-intensive tasks. Or, you might group services based on their function or the type of users they serve.</p>
+<p>Let&#x27;s go back to our e-commerce platform example. Here, you might create separate bulkheads for user management, inventory management, payment processing, and so forth. Each service would operate independently and have its own resources.</p>
+<p>The aim is to ensure that if one service fails or becomes a resource hog, the other services aren&#x27;t directly affected. They can continue to operate, providing some level of service to users.</p>
+<h2>Allocating Resources to Bulkheads</h2>
+<p>The second step in implementing the Bulkhead pattern is to allocate resources to each bulkhead. This allocation should be proportional to the needs and importance of each bulkhead. A resource-intensive or critical service might get more resources than a less demanding or less critical one.</p>
+<p>For example, in our e-commerce platform, you might allocate more resources to the payment processing service (which handles financial transactions) than to the user management service (which mainly handles user profiles). The specific allocation would depend on factors like the expected load on each service, its performance requirements, and the consequences of a failure.</p>
+<p>Resource allocation is a critical aspect of the Bulkhead pattern because it prevents a failure in one bulkhead from consuming all the system&#x27;s resources. If a bulkhead fails and starts consuming resources excessively, the resource allocation ensures that other bulkheads still have resources available to them. This helps to maintain system availability in the face of failures.</p>
+<h2>Handling Interactions Between Bulkheads</h2>
+<p>Another crucial aspect of the Bulkhead pattern&#x27;s architecture is how bulkheads interact with each other. Since each bulkhead operates independently, inter-bulkhead interactions must be carefully managed to prevent failures from propagating.</p>
+<p>In general, interactions between bulkheads should be kept to a minimum. The more a bulkhead depends on other bulkheads, the higher the chance of a failure spreading. When interactions are necessary, they should be handled in a way that isolates the interacting bulkheads from each other&#x27;s failures.</p>
+<p>For instance, if the user management service needs to interact with the inventory service, it could do so via a message queue or an API gateway. This way, if the inventory service fails, the failure doesn&#x27;t directly impact the user management service. The interaction remains isolated and manageable, maintaining the spirit of the Bulkhead pattern.</p>
+<h2>The Role of Resilience in the Bulkhead Pattern</h2>
+<p>The ultimate goal of the Bulkhead pattern is resilience - the ability of a system to cope with failures and continue to provide service. The pattern&#x27;s architecture reflects this goal in every aspect, from the isolation of bulkheads to the allocation of resources and the management of interactions.</p>
+<p>A resilient system is one that can absorb shocks, adapt to change, and continue to function despite adversities. The Bulkhead pattern contributes to system resilience by preventing failures from spreading, maintaining resource availability, and ensuring some level of service continuity.</p>
+<p>In the face of a failure, a system using the Bulkhead pattern doesn&#x27;t just shut down or degrade entirely. Instead, it degrades gracefully, with unaffected bulkheads continuing to operate and provide service. This is the essence of resilience and the ultimate benefit of the Bulkhead pattern.</p>
+<h2>The Power of the Bulkhead Pattern: Containing Failures</h2>
+<p>When we examine the architecture of the Bulkhead pattern, the power of the pattern becomes apparent. It&#x27;s not just about preventing failures; it&#x27;s about containing them, controlling their impact, and maintaining system function as much as possible. It&#x27;s a pattern designed for the realities of distributed systems, where failures are not the exception but the norm.</p>
+<h2>Summary</h2>
+<p>So far, we&#x27;ve looked at the architecture of the Bulkhead pattern, delving into the concepts of isolation and resource allocation. We&#x27;ve seen how bulkheads are created within a distributed system and how resources are allocated to them. We&#x27;ve also discussed how interactions between bulkheads are managed and the role of resilience in the pattern.</p>
+<p>In the next section, we&#x27;ll dive deeper into the inner workings of the Bulkhead pattern. We&#x27;ll explore how the pattern operates in real time, handling failures and maintaining system function. We&#x27;ll also provide a practical example of the Bulkhead pattern implemented in Java, giving you a first-hand look at how this powerful pattern works in practice.</p>
+<p>Remember, while the Bulkhead pattern is a powerful tool for managing failures in distributed systems, it&#x27;s not a silver bullet. It requires careful design and implementation, and it should be used as part of a broader strategy for system resilience. But with the right approach, it can make a significant difference in how your system handles failures. Stay tuned as we explore this further.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">The Inner Workings</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Understanding the architecture of the Bulkhead pattern is one thing, but to truly appreciate its power and utility, we need to dive into its inner workings. How does this pattern function in real-time in a running system? How does it handle the inevitable failures that arise in distributed systems? Let&#x27;s take a closer look.</p>
+<h2>Isolation in Practice: Maintaining Independence</h2>
+<p>In the context of the Bulkhead pattern, the concept of isolation is fundamental. Each bulkhead within the system needs to operate independently of others. This independence is what enables the bulkheads to contain failures and prevent them from spreading.</p>
+<p>In practice, maintaining this independence often involves careful design and implementation choices. For instance, each bulkhead might run in its own process or container, have its own database and cache, use its own thread pool, and so on.</p>
+<p>However, achieving isolation is not just about technical measures. It also requires an organizational commitment to maintaining the independence of bulkheads. For example, changes to one bulkhead should not require changes to others. Interdependencies between bulkheads should be minimized and carefully managed.</p>
+<h2>Resource Allocation: Ensuring Fairness and Efficiency</h2>
+<p>The allocation of resources to bulkheads is another crucial aspect of the Bulkhead pattern&#x27;s inner workings. The aim here is to ensure fairness (each bulkhead gets the resources it needs) and efficiency (resources are not wasted).</p>
+<p>In practice, resource allocation might involve setting resource quotas or limits for each bulkhead, scheduling resources in a fair and efficient manner, and dynamically adjusting resource allocation based on real-time conditions.</p>
+<p>For instance, if one bulkhead is experiencing a surge in demand while another is idle, the system might temporarily reallocate some resources from the idle bulkhead to the busy one. This dynamic allocation can help to improve system performance and responsiveness.</p>
+<h2>Failure Detection and Mitigation: Keeping Things Running</h2>
+<p>The ultimate test of the Bulkhead pattern is how it handles failures. When a failure occurs within a bulkhead, the pattern needs to detect the failure, isolate it, and mitigate its impact.</p>
+<p>In practice, this often involves a combination of monitoring, alerting, and automatic recovery mechanisms. The system continuously monitors the health and performance of each bulkhead, looking for signs of trouble. If a problem is detected, the system generates alerts and kicks off automatic recovery processes.</p>
+<p>For example, if a bulkhead fails and starts consuming resources excessively, the system might automatically throttle its resource usage or restart it. If the bulkhead remains unresponsive, the system might reroute its traffic to other bulkheads or bring up new instances of the bulkhead to handle the load.</p>
+<h2>The Reality of the Bulkhead Pattern: It&#x27;s Not a Silver Bullet</h2>
+<p>While the Bulkhead pattern offers a powerful way to manage failures in distributed systems, it&#x27;s important to understand that it&#x27;s not a silver bullet. It can&#x27;t prevent failures from happening, and it can&#x27;t guarantee 100% uptime or performance.</p>
+<p>The Bulkhead pattern is just one tool in the toolbox of distributed system design. It needs to be complemented with other techniques and strategies, such as redundancy, replication, load balancing, caching, and so on.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Bulkhead Pattern An Example</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>Seeing the Bulkhead pattern in practice helps us to understand how it functions in a live setting. Here, we will use Java to create a basic representation of this pattern. As we progress, we will analyze each segment and discuss how it contributes to the whole mechanism. However, remember that the example is for demonstrative purposes and might not cover all real-world considerations for a production-grade system. Let&#x27;s get started!</p>
+<h2>Conceptualizing the Example</h2>
+<p>For our illustration, let&#x27;s imagine a typical microservice-based application where different microservices are responsible for different tasks. We are focusing on the &quot;Order Service&quot; which is primarily responsible for creating orders and has to communicate with two other services: the &quot;Inventory Service&quot; and the &quot;Shipping Service&quot;.</p>
+<p>Both of these services have varying loads, with the Inventory Service often getting high traffic while the Shipping Service usually has less load. Without the Bulkhead pattern, a spike in requests to the Inventory Service could clog our Order Service, hindering it from completing its tasks involving the Shipping Service.</p>
+<h2>Laying the Groundwork</h2>
+<p>To implement the Bulkhead pattern, we would need to create separate thread pools for each dependent service interaction within the Order Service. By doing so, we ensure that a slowdown or issue in one service doesn&#x27;t affect the other&#x27;s performance.</p>
+<p>Java&#x27;s <code>ExecutorService</code> is perfect for creating thread pools. We&#x27;ll create two services - <code>inventoryExecutor</code> and <code>shippingExecutor</code>.</p>
+<pre><div><div><code><span>ExecutorService</span><span> inventoryExecutor </span><span>=</span><span> </span><span>Executors</span><span>.</span><span>newFixedThreadPool</span><span>(</span><span>100</span><span>)</span><span>;</span><span>
+</span><span></span><span>ExecutorService</span><span> shippingExecutor </span><span>=</span><span> </span><span>Executors</span><span>.</span><span>newFixedThreadPool</span><span>(</span><span>50</span><span>)</span><span>;</span></code></div></div></pre>
+<p>The numbers of threads in the pools should ideally be determined based on the load each service is expected to handle. In this scenario, we&#x27;ve assigned a larger pool for the Inventory Service, as it typically faces more traffic.</p>
+<h2>Implementing the Bulkheads</h2>
+<p>Now that we have different thread pools, we can use them to interact with the respective services. Below is a simplified version of how we can use them to make sure the interactions are happening within their &quot;bulkhead&quot;.</p>
+<pre><div><div><code><span>public</span><span> </span><span>void</span><span> </span><span>createOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
+</span><span>    inventoryExecutor</span><span>.</span><span>submit</span><span>(</span><span>(</span><span>)</span><span> </span><span>-</span><span>&gt;</span><span> </span><span>{</span><span>
+</span><span>        inventoryService</span><span>.</span><span>checkAndUpdateInventory</span><span>(</span><span>order</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>)</span><span>;</span><span>
+</span>
+<span>    shippingExecutor</span><span>.</span><span>submit</span><span>(</span><span>(</span><span>)</span><span> </span><span>-</span><span>&gt;</span><span> </span><span>{</span><span>
+</span><span>        shippingService</span><span>.</span><span>scheduleShipping</span><span>(</span><span>order</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>)</span><span>;</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>In the above code, the <code>createOrder</code> function initiates tasks that interact with the Inventory and Shipping services. These tasks are submitted to their respective executors, thereby ensuring that a slowdown in one service doesn&#x27;t affect the other.</p>
+<h2>The Bulkhead in Action</h2>
+<p>With this setup, if a significant number of requests start slowing down the Inventory Service, the threads interacting with it might be stuck or slowed down. However, this won&#x27;t affect the threads interacting with the Shipping Service, as they are separate. Hence, the <code>createOrder</code> method can continue scheduling shippings even when the inventory check and update are getting delayed, thereby utilizing the system resources efficiently and providing a faster response when possible.</p>
+<p>We&#x27;ve successfully implemented the Bulkhead pattern in our Order Service!</p>
+<p>Now, isn&#x27;t that simple and yet powerful? But hold on. Do you think we&#x27;re missing something? What about error handling? What if a service doesn&#x27;t respond at all, or throws an error? And how would you tune the sizes of the thread pools for optimal performance? Those considerations lead us to the next part of our discussion: performance implications and special considerations. Keep these questions in mind as we venture forward in our exploration of the Bulkhead pattern. The road ahead is as exciting as it is enlightening!</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Performance Implications and Special Considerations</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>While the Bulkhead pattern undoubtedly enhances the resilience of our distributed systems, like every design pattern, it comes with its considerations and potential pitfalls. Understanding these is critical to effectively leveraging the pattern and avoiding undesired side effects.</p>
+<h2>Performance Implications</h2>
+<h3>Efficient Resource Utilization</h3>
+<p>One significant advantage of the Bulkhead pattern is that it promotes efficient resource utilization. As we saw in our Java example, even when one service is sluggish or non-responsive, the system continues processing other tasks. The risk of the entire system freezing or significantly slowing down due to one faulty component is mitigated.</p>
+<h3>Load Balancing</h3>
+<p>The Bulkhead pattern can also assist in load balancing. By allocating different thread pools to various tasks or services, we distribute the system&#x27;s load. This distribution can be fine-tuned based on the nature and expected load of each task or service.</p>
+<h3>Response Time</h3>
+<p>The Bulkhead pattern can improve the overall response time of the system by ensuring that a delay in one part doesn&#x27;t affect the other parts. Even if some requests are delayed due to an issue in one component, others can be served swiftly.</p>
+<h2>Special Considerations</h2>
+<h3>Determining the Bulkhead Sizes</h3>
+<p>One of the challenges of implementing the Bulkhead pattern is determining the appropriate sizes for the bulkheads or thread pools. Ideally, these should be decided based on the expected load and nature of the tasks or services. However, striking the right balance often involves a degree of trial and error.</p>
+<h3>Monitoring and Adjusting the Bulkheads</h3>
+<p>Over time, as the load and nature of tasks evolve, the initial allocations may need adjustments. It&#x27;s crucial to monitor the system&#x27;s performance and adjust the bulkhead sizes as needed. Tools like Java&#x27;s VisualVM can help monitor thread usage and identify potential bottlenecks.</p>
+<h3>Error Handling</h3>
+<p>Even with bulkheads, some requests may fail or be excessively delayed if a service goes down or becomes unresponsive. It&#x27;s essential to handle these scenarios gracefully, perhaps by implementing a timeout or using another resilience pattern, like the Circuit Breaker, which we discussed in our previous chapter.</p>
+<h3>Scalability Concerns</h3>
+<p>While the Bulkhead pattern improves system resilience, it doesn&#x27;t directly address scalability. If the system load increases significantly, simply creating more threads might lead to excessive context switching and eventually decrease performance. In such cases, it&#x27;s worth exploring other scalability strategies, like horizontal scaling (adding more machines) or using asynchronous processing.</p>
+<p>Do these implications make the Bulkhead pattern less attractive? Absolutely not! On the contrary, understanding these considerations equips us to use the pattern more effectively. It&#x27;s like knowing the strengths and weaknesses of a chess piece. The queen is undoubtedly powerful, but a player who also knows when to strategically use a pawn or a knight has the upper hand.</p>
+<p>Likewise, the Bulkhead pattern, despite its considerations, is a potent tool in building robust distributed systems. Can you think of scenarios in your projects where the Bulkhead pattern could enhance resilience? As we explore some common use cases in the next part of this chapter, you might identify situations where the Bulkhead pattern could be your knight (or queen!) in the strategic game of distributed systems design. Let&#x27;s continue our journey!</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">System Design Examples</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><p>The Bulkhead pattern finds its footing in an array of distributed system scenarios. It&#x27;s a pattern that parallels real-world applications, as it&#x27;s inspired by a naval architecture concept. But how do these ship compartments translate into software systems? Let&#x27;s illustrate this through some real-world use cases.</p>
+<h2>Use Cases</h2>
+<h3>E-Commerce Platforms</h3>
+<p>Let&#x27;s imagine an e-commerce platform, where customer actions can span searching for products, adding items to their carts, and placing orders. While these operations are interconnected, they can be performed independently.</p>
+<p>Now, what if the service handling search operations is overwhelmed due to a spike in traffic or a bug causing excessive load? Without bulkheading, this could slow down the entire platform, affecting even cart and ordering services. This is where the Bulkhead pattern comes in handy. By isolating services into separate bulkheads, we ensure that an issue in one does not impact the others.</p>
+<h3>Online Gaming Platforms</h3>
+<p>An online gaming platform could be another perfect use case. Suppose the platform offers various games, each running as a separate service. Player requests to one game shouldn&#x27;t affect the performance of the other games. Again, by isolating game services into separate bulkheads, we can prevent a faulty or overloaded game from affecting the entire platform.</p>
+<h3>Financial Systems</h3>
+<p>Financial systems often have distinct operations: account management, transaction processing, and reporting. These operations are interrelated but can also function independently. A delay in generating reports shouldn&#x27;t affect the speed of transaction processing. Implementing the Bulkhead pattern can isolate these services, ensuring smooth and unaffected operations.</p>
+<h2>System Design Examples</h2>
+<p>Understanding the Bulkhead pattern through theoretical use cases is good, but let&#x27;s solidify this understanding with a system design example.</p>
+<p>Consider a large-scale music streaming platform like Spotify. This platform includes multiple services such as music streaming, user management, playlist management, and recommendation generation.</p>
+<p>Now, let&#x27;s think about how we could apply the Bulkhead pattern to this system:</p>
+<h3>Bulkheading Services</h3>
+<p>In our music streaming platform, the user management service could be completely isolated from the music streaming service. That way, even if the user management service were to become overloaded due to a sudden surge in new users, this would not affect the performance of the music streaming service. Users would still be able to listen to music uninterrupted.</p>
+<p>Similarly, the playlist management and recommendation services could also be isolated into their own bulkheads. So, even if the recommendation service becomes slow due to the complexity of processing and analyzing user data, the playlist management service won&#x27;t be affected, and users will still be able to create and manage their playlists.</p>
+<h3>Bulkheading at a Lower Level</h3>
+<p>We could also implement bulkheading at a lower level within a service. For example, within the music streaming service, we could separate the task of fetching a song from the task of streaming the song to the user into separate thread pools. So if fetching songs becomes slow due to a delay in accessing the song database, this won&#x27;t slow down the streaming of already fetched songs to the users.</p>
+<p>In both examples, applying the Bulkhead pattern can dramatically increase the resilience of the system. While one service or task is slow or failing, others continue functioning normally, providing an uninterrupted user experience.</p>
+<p>Whether it&#x27;s an e-commerce platform, a gaming platform, or a music streaming service, the Bulkhead pattern can enhance system resilience significantly. So, can you think of any services in your system that could benefit from this isolation? Or perhaps you can see now how existing slowdowns or failures could have been prevented with the Bulkhead pattern.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+
+<section id="chapter-09" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">09</span>
+    <h1 class="chapter-title">Conclusion</h1>
+  </div>
+  <div class="chapter-body">
+    <div><div><div><div><div><div><div><div><h2>The Value of the Bulkhead Pattern in Distributed Systems</h2>
+<p>In the world of distributed systems, the Bulkhead pattern has proven itself as an effective strategy to prevent failure propagation, enhancing the system&#x27;s overall resilience. This pattern, borrowed from naval architecture, has brought us a long way in ensuring a healthy segregation of resources and operations, ensuring that a failure in one part doesn&#x27;t sink the entire ship — or in our case, the entire system.</p>
+<p>This chapter took you on a deep dive into the Bulkhead pattern, its rationale, implementation, and its working mechanism. We started with the problem statement, describing the challenges faced in distributed systems when a single service failure can lead to a cascade of issues across the system. It is akin to a single weak link compromising the strength of the entire chain.</p>
+<p>Then we introduced the Bulkhead pattern as a solution to this issue. The Bulkhead pattern promotes the idea of dividing the system into isolated sections or &#x27;bulkheads&#x27;, much like compartments in a ship. If one service fails or is overwhelmed, the impact is limited to that specific bulkhead, leaving other services unaffected and available.</p>
+<p>Our journey into the Bulkhead pattern continued with a detailed look into the architecture and the inner workings of the pattern. We illustrated how resource allocation and isolation play a critical role in its functioning. The Bulkhead pattern creates a form of damage control, where issues are confined and the impact minimized.</p>
+<p>Bringing the concept closer to your everyday coding, we walked through a Java-based implementation of the Bulkhead pattern. With an easy-to-understand code example, we demonstrated how you could bring this powerful pattern to life in your own applications.</p>
+<p>As with any design pattern, we must consider certain trade-offs when implementing the Bulkhead pattern. We discussed the performance implications, special considerations, and even potential pitfalls to be mindful of when designing your systems with this pattern. Understanding these nuances is essential for effectively using the Bulkhead pattern and avoiding unwanted side-effects.</p>
+<p>We then illustrated real-world use cases and system design examples that benefit from the Bulkhead pattern. Whether it&#x27;s an e-commerce platform, a gaming service, or a music streaming platform, we showed how using the Bulkhead pattern can significantly increase the resilience of the system.</p>
+<p>Reflecting on everything we&#x27;ve covered, it&#x27;s clear that the Bulkhead pattern brings significant advantages in building robust, scalable distributed systems. But it&#x27;s also clear that it&#x27;s not a one-size-fits-all solution. As we emphasized, understanding the problem you&#x27;re trying to solve, the trade-offs involved, and the specifics of your system are all critical factors in successfully applying this pattern.</p>
+<p>Looking ahead, how can you apply what you&#x27;ve learned about the Bulkhead pattern in your work? Do you see areas where it could improve the resilience of your systems? Remember, the value of these design patterns lies in their application. A deeper understanding of these patterns will enable you to apply them more effectively and make better design decisions.</p></div></div></div></div></div></div></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_07_bulkhead_pattern') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_07_bulkhead_pattern', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

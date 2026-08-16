@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy &amp; Core Interview LLD Problems — LLD Master Guide (MERN & ES6+ Edition)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: #1e1e2e;
+    --accent: #e8ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff6b6b;
+    --accent4: #b8a9ff;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+    --code-bg: #0d0d16;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.5;
+  }
+
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 280px; background: var(--surface); border-right: 1px solid var(--border);
+    overflow-y: auto; z-index: 100; padding: 24px 0;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar-logo { padding: 0 24px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .sidebar-logo h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .sidebar-logo p { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  .nav-section {
+    padding: 8px 24px 4px; font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 12px;
+  }
+
+  .nav-item {
+    display: block; padding: 8px 24px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted); text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; line-height: 1.4;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .nav-item:hover, .nav-item.active { color: var(--text); background: var(--surface2); border-left-color: var(--accent); }
+  .nav-item span { color: var(--accent); margin-right: 4px; }
+
+  .main { margin-left: 280px; min-height: 100vh; }
+  .hero { padding: 80px 80px 60px; position: relative; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .hero-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--accent); color: #000; padding: 4px 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(32px, 4vw, 54px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 650px; font-style: italic; }
+
+  .content { padding: 60px 80px; max-width: 1050px; }
+  .section { margin-bottom: 80px; padding-bottom: 60px; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .section-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #000; background: var(--accent); padding: 4px 10px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; color: var(--text); }
+
+  h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; margin: 36px 0 16px; color: var(--accent2); }
+  h3 { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 16px; margin: 24px 0 12px; color: var(--text); }
+  p { margin-bottom: 16px; font-size: 15.5px; color: #c8c8d8; }
+  ul, ol { margin-bottom: 20px; padding-left: 24px; color: #c8c8d8; font-size: 15px; }
+  li { margin-bottom: 8px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 24px 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); padding: 20px; position: relative; overflow: hidden; transition: all 0.2s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  .callout { padding: 18px 22px; margin: 24px 0; border-left: 3px solid; font-size: 14px; background: var(--surface2); border-radius: 0 6px 6px 0; }
+  .callout-tip { border-color: var(--accent); background: rgba(232,255,71,0.06); }
+  .callout-tip strong { color: var(--accent); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.1em; }
+  .callout-info { border-color: var(--accent2); background: rgba(71,200,255,0.06); }
+  .callout-info strong { color: var(--accent2); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.1em; }
+  .callout-warn { border-color: var(--accent3); background: rgba(255,107,107,0.06); }
+  .callout-warn strong { color: var(--accent3); font-family: 'Syne', sans-serif; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.1em; }
+
+  .code-block { background: var(--code-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 20px 24px; margin: 24px 0; overflow-x: auto; position: relative; border-radius: 4px; }
+  .code-label { position: absolute; top: 8px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #a8d8a8; line-height: 1.6; }
+
+  .diagram { background: var(--surface2); border: 1px solid var(--border); padding: 24px; margin: 24px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent2); overflow-x: auto; border-radius: 4px; }
+  .diagram pre { line-height: 1.5; white-space: pre; }
+
+  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13.5px; }
+  th { background: var(--surface2); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 12px 16px; text-align: left; color: var(--accent); border-bottom: 2px solid var(--border); }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: #c0c0d0; vertical-align: top; }
+  tr:hover td { background: var(--surface2); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.accent { border-color: rgba(232,255,71,0.3); color: var(--accent); background: rgba(232,255,71,0.05); }
+  .tag.blue { border-color: rgba(71,200,255,0.3); color: var(--accent2); background: rgba(71,200,255,0.05); }
+  .tag.purple { border-color: rgba(184,169,255,0.3); color: var(--accent4); background: rgba(184,169,255,0.05); }
+  .tag.red { border-color: rgba(255,107,107,0.3); color: var(--accent3); background: rgba(255,107,107,0.05); }
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h2>LLD Master Guide</h2>
+    <p>// System Design v3 Edition</p>
+  </div>
+  <div class="nav-section">Module Curriculum</div>
+  <a class="nav-item" href="#chapter-01"><span>01</span> · Problem 1: Design Tic-Tac-Toe (O(1) Win Condition)</a>
+<a class="nav-item" href="#chapter-02"><span>02</span> · Problem 2: Design Vending Machine (State Pattern &amp; Refunds)</a>
+<a class="nav-item" href="#chapter-04"><span>04</span> · Problem 4: Design Library Management System (Modelling &amp; Loans)</a>
+<a class="nav-item" href="#chapter-06"><span>06</span> · Problem 6: Design Snake &amp; Ladder (Turn Queue &amp; Board Jumps)</a>
+<a class="nav-item" href="#chapter-07"><span>07</span> · Problem 7: Design Chess (Piece Hierarchy &amp; Command Pattern Undo)</a>
+<a class="nav-item" href="#chapter-09"><span>09</span> · Problem 9: Design ATM System (State Pattern &amp; Cash Dispenser)</a>
+<a class="nav-item" href="#chapter-10"><span>10</span> · Problem 10: Design Coffee Machine (Factory &amp; Strategy Pattern)</a>
+</nav>
+
+<div class="main">
+  <div class="hero">
+    <div class="hero-tag">Module 04 · Core LLD Problems</div>
+    <h1>Easy &amp; Core Interview LLD Problems</h1>
+    <p>Complete Low Level Design (LLD) & Object-Oriented Engineering Textbook with Runnable ES6+ / TypeScript Code.</p>
+  </div>
+
+  <div class="content">
+    <div class="section" id="chapter-01">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Problem 1: Design Tic-Tac-Toe (O(1) Win Condition)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">OOP</span><span class="tag blue">Tic-Tac-Toe</span><span class="tag purple">Board State</span></div>
+                <p>Design a Tic-Tac-Toe game supporting $N \times N$ board size with $O(1)$ win-condition evaluation.</p>
+                <div class="code-block"><span class="code-label">JavaScript — Tic-Tac-Toe Engine</span><pre>
+class TicTacToeEngine {
+    #size; #rows; #cols; #diag = 0; #antiDiag = 0;
+    constructor(size = 3) {
+        this.#size = size;
+        this.#rows = Array(size).fill(0);
+        this.#cols = Array(size).fill(0);
+    }
+    makeMove(r, c, symbol) {
+        const val = symbol === 'X' ? 1 : -1;
+        this.#rows[r] += val; this.#cols[c] += val;
+        if (r === c) this.#diag += val;
+        if (r + c === this.#size - 1) this.#antiDiag += val;
+
+        if (Math.abs(this.#rows[r]) === this.#size || Math.abs(this.#cols[c]) === this.#size ||
+            Math.abs(this.#diag) === this.#size || Math.abs(this.#antiDiag) === this.#size) {
+            return "WIN";
+        }
+        return "CONTINUE";
+    }
+}
+const game = new TicTacToeEngine(3);
+console.log(game.makeMove(0, 0, 'X'));</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-02">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Problem 2: Design Vending Machine (State Pattern &amp; Refunds)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">State Pattern</span><span class="tag blue">Vending Machine</span><span class="tag purple">Refunds</span></div>
+                <p>Complete Vending Machine handling Idle, Coin Insertion, Product Selection, Dispensing, and Refund Cancellation using the State Pattern.</p>
+                <div class="code-block"><span class="code-label">JavaScript — Vending Machine State Pattern</span><pre>
+class State {
+    insertCoin(vm, amt) { throw new Error("Action invalid in current state"); }
+    selectProduct(vm, code) { throw new Error("Action invalid in current state"); }
+    dispense(vm) { throw new Error("Action invalid in current state"); }
+    refund(vm) { throw new Error("Action invalid in current state"); }
+}
+
+class IdleState extends State {
+    insertCoin(vm, amt) {
+        vm.balance += amt;
+        console.log(`[IDLE -> HAS_MONEY] Coin Inserted: $${amt} | Total: $${vm.balance}`);
+        vm.setState(vm.hasMoneyState);
+    }
+}
+
+class HasMoneyState extends State {
+    selectProduct(vm, code) {
+        const item = vm.inventory.get(code);
+        if (!item || item.count <= 0) throw new Error("Item out of stock!");
+        if (vm.balance < item.price) throw new Error("Insufficient funds!");
+        vm.selectedProduct = item;
+        console.log(`[HAS_MONEY -> DISPENSING] Selected: ${item.name}`);
+        vm.setState(vm.dispensingState);
+    }
+    refund(vm) {
+        console.log(`[REFUND] Returned $${vm.balance}`);
+        vm.balance = 0;
+        vm.setState(vm.idleState);
+    }
+}
+
+class DispensingState extends State {
+    dispense(vm) {
+        const item = vm.selectedProduct;
+        item.count--;
+        vm.balance -= item.price;
+        console.log(`🎁 [DISPENSED] ${item.name}! Change: $${vm.balance}`);
+        vm.balance = 0;
+        vm.selectedProduct = null;
+        vm.setState(vm.idleState);
+    }
+}
+
+class VendingMachine {
+    constructor() {
+        this.idleState = new IdleState();
+        this.hasMoneyState = new HasMoneyState();
+        this.dispensingState = new DispensingState();
+        this.currentState = this.idleState;
+        this.balance = 0;
+        this.selectedProduct = null;
+        this.inventory = new Map([["A1", { name: "Coke", price: 2.50, count: 5 }]]);
+    }
+    setState(s) { this.currentState = s; }
+    insertCoin(amt) { this.currentState.insertCoin(this, amt); }
+    selectProduct(code) { this.currentState.selectProduct(this, code); }
+    dispense() { this.currentState.dispense(this); }
+    refund() { this.currentState.refund(this); }
+}
+
+const vm = new VendingMachine();
+vm.insertCoin(3.00);
+vm.selectProduct("A1");
+vm.dispense();</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-04">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Problem 4: Design Library Management System (Modelling &amp; Loans)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">Modelling</span><span class="tag blue">Library</span><span class="tag purple">Catalog</span></div>
+                <p>Library management system supporting ISBN catalog search, member loan checkouts, fine calculation, and reservation queues.</p>
+                <div class="code-block"><span class="code-label">JavaScript — Library Management System</span><pre>
+class BookItem {
+    constructor(isbn, title, author) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.isBorrowed = false;
+        this.dueDate = null;
+    }
+}
+
+class LibraryCatalog {
+    #books = new Map(); // ISBN -> BookItem
+    #loans = new Map(); // LoanId -> Loan Record
+
+    addBook(book) { this.#books.set(book.isbn, book); }
+
+    checkoutBook(isbn, memberId, durationDays = 14) {
+        const book = this.#books.get(isbn);
+        if (!book) throw new Error("Book not found!");
+        if (book.isBorrowed) throw new Error("Book is already checked out!");
+
+        book.isBorrowed = true;
+        book.dueDate = Date.now() + durationDays * 86400000;
+
+        const loan = { loanId: `LOAN_${Date.now()}`, isbn, memberId, dueDate: book.dueDate };
+        this.#loans.set(loan.loanId, loan);
+        console.log(`📚 [CHECKOUT] Book '${book.title}' checked out by Member ${memberId}`);
+        return loan;
+    }
+
+    returnBook(isbn, memberId) {
+        const book = this.#books.get(isbn);
+        if (!book || !book.isBorrowed) throw new Error("Invalid return request!");
+
+        const overDueDays = Math.max(0, Math.ceil((Date.now() - book.dueDate) / 86400000));
+        const fine = overDueDays * 1.5; // $1.50 per day late fine
+
+        book.isBorrowed = false;
+        book.dueDate = null;
+        console.log(`📖 [RETURN] Book '${book.title}' returned. Late Fine: $${fine}`);
+        return fine;
+    }
+}
+
+const lib = new LibraryCatalog();
+lib.addBook(new BookItem("ISBN-101", "Grokking System Design", "DesignGurus"));
+const loan = lib.checkoutBook("ISBN-101", "Member_77");
+lib.returnBook("ISBN-101", "Member_77");</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-06">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Problem 6: Design Snake &amp; Ladder (Turn Queue &amp; Board Jumps)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">OOP</span><span class="tag blue">Snake & Ladder</span><span class="tag purple">Turn Queue</span></div>
+                <p>Snake & Ladder board game with dynamic snakes/ladders jump map, dice rolling, and circular player turn queue.</p>
+                <div class="code-block"><span class="code-label">JavaScript — Snake & Ladder Game Engine</span><pre>
+class SnakeLadderGame {
+    #size = 100;
+    #jumps = new Map(); // startPos -> endPos (Snakes & Ladders)
+    #players = [];
+    #turnIndex = 0;
+
+    constructor(players) {
+        this.#players = players.map(p => ({ name: p, pos: 0 }));
+        // Add Ladders (start < end)
+        this.#jumps.set(2, 38); this.#jumps.set(7, 14); this.#jumps.set(15, 26);
+        // Add Snakes (start > end)
+        this.#jumps.set(99, 54); this.#jumps.set(70, 55); this.#jumps.set(52, 29);
+    }
+
+    rollDice() { return Math.floor(Math.random() * 6) + 1; }
+
+    playTurn() {
+        const player = this.#players[this.#turnIndex];
+        const dice = this.rollDice();
+        let nextPos = player.pos + dice;
+
+        if (nextPos > this.#size) {
+            console.log(`🎲 ${player.name} rolled ${dice}, but needs exact roll to reach 100.`);
+        } else {
+            // Apply Snake/Ladder jump if present
+            if (this.#jumps.has(nextPos)) {
+                const destination = this.#jumps.get(nextPos);
+                const type = destination > nextPos ? "LADDER 🪜" : "SNAKE 🐍";
+                console.log(`🎲 ${player.name} landed on ${nextPos} -> Hit a ${type}! Moved to ${destination}`);
+                nextPos = destination;
+            } else {
+                console.log(`🎲 ${player.name} rolled ${dice} -> Moved from ${player.pos} to ${nextPos}`);
+            }
+            player.pos = nextPos;
+        }
+
+        if (player.pos === this.#size) {
+            console.log(`🏆 [WINNER] ${player.name} won the game!`);
+            return "WIN";
+        }
+
+        this.#turnIndex = (this.#turnIndex + 1) % this.#players.length;
+        return "CONTINUE";
+    }
+}
+
+const game = new SnakeLadderGame(["Alice", "Bob"]);
+game.playTurn();</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-07">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Problem 7: Design Chess (Piece Hierarchy &amp; Command Pattern Undo)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">Complex Modelling</span><span class="tag blue">Chess</span><span class="tag purple">Command Pattern</span></div>
+                <p>Complete Chess game with Piece hierarchy (King, Queen, Rook, Bishop, Knight, Pawn), 8x8 matrix board, move validation, and Command pattern for Undo/Redo.</p>
+                <div class="code-block"><span class="code-label">JavaScript — Chess Game Engine</span><pre>
+class Position { constructor(r, c) { this.r = r; this.c = c; } }
+
+class Piece {
+    constructor(color, pos) { this.color = color; this.pos = pos; }
+    getValidMoves(board) { throw new Error("Abstract method"); }
+}
+
+class Rook extends Piece {
+    getValidMoves(board) {
+        const moves = [];
+        const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
+        for (const [dr, dc] of dirs) {
+            let r = this.pos.r + dr, c = this.pos.c + dc;
+            while (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                moves.push(new Position(r, c));
+                r += dr; c += dc;
+            }
+        }
+        return moves;
+    }
+}
+
+class MoveCommand {
+    constructor(board, piece, fromPos, toPos) {
+        this.board = board; this.piece = piece; this.fromPos = fromPos; this.toPos = toPos;
+        this.capturedPiece = null;
+    }
+
+    execute() {
+        this.capturedPiece = this.board.getPiece(this.toPos);
+        this.board.setPiece(this.toPos, this.piece);
+        this.board.setPiece(this.fromPos, null);
+        this.piece.pos = this.toPos;
+    }
+
+    undo() {
+        this.board.setPiece(this.fromPos, this.piece);
+        this.board.setPiece(this.toPos, this.capturedPiece);
+        this.piece.pos = this.fromPos;
+    }
+}
+
+class ChessBoard {
+    #grid = Array(8).fill(null).map(() => Array(8).fill(null));
+    getPiece(pos) { return this.#grid[pos.r][pos.c]; }
+    setPiece(pos, p) { this.#grid[pos.r][pos.c] = p; }
+}
+
+const board = new ChessBoard();
+const rook = new Rook("WHITE", new Position(0, 0));
+board.setPiece(new Position(0,0), rook);
+const cmd = new MoveCommand(board, rook, new Position(0,0), new Position(0,5));
+cmd.execute(); console.log("Rook moved to (0,5)");
+cmd.undo(); console.log("Move undone! Rook back at (0,0)");</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-09">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2 class="section-title">Problem 9: Design ATM System (State Pattern &amp; Cash Dispenser)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">State</span><span class="tag blue">ATM</span><span class="tag purple">Greedy Dispenser</span></div>
+                <p>ATM System with PIN verification, card validation, and greedy Cash Dispenser algorithm ($100, $50, $20 bills).</p>
+                <div class="code-block"><span class="code-label">JavaScript — ATM Cash Dispenser Engine</span><pre>
+class CashDispenser {
+    #inventory = new Map([[100, 10], [50, 20], [20, 50]]); // Denomination -> Count
+
+    dispense(amount) {
+        if (amount % 10 !== 0) throw new Error("Withdrawal amount must be multiple of $10");
+
+        const result = new Map();
+        let remaining = amount;
+        const denominations = [100, 50, 20];
+
+        for (const denom of denominations) {
+            const available = this.#inventory.get(denom) || 0;
+            const countNeeded = Math.floor(remaining / denom);
+            const countToTake = Math.min(available, countNeeded);
+
+            if (countToTake > 0) {
+                result.set(denom, countToTake);
+                remaining -= countToTake * denom;
+            }
+        }
+
+        if (remaining > 0) throw new Error("ATM cannot dispense exact cash denomination!");
+
+        // Commit inventory deduction
+        result.forEach((count, denom) => {
+            this.#inventory.set(denom, this.#inventory.get(denom) - count);
+        });
+
+        console.log(`💵 [CASH DISPENSED] Total: $${amount} | Bills:`, Object.fromEntries(result));
+        return result;
+    }
+}
+
+const atm = new CashDispenser();
+atm.dispense(270); // 2x $100, 1x $50, 1x $20</pre></div>
+  </div>
+</div>
+
+<div class="section" id="chapter-10">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2 class="section-title">Problem 10: Design Coffee Machine (Factory &amp; Strategy Pattern)</h2>
+  </div>
+  <div class="section-body">
+    <div class="tags"><span class="tag accent">Factory</span><span class="tag blue">Coffee Machine</span><span class="tag purple">Strategy</span></div>
+                <p>Automated Coffee Machine preparing Espresso, Cappuccino, and Latte with ingredient inventory validation.</p>
+                <div class="code-block"><span class="code-label">JavaScript — Coffee Machine Factory</span><pre>
+class CoffeeMachine {
+    #inventory = { water: 500, milk: 500, beans: 200 };
+
+    brew(recipeName) {
+        const recipes = {
+            Espresso: { water: 50, milk: 0, beans: 18 },
+            Latte: { water: 50, milk: 150, beans: 18 },
+            Cappuccino: { water: 50, milk: 100, beans: 18 }
+        };
+
+        const recipe = recipes[recipeName];
+        if (!recipe) throw new Error(`Unknown coffee recipe: ${recipeName}`);
+
+        if (this.#inventory.water < recipe.water ||
+            this.#inventory.milk < recipe.milk ||
+            this.#inventory.beans < recipe.beans) {
+            throw new Error(`Insufficient ingredients to brew ${recipeName}!`);
+        }
+
+        this.#inventory.water -= recipe.water;
+        this.#inventory.milk -= recipe.milk;
+        this.#inventory.beans -= recipe.beans;
+
+        console.log(`☕ [BREWED] ${recipeName} ready! Remaining Inventory:`, this.#inventory);
+        return recipeName;
+    }
+}
+
+const cm = new CoffeeMachine();
+cm.brew("Latte");</pre></div>
+  </div>
+</div>
+  </div>
+</div>
+
+<script>
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>

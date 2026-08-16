@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security &amp; Privacy - System Design Guide</title>
+    <meta property="og:title" content="Security &amp; Privacy - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Security &amp; Privacy</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (7)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="what is authentication"><a href="#chapter-01"><span class="chapter-num">01</span> What is Authentication</a></li>
+<li class="sidebar-item" data-num="02" data-title="what is authorization"><a href="#chapter-02"><span class="chapter-num">02</span> What is Authorization</a></li>
+<li class="sidebar-item" data-num="03" data-title="authentication vs authorization"><a href="#chapter-03"><span class="chapter-num">03</span> Authentication vs Authorization</a></li>
+<li class="sidebar-item" data-num="04" data-title="oauth vs jwt for authentication"><a href="#chapter-04"><span class="chapter-num">04</span> OAuth vs JWT for Authentication</a></li>
+<li class="sidebar-item" data-num="05" data-title="what is encryption"><a href="#chapter-05"><span class="chapter-num">05</span> What is Encryption</a></li>
+<li class="sidebar-item" data-num="06" data-title="what are ddos attacks"><a href="#chapter-06"><span class="chapter-num">06</span> What are DDoS Attacks</a></li>
+<li class="sidebar-item" data-num="07" data-title="introduction to messaging system"><a href="#chapter-07"><span class="chapter-num">07</span> Introduction to Messaging System</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">What is Authentication</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Authentication in software systems is like showing your ID at the entrance of a club. It&#x27;s the process of verifying who you are. Here&#x27;s how it works in the digital world:</p>
+<ul>
+<li>
+<p><strong>Basics</strong>: Just like the bouncer checks your ID, authentication in software checks if you are who you say you are. This is usually done through something you know (like a password), something you have (like a phone or security token), or something you are (like your fingerprint).</p>
+</li>
+<li>
+<p><strong>Types of Authentication</strong>:</p>
+<ol>
+<li><strong>Single-Factor Authentication (SFA)</strong>: This is like showing just one ID card. It usually involves something you know, like a password or PIN.</li>
+<li><strong>Two-Factor Authentication (2FA)</strong>: This is like showing two forms of ID. For example, entering a password (something you know) and then entering a code sent to your phone (something you have).</li>
+<li><strong>Multi-Factor Authentication (MFA)</strong>: This is like a high-security check where you need multiple proofs. It could be a combination of a password, a fingerprint, and a security token.</li>
+</ol>
+</li>
+<li>
+<p><strong>Importance</strong>:</p>
+<ul>
+<li><strong>Security</strong>: It keeps unauthorized people out, like a bouncer keeping gatecrashers away from a party.</li>
+<li><strong>Data Protection</strong>: It helps protect sensitive information, like keeping your personal details safe.</li>
+<li><strong>Trust</strong>: Users trust systems more when they know their data is protected.</li>
+</ul>
+</li>
+<li>
+<p><strong>Methods</strong>:</p>
+<ul>
+<li><strong>Passwords and PINs</strong>: The most common, but also often the weakest due to poor password practices.</li>
+<li><strong>Biometrics</strong>: Like fingerprints or facial recognition. More secure but can be more expensive or complex to implement.</li>
+<li><strong>Tokens and Cards</strong>: Physical devices or software-based tokens that generate codes for authentication.</li>
+<li><strong>Behavioral Biometrics</strong>: Analyzes patterns in user behavior, like how they type or use a mouse.</li>
+</ul>
+</li>
+</ul>
+<p>Authentication is a crucial first step in securing a software system, ensuring that access is granted only to the right individuals, much like how the right people are allowed into a club or a private event.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">What is Authorization</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Authorization in software systems is like getting a specific wristband at a festival that allows you access to certain areas. It&#x27;s about granting or denying permissions to do something after your identity is verified.</p>
+<ul>
+<li>
+<p><strong>After Authentication</strong>: Authorization always comes after authentication. First, the system recognizes you (like the club knows who you are), and then it decides what you are allowed to do (like what areas of the club you can enter).</p>
+</li>
+<li>
+<p><strong>Roles and Permissions</strong>:</p>
+<ul>
+<li><strong>Roles</strong>: These are like different types of wristbands or badges. For example, an &#x27;Admin&#x27; might have access to everything, while a &#x27;User&#x27; has limited access.</li>
+<li><strong>Permissions</strong>: Specific actions you&#x27;re allowed to perform, like viewing, editing, or deleting information. If you&#x27;re at a festival, it&#x27;s like being allowed to enter backstage areas, VIP sections, or just the general area.</li>
+</ul>
+</li>
+<li>
+<p><strong>Importance</strong>:</p>
+<ul>
+<li><strong>Security</strong>: It prevents users from accessing data or actions that they shouldn&#x27;t. Like keeping regular festival-goers out of VIP areas.</li>
+<li><strong>Data Integrity</strong>: Helps ensure that data isn&#x27;t wrongly modified or deleted.</li>
+<li><strong>Compliance</strong>: Many industries have regulations about who can access or modify certain data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>File System Permissions</strong>: Like on your computer, where some files are only accessible by the administrator.</li>
+<li><strong>Database Roles</strong>: In a company&#x27;s database, different employees have different levels of access based on their job.</li>
+<li><strong>Web Application Privileges</strong>: On a website, a regular user might only view content, while an editor can create and edit content, and an administrator can access user data and site settings.</li>
+</ul>
+</li>
+</ul>
+<p>Authorization is about having the right level of access to resources in a software system. It&#x27;s crucial for maintaining order and security, much like different access levels are important in a well-organized event or facility.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Authentication vs Authorization</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Here&#x27;s a comparison of authentication and authorization:</p>
+<div><table><thead><tr><th>Aspect</th><th>Authentication</th><th>Authorization</th></tr></thead><tbody><tr><td>Definition</td><td>The process of verifying who a user is.</td><td>The process of verifying what access a user has.</td></tr><tr><td>Focus</td><td>Identity verification.</td><td>Access rights and privileges.</td></tr><tr><td>Example</td><td>Entering a username and password.</td><td>Checking if a user can access a specific resource, like a file or database.</td></tr><tr><td>How It Works</td><td>Typically involves passwords, biometrics, OTPs, etc.</td><td>Involves settings, roles, and permissions that define what resources a user can access.</td></tr><tr><td>Tools/Methods</td><td>Login forms, OTPs, biometric scanners.</td><td>Access control lists, role-based access control.</td></tr><tr><td>Order in Process</td><td>Comes first in the security process.</td><td>Follows after authentication is successful.</td></tr><tr><td>Key Concern</td><td>Verifying user identity is genuine.</td><td>Managing user permissions and access levels.</td></tr><tr><td>Frequency</td><td>Typically occurs once at the beginning of a session.</td><td>Can occur multiple times, whenever a user requests access to a resource.</td></tr><tr><td>Dependence</td><td>Independent process, can exist without authorization in some systems.</td><td>Requires authentication as a prerequisite.</td></tr></tbody></table></div></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">OAuth vs JWT for Authentication</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>OAuth and JWT (JSON Web Tokens) are both widely used in the field of web security, but they serve different purposes and are often used in conjunction with each other rather than in opposition. Understanding their distinct roles is key to implementing effective authentication and authorization strategies in web applications.</p>
+<h2>OAuth</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>OAuth</strong> is an open standard for access delegation, commonly used as a way for users to grant websites or applications access to their information on other websites but without giving them the passwords.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Delegation Protocol</strong>: OAuth is not an authentication protocol but a secure delegation mechanism. It&#x27;s used to grant permissions to a third-party to access user data without exposing user credentials.</li>
+<li><strong>Tokens</strong>: It uses access tokens for authorization.</li>
+<li><strong>Use Cases</strong>: Commonly used to allow users to log in to a third-party application using their credentials from a service like Google, Facebook, or Twitter.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>A user logs into a third-party app using their Google account. OAuth allows the app to access some of the user’s Google account data, as authorized, without the need to share Google account credentials with the third-party app.</li>
+</ul>
+<h2>JWT (JSON Web Tokens)</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>JWT</strong> is a token format used in authorization and information exchange. It’s a JSON object encoded as a string, which is digitally signed, and optionally encrypted.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Authentication &amp; Information Exchange</strong>: JWT can be used for both authentication and secure data exchange.</li>
+<li><strong>Structure</strong>: A JWT typically consists of three parts: Header, Payload, and Signature.</li>
+<li><strong>Stateless</strong>: JWTs are self-contained, allowing stateless authentication, and are typically used in RESTful APIs.</li>
+<li><strong>Use Cases</strong>: Often used for token-based authentication systems.</li>
+</ul>
+<h3>Example</h3>
+<ul>
+<li>After a user logs in, the server creates a JWT with user information, signs it, and sends it back to the client. The client then uses this JWT to access protected resources by sending it with HTTP requests.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Purpose</strong>:</p>
+<ul>
+<li><strong>OAuth</strong>: A protocol for authorization. It allows one service to utilize another service’s user authentication without the need for credentials.</li>
+<li><strong>JWT</strong>: A format for securely transmitting information. It can be used for authentication and information exchange.</li>
+</ul>
+</li>
+<li>
+<p><strong>Usage in Authentication/Authorization</strong>:</p>
+<ul>
+<li><strong>OAuth</strong>: Used to grant access to user data and services from one site to another.</li>
+<li><strong>JWT</strong>: Often used as the format of the access token in OAuth, but can also be used independently for authentication and information transfer.</li>
+</ul>
+</li>
+<li>
+<p><strong>State</strong>:</p>
+<ul>
+<li><strong>OAuth</strong>: Typically relies on server-side storage to keep track of the issued tokens.</li>
+<li><strong>JWT</strong>: Stateless; it contains all the necessary information within the token.</li>
+</ul>
+</li>
+<li>
+<p><strong>Security</strong>:</p>
+<ul>
+<li><strong>OAuth</strong>: Security depends on the specific implementation but generally relies on SSL/TLS for security during token exchange.</li>
+<li><strong>JWT</strong>: The token itself is secured by its digital signature.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<ul>
+<li><strong>Complementary Technologies</strong>: In many implementations, OAuth uses JWT as the format for its tokens. OAuth manages the authorization process, and JWT provides a secure token format.</li>
+<li><strong>Use JWT for</strong>: Securely transmitting information between parties and stateless authentication.</li>
+<li><strong>Use OAuth for</strong>: Delegating access to user data to third-party applications without exposing user credentials.</li>
+</ul>
+<p>Understanding when to use each and how they can work together is crucial for designing secure and efficient authentication and authorization mechanisms in modern web applications.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">What is Encryption</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">OAuth 2.0 Authorization Code Flow &amp; Signed JWT Anatomy</div>
+    <div class="diagram-badge">Authentication Protocol</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradSec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: JWT Structure Breakdown -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="380" height="240" rx="10" fill="url(#gradSec)" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="190" y="28" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">JSON WEB TOKEN (JWT) STRUCTURE</text>
+
+    <!-- Header (Red) -->
+    <rect x="20" y="48" width="340" height="48" rx="6" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+    <text x="35" y="68" fill="#f87171" font-family="Fira Code, monospace" font-size="10" font-weight="700">HEADER: Algorithm &amp; Type</text>
+    <text x="35" y="85" fill="#fca5a5" font-family="Fira Code, monospace" font-size="9">{"alg": "HS256", "typ": "JWT"}</text>
+
+    <!-- Payload (Purple) -->
+    <rect x="20" y="105" width="340" height="58" rx="6" fill="#4c1d95" stroke="#a855f7" stroke-width="1"/>
+    <text x="35" y="125" fill="#c084fc" font-family="Fira Code, monospace" font-size="10" font-weight="700">PAYLOAD: Claims &amp; User ID</text>
+    <text x="35" y="142" fill="#e9d5ff" font-family="Fira Code, monospace" font-size="9">{"sub": "usr_99", "role": "admin", "exp": 1771234567}</text>
+
+    <!-- Signature (Cyan) -->
+    <rect x="20" y="172" width="340" height="48" rx="6" fill="#0c4a6e" stroke="#0284c7" stroke-width="1"/>
+    <text x="35" y="192" fill="#38bdf8" font-family="Fira Code, monospace" font-size="10" font-weight="700">SIGNATURE: HMACSHA256 Secret Verification</text>
+    <text x="35" y="209" fill="#bae6fd" font-family="Fira Code, monospace" font-size="8.5">HMACSHA256(base64(header) + "." + base64(payload), secret)</text>
+  </g>
+
+  <!-- Right: OAuth 2.0 Auth Code Flow -->
+  <g transform="translate(420, 20)">
+    <rect x="0" y="0" width="400" height="240" rx="10" fill="url(#gradSec)" stroke="#10b981" stroke-width="1.2"/>
+    <text x="200" y="28" fill="#10b981" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">OAUTH 2.0 AUTHORIZATION CODE FLOW</text>
+
+    <!-- 4 Key Steps -->
+    <g transform="translate(20, 48)">
+      <rect x="0" y="0" width="360" height="38" rx="5" fill="#1e1b4b" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="15" y="24" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9.5">1. User Logs in ➔ Auth Server redirects with ?code=xyz</text>
+
+      <rect x="0" y="46" width="360" height="38" rx="5" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+      <text x="15" y="70" fill="#34d399" font-family="Fira Code, monospace" font-size="9.5">2. Client Backend posts Code + Client Secret to Token Endpoint</text>
+
+      <rect x="0" y="92" width="360" height="38" rx="5" fill="#78350f" stroke="#f59e0b" stroke-width="0.8"/>
+      <text x="15" y="116" fill="#fbbf24" font-family="Fira Code, monospace" font-size="9.5">3. Auth Server returns Access Token (JWT) + Refresh Token</text>
+
+      <rect x="0" y="138" width="360" height="38" rx="5" fill="#1e293b" stroke="#a855f7" stroke-width="0.8"/>
+      <text x="15" y="162" fill="#c084fc" font-family="Fira Code, monospace" font-size="9.5">4. Client requests Resource Server with "Bearer &lt;JWT&gt;"</text>
+    </g>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> OAuth 2.0 delegates authentication securely without sharing credentials, while stateless JWTs cryptographically sign claims (Header.Payload.Signature) to enable fast distributed verification across services.
+  </div>
+</div>
+
+
+    <div><p>Encryption in software systems is like sending a secret letter where the message is scrambled into a code. Only someone with the right key can read it. It&#x27;s a method to protect data by making it unreadable to unauthorized users.</p>
+<ul>
+<li>
+<p><strong>Basic Concept</strong>: Encryption transforms readable data (plaintext) into a scrambled, unreadable format (ciphertext). To turn it back into readable form, you need the correct decryption key.</p>
+</li>
+<li>
+<p><strong>Types of Encryption</strong>:</p>
+<ol>
+<li><strong>Symmetric Encryption</strong>: Uses the same key for encrypting and decrypting data. Think of it as a lock and key system where the same key locks and unlocks the box.</li>
+<li><strong>Asymmetric Encryption</strong>: Uses two different keys – a public key for encryption and a private key for decryption. It&#x27;s like having a public mailbox where anyone can drop a message (public key), but only you have the key to open it (private key).</li>
+</ol>
+</li>
+<li>
+<p><strong>Why It&#x27;s Used</strong>:</p>
+<ul>
+<li><strong>Data Security</strong>: To protect sensitive data like passwords, credit card numbers, or confidential communications.</li>
+<li><strong>Privacy</strong>: Ensures that private conversations or information stay private.</li>
+<li><strong>Integrity</strong>: By encrypting data, it helps in verifying that the data has not been altered during transmission.</li>
+</ul>
+</li>
+<li>
+<p><strong>Where It&#x27;s Used</strong>:</p>
+<ul>
+<li><strong>Secure Websites</strong>: HTTPS uses encryption to secure the data transmitted between your browser and the website.</li>
+<li><strong>Online Payments</strong>: Encryption protects your financial details when you buy something online.</li>
+<li><strong>Emails and Messaging</strong>: Services use encryption to keep your messages secure.</li>
+</ul>
+</li>
+<li>
+<p><strong>Challenges</strong>:</p>
+<ul>
+<li><strong>Key Management</strong>: Keeping the encryption keys safe is crucial. If someone gets the key, they can decrypt your data.</li>
+<li><strong>Performance</strong>: Encryption can slow down systems because it takes time to encrypt and decrypt data.</li>
+<li><strong>Complexity</strong>: Implementing and managing encryption strategies can be complex.</li>
+</ul>
+</li>
+</ul>
+<p>Encryption is a fundamental aspect of cybersecurity, acting as a critical barrier against data breaches and cyber attacks. It&#x27;s like having a secret language that only you and the intended recipient understand, keeping your information safe from prying eyes.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">What are DDoS Attacks</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>A Distributed Denial of Service (DDoS) attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic. DDoS attacks achieve effectiveness by utilizing multiple compromised computer systems as sources of attack traffic. These systems can include computers and other networked resources such as IoT devices.</p>
+<h3>How DDoS Attacks Work</h3>
+<ul>
+<li><strong>How It Happens</strong>: Hackers use a network of compromised computers and devices (botnets) to send a flood of internet traffic to a target, like a website or server.</li>
+<li><strong>Goal</strong>: To overload the server&#x27;s capacity to handle requests, causing slow service or complete shutdown.</li>
+<li><strong>Types</strong>: Volume-based attacks (overwhelming bandwidth), protocol attacks (targeting server resources), and application layer attacks (targeting web applications).</li>
+</ul>
+<h3>Common Types of DDoS Attacks</h3>
+<ul>
+<li><strong>Volumetric Attacks</strong>: The most common form, these attacks flood the network with a substantial amount of traffic.</li>
+<li><strong>Protocol Attacks</strong>: These target network layer or transport layer protocols to consume server resources or bandwidth.</li>
+<li><strong>Application Layer Attacks</strong>: These are more sophisticated, targeting specific aspects of an application or server.</li>
+</ul>
+<h3>Mitigation Strategies</h3>
+<ol>
+<li><strong>Network Redundancy</strong>: Having multiple pathways for network traffic can help avoid single points of failure.</li>
+<li><strong>DDoS Protection Services</strong>: These services can detect and mitigate DDoS attacks, often through large-scale network infrastructure capable of absorbing and diffusing attack traffic.</li>
+<li><strong>Firewalls and Anti-DDoS Software</strong>: Implementing advanced firewall systems and specific anti-DDoS software can help identify and block attack traffic.</li>
+<li><strong>Traffic Analysis</strong>: Continuously monitoring network traffic can help in identifying anomalies indicative of a DDoS attack.</li>
+<li><strong>Responsive Plan</strong>: Having a response plan in place, including procedures for identifying, mitigating, and recovering from an attack, is crucial for minimizing damage.</li>
+<li><strong>Good Security Hygiene</strong>: Regularly updating security protocols and educating users about the risks of malware can help reduce the number of devices that can be used in DDoS attacks.</li>
+<li><strong>Scalable Infrastructure</strong>: Utilizing cloud services with the ability to scale rapidly can absorb and disperse high traffic loads during an attack.</li>
+</ol>
+<p>Mitigating a DDoS attack involves both preventative measures and reactive strategies. It&#x27;s about having a robust defense to either prevent the traffic jam or clear it quickly if it happens. Regularly updating security protocols and being prepared to respond swiftly are key to minimizing the impact of such attacks.</p></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Introduction to Messaging System</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Background</h2>
+<p>One of the common challenges among distributed systems is handling a continuous influx of data from multiple sources. Imagine a log aggregation service that is receiving hundreds of log entries per second from different sources. The function of this log aggregation service is to store these logs on disk at a shared server and also build an index so that the logs can be searched later. A few challenges of this service are:</p>
+<ol>
+<li>How will the log aggregation service handle a spike of messages? If the service can handle (or buffer) 500 messages per second, what will happen if it starts receiving a higher number of messages per second? If we decide to have multiple instances of the log aggregation service, how do we divide the work among these instances?</li>
+<li>How can we receive messages from different types of sources? The sources producing (or consuming) these logs need to decide upon a common protocol and data format to send log messages to the log aggregation service. This leads us to a strongly coupled architecture between the producer and consumer of the log messages.</li>
+<li>What will happen to the log messages if the log aggregation service is down or unresponsive for some time?</li>
+</ol>
+<p>To efficiently manage such scenarios, distributed systems depend upon a messaging system.</p>
+<h2>What is a messaging system?</h2>
+<p>A <strong>messaging system</strong> is responsible for transferring data among services, applications, processes, or servers. Such a system helps <strong>decouple</strong> different parts of a distributed system by providing an <strong>asynchronous</strong> way of transferring messaging between the sender and the receiver. Hence, all senders (or producers) and receivers (or consumers) focus on the data/message without worrying about the mechanism used to share the data.</p></div><div><p>There are two common ways to handle messages: <strong>Queuing</strong> and <strong>Publish-Subscribe</strong>.</p>
+<h3>Queue</h3>
+<p>In the queuing model, messages are stored sequentially in a queue. Producers push messages to the rear of the queue, and consumers extract the messages from the front of the queue.</p></div><div><p>A particular message can be consumed by a maximum of one consumer only. Once a consumer grabs a message, it is removed from the queue such that the next consumer will get the next message. This is a great model for distributing message-processing among multiple consumers. But this also limits the system as multiple consumers cannot read the same message from the queue.</p></div><div><h3>Publish-subscribe messaging system</h3>
+<p>In the pub-sub (short for publish-subscribe) model, messages are divided into topics. A publisher (or a producer) sends a message to a topic that gets stored in the messaging system under that topic. Subscribers (or the consumer) subscribe to a topic to receive every message published to that topic. Unlike the Queuing model, the pub-sub model allows multiple consumers to get the same message; if two consumers subscribe to the same topic, they will receive all messages published to that topic.</p></div><div><p>The messaging system that stores and maintains the messages is commonly known as the message <strong>broker</strong>. It provides a loose coupling between publishers and subscribers, or producers and consumers of data.</p></div><div><p>The message broker stores published messages in a queue, and subscribers read them from the queue. Hence, subscribers and publishers do not have to be synchronized. This <strong>loose coupling</strong> enables subscribers and publishers to read and write messages at different rates.</p>
+<p>The messaging system&#x27;s ability to store messages provides <strong>fault-tolerance</strong>, so messages do not get lost between the time they are produced and the time they are consumed.</p>
+<p>To summarize, a message system is deployed in an application stack for the following reasons:</p>
+<ol>
+<li>
+<p><strong>Messaging buffering:</strong> To provide a buffering mechanism in front of processing (i.e., to deal with temporary incoming message spikes that are greater than what the processing app can deal with). This enables the system to safely deal with spikes in workloads by temporarily storing data until it is ready for processing.</p>
+</li>
+<li>
+<p><strong>Guarantee of message delivery:</strong> Allows producers to publish messages with assurance that the message will eventually be delivered if the consuming application is unable to receive the message when it is published.</p>
+</li>
+<li>
+<p><strong>Providing abstraction:</strong> Distributed messaging systems enable decoupling of sender and receiver components in a system, allowing them to evolve independently. This architectural pattern promotes modularity, making it easier to maintain and update individual components without affecting the entire system.</p>
+</li>
+<li>
+<p><strong>Scalability:</strong> Distributed messaging systems can handle a large number of messages and can scale horizontally to accommodate increasing workloads. This allows applications to grow and manage higher loads without significant performance degradation.</p>
+</li>
+<li>
+<p><strong>Fault Tolerance:</strong> By distributing messages across multiple nodes or servers, these systems can continue to operate even if a single node fails. This redundancy provides increased reliability and ensures that messages are not lost during system failures.</p>
+</li>
+<li>
+<p><strong>Asynchronous Communication:</strong> These systems enable asynchronous communication between components, allowing them to process messages at their own pace without waiting for immediate responses. This can improve overall system performance and responsiveness, particularly in scenarios with high latency or variable processing times.</p>
+</li>
+<li>
+<p><strong>Load Balancing:</strong> Distributed messaging systems can automatically distribute messages across multiple nodes, ensuring that no single node becomes a bottleneck. This allows for better resource utilization and improved overall performance.</p>
+</li>
+<li>
+<p><strong>Message Persistence:</strong> Many distributed messaging systems provide message persistence, ensuring that messages are not lost if a receiver is temporarily unavailable or slow to process messages. This feature helps maintain data consistency and reliability across the system.</p>
+</li>
+<li>
+<p><strong>Security:</strong> Distributed messaging systems often support various security mechanisms, such as encryption and authentication, to protect sensitive data and prevent unauthorized access.</p>
+</li>
+<li>
+<p><strong>Interoperability:</strong> These systems often support multiple messaging protocols and can integrate with various platforms and technologies, making it easier to connect different components within a complex system.</p>
+</li>
+</ol></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_14_security_and_privacy') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_14_security_and_privacy', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

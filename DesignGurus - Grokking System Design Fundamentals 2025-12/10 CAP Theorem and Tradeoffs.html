@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAP Theorem &amp; System Tradeoffs - System Design Guide</title>
+    <meta property="og:title" content="CAP Theorem &amp; System Tradeoffs - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAP Theorem &amp; System Tradeoffs</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to cap theorem"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to CAP Theorem</a></li>
+<li class="sidebar-item" data-num="02" data-title="components of cap theorem"><a href="#chapter-02"><span class="chapter-num">02</span> Components of CAP Theorem</a></li>
+<li class="sidebar-item" data-num="03" data-title="tradeoffs in cap theorem"><a href="#chapter-03"><span class="chapter-num">03</span> Tradeoffs in CAP Theorem</a></li>
+<li class="sidebar-item" data-num="04" data-title="examples of cap theorem in practice"><a href="#chapter-04"><span class="chapter-num">04</span> Examples of CAP Theorem in Practice</a></li>
+<li class="sidebar-item" data-num="05" data-title="beyond cap theorem"><a href="#chapter-05"><span class="chapter-num">05</span> Beyond CAP Theorem</a></li>
+<li class="sidebar-item" data-num="06" data-title="system design tradeoffs in interviews"><a href="#chapter-06"><span class="chapter-num">06</span> System Design Tradeoffs in Interviews</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to CAP Theorem</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">CAP Theorem Triangle &amp; PACELC Trade-Off Matrix</div>
+    <div class="diagram-badge">Distributed Tradeoffs</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradCAP" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: CAP Triangle -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="380" height="240" rx="10" fill="url(#gradCAP)" stroke="#f59e0b" stroke-width="1.2"/>
+    <text x="190" y="28" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">CAP THEOREM TRIANGLE</text>
+
+    <!-- Triangle polygon -->
+    <polygon points="190,65 80,215 300,215" fill="none" stroke="#475569" stroke-width="2"/>
+
+    <!-- Consistency Node (Top) -->
+    <circle cx="190" cy="65" r="22" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2.5"/>
+    <text x="190" y="70" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">C</text>
+    <text x="190" y="38" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9">Consistency</text>
+
+    <!-- Availability Node (Bottom Left) -->
+    <circle cx="80" cy="215" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/>
+    <text x="80" y="220" fill="#10b981" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">A</text>
+    <text x="80" y="248" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Availability</text>
+
+    <!-- Partition Tolerance Node (Bottom Right) -->
+    <circle cx="300" cy="215" r="22" fill="#581c87" stroke="#c084fc" stroke-width="2.5"/>
+    <text x="300" y="220" fill="#c084fc" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">P</text>
+    <text x="300" y="248" fill="#c084fc" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Partition Tolerance</text>
+
+    <!-- Side Choices -->
+    <rect x="220" y="125" width="105" height="22" rx="4" fill="#1e1b4b" stroke="#6366f1"/>
+    <text x="272" y="140" fill="#818cf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">CP: HBase, Redis</text>
+
+    <rect x="55" y="125" width="105" height="22" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="107" y="140" fill="#34d399" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">AP: Cassandra, Couch</text>
+  </g>
+
+  <!-- Right: PACELC Theorem Matrix -->
+  <g transform="translate(420, 20)">
+    <rect x="0" y="0" width="400" height="240" rx="10" fill="url(#gradCAP)" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="200" y="28" fill="#818cf8" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">PACELC THEOREM EXTENSION</text>
+
+    <rect x="20" y="48" width="360" height="75" rx="6" fill="#1e1b4b" stroke="#38bdf8" stroke-width="0.8"/>
+    <text x="35" y="70" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700">IF PARTITION (P): Choose A or C</text>
+    <text x="35" y="90" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">• PC/EC (e.g. BigTable, Spanner): Strict consistency at all times.</text>
+    <text x="35" y="106" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">• PA/EL (e.g. Cassandra, Dynamo): High availability even during network splits.</text>
+
+    <rect x="20" y="135" width="360" height="85" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+    <text x="35" y="157" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700">ELSE NORMAL OPERATION (E): Choose L or C</text>
+    <text x="35" y="177" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">• PC/EC: Sacrifices Latency (L) to ensure replication sync.</text>
+    <text x="35" y="195" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.5">• PA/EL: Returns ultra-fast reads/writes (L) with eventual consistency.</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> In any distributed system subject to network partitions (P), architects must trade between Consistency (CP) and Availability (AP); during normal operation (E), they must trade between Latency (L) and Consistency (C).
+  </div>
+</div>
+
+
+    <div><p>The CAP theorem is a fundamental concept in distributed system architecture that describes an unavoidable trade-off between three core requirements: Consistency, Availability, and Partition Tolerance. In simple terms, it states that a distributed system cannot guarantee all three at the same time. This principle, introduced by computer scientist Eric Brewer, matters because it guides how we design reliable systems. If you’ve ever wondered why a banking app would rather go offline than show incorrect data, or why a social media feed might show slightly stale posts during outages, the CAP theorem provides the answer. It’s a must-know concept for system design interviews and real-world technical decision-making.</p>
+<h2>Overview of the CAP theorem</h2>
+<p>The CAP theorem states that it is impossible for a distributed system to simultaneously provide all three properties: consistency, availability, and partition tolerance. In other words, a distributed system can only guarantee two out of these three properties at any given time. The theorem highlights the inherent trade-offs that system designers must consider when building distributed systems.</p>
+<ul>
+<li>
+<p><strong>Consistency (C):</strong> In the context of CAP, consistency means that <strong>all nodes see the same data at the same time</strong>. More formally, every read receives the result of the most recent write – no matter which replica node it connects to. This is often referred to as <em>strong consistency</em> or <em>linearizability</em>. (Note: This is different from the “consistency” in ACID databases, which refers to validity of transactions. Here, we mean consistency across distributed replicas.) If you write some data, a consistent system ensures any subsequent read (on any node) will return that data.</p>
+</li>
+<li>
+<p><strong>Availability (A):</strong> Availability means the system <strong>always responds to requests</strong>. Every request to a non-failing node must result in <em>some</em> response (either the latest data or possibly stale data, but it cannot ignore you or error out). In practice, this means even if parts of the system go down, the service as a whole is still accessible. An available system can tolerate node failures – clients can always read or write <em>something</em>.</p>
+</li>
+<li>
+<p><strong>Partition Tolerance (P):</strong> Partition tolerance means the system <strong>continues to operate despite network partitions</strong> or communication failures between nodes. A <em>partition</em> is a break in connectivity that splits the network into disjoint parts. In a partition-tolerant system, even if nodes are cut off from each other due to network issues, each part can keep working (possibly in a degraded mode). Essentially, the system can lose arbitrarily many messages between nodes (or even whole nodes) and still keep going. In modern distributed systems, <strong>network partitions <em>will</em> happen</strong> (due to outages, delays, etc.), so tolerance to partitions is a must.</p>
+</li>
+</ul></div><div><p>CAP theorem tells us that when a network partition occurs, a system must choose between being Consistent or being Available – it cannot be both. If there is no partition, you can have both C and A. But you <em>must</em> design assuming a partition will eventually happen. At that point, <strong>you sacrifice either consistency or availability</strong>. This is the crux of CAP: in the presence of a partition, you can only guarantee two of the three properties (since partition tolerance is usually non-negotiable, the real choice is between C and A). We’ll explore this trade-off and what it means for real systems in the next sections.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Components of CAP Theorem</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Now that we have defined Consistency, Availability, and Partition Tolerance, let&#x27;s dive deeper into what each of these means in practice for distributed systems, and why they matter.</p>
+<h2>Consistency in Distributed Systems</h2>
+<p>Under CAP, <strong>consistency means <em>strong consistency</em></strong> across the distributed system. Whenever data is written to one node, that data is immediately (and synchronously) replicated to <em>all</em> nodes before the write is considered successful. This guarantees that any client, reading from any replica, will get the latest data. For example, if you update your profile picture on a social network, a strongly consistent system would ensure that anyone who views your profile (from any server location) sees the new picture immediately after you saved it.</p>
+<p>It’s important to note that this is different from the “C” in ACID. In ACID database terms, consistency means the database constraints are preserved after a transaction. In CAP, consistency specifically means <strong>atomic/linearizable consistency across replicas</strong> – i.e., no two nodes should ever disagree on the current state of the data. Strong consistency simplifies development (you don’t have to worry about stale reads), but it often comes at the cost of speed or availability, especially if nodes are far apart.</p>
+<p>There are weaker forms of consistency (like <em>eventual consistency</em>) where all nodes will <em>eventually</em> have the same data, but not instantly. Those are typically what an “AP” system offers – we’ll discuss that shortly. For CAP, think of consistency as the strictest form: every read reflects the most recent write.</p>
+<h2>Understanding Availability</h2>
+<p><strong>Availability</strong> in CAP doesn’t just mean the system is up; it specifically means <strong>every request gets a response</strong> <em>even during failures</em>. No matter which node you contact, if it hasn’t crashed, it will respond within a reasonable time. An available system <em>never</em> resorts to saying “sorry, I can’t serve your request right now” due to a node or network failure.</p>
+<p>In practical terms, this often means there are multiple redundant nodes, so if one goes down or can’t be reached, another can serve the request. However, an available system might serve <em>stale data</em> if it has to, rather than refuse to answer. The key is that the system remains operational continuously. For example, DNS (the domain name system) is highly available – if one nameserver is down, you’ll query another. You might occasionally get an outdated DNS entry due to propagation delays, but you will get <em>something</em> back (DNS is an example of an <strong>AP system</strong>, which favors availability over strict consistency).</p>
+<p>In summary, an available system avoids downtime. It prioritizes giving <em>a</em> response over always giving the up-to-the-second correct response. This property is crucial for user-facing services where even a brief outage is unacceptable.</p>
+<h2>Why Partition Tolerance is Necessary</h2>
+<p><strong>Partition tolerance</strong> is arguably the least negotiable of the three in distributed systems. It means the system can keep working even if network links between nodes fail or some nodes crash. In a distributed system spread across machines or data centers, you <em>will</em> encounter situations where nodes can’t talk to each other (packets get dropped, switches fail, data centers catch fire, etc.). Partition tolerance is the property that <strong>the system as a whole survives these events</strong>.</p>
+<p>For example, imagine a system with nodes in New York and London. If the transatlantic link goes down (a network partition), a partition-tolerant design would allow each side to continue operating (perhaps serving local reads/writes) rather than completely locking up. Without partition tolerance, a network blip could bring your entire service down.</p>
+<p>Practically, almost all <em>modern distributed systems require P</em>. If you give up partition tolerance (i.e., choose CA in CAP terms), it means your system is not built to handle network failures between nodes. The only realistic way to be “CA” is to have all components so tightly coupled (or even running on one node) that a partition can’t happen. For instance, a single-instance database on one server can be consistent and available (until that server crashes, of course) – this is a <strong>CA scenario</strong> but not a distributed system by CAP’s definition. In distributed scenarios, you don’t really get to choose P or not; you <em>must</em> tolerate partitions, so the real-world choice is between C and A when P occurs.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Tradeoffs in CAP Theorem</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Now let&#x27;s discuss the heart of CAP: the trade-offs. <strong>Why can’t a distributed system have Consistency, Availability, and Partition tolerance all at once?</strong> The simple answer: when a network partition happens, the system has to make a tough choice:</p>
+<ul>
+<li>
+<p>If the system decides to <strong>remain consistent (C)</strong>, it cannot allow conflicting updates on different sides of the partition. So at least one side of the partition must stop accepting operations (to avoid divergence). That means some part of the system becomes <strong>unavailable (not serving requests)</strong>. This is a <strong>CP</strong> choice – consistency over availability during partitions.</p>
+</li>
+<li>
+<p>If the system decides to <strong>remain available (A)</strong>, it must keep serving requests on all sides of the partition. That means each side might proceed independently, leading to <strong>inconsistencies</strong> (different parts have different data until they can sync up later). This is an <strong>AP</strong> choice – availability over consistency.</p>
+</li>
+</ul>
+<p>Because a real distributed system cannot prevent partitions, it <em>cannot have both C and A in a partition</em>. That’s the essence of CAP. In normal operation (no partitions), you might get both C and A, but CAP is really about the behavior <em>under failure conditions</em>. In other words, because a distributed system must be partition tolerant, the only choices are deciding between availability and consistency..</p>
+<h2>CP, AP, and CA Systems (with Examples)</h2>
+<p>Depending on which trade-off a system makes, we categorize it as <strong>CP, AP, or CA</strong> under CAP theorem:</p>
+<ul>
+<li>
+<p><strong>CP (Consistency + Partition tolerance, no guarantee of Availability):</strong> These systems choose consistency over availability when a failure happens. If a network partition occurs, a CP system will refuse to accept some requests or answers on one side in order to keep the data consistent. Example: <strong>Apache ZooKeeper</strong> is a CP system – it will shut down or refuse requests if it loses a quorum of nodes, ensuring no two clients see different data. In other words, if ZooKeeper cannot guarantee correct, consistent behavior, it will not respond at all (sacrificing availability). <strong>MongoDB</strong> (in its default replicated setup) is another example often considered CP. If the primary node in a MongoDB replica set goes down, the system halts writes until a new primary is elected, pausing availability briefly to maintain a single up-to-date source of truth. These systems are suitable for use cases where data integrity is paramount – for example, <strong>financial applications</strong> prefer CP, as seen in banking: it’s better for the system to refuse an operation than to allow inconsistent money transfers.</p>
+</li>
+<li>
+<p><strong>AP (Availability + Partition tolerance, no immediate Consistency guarantee):</strong> These systems choose availability over strict consistency. During a partition, they allow all nodes to continue operating, even if that means some clients see out-of-date data. The system will reconcile differences later (thus usually providing <em>eventual consistency</em>). Examples: <strong>Apache Cassandra</strong> is a classic AP datastore – it’s designed to always accept reads/writes on any node, even during network issues, and resolves conflicts asynchronously, so it <strong>“delivers availability and partition tolerance but can’t deliver consistency all the time.”</strong>. Similarly, Amazon’s <strong>DynamoDB</strong> (based on the Dynamo paper) is AP. In fact, Amazon’s Dynamo was explicitly designed for an “always-on” shopping cart service where the requirement was that the system must accept reads/writes even amid failures; to achieve this, <em>Dynamo sacrifices consistency under certain failure scenarios</em>. DNS (the domain name system) is another everyday example of AP: it’s virtually always available globally, but updates (like changing a domain’s IP) take time to propagate, meaning not everyone sees the change immediately. AP systems are great for use cases like caches, shopping carts, or social media feeds – where it’s more important that the system is up than absolutely in sync at every moment.</p>
+</li>
+<li>
+<p><strong>CA (Consistency + Availability, no Partition tolerance):</strong> These systems provide consistency and availability <em>as long as the system is whole</em>, but they are not partition-tolerant. In practice this means the system will fail or become totally unavailable if a partition occurs, so it can only run in scenarios where partitions are negligible (e.g., within a single server or local cluster with reliable network). A common example: a <strong>single-node relational database</strong> can be viewed as CA – it is consistent (thanks to ACID properties) and available (when the node is up), but if that one node fails, or if you consider a partition between the app and the db, the system doesn’t gracefully tolerate it (it just fails). Some <strong>relational DB clusters</strong> that use synchronous replication can also be seen as CA <em>until</em> a network split happens – at which point they usually stop functioning rather than allow divergence. Partition tolerance plays a “less important role” in these systems, but in a true distributed environment you can’t really avoid P. It’s important to note that <strong>pure CA systems are theoretical in distributed context</strong>, as for all practical purposes a fully CA distributed database cannot exist because you can’t avoid network faults. Thus, CA is usually only achievable in a single-site or tightly coupled system.</p>
+</li>
+</ul></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Examples of CAP Theorem in Practice</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Let’s look at how some real-world systems exemplify CAP trade-offs:</p>
+<ul>
+<li>
+<p><strong>MongoDB (CP):</strong> MongoDB is a popular NoSQL database which, by default, prioritizes consistency. It uses a primary-secondary replication model. Only the primary can accept writes, and if the primary is lost (partitioned away or down), the system elects a new primary. During that failover window, writes are not accepted – a sacrifice of availability to ensure no two primaries exist (consistency). Once a new primary is in place and secondaries are synchronized, the cluster resumes normal operations. This makes MongoDB <em>CP</em>: it won’t give you an outdated answer (it would rather pause), which is good for applications where stale data could be harmful.</p>
+</li>
+<li>
+<p><strong>Cassandra (AP):</strong> Cassandra is a distributed database that takes the opposite approach. It has no single primary node – any node can accept writes at any time. This yields high availability and scalability. If a partition happens, Cassandra keeps all sides running; writes might conflict, but the system will reconcile them (using timestamps, hinted handoff, repair jobs, etc.) after the fact. Thus, Cassandra is willing to return older data rather than fail a request, embodying an AP system. It provides tunable consistency (you can configure how many replicas must ack a read/write), but the default philosophy is “always be available.” Many large-scale websites use Cassandra for features like user activity feeds, where it’s okay if one replica is briefly behind as long as the service is up.</p>
+</li>
+<li>
+<p><strong>ZooKeeper (CP):</strong> ZooKeeper is a coordination service often used for configuration management, leader election, and other tasks in distributed applications. It is famously a CP system. ZooKeeper uses an algorithm (Zab) that requires a majority quorum of nodes to operate. If a network split leaves the cluster without a quorum, the minority side will stop functioning (becoming unavailable) to preserve a single consistent state. In other words&#x27; ZooKeeper “sacrifices availability in order to achieve consistency and partition tolerance” – if it cannot guarantee the latest state, it simply won’t respond. This makes ZooKeeper ideal for things like distributed locks and config where consistency (everyone agreeing on one leader, for example) is crucial.</p>
+</li>
+<li>
+<p><strong>DynamoDB (AP):</strong> DynamoDB, a cloud key-value store from Amazon, is built on the principles of Amazon’s Dynamo paper. DynamoDB is designed to scale across multiple data centers and remain available. It <strong>replicates data across zones and continues serving even if some replicas or network links fail</strong>, favoring availability. By default, reads are eventually consistent (you might read slightly stale data if a partition occurred), though it offers an option for <em>strongly consistent reads</em> within a region. Amazon’s goal with DynamoDB is that operations (especially writes to things like a shopping cart or user preference) should succeed even in the face of outages – they’ll sort out any inconsistencies later.</p>
+</li>
+</ul>
+<p>These examples show that <strong>different systems make different trade-offs</strong>. There is no free lunch – you pick the two properties that matter most for your use case. Next, we’ll see an important extension to CAP that considers another dimension: latency.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Beyond CAP Theorem</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>CAP is a simplified model that only considers a binary state (partition or no partition). In real systems, even when there’s no partition, there are still trade-offs — notably between consistency and <strong>latency/performance</strong>. To address this, researchers have proposed extensions and refinements to CAP.</p>
+<h2>PACELC Theorem</h2>
+<p>The most well-known extension is the <strong>PACELC theorem</strong>, introduced by Daniel Abadi around 2010. PACELC expands on CAP by asking: <em>not only what happens during a Partition (P), but also what happens Else (E) when there’s no partition.</em> In formal terms, PACELC says:</p>
+<ul>
+<li><strong>If a partition (P) occurs</strong>: the system must choose either <strong>Availability (A)</strong> or <strong>Consistency (C)</strong> (this is essentially the CAP theorem trade-off during a failure).</li>
+<li><strong>Else (no partition)</strong>: the system must choose between <strong>Latency (L)</strong> and <strong>Consistency (C)</strong>.</li>
+</ul>
+<p>In shorthand, <em>“if P then A or C; else L or C.”</em> This acknowledges that even in normal operation, there’s often a tension between giving responses quickly (low latency) and doing extra work to ensure consistency. For example, waiting for data to replicate to many nodes might ensure strong consistency but adds latency to each request. Or you can respond faster from one node’s data (lower latency) at the cost of maybe not being fully up-to-date (slightly weaker consistency).</p>
+<p>PACELC thus fills in the gap that CAP leaves: CAP is silent when the system is running well. PACELC says <em>even with no failures, you’re either prioritizing speed or consistency</em>. It effectively adds a second dimension to the design choices.</p>
+<p>Let’s illustrate PACELC with examples:</p>
+<ul>
+<li>
+<p><strong>Cassandra under PACELC:</strong> We said Cassandra is AP in CAP terms. Under PACELC, we classify it as <strong>PA/EL</strong> – Partition tolerant + Available, and Else (when no partition) it prefers low Latency over full consistency. Cassandra’s design optimizes for fast writes and reads (low latency) rather than blocking to synchronize every replica on each request. So it’s Available under partition, and in normal times it’s still favoring performance (with eventual consistency). In PACELC notation: <strong>PA/EL</strong>.</p>
+</li>
+<li>
+<p><strong>MongoDB under PACELC:</strong> MongoDB was CP in CAP. Under PACELC, it’s often described as <strong>PC/EC</strong> – Partition tolerant + Consistent, and Else Consistent. That means even with no partition, MongoDB (by default) chooses consistency over latency (it funnels writes through one primary and replicates synchronously to secondaries). During a partition, it sacrifices availability to keep data consistent (only a majority partition can accept writes). So MongoDB is <strong>PC/EC</strong> by default configuration.</p>
+</li>
+<li>
+<p><strong>Google Spanner:</strong> Google Spanner is a globally-distributed SQL database. It aims to be strongly consistent <strong>and</strong> highly available, by using synchronized clocks (TrueTime) to minimize uncertainty. According to PACELC, Spanner can be seen as <strong>PC/EC</strong> (much like MongoDB – it prioritizes consistency in all cases). In CAP terms, Spanner is technically a CP system (it will sacrifice availability if a major partition occurs), but through engineering (and controlling clock drift) Google made partitions rare and short, so in effect Spanner behaves like a CA system for practical use. Spanner chooses consistency even if that means a bit more latency (transactions wait out clock uncertainty), thus it fits PACELC’s PC/EC category (favoring consistency both during and outside partitions).</p>
+</li>
+</ul>
+<p>The PACELC theorem reminds us that <strong>performance (latency) is part of the equation</strong>. A system that is strongly consistent even without failures might incur higher response times, while a system that gives snappy responses might be doing so by not waiting on cross-node consensus.</p></div><div><h2>c. CRDTs and Hybrid Systems</h2>
+<p>Convergent Replicated Data Types (CRDTs) are data structures designed to allow multiple replicas to be updated independently and converge to a consistent state without requiring coordination. CRDTs can help system designers achieve both strong eventual consistency and high availability. By combining CRDTs with other techniques, it is possible to build hybrid systems that provide tunable consistency guarantees, enabling applications to make trade-offs based on their specific requirements.</p>
+<h2>d. Application-specific trade-offs</h2>
+<p>The CAP theorem and its extensions provide valuable insights into the fundamental trade-offs in distributed systems design. However, it is crucial to remember that real-world systems often involve more complex and application-specific trade-offs. As a system designer, it is important to understand the unique requirements and constraints of your application and make informed decisions about the trade-offs that best meet those needs.</p>
+<h1>Summary</h1>
+<p>While the CAP theorem has been foundational to understanding the trade-offs in distributed systems, it is essential to explore and consider more nuanced models and techniques to design systems that effectively address the challenges and requirements of modern applications.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">System Design Tradeoffs in Interviews</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>When it comes to system design (especially in interviews), understanding CAP isn’t just theoretical – it guides real decisions. Interviewers often present scenarios where you need to decide between consistency and availability. Here’s how to think about it:</p>
+<h3>1. Understand the requirements of the scenario</h3>
+<p>Ask yourself: is it worse for this system to show incorrect/out-of-date data, or to not respond at all? The answer will hint at consistency vs availability. For example, in a banking system, an inconsistent account balance is unacceptable – it’s better to make the user wait than show wrong data or allow double-spending. This scenario calls for <strong>consistency over availability</strong> (a CP approach). On the other hand, consider a social media news feed or an analytics dashboard – showing slightly stale results is usually fine, but the service being down is not. That scenario leans toward <strong>availability over consistency</strong> (an AP approach with eventual consistency).</p>
+<h3>2. Recognize that partition tolerance is usually a given</h3>
+<p>In an interview, if you’re designing a distributed system, you should assume that P (network issues) can happen. This means you’re inherently in a CAP trade-off situation. A good answer will mention something like, “Since network partitions can occur, we have to choose whether to favor consistency or availability in this design.”</p>
+<h3>3. Use real-world analogies or references</h3>
+<p>You can mention known systems as examples to justify your choice. For instance: <em>“We might choose a design similar to Cassandra or DynamoDB which prioritize availability, because in our use case (say, a cache for product catalog) it’s more important that the system is always up than absolutely up-to-date. The data can sync eventually.”</em> Or <em>“We could use an approach like ZooKeeper or a SQL database cluster for this config service, because we need strong consistency – it’s okay if during a network split the service pauses, as long as we never get conflicting configs.”</em> Demonstrating knowledge of how big companies solve it adds credibility. For example, you might say <strong>“Amazon’s Dynamo was designed for an always-on shopping cart, so they chose an AP design with eventual consistency. I’d apply the same principle here because user experience should never be interrupted for this feature.”</strong> Or, <em>“Google uses Spanner for their ad database to ensure global consistency – in our case of a financial ledger, we’d also lean CP, even if it means a bit more latency.”</em></p>
+<h3>4. Acknowledge the trade-off and possible mitigation</h3>
+<p>A strong answer doesn’t just pick C or A blindly; it discusses the impact and how to mitigate downsides. For example, <em>“If we choose availability, we’ll need to handle conflicts from concurrent updates (perhaps using timestamps or last-write-wins). The data might be temporarily inconsistent, so we must ensure eventual reconciliation.”</em> Or <em>“If we choose consistency, we should implement retries or graceful degradation for when the service is unavailable during a partition, so that users see a friendly error or limited functionality instead of total failure.”</em> This shows you understand the practical implications.</p>
+<h3>5. Mention tunable or nuanced approaches if relevant</h3>
+<p>Modern systems often allow tuning the consistency level per request (for instance, Cassandra lets you choose consistency level per query). In an interview, you could mention this: <em>“We could even make it tunable – e.g., a read that absolutely must be up-to-date can be routed to the leader (sacrificing some latency), whereas other reads can go to any replica for speed. This way the system isn’t strictly one or the other, but offers a spectrum depending on the operation.”</em> Eric Brewer himself noted that within one system, some operations can be handled in a more available way and others in a more consistent way. This kind of answer shows maturity – real systems often mix approaches.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_10_cap_theorem_and_tradeoffs') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_10_cap_theorem_and_tradeoffs', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+=== LINKEDIN SDI FLAGSHIP POST: Designing TinyURL: Base62 vs Key Generation Service (KGS) ===
+Target Chapter: 05 Classic System Design Problems (Part 1).html
+
+--- [COPY POST BODY BELOW] ---
+
+🔗 Why MD5/SHA-256 hashing fails for TinyURL and how a Key Generation Service (KGS) fixes it:
+
+Designing a URL Shortener seems simple until you hit 100,000,000 URLs/day and need zero collision guarantees.
+
+❌ The Flawed Approach: MD5(URL) -> Base62
+Hashing a long URL gives 128 bits. Taking the first 7 characters causes hash collisions. Appending user IDs or random salts requires continuous database collision checks, causing high latency write bottlenecks!
+
+⚡ The Staff-Level Solution: Dedicated Key Generation Service (KGS)
+1️⃣ Pre-generate 7-character Base62 keys ($62^7 \approx 3.52 \text{ Trillion}$ unique keys).
+2️⃣ Store keys in two tables: `Used_Keys` and `Available_Keys`.
+3️⃣ KGS server loads 5,000 available keys into RAM.
+4️⃣ When a request arrives, KGS hands out a key in < 1 millisecond with ZERO database hashing or collision checks!
+5️⃣ Redundant KGS replicas with master-standby leases ensure no duplicate keys are ever handed out.
+
+(Includes complete Python + TypeScript production code with Redis caching!)
+
+💬 How would you handle key recovery when shortened URLs expire?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#TinyURL #SystemDesign #Algorithms #CodingInterview #DistributedSystems #SoftwareArchitecture
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

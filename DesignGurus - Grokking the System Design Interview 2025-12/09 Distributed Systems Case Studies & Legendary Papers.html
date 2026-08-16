@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08. Distributed Systems Case Studies & Legendary Papers - Grokking System Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --accent-tertiary: #a855f7;
+            --border-color: #334155;
+            --sidebar-width: 320px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 32px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+        .chapter-list {
+            overflow-y: auto;
+            flex: 1;
+            padding: 10px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--bg-primary);
+            color: var(--accent-primary);
+        }
+        .nav-item.active {
+            border-left: 3px solid var(--accent-primary);
+            font-weight: 600;
+        }
+        .chapter-number {
+            margin-right: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .chapter-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .reading-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px 100px;
+            width: 100%;
+        }
+        .chapter-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        .chapter-header .chapter-number {
+            font-size: 1rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+        .chapter-title-main {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-top: 8px;
+        }
+        .chapter-body {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #cbd5e1;
+        }
+        .chapter-body h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin: 32px 0 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px;
+        }
+        .chapter-body h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #38bdf8;
+            margin: 24px 0 12px;
+        }
+        .chapter-body p { margin-bottom: 16px; }
+        .chapter-body ul, .chapter-body ol {
+            margin: 0 0 20px 24px;
+        }
+        .chapter-body li { margin-bottom: 8px; }
+        .chapter-body code {
+            font-family: 'Fira Code', monospace;
+            background-color: #1e1b4b;
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+        .diagram-card {
+            margin: 28px 0;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .diagram-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 10px;
+        }
+        .diagram-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+        .diagram-badge {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .diagram-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .diagram-caption {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+        .flow-line {
+            stroke-dasharray: 6;
+            animation: flowAnim 1.5s linear infinite;
+        }
+        @keyframes flowAnim {
+            from { stroke-dashoffset: 12; }
+            to { stroke-dashoffset: 0; }
+        }
+        .interview-tweak-box {
+            margin: 32px 0 24px 0;
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            border: 1.5px solid #6366f1;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+        }
+        .tweak-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+            padding-bottom: 12px;
+        }
+        .tweak-badge {
+            background: #4f46e5;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .tweak-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: #c7d2fe;
+            font-weight: 700;
+        }
+        .tweak-item { margin-bottom: 16px; }
+        .tweak-item:last-child { margin-bottom: 0; }
+        .tweak-item h4 { color: #fde047; font-size: 0.95rem; margin-bottom: 8px; font-weight: 600; }
+        .tweak-item p, .tweak-item ul, .tweak-item ol { font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; }
+        .tweak-item strong { color: #38bdf8; }
+        .chapter-section { display: none; }
+        .chapter-section.active { display: block; }
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">08. AI System Design</div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search problems...">
+            </div>
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('topics')">Topics (12)</button>
+            </div>
+        </div>
+        <nav class="chapter-list">
+                <a href="#chapter-01" class="nav-item active" data-chapter="chapter-01">
+                    <span class="chapter-number">01</span>
+                    <span class="chapter-title">Amazon Dynamo: Highly Available Distributed Key-Value Store</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-02" class="nav-item" data-chapter="chapter-02">
+                    <span class="chapter-number">02</span>
+                    <span class="chapter-title">Apache Kafka: Distributed Streaming Commit Log Architecture</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-03" class="nav-item" data-chapter="chapter-03">
+                    <span class="chapter-number">03</span>
+                    <span class="chapter-title">Consistent Hashing &amp;amp; Virtual Node Mathematics</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-04" class="nav-item" data-chapter="chapter-04">
+                    <span class="chapter-number">04</span>
+                    <span class="chapter-title">Paxos &amp;amp; Raft Distributed Consensus Protocols</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-05" class="nav-item" data-chapter="chapter-05">
+                    <span class="chapter-number">05</span>
+                    <span class="chapter-title">Google Bigtable: Distributed Storage for Structured Data</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-06" class="nav-item" data-chapter="chapter-06">
+                    <span class="chapter-number">06</span>
+                    <span class="chapter-title">Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-07" class="nav-item" data-chapter="chapter-07">
+                    <span class="chapter-number">07</span>
+                    <span class="chapter-title">Google Chubby: Distributed Lock Service for Coarse-Grained Synchronization</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-08" class="nav-item" data-chapter="chapter-08">
+                    <span class="chapter-number">08</span>
+                    <span class="chapter-title">Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-09" class="nav-item" data-chapter="chapter-09">
+                    <span class="chapter-number">09</span>
+                    <span class="chapter-title">Google MapReduce: Large-Scale Distributed Data Processing</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-10" class="nav-item" data-chapter="chapter-10">
+                    <span class="chapter-number">10</span>
+                    <span class="chapter-title">Google File System (GFS) &amp;amp; Hadoop HDFS</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-11" class="nav-item" data-chapter="chapter-11">
+                    <span class="chapter-number">11</span>
+                    <span class="chapter-title">Apache Cassandra: Decentralized Masterless NoSQL Database</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-12" class="nav-item" data-chapter="chapter-12">
+                    <span class="chapter-number">12</span>
+                    <span class="chapter-title">Course Conclusion &amp;amp; Next Steps</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+            </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="content-container">
+
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Amazon Dynamo: Highly Available Distributed Key-Value Store</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+      <div class="diagram-header">
+        <div class="diagram-title">Dynamo Ring Architecture: Sloppy Quorums &amp; Vector Clocks</div>
+        <div class="diagram-badge">LEGENDARY PAPERS (AMAZON DYNAMO 2007)</div>
+      </div>
+      <div class="diagram-body">
+        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradDynamo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <circle cx="160" cy="110" r="90" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <circle cx="160" cy="20" r="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+    <text x="160" y="24" fill="#ffffff" font-family="Outfit, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Node A</text>
+    
+    <circle cx="250" cy="110" r="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+    <text x="250" y="114" fill="#ffffff" font-family="Outfit, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Node B</text>
+
+    <circle cx="160" cy="200" r="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+    <text x="160" y="204" fill="#ffffff" font-family="Outfit, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Node C</text>
+
+    <circle cx="70" cy="110" r="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+    <text x="70" y="114" fill="#ffffff" font-family="Outfit, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Node D</text>
+    <text x="160" y="115" fill="#fde68a" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Dynamo Ring</text>
+
+    <rect x="340" y="15" width="220" height="185" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="450" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SLOPPY QUORUM (N=3, R=2, W=2)</text>
+    <rect x="355" y="55" width="190" height="35" rx="3" fill="#78350f"/>
+    <text x="450" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Preference List: [Node A, B, C]</text>
+    <rect x="355" y="95" width="190" height="40" rx="3" fill="#1e1b4b"/>
+    <text x="450" y="115" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Hinted Handoff to Node D</text>
+    <text x="450" y="128" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Stores write temporarily if A is down</text>
+    <text x="450" y="175" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Merkle Tree Anti-Entropy Background Sync</text>
+
+    <rect x="590" y="15" width="225" height="185" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="702" y="42" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">VECTOR CLOCKS CONFLICT RES</text>
+    <rect x="605" y="55" width="195" height="35" rx="3" fill="#022c22"/>
+    <text x="702" y="75" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">D1 = ([A, 1]), D2 = ([A, 2])</text>
+    <rect x="605" y="95" width="195" height="40" rx="3" fill="#064e3b"/>
+    <text x="702" y="115" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Concurrent: D3 = ([A,2],[B,1]), D4 = ([A,2],[C,1])</text>
+    <text x="702" y="128" fill="#fde68a" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Client-Side Read Reconciliation (Cart Merge)</text>
+    <text x="702" y="175" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Guarantees Always-Writable Availability</text>
+
+    <path d="M 270 110 L 340 110" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 560 110 L 590 110" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+      </div>
+      <div class="diagram-caption">
+        💡 <strong>Key Architecture Takeaway:</strong> Prioritizes 100% write availability (AP under CAP theorem) for shopping carts by employing Consistent Hashing with virtual nodes, Sloppy Quorums ($R+W &gt; N$) with Hinted Handoff, and client-reconciled Vector Clocks.
+      </div>
+    </div>
+
+    <h2>1. The Problem &amp; Business Motivation</h2>
+    <p>In 2007, Amazon published the landmark paper <em>"Dynamo: Amazon's Highly Available Key-value Store"</em>. Amazon observed that rigid ACID transactions and relational database master-slave setups caused checkout delays and downtime during holiday traffic spikes. For e-commerce shopping carts, <strong>a write operation should never be rejected</strong>: a customer must always be able to add an item to their cart even during data center network partitions.</p>
+
+    <h2>2. Core Architectural Mechanisms</h2>
+    <ul>
+      <li><strong>Consistent Hashing with Virtual Nodes:</strong> Keys and nodes are mapped onto a $2^{128}$ MD5 ring. Each physical server hosts $V=150$ virtual nodes, evening out load variance.</li>
+      <li><strong>Sloppy Quorums ($N, R, W$):</strong> Configured with $N=3$ (replicas), $W=2$ (write quorum), $R=2$ (read quorum). Since $R + W = 4 &gt; N$, reads overlap with writes.</li>
+      <li><strong>Hinted Handoff:</strong> If primary Node A is unreachable, Node D temporarily stores the write in a special hint folder and drains it back to Node A once Node A recovers.</li>
+      <li><strong>Vector Clocks:</strong> Captures causal relationships across concurrent distributed writes: <code>VC = { (NodeA, 1), (NodeB, 2) }</code>. When concurrent sibling branches occur, the client merges them (e.g. union of shopping cart items).</li>
+      <li><strong>Merkle Tree Anti-Entropy Sync:</strong> Hierarchical hash trees allow replica nodes to synchronize divergent ranges in $O(\log N)$ network payload comparisons.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Vector Clock Reconciler</h2>
+    <pre><code># Python: Dynamo Vector Clock & Concurrent Branch Reconciler
+from typing import Dict, Tuple
+
+class VectorClock:
+    def __init__(self, clock_dict: Dict[str, int] = None):
+        self.clock = clock_dict.copy() if clock_dict else {}
+
+    def increment(self, node_id: str):
+        self.clock[node_id] = self.clock.get(node_id, 0) + 1
+
+    def compare(self, other: 'VectorClock') -> str:
+        """
+        Returns 'EQUAL', 'ANCESTOR', 'DESCENDANT', or 'CONCURRENT'
+        """
+        self_greater = False
+        other_greater = False
+        all_nodes = set(self.clock.keys()).union(set(other.clock.keys()))
+
+        for n in all_nodes:
+            v1 = self.clock.get(n, 0)
+            v2 = other.clock.get(n, 0)
+            if v1 > v2: self_greater = True
+            elif v2 > v1: other_greater = True
+
+        if self_greater and other_greater: return 'CONCURRENT'  # Conflict!
+        elif self_greater: return 'DESCENDANT'
+        elif other_greater: return 'ANCESTOR'
+        return 'EQUAL'</code></pre>
+
+    <pre><code>// TypeScript: Dynamo Vector Clock Conflict Detector
+export class VectorClock {
+    public clock: Record<string, number>;
+
+    constructor(initialClock: Record<string, number> = {}) {
+        this.clock = { ...initialClock };
+    }
+
+    public increment(nodeId: string): void {
+        this.clock[nodeId] = (this.clock[nodeId] || 0) + 1;
+    }
+
+    public compare(other: VectorClock): "EQUAL" | "ANCESTOR" | "DESCENDANT" | "CONCURRENT" {
+        let selfGreater = false;
+        let otherGreater = false;
+        const allNodes = new Set([...Object.keys(this.clock), ...Object.keys(other.clock)]);
+
+        for (const node of allNodes) {
+            const v1 = this.clock[node] || 0;
+            const v2 = other.clock[node] || 0;
+            if (v1 > v2) selfGreater = true;
+            else if (v2 > v1) otherGreater = true;
+        }
+
+        if (selfGreater && otherGreater) return "CONCURRENT";
+        if (selfGreater) return "DESCENDANT";
+        if (otherGreater) return "ANCESTOR";
+        return "EQUAL";
+    }
+}</code></pre>
+
+    <div class="interview-tweak-box">
+      <div class="tweak-header">
+        <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+        <h3>Staff Follow-Up: "What happens if Vector Clocks grow unbounded over years of shopping cart edits?"</h3>
+        <p><strong>Mitigation: Clock Truncation Threshold:</strong> Dynamo sets a truncation threshold (e.g. 10 node entries). When a vector clock exceeds 10 entries, the oldest <code>(node, timestamp)</code> pair is garbage-collected. While this introduces a tiny risk of false-concurrent branches, client-side cart reconciliation handles it cleanly without losing customer items.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Apache Kafka: Distributed Streaming Commit Log Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+      <div class="diagram-header">
+        <div class="diagram-title">Kafka Zero-Copy OS Page Cache &amp; Append-Only Commit Log</div>
+        <div class="diagram-badge">LEGENDARY PAPERS (LINKEDIN KAFKA 2011)</div>
+      </div>
+      <div class="diagram-body">
+        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradKafka" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <rect x="0" y="45" width="120" height="90" rx="8" fill="url(#gradKafka)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="60" y="78" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">PRODUCER</text>
+    <text x="60" y="98" fill="#fde68a" font-family="Fira Code, monospace" font-size="7.5" text-anchor="middle">acks=all / RecordBatch</text>
+
+    <rect x="170" y="15" width="220" height="175" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="280" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">KAFKA BROKER (COMMIT LOG)</text>
+    <rect x="185" y="55" width="190" height="35" rx="3" fill="#78350f"/>
+    <text x="280" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Sequential Append-Only Disk Log</text>
+    <rect x="185" y="95" width="190" height="40" rx="3" fill="#1e1b4b"/>
+    <text x="280" y="115" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">OS Page Cache (RAM)</text>
+    <text x="280" y="128" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Bypasses JVM Garbage Collection</text>
+    <text x="280" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">ISR (In-Sync Replicas) + High Watermark</text>
+
+    <rect x="440" y="15" width="220" height="175" rx="8" fill="#4c1d95" stroke="#a855f7" stroke-width="2"/>
+    <text x="550" y="42" fill="#e9d5ff" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">LINUX ZERO-COPY (sendfile)</text>
+    <rect x="455" y="55" width="190" height="35" rx="3" fill="#312e81"/>
+    <text x="550" y="75" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">OS Page Cache -&gt; NIC Buffer</text>
+    <rect x="455" y="95" width="190" height="40" rx="3" fill="#0f172a"/>
+    <text x="550" y="115" fill="#34d399" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Zero User-Space Context Switching</text>
+    <text x="550" y="128" fill="#6ee7b7" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Max line-rate network throughput</text>
+    <text x="550" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Delivers &gt; 1,000,000 msg/sec per broker</text>
+
+    <rect x="695" y="45" width="120" height="90" rx="8" fill="url(#gradKafka)" stroke="#10b981" stroke-width="1.8"/>
+    <text x="755" y="78" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">CONSUMER GROUP</text>
+    <text x="755" y="98" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Cooperative Rebalance</text>
+
+    <path d="M 120 90 L 170 90" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 390 90 L 440 90" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 660 90 L 695 90" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+      </div>
+      <div class="diagram-caption">
+        💡 <strong>Key Architecture Takeaway:</strong> Achieves millions of messages/sec by treating disk as sequential storage, relying on the Linux OS Page Cache, and utilizing the kernel <code>sendfile</code> system call to transfer disk buffers directly to network sockets without user-space copying.
+      </div>
+    </div>
+
+    <h2>1. The Problem &amp; Business Motivation</h2>
+    <p>Originally designed at LinkedIn in 2011 by Jay Kreps, Neha Narkhede, and Jun Rao, Apache Kafka solved the challenge of high-throughput real-time activity stream ingestion (page views, search queries, metrics) that overwhelmed traditional message brokers like RabbitMQ and ActiveMQ.</p>
+
+    <h2>2. Core Architectural Mechanisms</h2>
+    <ul>
+      <li><strong>Sequential Append-Only Log:</strong> Disk random I/O is slow (~100 ops/sec on HDDs), but sequential disk access matches or exceeds random memory access (~600 MB/sec)! Kafka strictly appends records to immutable 1GB segment files.</li>
+      <li><strong>OS Page Cache vs JVM Heap:</strong> Kafka does not manage cache in JVM heap (which incurs severe Garbage Collection pauses). Instead, it leaves written blocks in the Linux OS Page Cache, which doubles memory efficiency and survives broker process restarts.</li>
+      <li><strong>Linux Zero-Copy (<code>sendfile</code>):</strong> In traditional sockets, data is copied 4 times (Disk $
+ightarrow$ OS Page Cache $
+ightarrow$ User-space JVM $
+ightarrow$ Socket Buffer $
+ightarrow$ NIC). Kafka uses <code>sendfile()</code>, copying data directly from OS Page Cache to the NIC, achieving maximum network line-rate throughput.</li>
+      <li><strong>In-Sync Replicas (ISR) &amp; High Watermark (HW):</strong> A replica is retained in the ISR if it fetches within <code>replica.lag.time.max.ms</code> (default 30s). Messages are only exposed to consumers once committed across all ISR nodes (High Watermark).</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Partition Log Segment Reader</h2>
+    <pre><code># Python: Kafka Append-Only Partition Log Simulator
+import struct
+import time
+
+class KafkaPartitionSegment:
+    def __init__(self, base_offset: int = 0):
+        self.base_offset = base_offset
+        self.entries = []
+        self.high_watermark = 0
+
+    def append_message(self, key: bytes, payload: bytes) -> int:
+        offset = self.base_offset + len(self.entries)
+        ts = int(time.time() * 1000)
+        # Entry format: (offset, timestamp, key_len, key, val_len, val)
+        self.entries.append({"offset": offset, "ts": ts, "key": key, "val": payload})
+        return offset
+
+    def commit_high_watermark(self, isr_ack_offset: int):
+        self.high_watermark = min(isr_ack_offset, self.base_offset + len(self.entries))
+
+    def read_from_offset(self, start_offset: int, max_records: int = 100) -> list:
+        # Consumers can only read up to the High Watermark (committed messages)
+        readable = [e for e in self.entries if start_offset <= e["offset"] < self.high_watermark]
+        return readable[:max_records]</code></pre>
+
+    <pre><code>// TypeScript: Kafka Log Segment Manager
+interface LogEntry {
+    offset: number;
+    timestamp: number;
+    key: string;
+    payload: string;
+}
+
+export class KafkaPartitionSegment {
+    private entries: LogEntry[] = [];
+    public highWatermark = 0;
+    public baseOffset: number;
+
+    constructor(baseOffset = 0) {
+        this.baseOffset = baseOffset;
+    }
+
+    public append(key: string, payload: string): number {
+        const offset = this.baseOffset + this.entries.length;
+        this.entries.push({ offset, timestamp: Date.now(), key, payload });
+        return offset;
+    }
+
+    public updateHighWatermark(committedOffset: number): void {
+        this.highWatermark = Math.min(committedOffset, this.baseOffset + this.entries.length);
+    }
+
+    public consume(fromOffset: number, maxBatch = 50): LogEntry[] {
+        return this.entries
+            .filter(e => e.offset >= fromOffset && e.offset < this.highWatermark)
+            .slice(0, maxBatch);
+    }
+}</code></pre>
+
+    <div class="interview-tweak-box">
+      <div class="tweak-header">
+        <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+        <h3>Staff Follow-Up: "What happens if a broker experiences an unclean leader election when all ISR nodes crash?"</h3>
+        <p><strong>Mitigation: <code>unclean.leader.election.enable=false</code>:</strong> If the leader dies and no ISR nodes are alive, Kafka defaults to refusing elections, sacrificing availability to guarantee zero message loss. If set to <code>true</code>, an out-of-sync replica is elected, leading to silent data truncation and data loss.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Consistent Hashing &amp;amp; Virtual Node Mathematics</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. Mathematical Derivation of Load Variance</h2>
+    <p>In standard modulo hashing (<code>hash(key) % N</code>), adding a single server causes $(N-1)/N$ of all keys (up to 99% of the cache) to move, triggering a catastrophic cache avalanche. <strong>Consistent Hashing</strong> (Karger et al., 1997) maps keys and servers to a circular ring $[0, 2^{32}-1]$. When a node joins or leaves, only $K/N$ keys are relocated.</p>
+
+    <h2>2. Virtual Node Variance Reduction Formula</h2>
+    <p>With only $N$ physical nodes, the distribution of hash tokens on the circle is non-uniform, leading to hot spots. Introducing $V$ virtual nodes per physical server reduces the standard deviation of load across nodes according to:</p>
+    <p><code>\sigma pprox rac{1}{\sqrt{V}}</code></p>
+    <p>With $V = 150$ to $200$ virtual nodes per server, load variance drops below <strong>5%</strong> across all physical servers.</p>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: High-Performance Hash Ring</h2>
+    <pre><code># Python: Consistent Hashing with Bisect Ring Lookup
+import hashlib
+from bisect import bisect_right
+
+class ConsistentHashRing:
+    def __init__(self, replicas: int = 150):
+        self.replicas = replicas
+        self.ring = []
+        self.node_map = {}
+
+    def _hash(self, key: str) -> int:
+        return int(hashlib.md5(key.encode('utf-8')).hexdigest(), 16)
+
+    def add_node(self, node: str):
+        for i in range(self.replicas):
+            v_hash = self._hash(f"{node}#VN{i}")
+            self.ring.append(v_hash)
+            self.node_map[v_hash] = node
+        self.ring.sort()
+
+    def get_node(self, key: str) -> str:
+        if not self.ring: return None
+        h = self._hash(key)
+        idx = bisect_right(self.ring, h)
+        if idx == len(self.ring): idx = 0
+        return self.node_map[self.ring[idx]]</code></pre>
+
+    <pre><code>// TypeScript: Consistent Hash Ring with Virtual Nodes
+import * as crypto from "crypto";
+
+export class ConsistentHashRing {
+    private replicas: number;
+    private ring: number[] = [];
+    private nodeMap = new Map<number, string>();
+
+    constructor(replicas = 150) {
+        this.replicas = replicas;
+    }
+
+    private hash(key: string): number {
+        const hashBuf = crypto.createHash("md5").update(key).digest();
+        return hashBuf.readUInt32BE(0);
+    }
+
+    public addNode(node: string): void {
+        for (let i = 0; i < this.replicas; i++) {
+            const h = this.hash(`${node}#VN${i}`);
+            this.ring.push(h);
+            this.nodeMap.set(h, node);
+        }
+        this.ring.sort((a, b) => a - b);
+    }
+
+    public getNode(key: string): string | null {
+        if (this.ring.length === 0) return null;
+        const h = this.hash(key);
+        
+        // Binary search for successor node
+        let low = 0, high = this.ring.length - 1;
+        let targetIdx = 0;
+
+        while (low <= high) {
+            const mid = Math.floor((low + high) / 2);
+            if (this.ring[mid] >= h) {
+                targetIdx = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return this.nodeMap.get(this.ring[targetIdx])!;
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Paxos &amp;amp; Raft Distributed Consensus Protocols</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. The Distributed Consensus Problem</h2>
+    <p>Consensus allows a distributed cluster of $2F+1$ nodes to agree on a sequence of state machine transitions even when up to $F$ nodes crash or experience arbitrary network delays. Leslie Lamport proposed <strong>Paxos (1998)</strong>, while Diego Ongaro and John Ousterhout introduced <strong>Raft (2014)</strong> to provide equivalent safety with superior human understandability.</p>
+
+    <h2>2. Raft Consensus Mechanics: 3 Subproblems</h2>
+    <ul>
+      <li><strong>Leader Election:</strong> Nodes start as Followers. If election timer (randomized between 150ms-300ms) expires without hearing heartbeats, Follower transitions to Candidate, increments <code>term</code>, and requests votes. First to gather a majority quorum ($\lfloor N/2 
+floor + 1$) becomes Leader.</li>
+      <li><strong>Log Replication:</strong> Leader receives client command, appends to local log, and broadcasts <code>AppendEntries(term, leaderId, prevLogIndex, prevLogTerm, entries, leaderCommit)</code> RPC to all Followers.</li>
+      <li><strong>Safety Invariant:</strong> If a log entry is committed at index $i$, no leader will ever be elected who does not possess that log entry (enforced during voting: candidates with older logs are rejected).</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Raft State Machine</h2>
+    <pre><code># Python: Raft Leader Election & Quorum Voting Simulator
+import random
+
+class RaftNode:
+    FOLLOWER, CANDIDATE, LEADER = "FOLLOWER", "CANDIDATE", "LEADER"
+
+    def __init__(self, node_id: str, peers: list):
+        self.node_id = node_id
+        self.peers = peers
+        self.state = self.FOLLOWER
+        self.current_term = 0
+        self.voted_for = None
+        self.log = []
+
+    def start_election(self) -> bool:
+        self.state = self.CANDIDATE
+        self.current_term += 1
+        self.voted_for = self.node_id
+        votes = 1  # Vote for self
+
+        for peer in self.peers:
+            if peer.request_vote(self.current_term, self.node_id, len(self.log)):
+                votes += 1
+
+        if votes > (len(self.peers) + 1) // 2:
+            self.state = self.LEADER
+            return True
+        return False
+
+    def request_vote(self, term: int, candidate_id: str, candidate_log_len: int) -> bool:
+        if term > self.current_term:
+            self.current_term = term
+            self.state = self.FOLLOWER
+            self.voted_for = None
+
+        if term == self.current_term and (self.voted_for is None or self.voted_for == candidate_id):
+            if candidate_log_len >= len(self.log):  # Log up-to-date check
+                self.voted_for = candidate_id
+                return True
+        return False</code></pre>
+
+    <pre><code>// TypeScript: Raft State Machine
+export class RaftNode {
+    public state: "FOLLOWER" | "CANDIDATE" | "LEADER" = "FOLLOWER";
+    public currentTerm = 0;
+    public votedFor: string | null = null;
+    public log: Array<{ term: number; cmd: string }> = [];
+
+    constructor(public nodeId: string, private peerNodes: RaftNode[] = []) {}
+
+    public requestVote(term: number, candidateId: string, candidateLogLen: number): boolean {
+        if (term > this.currentTerm) {
+            this.currentTerm = term;
+            this.state = "FOLLOWER";
+            this.votedFor = null;
+        }
+
+        if (term === this.currentTerm && (!this.votedFor || this.votedFor === candidateId)) {
+            if (candidateLogLen >= this.log.length) {
+                this.votedFor = candidateId;
+                return true;
+            }
+        }
+        return false;
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Google Bigtable: Distributed Storage for Structured Data</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+      <div class="diagram-header">
+        <div class="diagram-title">Bigtable LSM-Tree: MemTable, Write-Ahead Log &amp; SSTables</div>
+        <div class="diagram-badge">LEGENDARY PAPERS (GOOGLE BIGTABLE 2006)</div>
+      </div>
+      <div class="diagram-body">
+        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradBT" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <rect x="0" y="45" width="120" height="90" rx="8" fill="url(#gradBT)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="60" y="78" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">CLIENT WRITE</text>
+    <text x="60" y="98" fill="#fde68a" font-family="Fira Code, monospace" font-size="7.5" text-anchor="middle">Row:Column:Time</text>
+
+    <rect x="170" y="15" width="220" height="175" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="280" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">TABLET SERVER (MEMORY)</text>
+    <rect x="185" y="55" width="190" height="35" rx="3" fill="#78350f"/>
+    <text x="280" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Write-Ahead Log (WAL on GFS)</text>
+    <rect x="185" y="95" width="190" height="40" rx="3" fill="#1e1b4b"/>
+    <text x="280" y="115" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">MemTable (In-Memory SkipList)</text>
+    <text x="280" y="128" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Sorted multi-version key-value map</text>
+    <text x="280" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Minor Compaction flushes to disk</text>
+
+    <rect x="440" y="15" width="220" height="175" rx="8" fill="#4c1d95" stroke="#a855f7" stroke-width="2"/>
+    <text x="550" y="42" fill="#e9d5ff" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">IMMUTABLE SSTables (GFS)</text>
+    <rect x="455" y="55" width="190" height="35" rx="3" fill="#312e81"/>
+    <text x="550" y="75" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">SSTable 1 (64KB Blocks + Index)</text>
+    <rect x="455" y="95" width="190" height="40" rx="3" fill="#0f172a"/>
+    <text x="550" y="115" fill="#34d399" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Bloom Filter on SSTables</text>
+    <text x="550" y="128" fill="#6ee7b7" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Avoids 98% of unnecessary disk seeks</text>
+    <text x="550" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Major Compaction merges SSTables</text>
+
+    <rect x="695" y="45" width="120" height="90" rx="8" fill="url(#gradBT)" stroke="#10b981" stroke-width="1.8"/>
+    <text x="755" y="78" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FAST READ</text>
+    <text x="755" y="98" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Block Cache Hit</text>
+
+    <path d="M 120 90 L 170 90" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 390 90 L 440 90" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 660 90 L 695 90" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+      </div>
+      <div class="diagram-caption">
+        💡 <strong>Key Architecture Takeaway:</strong> Structures data as a sparse, distributed, persistent multi-dimensional sorted map. Writes are absorbed in memory (MemTable SkipList) after WAL logging and periodically flushed to immutable SSTables on GFS with Bloom Filters.
+      </div>
+    </div>
+
+    <h2>1. The Problem &amp; Data Model</h2>
+    <p>In 2006, Google published <em>"Bigtable: A Distributed Storage System for Structured Data"</em> (Chang et al.). Bigtable was built to store petabytes of structured data across web indexing, Google Earth, and Google Analytics. It defines data as:</p>
+    <p><code>(row:string, column:string, time:int64) -&gt; string</code></p>
+
+    <h2>2. Core Architectural Mechanisms</h2>
+    <ul>
+      <li><strong>Tablets &amp; Tablet Servers:</strong> A table is split into 100MB-200MB row ranges called Tablets. Each tablet is assigned to a Tablet Server coordinated via Google Chubby locks.</li>
+      <li><strong>LSM-Tree (Log-Structured Merge-Tree):</strong> Writes are sequentially appended to a Write-Ahead Log (WAL) on GFS and inserted into an in-memory sorted SkipList (<strong>MemTable</strong>). Read queries check MemTable first, then scan SSTables.</li>
+      <li><strong>SSTable (Sorted String Table):</strong> Immutable files on GFS divided into 64KB blocks. An in-memory block index enables fast binary search seeks.</li>
+      <li><strong>Bloom Filters:</strong> Each SSTable has an in-memory Bloom filter, allowing Bigtable to verify in $O(1)$ time if a row key exists in an SSTable without issuing disk I/O.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: MemTable SkipList Simulator</h2>
+    <pre><code># Python: Bigtable MemTable with In-Memory Sorted Storage & SSTable Flush
+from typing import Dict, Optional
+
+class MemTable:
+    def __init__(self, flush_threshold_entries: int = 1000):
+        self.map: Dict[str, Dict[str, Dict[int, str]]] = {}
+        self.entry_count = 0
+        self.flush_threshold = flush_threshold_entries
+
+    def put(self, row_key: str, col_family: str, timestamp: int, value: str):
+        if row_key not in self.map: self.map[row_key] = {}
+        if col_family not in self.map[row_key]: self.map[row_key][col_family] = {}
+        self.map[row_key][col_family][timestamp] = value
+        self.entry_count += 1
+
+    def get(self, row_key: str, col_family: str) -> Optional[str]:
+        if row_key in self.map and col_family in self.map[row_key]:
+            # Return latest timestamp version
+            timestamps = sorted(self.map[row_key][col_family].keys(), reverse=True)
+            if timestamps:
+                return self.map[row_key][col_family][timestamps[0]]
+        return None</code></pre>
+
+    <pre><code>// TypeScript: Bigtable MemTable
+export class MemTable {
+    private data = new Map<string, Map<string, Map<number, string>>>();
+    public entryCount = 0;
+
+    public put(row: string, col: string, ts: number, val: string): void {
+        if (!this.data.has(row)) this.data.set(row, new Map());
+        if (!this.data.get(row)!.has(col)) this.data.get(row)!.set(col, new Map());
+        
+        this.data.get(row)!.get(col)!.set(ts, val);
+        this.entryCount++;
+    }
+
+    public get(row: string, col: string): string | null {
+        const rowMap = this.data.get(row);
+        if (!rowMap || !rowMap.has(col)) return null;
+
+        const tsMap = rowMap.get(col)!;
+        const sortedTimestamps = Array.from(tsMap.keys()).sort((a, b) => b - a);
+        return sortedTimestamps.length > 0 ? tsMap.get(sortedTimestamps[0])! : null;
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. Decentralized Peer-to-Peer Membership</h2>
+    <p>In clusters with 10,000+ nodes, centralized heartbeating creates a severe network bottleneck $O(N^2)$. <strong>Gossip Protocols (Epidemic Protocols)</strong> spread cluster state like a virus: each node periodically picks $k$ random peers and shares membership state, achieving $O(\log N)$ network propagation with zero single points of failure.</p>
+
+    <h2>2. SWIM Protocol Mechanics (Structured Weakly-Consistent Infection-Style)</h2>
+    <ul>
+      <li><strong>Direct Ping:</strong> Node A picks random Node B and sends a <code>PING</code>. If B responds with <code>ACK</code> within timeout $T$, B is ALIVE.</li>
+      <li><strong>Indirect Ping-Req:</strong> If B does not reply, Node A sends <code>PING-REQ</code> to $k$ random helper nodes. Helpers ping B on A's behalf, bypassing localized network packet drops.</li>
+      <li><strong>Suspicion Mechanism:</strong> If helpers also fail, B is marked <strong>SUSPECT</strong> for a grace period. If no refutation message arrives, B is marked <strong>DEAD</strong> and gossiped cluster-wide.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: SWIM Failure Detector</h2>
+    <pre><code># Python: SWIM Protocol State Machine
+import random
+
+class SWIMNode:
+    ALIVE, SUSPECT, DEAD = "ALIVE", "SUSPECT", "DEAD"
+
+    def __init__(self, node_id: str):
+        self.node_id = node_id
+        self.members = {}  # node_id -> status
+
+    def ping_node(self, target_node: 'SWIMNode', helpers: list) -> str:
+        # 1. Direct Ping
+        if target_node.is_healthy():
+            return self.ALIVE
+
+        # 2. Indirect Ping via k Helpers
+        for helper in helpers:
+            if helper.is_healthy() and target_node.is_healthy():
+                return self.ALIVE
+
+        # 3. Mark Suspect
+        self.members[target_node.node_id] = self.SUSPECT
+        return self.SUSPECT
+
+    def is_healthy(self) -> bool:
+        return True  # Simulates node response</code></pre>
+
+    <pre><code>// TypeScript: SWIM Failure Detector
+export class SWIMNode {
+    public members = new Map<string, "ALIVE" | "SUSPECT" | "DEAD">();
+
+    constructor(public nodeId: string) {}
+
+    public checkHealth(targetNode: SWIMNode, helpers: SWIMNode[]): "ALIVE" | "SUSPECT" {
+        // Direct ping simulation
+        const directAck = Math.random() > 0.1;
+        if (directAck) return "ALIVE";
+
+        // Indirect ping via k helpers
+        const helperAck = helpers.some(() => Math.random() > 0.05);
+        if (helperAck) return "ALIVE";
+
+        this.members.set(targetNode.nodeId, "SUSPECT");
+        return "SUSPECT";
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Google Chubby: Distributed Lock Service for Coarse-Grained Synchronization</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. The Role of Chubby at Google</h2>
+    <p>Published in 2006 by Mike Burrows (<em>"The Chubby lock service for loosely-coupled distributed systems"</em>), Chubby provides coarse-grained distributed locking and small file configuration storage for Google GFS and Bigtable. Rather than acquiring locks for milliseconds (fine-grained), clients hold Chubby locks for hours or days to declare primary mastership.</p>
+
+    <h2>2. Sequencer Tokens &amp; Split-Brain Fencing</h2>
+    <p>When a client lock lease expires due to a network delay, a new master acquires the lock. If the old master awakens and sends a delayed write to storage, data corruption occurs! Chubby solves this via <strong>Sequencer Tokens</strong> (monotonically increasing integer tokens attached to every lock). Storage servers reject any write with a sequencer token lower than the latest seen token.</p>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Chubby Fencing Token Validator</h2>
+    <pre><code># Python: Chubby Sequencer Token Validator
+class ChubbyStorageFence:
+    def __init__(self):
+        self.highest_sequencer_seen = 0
+
+    def apply_write(self, sequencer_token: int, data_payload: str) -> bool:
+        # Fencing rule: reject stale zombie master writes
+        if sequencer_token < self.highest_sequencer_seen:
+            raise PermissionError(f"Stale Lock! Token {sequencer_token} < {self.highest_sequencer_seen}")
+
+        self.highest_sequencer_seen = sequencer_token
+        return True</code></pre>
+
+    <pre><code>// TypeScript: Chubby Sequencer Token Validator
+export class ChubbyStorageFence {
+    private highestTokenSeen = 0;
+
+    public applyWrite(sequencerToken: number, payload: string): boolean {
+        if (sequencerToken < this.highestTokenSeen) {
+            throw new Error(`Stale Token! ${sequencerToken} < ${this.highestTokenSeen}`);
+        }
+        this.highestTokenSeen = sequencerToken;
+        return true;
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. ZooKeeper Overview &amp; ZNode Tree</h2>
+    <p>Apache ZooKeeper (Hunt et al., 2010) is a centralized service for maintaining configuration, naming, synchronization, and group services. It presents a hierarchical in-memory filesystem of <strong>ZNodes</strong> (Persistent, Ephemeral, and Sequential).</p>
+
+    <h2>2. Ephemeral Sequential Locks &amp; Herd Effect Avoidance</h2>
+    <p>To acquire a fair distributed lock without creating a "thundering herd" (where thousands of clients wake up simultaneously when a lock is released):</p>
+    <ul>
+      <li>Each client creates an <strong>Ephemeral Sequential ZNode</strong>: <code>/locks/lock-000000001</code>.</li>
+      <li>The client queries children of <code>/locks</code>. If its sequence number is the lowest, it holds the lock!</li>
+      <li>If not lowest, the client sets a Watcher <strong>only on the immediately preceding ZNode</strong> (e.g. <code>lock-000000003</code> watches <code>lock-000000002</code>), ensuring exactly 1 client wakes up when a lock is released.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Fair Distributed Lock</h2>
+    <pre><code># Python: ZooKeeper Ephemeral Sequential Lock Simulator
+class ZooKeeperLock:
+    def __init__(self):
+        self.lock_nodes = []
+
+    def acquire_lock(self, client_id: str) -> str:
+        seq = len(self.lock_nodes) + 1
+        node_name = f"lock-{seq:010d}"
+        self.lock_nodes.append((node_name, client_id))
+        
+        # Check if client holds lowest sequence
+        if self.lock_nodes[0][1] == client_id:
+            return "LOCK_ACQUIRED"
+        return f"WATCHING_PREV_NODE_{self.lock_nodes[-2][0]}"</code></pre>
+
+    <pre><code>// TypeScript: ZooKeeper Fair Lock
+export class ZooKeeperLock {
+    private lockQueue: Array<{ nodeName: string; clientId: string }> = [];
+
+    public requestLock(clientId: string): { status: "ACQUIRED" | "WAITING"; watchNode?: string } {
+        const seq = this.lockQueue.length + 1;
+        const nodeName = `lock-${String(seq).padStart(10, "0")}`;
+        this.lockQueue.push({ nodeName, clientId });
+
+        if (this.lockQueue[0].clientId === clientId) {
+            return { status: "ACQUIRED" };
+        }
+
+        const prevNode = this.lockQueue[this.lockQueue.length - 2].nodeName;
+        return { status: "WAITING", watchNode: prevNode };
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-09" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">09</span>
+    <h1 class="chapter-title">Google MapReduce: Large-Scale Distributed Data Processing</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+      <div class="diagram-header">
+        <div class="diagram-title">MapReduce Execution DAG: Split, Map, Spill, Shuffle &amp; Reduce</div>
+        <div class="diagram-badge">LEGENDARY PAPERS (GOOGLE MAPREDUCE 2004)</div>
+      </div>
+      <div class="diagram-body">
+        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradMR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <rect x="0" y="45" width="120" height="90" rx="8" fill="url(#gradMR)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="60" y="78" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">INPUT SPLITS</text>
+    <text x="60" y="98" fill="#fde68a" font-family="Fira Code, monospace" font-size="7.5" text-anchor="middle">64MB GFS Chunks</text>
+
+    <rect x="170" y="15" width="180" height="175" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="260" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">MAP WORKERS (M)</text>
+    <rect x="185" y="55" width="150" height="35" rx="3" fill="#78350f"/>
+    <text x="260" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Map(k1, v1) -&gt; list(k2, v2)</text>
+    <rect x="185" y="95" width="150" height="40" rx="3" fill="#1e1b4b"/>
+    <text x="260" y="115" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">In-Memory Spill Buffer</text>
+    <text x="260" y="128" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Sorts &amp; partitions by hash(k2)</text>
+    <text x="260" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Spills sorted runs to local disk</text>
+
+    <rect x="390" y="15" width="190" height="175" rx="8" fill="#4c1d95" stroke="#a855f7" stroke-width="2"/>
+    <text x="485" y="42" fill="#e9d5ff" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">SHUFFLE &amp; SORT</text>
+    <rect x="405" y="55" width="160" height="35" rx="3" fill="#312e81"/>
+    <text x="485" y="75" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">HTTP Remote Fetch</text>
+    <rect x="405" y="95" width="160" height="40" rx="3" fill="#0f172a"/>
+    <text x="485" y="115" fill="#34d399" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Multi-Way External Merge</text>
+    <text x="485" y="128" fill="#6ee7b7" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Groups identical keys together</text>
+    <text x="485" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Feeds grouped iterator to Reduce</text>
+
+    <rect x="620" y="15" width="190" height="175" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="715" y="42" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">REDUCE WORKERS (R)</text>
+    <rect x="635" y="55" width="160" height="35" rx="3" fill="#022c22"/>
+    <text x="715" y="75" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Reduce(k2, list(v2)) -&gt; list(v3)</text>
+    <rect x="635" y="95" width="160" height="40" rx="3" fill="#064e3b"/>
+    <text x="715" y="115" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Emits Output Files to GFS</text>
+    <text x="715" y="128" fill="#fde68a" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">Master Backup Speculative Execution</text>
+    <text x="715" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Handles straggler node failures</text>
+
+    <path d="M 120 90 L 170 90" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 350 90 L 390 90" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 580 90 L 620 90" stroke="#a855f7" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+      </div>
+      <div class="diagram-caption">
+        💡 <strong>Key Architecture Takeaway:</strong> Hides complex distributed failure recovery, data partitioning, and inter-node network shuffling behind a simple functional abstraction: <code>Map</code> and <code>Reduce</code>.
+      </div>
+    </div>
+
+    <h2>1. The Problem &amp; Business Motivation</h2>
+    <p>Published in 2004 by Jeffrey Dean and Sanjay Ghemawat (<em>"MapReduce: Simplified Data Processing on Large Clusters"</em>), MapReduce allowed Google software engineers with no distributed systems background to process multi-terabyte datasets across thousands of commodity Linux servers with automated fault tolerance.</p>
+
+    <h2>2. Core Architectural Mechanisms</h2>
+    <ul>
+      <li><strong>Map Phase:</strong> Master assigns $M$ input splits (64MB chunks from GFS) to idle Map workers. Map functions transform raw inputs into intermediate key-value pairs <code>(k2, v2)</code>.</li>
+      <li><strong>Partition &amp; In-Memory Spill:</strong> Intermediate pairs are buffered in memory and partitioned into $R$ regions via <code>hash(key) mod R</code>. When the buffer reaches 80% capacity, it is sorted and spilled to local disk.</li>
+      <li><strong>Shuffle &amp; Sort:</strong> Reduce workers pull their designated partition files from all $M$ Map workers over HTTP and perform an external multi-way merge sort to group matching keys.</li>
+      <li><strong>Reduce Phase:</strong> Reduce workers iterate through grouped keys, invoking <code>Reduce(k2, list(v2))</code> and appending final outputs to GFS.</li>
+      <li><strong>Backup Tasks (Straggler Mitigation):</strong> Near the end of a job, Master launches duplicate "backup" copies of remaining in-flight tasks. The task completes whenever either the primary or backup finishes, eliminating tail-latency bottlenecks.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: In-Memory MapReduce Simulator</h2>
+    <pre><code># Python: MapReduce Engine Simulator
+from collections import defaultdict
+from typing import List, Tuple, Callable
+
+class MapReduceEngine:
+    @staticmethod
+    def run_job(
+        input_data: List[str],
+        mapper: Callable[[str], List[Tuple[str, int]]],
+        reducer: Callable[[str, List[int]], Tuple[str, int]]
+    ) -> List[Tuple[str, int]]:
+        # 1. Map Phase
+        intermediate = []
+        for line in input_data:
+            intermediate.extend(mapper(line))
+
+        # 2. Shuffle & Group Phase
+        grouped = defaultdict(list)
+        for key, val in intermediate:
+            grouped[key].append(val)
+
+        # 3. Reduce Phase
+        results = []
+        for key, val_list in grouped.items():
+            results.append(reducer(key, val_list))
+
+        return results</code></pre>
+
+    <pre><code>// TypeScript: MapReduce Engine
+export class MapReduceEngine {
+    public static runJob<K, V, R>(
+        inputs: string[],
+        mapper: (line: string) => Array<{ key: K; value: V }>,
+        reducer: (key: K, values: V[]) => R
+    ): R[] {
+        // Map phase
+        const intermediate: Array<{ key: K; value: V }> = [];
+        for (const line of inputs) {
+            intermediate.push(...mapper(line));
+        }
+
+        // Shuffle phase
+        const groups = new Map<K, V[]>();
+        for (const item of intermediate) {
+            if (!groups.has(item.key)) groups.set(item.key, []);
+            groups.get(item.key)!.push(item.value);
+        }
+
+        // Reduce phase
+        const output: R[] = [];
+        for (const [key, values] of groups.entries()) {
+            output.push(reducer(key, values));
+        }
+        return output;
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-10" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">10</span>
+    <h1 class="chapter-title">Google File System (GFS) &amp;amp; Hadoop HDFS</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. The GFS Design Philosophy</h2>
+    <p>Published in 2003 by Sanjay Ghemawat, Howard Gobioff, and Shun-Tak Leung (<em>"The Google File System"</em>), GFS challenged conventional distributed file system assumptions by designing for component failures as the norm, optimizing for multi-gigabyte files and continuous append-only writes.</p>
+
+    <h2>2. Architecture &amp; Single-Master Control Plane</h2>
+    <ul>
+      <li><strong>Decoupled Control vs Data Plane:</strong> Clients consult the <strong>GFS Master</strong> only for metadata (chunk handles and chunkserver locations). All actual high-volume data streaming occurs directly between clients and Chunkservers.</li>
+      <li><strong>Large 64MB/128MB Chunks:</strong> Minimizes master memory requirements (Master stores all metadata in RAM for speed: ~64 bytes per chunk).</li>
+      <li><strong>3x Rack-Aware Replication:</strong> Replicas are placed across different server racks to survive top-of-rack switch and power failures.</li>
+      <li><strong>Atomic Record Append:</strong> Allows multiple clients to append data concurrently to the same file without complex distributed locks.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Rack-Aware Block Allocator</h2>
+    <pre><code># Python: GFS / HDFS Rack-Aware Block Allocation Policy
+class RackAwareBlockAllocator:
+    def __init__(self, cluster_topology: dict):
+        # cluster_topology: {"rack_1": ["node_1", "node_2"], "rack_2": ["node_3"]}
+        self.topology = cluster_topology
+
+    def allocate_3x_replicas(self, client_node: str) -> list:
+        # 1. First replica on local rack
+        # 2. Second replica on remote rack
+        # 3. Third replica on remote rack (different node)
+        racks = list(self.topology.keys())
+        rep1 = self.topology[racks[0]][0]
+        rep2 = self.topology[racks[1]][0]
+        rep3 = self.topology[racks[1]][1] if len(self.topology[racks[1]]) > 1 else self.topology[racks[0]][1]
+        return [rep1, rep2, rep3]</code></pre>
+
+    <pre><code>// TypeScript: HDFS Rack-Aware Placement Policy
+export class RackAwarePlacementPolicy {
+    constructor(private topology: Record<string, string[]>) {}
+
+    public selectReplicas(): string[] {
+        const racks = Object.keys(this.topology);
+        const rack1Nodes = this.topology[racks[0]];
+        const rack2Nodes = this.topology[racks[1]];
+
+        return [
+            rack1Nodes[0], // Replica 1: Local Rack
+            rack2Nodes[0], // Replica 2: Remote Rack Node A
+            rack2Nodes[1] || rack1Nodes[1] // Replica 3: Remote Rack Node B
+        ];
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-11" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">11</span>
+    <h1 class="chapter-title">Apache Cassandra: Decentralized Masterless NoSQL Database</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. The Hybrid Architecture (Dynamo + Bigtable)</h2>
+    <p>Created at Facebook by Avinash Lakshman (co-author of Amazon Dynamo) and Prashant Malik, Apache Cassandra combines <strong>Amazon Dynamo's masterless peer-to-peer ring topology</strong> with <strong>Google Bigtable's ColumnFamily LSM-tree storage engine</strong>, delivering linear horizontal scalability with zero single points of failure.</p>
+
+    <h2>2. Tunable Consistency Mathematics</h2>
+    <p>Cassandra allows developers to dynamically tune consistency per query:</p>
+    <ul>
+      <li><strong>Write Consistency:</strong> <code>ANY</code>, <code>ONE</code>, <code>QUORUM</code>, <code>ALL</code>.</li>
+      <li><strong>Read Consistency:</strong> <code>ONE</code>, <code>QUORUM</code>, <code>ALL</code>.</li>
+      <li><strong>Strong Consistency Condition:</strong> If $\mathbf{R + W &gt; N}$, where $N$ is the replication factor, Cassandra guarantees strong read-your-writes consistency because the read quorum is mathematically guaranteed to overlap with the write quorum.</li>
+    </ul>
+
+    <h2>3. Production Python &amp; JavaScript Implementations: Tunable Quorum Evaluator</h2>
+    <pre><code># Python: Cassandra Quorum Evaluator
+class CassandraConsistencyEvaluator:
+    @staticmethod
+    def is_strong_consistency(replication_factor: int, read_level: str, write_level: str) -> bool:
+        def get_count(level: str) -> int:
+            if level == "ONE": return 1
+            elif level == "QUORUM": return (replication_factor // 2) + 1
+            elif level == "ALL": return replication_factor
+            return 1
+
+        r = get_count(read_level)
+        w = get_count(write_level)
+        return (r + w) > replication_factor</code></pre>
+
+    <pre><code>// TypeScript: Cassandra Tunable Quorum Validator
+export class CassandraConsistencyValidator {
+    public static isStrongConsistency(n: number, readLvl: "ONE" | "QUORUM" | "ALL", writeLvl: "ONE" | "QUORUM" | "ALL"): boolean {
+        const getCount = (lvl: "ONE" | "QUORUM" | "ALL"): number => {
+            if (lvl === "ONE") return 1;
+            if (lvl === "QUORUM") return Math.floor(n / 2) + 1;
+            return n;
+        };
+
+        const r = getCount(readLvl);
+        const w = getCount(writeLvl);
+        return (r + w) > n;
+    }
+}</code></pre>
+  </div>
+</section>
+
+<section id="chapter-12" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">12</span>
+    <h1 class="chapter-title">Course Conclusion &amp;amp; Next Steps</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>Congratulations on Completing the Masterclass!</h2>
+    <p>You have mastered the entire spectrum of system design: from foundational distributed building blocks and classic FAANG interview flagships, to bleeding-edge multimodal AI/LLM architectures and the 11 legendary distributed systems papers that power modern computing infrastructure.</p>
+    <p>For feedback, comments, and suggestions, please contact us at <a href="mailto:hello@designgurus.org">hello@designgurus.org</a>.</p>
+  </div>
+</section>
+
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabName) {
+            console.log('Tab switched to:', tabName);
+        }
+
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.chapter-section');
+
+        function setActiveSection(id) {
+            sections.forEach(s => s.classList.remove('active'));
+            navItems.forEach(n => n.classList.remove('active'));
+
+            const targetSection = document.getElementById(id);
+            const targetNav = document.querySelector(`.nav-item[href="#${id}"]`);
+
+            if (targetSection) targetSection.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const targetId = item.getAttribute('href').substring(1);
+                setActiveSection(targetId);
+            });
+        });
+
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            setActiveSection(hash);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic System Design Problems (Part 2) - System Design Interview Guide</title>
+    <meta property="og:title" content="Classic System Design Problems (Part 2) - System Design Interview Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    
+        /* Interview Tweak Callout Box */
+        .interview-tweak-box {
+            margin: 32px 0 24px 0;
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            border: 1.5px solid #6366f1;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+        }
+        .tweak-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+            padding-bottom: 12px;
+        }
+        .tweak-badge {
+            background: #4f46e5;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .tweak-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: #c7d2fe;
+            font-weight: 700;
+        }
+        .tweak-item {
+            margin-bottom: 16px;
+        }
+        .tweak-item:last-child {
+            margin-bottom: 0;
+        }
+        .tweak-item h4 {
+            color: #fde047;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .tweak-item p, .tweak-item ul, .tweak-item ol {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+        .tweak-item strong {
+            color: #38bdf8;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Classic System Design Problems (Part 2)</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="designing twitter search"><a href="#chapter-01"><span class="chapter-num">01</span> Designing Twitter Search</a></li>
+<li class="sidebar-item" data-num="02" data-title="designing a web crawler"><a href="#chapter-02"><span class="chapter-num">02</span> Designing a Web Crawler</a></li>
+<li class="sidebar-item" data-num="03" data-title="designing facebook newsfeed"><a href="#chapter-03"><span class="chapter-num">03</span> Designing Facebook Newsfeed</a></li>
+<li class="sidebar-item" data-num="04" data-title="designing yelp or nearby friends"><a href="#chapter-04"><span class="chapter-num">04</span> Designing Yelp or Nearby Friends</a></li>
+<li class="sidebar-item" data-num="05" data-title="designing uber backend"><a href="#chapter-05"><span class="chapter-num">05</span> Designing Uber backend</a></li>
+<li class="sidebar-item" data-num="06" data-title="designing ticketmaster"><a href="#chapter-06"><span class="chapter-num">06</span> Designing Ticketmaster</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Designing Twitter Search</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Twitter Search: Earlybird Inverted Index &amp; Scatter-Gather Broker</div>
+    <div class="diagram-badge">Real-Time Search</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- Query Client -->
+    <rect x="0" y="50" width="110" height="85" rx="8" fill="url(#gradSearch)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="55" y="82" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">SEARCH QUERY</text>
+    <text x="55" y="102" fill="#fde68a" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">"system &amp; design"</text>
+
+    <!-- Query Aggregator / Scatter-Gather -->
+    <rect x="170" y="25" width="190" height="150" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="265" y="52" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SCATTER-GATHER BROKER</text>
+    <rect x="185" y="65" width="160" height="35" rx="3" fill="#78350f"/>
+    <text x="265" y="87" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Scatters query to all Shards</text>
+    <rect x="185" y="108" width="160" height="50" rx="3" fill="#1e293b"/>
+    <text x="265" y="128" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Gathers top-K from each</text>
+    <text x="265" y="145" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Merges &amp; sorts by Recency/Likes</text>
+
+    <!-- Inverted Index Shards -->
+    <rect x="420" y="10" width="220" height="180" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+    <text x="530" y="38" fill="#c7d2fe" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">INVERTED INDEX SHARDS (EARLYBIRD)</text>
+    
+    <rect x="435" y="50" width="190" height="35" rx="3" fill="#0f172a"/>
+    <text x="530" y="68" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">"system" ➔ [Tweet_101, Tweet_402]</text>
+    <text x="530" y="79" fill="#93c5fd" font-family="Fira Code, monospace" font-size="7.5" text-anchor="middle">Posting List in In-Memory Buffer</text>
+
+    <rect x="435" y="92" width="190" height="35" rx="3" fill="#0f172a"/>
+    <text x="530" y="110" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">"design" ➔ [Tweet_101, Tweet_889]</text>
+    <text x="530" y="121" fill="#93c5fd" font-family="Fira Code, monospace" font-size="7.5" text-anchor="middle">Intersection: Tweet_101</text>
+
+    <rect x="435" y="134" width="190" height="45" rx="3" fill="#312e81"/>
+    <text x="530" y="152" fill="#fbbf24" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Real-time Ingestion via Kafka</text>
+    <text x="530" y="167" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Indexed in &lt;100ms from posting</text>
+
+    <!-- User Results -->
+    <rect x="680" y="50" width="120" height="85" rx="8" fill="url(#gradSearch)" stroke="#10b981" stroke-width="1.8"/>
+    <text x="740" y="82" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RESULTS</text>
+    <text x="740" y="102" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">Merged Top-50</text>
+
+    <!-- Connectors -->
+    <path d="M 110 92 L 170 92" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 360 92 L 420 92" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 640 92 L 680 92" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Queries are scattered across in-memory inverted index posting lists and merged by recency/relevance, enabling search results for new tweets within 100ms of posting.
+  </div>
+</div>
+
+
+    <div><h2>1. What is Twitter Search?</h2>
+<p>Twitter users can update their status whenever they like. Each status (called a tweet) consists of plain text and our goal is to design a system that allows searching over all the user tweets.</p>
+<h3>Try it yourself</h3>
+<p>Before looking at the solution, try designing it:</p></div><div><h2>2. Requirements and Goals of the System</h2>
+<ul>
+<li>Let&#x27;s assume Twitter has 1.5 billion total users with 800 million daily active users.</li>
+<li>On average Twitter gets 400 million tweets every day.</li>
+<li>The average size of a tweet is 300 bytes.</li>
+<li>Let&#x27;s assume there will be 500M searches every day.</li>
+<li>The search query will consist of multiple words combined with AND/OR.</li>
+</ul>
+<p>We need to design a system that can efficiently store and query tweets.</p>
+<h2>3. Capacity Estimation and Constraints</h2>
+<p><strong>Storage Capacity:</strong> Since we have 400 million new tweets every day and each tweet on average is 300 bytes, the total storage we need, will be:</p>
+<center>
+400M * 300 =&gt; 120GB/day
+</center>
+<p>Total storage per second:</p>
+<center>
+120GB / 24hours / 3600sec ~= 1.38MB/second
+</center>
+<h2>4. System APIs</h2>
+<p>We can have SOAP or REST APIs to expose the functionality of our service; following could be the definition of the search API:</p>
+<pre><div><div><code><span>search</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_terms</span><span>,</span><span> maximum_results_to_return</span><span>,</span><span> sort</span><span>,</span><span> page_token</span><span>)</span></code></div></div></pre>
+<p><strong>Parameters:</strong><br>
+api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
+search_terms (string): A string containing the search terms.<br>
+maximum_results_to_return (number): Number of tweets to return.<br>
+sort (number): Optional sort mode: Latest first (0 - default), Best matched (1), Most liked (2).<br>
+page_token (string): This token will specify a page in the result set that should be returned.</br></br></br></br></br></p>
+<p><strong>Returns:</strong> (JSON)<br>
+A JSON containing information about a list of tweets matching the search query. Each result entry can have the user ID &amp; name, tweet text, tweet ID, creation time, number of likes, etc.</br></p>
+<h2>5. High Level Design</h2>
+<p>At the high level, we need to store all the tweets in a database and also build an index that can keep track of which word appears in which tweet. This index will help us quickly find tweets that the users are trying to search for.</p></div><div><h2>6. Detailed Component Design</h2>
+<p><strong>1. Storage:</strong>
+We need to store 120GB of new data every day. Given this huge amount of data, we need to come up with a data partitioning scheme that will be efficiently distributing the data onto multiple servers. If we plan for next five years, we will need the following storage:</p>
+<center>
+120GB * 365days * 5years ~= 200TB
+</center>
+<p>If we never want to be more than 80% full at any time, we approximately will need 250TB of total storage. Let&#x27;s assume that we want to keep an extra copy of all tweets for fault tolerance; then, our total storage requirement will be 500TB. If we assume a modern server can store up to 4TB of data, we would need 125 such servers to hold all of the required data for the next five years.</p>
+<p>Let&#x27;s start with a simplistic design where we store the tweets in a MySQL database. We can assume that we store the tweets in a table having two columns, TweetID and TweetText. Let&#x27;s assume we partition our data based on TweetID. If our TweetIDs are unique system-wide, we can define a hash function that can map a TweetID to a storage server where we can store that tweet object.</p>
+<p><strong>How can we create system-wide unique TweetIDs?</strong> If we are getting 400M new tweets each day, then how many tweet objects we can expect in five years?</p>
+<center>
+400M * 365 days * 5 years =&gt; 730 billion
+</center>
+<p>This means we would need a five bytes number to identify TweetIDs uniquely. Let&#x27;s assume we have a service that can generate a unique TweetID whenever we need to store an object (The TweetID discussed here will be similar to TweetID discussed in &#x27;Designing Twitter&#x27;). We can feed the TweetID to our hash function to find the storage server and store our tweet object there.</p>
+<p><strong>2. Index:</strong>
+What should our index look like? Since our tweet queries will consist of words, let&#x27;s build the index that can tell us which word comes in which tweet object. Let&#x27;s first estimate how big our index will be. If we want to build an index for all the English words and some famous nouns like people names, city names, etc., and if we assume that we have around 300K English words and 200K nouns, then we will have 500k total words in our index. Let&#x27;s assume that the average length of a word is five characters. If we are keeping our index in memory, we need 2.5MB of memory to store all the words:</p>
+<center>
+500K * 5 =&gt; 2.5 MB
+</center>
+<p>Let&#x27;s assume that we want to keep the index in memory for all the tweets from only past two years. Since we will be getting 730B tweets in 5 years, this will give us 292B tweets in two years. Given that each TweetID will be 5 bytes, how much memory will we need to store all the TweetIDs?</p>
+<center>
+292B * 5 =&gt; 1460 GB
+</center>
+<p>So our index would be like a big distributed hash table, where &#x27;key&#x27; would be the word and &#x27;value&#x27; will be a list of TweetIDs of all those tweets which contain that word. Assuming on average we have 40 words in each tweet and since we will not be indexing prepositions and other small words like &#x27;the&#x27;, &#x27;an&#x27;, &#x27;and&#x27; etc., let&#x27;s assume we will have around 15 words in each tweet that need to be indexed. This means each TweetID will be stored 15 times in our index. So total memory we will need to store our index:</p>
+<center>
+(1460 * 15) + 2.5MB ~= 21 TB
+</center>
+<p>Assuming a high-end server has 144GB of memory, we would need 152 such servers to hold our index.</p>
+<p>We can partition our data based on two criteria:</p>
+<p><strong>Sharding based on Words:</strong>  While building our index, we will iterate through all the words of a tweet and calculate the hash of each word to find the server where it would be indexed. To find all tweets containing a specific word we have to query only the server which contains this word.</p>
+<p>We have a couple of issues with this approach:</p>
+<ol>
+<li>What if a word becomes hot? Then there will be a lot of queries on the server holding that word. This high load will affect the performance of our service.</li>
+<li>Over time, some words can end up storing a lot of TweetIDs compared to others, therefore, maintaining a uniform distribution of words while tweets are growing is quite tricky.</li>
+</ol>
+<p>To recover from these situations we either have to repartition our data or use &#x27;Consistent Hashing&#x27;.</p>
+<p><strong>Sharding based on the tweet object:</strong> While storing, we will pass the TweetID to our hash function to find the server and index all the words of the tweet on that server. While querying for a particular word, we have to query all the servers, and each server will return a set of TweetIDs. A centralized server will aggregate these results to return them to the user.</p></div><div><h2>7. Fault Tolerance</h2>
+<p>What will happen when an index server dies? We can have a secondary replica of each server and if the primary server dies it can take control after the failover. Both primary and secondary servers will have the same copy of the index.</p>
+<p>What if both primary and secondary servers die at the same time? We have to allocate a new server and rebuild the same index on it. How can we do that? We don’t know what words/tweets were kept on this server. If we were using &#x27;Sharding based on the tweet object&#x27;, the brute-force solution would be to iterate through the whole database and filter TweetIDs using our hash function to figure out all the required tweets that would be stored on this server. This would be inefficient and also during the time when the server was being rebuilt we would not be able to serve any query from it, thus missing some tweets that should have been seen by the user.</p>
+<p>How can we efficiently retrieve a mapping between tweets and the index server? We have to build a reverse index that will map all the TweetID to their index server. Our Index-Builder server can hold this information. We will need to build a Hashtable where the ‘key’ will be the index server number and the ‘value’ will be a HashSet containing all the TweetIDs being kept at that index server. Notice that we are keeping all the TweetIDs in a HashSet; this will enable us to add/remove tweets from our index quickly. So now, whenever an index server has to rebuild itself, it can simply ask the Index-Builder server for all the tweets it needs to store and then fetch those tweets to build the index. This approach will surely be fast. We should also have a replica of the Index-Builder server for fault tolerance.</p>
+<h2>8. Cache</h2>
+<p>To deal with hot tweets we can introduce a cache in front of our database. We can use <a href="https://en.wikipedia.org/wiki/Memcached" target="_blank">Memcached</a>, which can store all such hot tweets in memory. Application servers, before hitting the backend database, can quickly check if the cache has that tweet. Based on clients’ usage patterns, we can adjust how many cache servers we need. For cache eviction policy, Least Recently Used (LRU) seems suitable for our system.</p>
+<h2>9. Load Balancing</h2>
+<p>We can add a load balancing layer at two places in our system 1) Between Clients and Application servers and 2) Between Application servers and Backend servers. Initially, a simple Round Robin approach can be adopted; that distributes incoming requests equally among backend servers. This LB is simple to implement and does not introduce any overhead. Another benefit of this approach is LB will take dead servers out of the rotation and will stop sending any traffic to it. A problem with Round Robin LB is it won’t take server load into consideration. If a server is overloaded or slow, the LB will not stop sending new requests to that server. To handle this, a more intelligent LB solution can be placed that periodically queries the backend server about their load and adjust traffic based on that.</p>
+<h2>10. Ranking</h2>
+<p>How about if we want to rank the search results by social graph distance, popularity, relevance, etc?</p>
+<p>Let&#x27;s assume we want to rank tweets by popularity, like how many likes or comments a tweet is getting, etc. In such a case, our ranking algorithm can calculate a &#x27;popularity number&#x27; (based on the number of likes, etc.) and store it with the index. Each partition can sort the results based on this popularity number before returning results to the aggregator server. The aggregator server combines all these results, sorts them based on the popularity number, and sends the top results to the user.</p></div>
+  
+
+<h2>7. Production Python Implementation: Lock-Free Append-Only Inverted Index (Earlybird)</h2>
+    <pre><code>from collections import defaultdict
+from typing import List, Dict
+
+class EarlybirdInvertedIndex:
+    def __init__(self):
+        # Maps term -> list of tweet_ids (append-only)
+        self.posting_lists: Dict[str, List[int]] = defaultdict(list)
+        self.tweet_metadata: Dict[int, dict] = {}
+
+    def index_tweet(self, tweet_id: int, text: str, user_id: int, created_at: int):
+        self.tweet_metadata[tweet_id] = {"user_id": user_id, "created_at": created_at}
+        tokens = set(text.lower().split())
+        for token in tokens:
+            self.posting_lists[token].append(tweet_id)
+
+    def search(self, query: str, limit: int = 20) -> List[dict]:
+        terms = query.lower().split()
+        if not terms:
+            return []
+            
+        # Intersect posting lists
+        candidate_ids = set(self.posting_lists.get(terms[0], []))
+        for t in terms[1:]:
+            candidate_ids.intersection_update(self.posting_lists.get(t, []))
+            
+        # Rank by recency
+        results = [self.tweet_metadata[tid] for tid in candidate_ids]
+        return sorted(results, key=lambda x: x["created_at"], reverse=True)[:limit]</code></pre>
+
+
+<h2>Production JavaScript (Node.js / TypeScript) Implementation: Lock-Free Inverted Index</h2>
+    <pre><code>// TypeScript Earlybird Inverted Index Engine
+export class EarlybirdInvertedIndex {
+    private postingLists = new Map<string, number[]>();
+    private tweetMetadata = new Map<number, { userId: number; createdAt: number }>();
+
+    public indexTweet(tweetId: number, text: string, userId: number, createdAt: number): void {
+        this.tweetMetadata.set(tweetId, { userId, createdAt });
+        const tokens = new Set(text.toLowerCase().split(/\s+/));
+        
+        for (const token of tokens) {
+            if (!this.postingLists.has(token)) {
+                this.postingLists.set(token, []);
+            }
+            this.postingLists.get(token)!.push(tweetId);
+        }
+    }
+
+    public search(query: string, limit = 20): Array<{ tweetId: number; userId: number; createdAt: number }> {
+        const terms = query.toLowerCase().split(/\s+/);
+        if (terms.length === 0 || !this.postingLists.has(terms[0])) return [];
+
+        let matchingIds = new Set(this.postingLists.get(terms[0])!);
+        for (let i = 1; i < terms.length; i++) {
+            const currentList = new Set(this.postingLists.get(terms[i]) || []);
+            matchingIds = new Set([...matchingIds].filter(id => currentList.has(id)));
+        }
+
+        const results = [...matchingIds].map(id => ({
+            tweetId: id,
+            ...this.tweetMetadata.get(id)!
+        }));
+
+        return results.sort((a, b) => b.createdAt - a.createdAt).slice(0, limit);
+    }
+}</code></pre>
+
+<div class="interview-tweak-box">
+  <div class="tweak-header">
+    <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+    <h3>Advanced Interview Follow-Ups &amp; Edge Cases</h3>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 1: "How do you make newly published tweets searchable within 100 milliseconds without locking inverted index shards?"</h4>
+    <p><strong>Mitigation: Twitter Earlybird Architecture (Append-Only Inverted Index):</strong></p>
+    <ul>
+      <li>Standard Lucene/Elasticsearch indices require periodic disk segment flushes (taking 1 to 5 seconds).</li>
+      <li>Earlybird maintains a lock-free, single-writer in-memory circular posting list buffer. New tweet terms are appended directly to memory arrays without segment merging, making them searchable by reader threads within 10ms.</li>
+    </ul>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 2: "Should we shard the search index by Tweet ID or by Creation Time?"</h4>
+    <p><strong>Trade-off Analysis:</strong></p>
+    <ul>
+      <li><strong>Sharding by Tweet ID (Document Partitioning):</strong> Queries must scatter-gather to all shards, but write load is distributed 100% evenly across the cluster.</li>
+      <li><strong>Sharding by Creation Time:</strong> Recent queries only hit the current day's shard. <em>Bottleneck:</em> The newest shard receives 100% of write traffic and 90% of read search traffic (massive hot-spotting). <em>Verdict:</em> Shard by Tweet ID with in-memory recency posting list optimization.</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Designing a Web Crawler</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Web Crawler: URL Frontier Politeness, SimHash &amp; Fetcher Pool</div>
+    <div class="diagram-badge">Web Scale</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradCrawl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- URL Frontier -->
+    <rect x="0" y="25" width="160" height="160" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="80" y="52" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">URL FRONTIER</text>
+    <rect x="15" y="65" width="130" height="35" rx="3" fill="#78350f"/>
+    <text x="80" y="85" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Politeness: Host Queues</text>
+    <rect x="15" y="105" width="130" height="35" rx="3" fill="#1e293b"/>
+    <text x="80" y="125" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Priority: PageRank Heap</text>
+    <text x="80" y="165" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Kafka Partitioned Frontier</text>
+
+    <!-- Fetcher & DNS -->
+    <rect x="220" y="25" width="180" height="160" rx="8" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2"/>
+    <text x="310" y="52" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">DISTRIBUTED FETCHER</text>
+    <rect x="235" y="65" width="150" height="35" rx="3" fill="#0369a1"/>
+    <text x="310" y="85" fill="#e0f2fe" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Local DNS Cache (Zero RTT)</text>
+    <rect x="235" y="105" width="150" height="35" rx="3" fill="#0f172a"/>
+    <text x="310" y="125" fill="#93c5fd" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Robots.txt Evaluator</text>
+    <text x="310" y="165" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Async I/O HTTP/3 Client</text>
+
+    <!-- Parser & Deduplication Engine -->
+    <rect x="460" y="15" width="200" height="180" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="560" y="42" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">PARSER &amp; DEDUPLICATION</text>
+    <rect x="475" y="55" width="170" height="35" rx="3" fill="#022c22"/>
+    <text x="560" y="75" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">HTML &amp; Text Content Extractor</text>
+    <rect x="475" y="95" width="170" height="35" rx="3" fill="#064e3b"/>
+    <text x="560" y="115" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">SimHash Near-Duplicate Detection</text>
+    <rect x="475" y="135" width="170" height="45" rx="3" fill="#1e1b4b"/>
+    <text x="560" y="155" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">URL Normalizer &amp; Link Extractor</text>
+
+    <!-- Storage & Feedback Loop -->
+    <rect x="710" y="40" width="110" height="130" rx="8" fill="#581c87" stroke="#c084fc" stroke-width="1.8"/>
+    <text x="765" y="68" fill="#e9d5ff" font-family="Outfit, sans-serif" font-size="10" font-weight="700" text-anchor="middle">STORAGE</text>
+    <rect x="720" y="80" width="90" height="35" rx="3" fill="#0f172a"/>
+    <text x="765" y="100" fill="#fbcfe8" font-family="Fira Code, monospace" font-size="7" text-anchor="middle">S3 / Bigtable</text>
+    <rect x="720" y="120" width="90" height="35" rx="3" fill="#4c1d95"/>
+    <text x="765" y="140" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="7" text-anchor="middle">Doc Index</text>
+
+    <!-- Connectors -->
+    <path d="M 160 105 L 220 105" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 400 105 L 460 105" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 660 105 L 710 105" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+    <path d="M 560 180 C 560 220, 80 220, 80 185" stroke="#c084fc" stroke-width="2" class="flow-line"/>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Enforces host politeness with per-domain FIFO queues and detects near-duplicate web pages using 64-bit SimHash hamming distances.
+  </div>
+</div>
+
+
+    <div><h2>1. What is a Web Crawler?</h2>
+<p>A web crawler is a software program that browses the World Wide Web in a methodical and automated manner. It collects documents by recursively fetching links from a set of starting pages. Many sites, particularly search engines, use web crawling as a means of providing up-to-date data. Search engines download all the pages to create an index on them to perform faster searches.</p>
+<p>Some other uses of web crawlers are:</p>
+<ul>
+<li>To test web pages and links for valid syntax and structure.</li>
+<li>To monitor sites to see when their structure or contents change.</li>
+<li>To maintain mirror sites for popular Web sites.</li>
+<li>To search for copyright infringements.</li>
+<li>To build a special-purpose index, e.g., one that has some understanding of the content stored in multimedia files on the Web.</li>
+</ul>
+<h3>Try it yourself</h3>
+<p>Before looking at the solution, try designing it:</p></div><div><h3>Designing Web Crawler (video)</h3>
+<p>Here is a video discussing how to design a Web Crawler:</p></div><div><h2>2. Requirements and Goals of the System</h2>
+<p>Let&#x27;s assume we need to crawl all the web.</p>
+<p><strong>Scalability:</strong> Our service needs to be scalable such that it can crawl the entire Web and can be used to fetch hundreds of millions of Web documents.</p>
+<p><strong>Extensibility:</strong> Our service should be designed in a modular way with the expectation that new functionality will be added to it. There could be newer document types that need to be downloaded and processed in the future.</p>
+<h2>3. Some Design Considerations</h2>
+<p>Crawling the web is a complex task, and there are many ways to go about it. We should be asking a few questions before going any further:</p>
+<p><strong>Is it a crawler for HTML pages only? Or should we fetch and store other types of media, such as sound files, images, videos, etc.?</strong> This is important because the answer can change the design. If we are writing a general-purpose crawler to download different media types, we might want to break down the parsing module into different sets of modules: one for HTML, another for images, or another for videos, where each module extracts what is considered interesting for that media type.</p>
+<p>Let&#x27;s assume for now that our crawler is going to deal with HTML only, but it should be extensible and make it easy to add support for new media types.</p>
+<p><strong>What protocols are we looking at? HTTP? What about FTP links? What different protocols should our crawler handle?</strong> For the sake of the exercise, we will assume HTTP. Again, it shouldn&#x27;t be hard to extend the design to use FTP and other protocols later.</p>
+<p><strong>What is the expected number of pages we will crawl? How big will the URL database become?</strong>
+Let’s assume we need to crawl one billion websites. Since a website can contain many, many URLs, let&#x27;s assume an upper bound of 15 billion different web pages that will be reached by our crawler.</p>
+<p><strong>What is &#x27;RobotsExclusion&#x27; and how should we deal with it?</strong> Courteous Web crawlers implement the Robots Exclusion Protocol, which allows Webmasters to declare parts of their sites off-limits to crawlers. The Robots Exclusion Protocol requires a Web crawler to fetch a special document called robot.txt which contains these declarations from a Web site before downloading any real content from it.</p>
+<h2>4. Capacity Estimation and Constraints</h2>
+<p>If we want to crawl 15 billion pages within four weeks, how many pages do we need to fetch per second?</p>
+<center>
+15B / (4 weeks * 7 days * 86400 sec) ~= 6200 pages/sec</center>
+<p><strong>What about storage?</strong> Page sizes vary a lot, but, as mentioned above since, we will be dealing with HTML text only, let&#x27;s assume an average page size of 100KB. With each page, if we are storing 500 bytes of metadata, total storage we would need:</p>
+<center>
+15B * (100KB + 500) ~= 1.5 petabytes
+</center>
+<p>Assuming a 70% capacity model (we don&#x27;t want to go above 70% of the total capacity of our storage system), total storage we will need:</p>
+<center>
+1.5 petabytes / 0.7 ~= 2.14 petabytes
+</center>
+<h2>5. High Level Design</h2>
+<p>The basic algorithm executed by any Web crawler is to take a list of seed URLs as its input and repeatedly execute the following steps.</p>
+<ol>
+<li>Pick a URL from the unvisited URL list.</li>
+<li>Determine the IP Address of its host-name.</li>
+<li>Establish a connection to the host to download the corresponding document.</li>
+<li>Parse the document contents to look for new URLs.</li>
+<li>Add the new URLs to the list of unvisited URLs.</li>
+<li>Process the downloaded document, e.g., store it or index its contents, etc.</li>
+<li>Go back to step 1</li>
+</ol>
+<h2>How to crawl?</h2>
+<p><strong>Breadth-first or depth-first?</strong> Breadth First Search (BFS) is usually used. However, Depth First Search (DFS) is also utilized in some situations, such as, if your crawler has already established a connection with the website, it might just DFS all the URLs within this website to save some handshaking overhead.</p>
+<p><strong>Path-ascending crawling:</strong> Path-ascending crawling can help discover a lot of isolated resources or resources for which no inbound link would have been found in regular crawling of a particular Web site. In this scheme, a crawler would ascend to every path in each URL that it intends to crawl. For example, when given a seed URL of <a href="http://foo.com/a/b/page.html" target="_blank">http://foo.com/a/b/page.html</a>, it will attempt to crawl /a/b/, /a/, and /.</p>
+<h2>Difficulties in implementing an efficient web crawler</h2>
+<p>There are two important characteristics of the Web that makes Web crawling a very difficult task:</p>
+<p><strong>1. Large volume of Web pages:</strong> A large volume of web pages implies that web crawler can only download a fraction of the web pages at any time and hence it is critical that web crawler should be intelligent enough to prioritize download.</p>
+<p><strong>2. Rate of change on web pages.</strong> Another problem with today&#x27;s dynamic world is that web pages on the internet change very frequently. As a result, by the time the crawler is downloading the last page from a site, the page may change, or a new page may be added to the site.</p>
+<p>A bare minimum crawler needs at least these components:</p>
+<p><strong>1. URL frontier:</strong> To store the list of URLs to download and also prioritize which URLs should be crawled first.<br>
+<strong>2. HTML Fetcher:</strong> To retrieve a web page from the server.<br>
+<strong>3. Extractor:</strong> To extract links from HTML documents.<br>
+<strong>4. Duplicate Eliminator:</strong> To make sure the same content is not extracted twice unintentionally.<br>
+<strong>5. Datastore:</strong> To store retrieved pages, URLs, and other metadata.</br></br></br></br></p></div><div><h2>6. Detailed Component Design</h2>
+<p>Let&#x27;s assume our crawler is running on one server and all the crawling is done by multiple working threads where each working thread performs all the steps needed to download and process a document in a loop.</p>
+<p>The first step of this loop is to remove an absolute URL from the shared URL frontier for downloading. An absolute URL begins with a scheme (e.g., “HTTP”) which identifies the network protocol that should be used to download it. We can implement these protocols in a modular way for extensibility, so that later if our crawler needs to support more protocols, it can be easily done. Based on the URL’s scheme, the worker calls the appropriate protocol module to download the document. After downloading, the document is placed into a Document Input Stream (DIS). Putting documents into DIS will enable other modules to re-read the document multiple times.</p>
+<p>Once the document has been written to the DIS, the
+worker thread invokes the dedupe test to determine whether this document (associated with a different URL) has been seen before. If so, the document is not processed any further and the worker thread removes the next URL from the frontier.</p>
+<p>Next, our crawler needs to process the downloaded document. Each document can have a different MIME type like HTML page, Image, Video, etc. We can implement these MIME schemes in a modular way, so that later if our crawler needs to support more types, we can easily implement them. Based on the downloaded document’s MIME type, the
+worker invokes the process method of each processing module associated with that MIME type.</p>
+<p>Furthermore, our HTML processing module will extract all links from the page. Each link is converted into an absolute URL and tested against a user-supplied URL filter to determine if it
+should be downloaded. If the URL passes the filter, the worker performs the URL-seen test, which checks if the URL has been seen before, namely, if it is in the URL frontier or has already been downloaded. If the URL is new, it is added to the frontier.</p></div><div><p>Let&#x27;s discuss these components one by one, and see how they can be distributed onto multiple machines:</p>
+<p><strong>1. The URL frontier:</strong> The URL frontier is the data structure that contains all the URLs that remain to be downloaded. We can crawl by performing a breadth-first traversal of the Web, starting from the pages in the seed set. Such traversals are easily implemented by using a FIFO queue.</p>
+<p>Since we&#x27;ll be having a huge list of URLs to crawl, we can distribute our URL frontier into multiple servers. Let&#x27;s assume on each server we have multiple worker threads performing the crawling tasks. Let&#x27;s also assume that our hash function maps each URL to a server which will be responsible for crawling it.</p>
+<p>Following politeness requirements must be kept in mind while designing a distributed URL frontier:</p>
+<ol>
+<li>Our crawler should not overload a server by downloading a lot of pages from it.</li>
+<li>We should not have multiple machines connecting a web server.</li>
+</ol>
+<p>To implement this politeness constraint our crawler can have a collection of distinct FIFO sub-queues on each server. Each worker thread will have its separate sub-queue, from which it removes URLs for crawling. When a new URL needs to be added, the FIFO sub-queue in which it is placed will be determined by the URL’s canonical hostname. Our hash function can map each hostname to a thread number. Together, these two points imply that, at most, one worker thread will download documents from a given Web server, and also, by using the FIFO queue, it&#x27;ll not overload a Web server.</p>
+<p><strong>How big will our URL frontier be?</strong> The size would be in the hundreds of millions of URLs. Hence, we need to store our URLs on a disk. We can implement our queues in such a way that they have separate buffers for enqueuing and dequeuing. Enqueue buffer, once filled, will be dumped to the disk, whereas dequeue buffer will keep a cache of URLs that need to be visited; it can periodically read from disk to fill the buffer.</p>
+<p><strong>2. The fetcher module:</strong> The purpose of a fetcher module is to download the document corresponding to a given URL using the appropriate network protocol like HTTP. As discussed above, webmasters create robot.txt to make certain parts of their websites off-limits for the crawler. To avoid downloading this file on every request, our crawler&#x27;s HTTP protocol module can maintain a fixed-sized cache mapping host-names to their robot&#x27;s exclusion rules.</p>
+<p><strong>3. Document input stream:</strong> Our crawler&#x27;s design enables the same document to be processed by multiple processing modules. To avoid downloading a document multiple times, we cache the document locally using an abstraction called a Document Input Stream (DIS).</p>
+<p>A DIS is an input stream that caches the entire contents of the document read from the internet. It also provides methods to re-read the document. The DIS can cache small documents (64 KB or less) entirely in memory, while larger documents can be temporarily written to a backing file.</p>
+<p>Each worker thread has an associated DIS, which it reuses from document to document. After extracting a URL from the frontier, the worker passes that URL to the relevant protocol module, which initializes the DIS from a network connection to contain the document’s contents. The worker then passes the DIS to all relevant processing modules.</p>
+<p><strong>4. Document Dedupe test:</strong> Many documents on the Web are available under multiple, different URLs. There are also many cases in which documents are mirrored on various servers. Both of these effects will cause any Web crawler to download the same document multiple times. To prevent the processing of a document more than once, we perform a dedupe test on each document to remove duplication.</p>
+<p>To perform this test, we can calculate a 64-bit checksum of every processed document and store it in a database. For every new document, we can compare its checksum to all the previously calculated checksums to see the document has been seen before. We can use MD5 or SHA to calculate these checksums.</p>
+<p><strong>How big would the checksum store be?</strong>
+If the whole purpose of our checksum store is to do dedupe, then we just need to keep a unique set containing checksums of all previously processed document. Considering 15 billion distinct web pages, we would need:</p>
+<center>
+15B * 8 bytes =&gt; 120 GB
+</center>
+<p>Although this can fit into a modern-day server&#x27;s memory, if we don&#x27;t have enough memory available, we can keep smaller LRU based cache on each server with everything backed by persistent storage. The dedupe test first checks if the checksum is present in the cache. If not, it has to check if the checksum resides in the back storage. If the checksum is found, we will ignore the document. Otherwise, it will be added to the cache and back storage.</p>
+<p><strong>5. URL filters:</strong> The URL filtering mechanism provides a customizable way to control the set of URLs that are downloaded. This is used to block websites so that our crawler can ignore them. Before adding each URL to the frontier, the worker thread consults the user-supplied URL filter. We can define filters to restrict URLs by domain, prefix, or protocol type.</p>
+<p><strong>6. Domain name resolution:</strong> Before contacting a Web server, a Web crawler must use the Domain Name Service (DNS) to map the Web server’s hostname into an IP address. DNS name resolution will be a big bottleneck for our crawlers given the huge number of URLs we will be working with. To avoid repeated requests, we can start caching DNS results by building our local DNS server.</p>
+<p><strong>7. URL dedupe test:</strong> While extracting links, any Web crawler will encounter multiple links to the same document. To avoid downloading and processing a document multiple times, a URL dedupe test must be performed on each extracted link before adding it to the URL frontier.</p>
+<p>To perform the URL dedupe test, we can store all the URLs seen by our crawler in canonical form in a database. To save space, we do not store the textual representation of each URL in the URL set, but rather a fixed-sized checksum.</p>
+<p>To reduce the number of operations on the database store, we can keep an in-memory cache of popular URLs on each host shared by all threads. The reason to have this cache is that links to some URLs are quite common, so caching the popular ones in memory will lead to a high in-memory hit rate.</p>
+<p><strong>How much storage we would need for URL&#x27;s store?</strong> If the whole purpose of our checksum is to do URL dedupe, then we just need to keep a unique set containing checksums of all previously seen URLs. Considering 15 billion distinct URLs and 8 bytes for checksum, we would need:</p>
+<center>
+15B * 8 bytes =&gt; 120 GB
+</center>
+<p><strong>Can we use bloom filters for deduping?</strong>
+Bloom filters are a probabilistic data structure for set membership testing that may yield false positives. A large bit vector represents the set. An element is added to the set by computing <code>n</code> hash functions of the element and setting the corresponding bits. An element is deemed to be in the set if the bits at all &#x27;n&#x27; of the element’s hash locations are set. Hence, a document may incorrectly be deemed to be in the set, but false negatives are not possible.</p>
+<p>The disadvantage of using a bloom filter for the URL seen test is that each false positive will cause the URL not to be added to the frontier and, therefore, the document will never be downloaded. The chance of a false positive can be reduced by making the bit vector larger.</p>
+<p><strong>8. Checkpointing:</strong> A crawl of the entire Web takes weeks to complete. To guard against failures, our crawler can write regular snapshots of its state to the disk. An interrupted or aborted crawl can easily be restarted from the latest checkpoint.</p>
+<h2>7. Fault Tolerance</h2>
+<p>We should use consistent hashing for distribution among crawling servers. Consistent hashing will not only help in replacing a dead host but also help in distributing load among crawling servers.</p>
+<p>All our crawling servers will be performing regular checkpointing and storing their FIFO queues to disks. If a server goes down, we can replace it. Meanwhile, consistent hashing should shift the load to other servers.</p>
+<h2>8. Data Partitioning</h2>
+<p>Our crawler will be dealing with three kinds of data: 1) URLs to visit 2) URL checksums for dedupe 3) Document checksums for dedupe.</p>
+<p>Since we are distributing URLs based on the hostnames, we can store these data on the same host. So, each host will store its set of URLs that need to be visited, checksums of all the previously visited URLs, and checksums of all the downloaded documents. Since we will be using consistent hashing, we can assume that URLs will be redistributed from overloaded hosts.</p>
+<p>Each host will perform checkpointing periodically and dump a snapshot of all the data it is holding onto a remote server. This will ensure that if a server dies down another server can replace it by taking its data from the last snapshot.</p>
+<h2>9. Crawler Traps</h2>
+<p>There are many crawler traps, spam sites, and cloaked content. A crawler trap is a URL or set of URLs that cause a crawler to crawl indefinitely. Some crawler traps are unintentional. For example, a symbolic link within a file system can create a cycle. Other crawler traps are introduced intentionally. For example, people have written traps that dynamically generate an infinite Web of documents. The motivations behind such traps vary. Anti-spam traps are designed to catch crawlers used by spammers looking for email addresses, while other sites use traps to catch search engine crawlers to boost their search ratings.</p></div>
+  
+
+<h2>7. Production Python Implementation: 64-Bit SimHash Near-Duplicate Detector</h2>
+    <pre><code>import hashlib
+
+class SimHashDetector:
+    @staticmethod
+    def compute_simhash(text: str) -> int:
+        v = [0] * 64
+        tokens = text.lower().split()
+        
+        for token in tokens:
+            token_hash = int(hashlib.md5(token.encode('utf-8')).hexdigest(), 16)
+            for i in range(64):
+                bit = (token_hash >> i) & 1
+                v[i] += 1 if bit == 1 else -1
+                
+        fingerprint = 0
+        for i in range(64):
+            if v[i] > 0:
+                fingerprint |= (1 << i)
+        return fingerprint
+
+    @staticmethod
+    def hamming_distance(hash1: int, hash2: int) -> int:
+        x = hash1 ^ hash2
+        distance = 0
+        while x > 0:
+            distance += x & 1
+            x >>= 1
+        return distance</code></pre>
+
+
+<h2>Production JavaScript (Node.js / Crypto) Implementation: 64-Bit SimHash Detector</h2>
+    <pre><code>// Node.js 64-Bit SimHash Near-Duplicate Detector
+import * as crypto from "crypto";
+
+export class SimHashDetector {
+    public static computeSimHash(text: string): bigint {
+        const v = new Array(64).fill(0);
+        const tokens = text.toLowerCase().split(/\s+/);
+
+        for (const token of tokens) {
+            const hashBuf = crypto.createHash("md5").update(token).digest();
+            // Read first 64 bits (8 bytes)
+            const hash64 = hashBuf.readBigUInt64BE(0);
+
+            for (let i = 0; i < 64; i++) {
+                const bit = (hash64 >> BigInt(i)) & 1n;
+                v[i] += bit === 1n ? 1 : -1;
+            }
+        }
+
+        let fingerprint = 0n;
+        for (let i = 0; i < 64; i++) {
+            if (v[i] > 0) {
+                fingerprint |= (1n << BigInt(i));
+            }
+        }
+        return fingerprint;
+    }
+
+    public static hammingDistance(hash1: bigint, hash2: bigint): number {
+        let x = hash1 ^ hash2;
+        let count = 0;
+        while (x > 0n) {
+            if (x & 1n) count++;
+            x >>= 1n;
+        }
+        return count;
+    }
+}</code></pre>
+
+<div class="interview-tweak-box">
+  <div class="tweak-header">
+    <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+    <h3>Advanced Interview Follow-Ups &amp; Edge Cases</h3>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 1: "How do you detect and escape spider traps and infinite dynamic calendar loops (e.g., website.com/calendar?year=2099)?"</h4>
+    <p><strong>Mitigation: Multi-Layered Anti-Trap Defense:</strong></p>
+    <ul>
+      <li><strong>URL Depth &amp; Parameter Caps:</strong> Limit maximum URL path depth (e.g., max 8 slashes) and query parameter count.</li>
+      <li><strong>SimHash Near-Duplicate Detection:</strong> Compute 64-bit SimHash over the extracted text of the page. If the hamming distance between the new page and existing domain pages is $\le 3$, drop the page without following outbound links.</li>
+      <li><strong>Per-Domain Page Quotas:</strong> Cap the crawler at a maximum of 50,000 pages per domain per crawl cycle.</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Designing Facebook Newsfeed</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Facebook Newsfeed: Machine Learning Ranking &amp; Graph EdgeRank</div>
+    <div class="diagram-badge">Social Feed</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradFeed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- User Request -->
+    <rect x="0" y="50" width="110" height="85" rx="8" fill="url(#gradFeed)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="55" y="82" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">USER APP</text>
+    <text x="55" y="102" fill="#94a3b8" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">GET /feed</text>
+
+    <!-- Feed Aggregator -->
+    <rect x="170" y="20" width="190" height="155" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="265" y="48" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">FEED AGGREGATOR SVC</text>
+    <rect x="185" y="60" width="160" height="40" rx="3" fill="#78350f"/>
+    <text x="265" y="82" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Queries Social Graph</text>
+    <text x="265" y="94" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Fetches Friend IDs &amp; Pages</text>
+    <rect x="185" y="108" width="160" height="45" rx="3" fill="#1e293b"/>
+    <text x="265" y="128" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Retrieves Candidate Posts</text>
+    <text x="265" y="142" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Top 500 candidate post IDs</text>
+
+    <!-- ML Ranking Model (EdgeRank / Deep Learning) -->
+    <rect x="420" y="20" width="200" height="155" rx="8" fill="#4c1d95" stroke="#a855f7" stroke-width="2"/>
+    <text x="520" y="48" fill="#e9d5ff" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">ML RANKING ENGINE</text>
+    <rect x="435" y="60" width="170" height="40" rx="3" fill="#312e81"/>
+    <text x="520" y="80" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Features: Affinity, Weight, Time</text>
+    <text x="520" y="92" fill="#6ee7b7" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">P(Engage) = CTR * Likes * Shares</text>
+    <rect x="435" y="108" width="170" height="45" rx="3" fill="#0f172a"/>
+    <text x="520" y="128" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Reranks into Top 50 Items</text>
+    <text x="520" y="142" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Injected with Sponsored Ads</text>
+
+    <!-- Rendered Feed Response -->
+    <rect x="670" y="50" width="130" height="85" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+    <text x="735" y="82" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">PERSONALIZED FEED</text>
+    <text x="735" y="102" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">Rendered in &lt;150ms</text>
+
+    <!-- Connectors -->
+    <path d="M 110 92 L 170 92" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 360 92 L 420 92" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 620 92 L 670 92" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Aggregates friend candidate posts from the social graph and feeds them through real-time ML scoring models to personalize the top 50 stories.
+  </div>
+</div>
+
+
+    <div><h2>1. What is Facebook’s newsfeed?</h2>
+<p>A Newsfeed is the constantly updating list of stories in the middle of Facebook’s homepage. It includes status updates, photos, videos, links, app activity, and &#x27;likes&#x27; from people, pages, and groups that a user follows on Facebook. In other words, it is a compilation of a complete scrollable version of your friends&#x27; and your life story from photos, videos, locations, status updates, and other activities.</p>
+<p>For any social media site you design - Twitter, Instagram, or Facebook - you will need some newsfeed system to display updates from friends and followers.</p>
+<h3>Try it yourself</h3>
+<p>Before looking at the solution, try designing it:</p></div><div><h2>2. Requirements and Goals of the System</h2>
+<p>Let’s design a newsfeed for Facebook with the following requirements:</p>
+<p><strong>Functional requirements:</strong></p>
+<ol>
+<li>Newsfeed will be generated based on the posts from the people, pages, and groups that a user follows.</li>
+<li>A user may have many friends and follow a large number of pages/groups.</li>
+<li>Feeds may contain images, videos, or just text.</li>
+<li>Our service should support appending new posts as they arrive to the newsfeed for all active users.</li>
+</ol>
+<p><strong>Non-functional requirements:</strong></p>
+<ol>
+<li>Our system should be able to generate any user’s newsfeed in real-time - maximum latency seen by the end user would be 2s.</li>
+<li>A post shouldn’t take more than 5s to make it to a user&#x27;s feed assuming a new newsfeed request comes in.</li>
+</ol>
+<h2>3. Capacity Estimation and Constraints</h2>
+<p>Let’s assume on average a user has 300 friends and follows 200 pages.</p>
+<p><strong>Traffic estimates:</strong> Let’s assume 300M daily active users with each user fetching their timeline an average of five times a day. This will result in 1.5B newsfeed requests per day or approximately 17,500 requests per second.</p>
+<p><strong>Storage estimates:</strong> On average, let’s assume we need to have around 500 posts in every user’s feed that we want to keep in memory for a quick fetch. Let’s also assume that on average each post would be 1KB in size. This would mean that we need to store roughly 500KB of data per user. To store all this data for all the active users we would need 150TB of memory. If a server can hold 100GB we would need around 1500 machines to keep the top 500 posts in memory for all active users.</p>
+<h2>4. System APIs</h2>
+<blockquote>
+<p>💡 Once we have finalized the requirements, it&#x27;s always a good idea to define the system APIs. This should explicitly state what is expected from the system.</p>
+</blockquote>
+<p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the API for getting the newsfeed:</p>
+<pre><div><div><code><span>getUserFeed</span><span>(</span><span>api_dev_key</span><span>,</span><span> user_id</span><span>,</span><span> since_id</span><span>,</span><span> count</span><span>,</span><span> max_id</span><span>,</span><span> exclude_replies</span><span>)</span></code></div></div></pre>
+<p><strong>Parameters:</strong><br>
+api_dev_key (string): The API developer key of a registered can be used to, among other things, throttle users based on their allocated quota.<br>
+<strong>user_id (number):</strong> The ID of the user for whom the system will generate the newsfeed.<br>
+<strong>since_id (number):</strong> Optional; returns results with an ID higher than (that is, more recent than) the specified ID.<br>
+<strong>count (number):</strong> Optional; specifies the number of feed items to try and retrieve up to a maximum of 200 per distinct request.<br>
+<strong>max_id (number):</strong> Optional; returns results with an ID less than (that is, older than) or equal to the specified ID.<br>
+<strong>exclude_replies(boolean):</strong> Optional; this parameter will prevent replies from appearing in the returned timeline.</br></br></br></br></br></br></p>
+<p><strong>Returns:</strong> (JSON)
+Returns a JSON object containing a list of feed items.</p>
+<h2>5. Database Design</h2>
+<p>There are three primary objects: User, Entity (e.g. page, group, etc.), and FeedItem (or Post). Here are some observations about the relationships between these entities:</p>
+<ul>
+<li>A User can follow other entities and can become friends with other users.</li>
+<li>Both users and entities can post FeedItems which can contain text, images, or videos.</li>
+<li>Each FeedItem will have a UserID which will point to the User who created it. For simplicity, let’s assume that only users can create feed items, although, on Facebook Pages can post feed item too.</li>
+<li>Each FeedItem can optionally have an EntityID pointing to the page or the group where that post was created.</li>
+</ul>
+<p>If we are using a relational database, we would need to model two relations: User-Entity relation and FeedItem-Media relation. Since each user can be friends with many people and follow a lot of entities, we can store this relation in a separate table. The “Type” column in “UserFollow” identifies if the entity being followed is a User or Entity. Similarly, we can have a table for FeedMedia relation.</p></div><div><h2>6. High Level System Design</h2>
+<p>At a high level this problem can be divided into two parts:</p>
+<p><strong>Feed generation:</strong> Newsfeed is generated from the posts (or feed items) of users and entities (pages and groups) that a user follows. So, whenever our system receives a request to generate the feed for a user (say Jane), we will perform the following steps:</p>
+<ol>
+<li>Retrieve IDs of all users and entities that Jane follows.</li>
+<li>Retrieve latest, most popular and relevant posts for those IDs. These are the potential posts that we can show in Jane’s newsfeed.</li>
+<li>Rank these posts based on the relevance to Jane. This represents Jane’s current feed.</li>
+<li>Store this feed in the cache and return top posts (say 20) to be rendered on Jane’s feed.</li>
+<li>On the front-end, when Jane reaches the end of her current feed, she can fetch the next 20 posts from the server and so on.</li>
+</ol>
+<p>One thing to notice here is that we generated the feed once and stored it in the cache. What about new incoming posts from people that Jane follows? If Jane is online, we should have a mechanism to rank and add those new posts to her feed. We can periodically (say every five minutes) perform the above steps to rank and add the newer posts to her feed. Jane can then be notified that there are newer items in her feed that she can fetch.</p>
+<p><strong>Feed publishing:</strong> Whenever Jane loads her newsfeed page, she has to request and pull feed items from the server. When she reaches the end of her current feed, she can pull more data from the server. For newer items either the server can notify Jane and then she can pull, or the server can push, these new posts. We will discuss these options in detail later.</p>
+<p>At a high level, we will need following components in our Newsfeed service:</p>
+<ol>
+<li><strong>Web servers:</strong> To maintain a connection with the user. This connection will be used to transfer data between the user and the server.</li>
+<li><strong>Application server:</strong> To execute the workflows of storing new posts in the database servers. We will also need some application servers to retrieve and to push the newsfeed to the end user.</li>
+<li><strong>Metadata database and cache:</strong> To store the metadata about Users, Pages, and Groups.</li>
+<li><strong>Posts database and cache:</strong> To store metadata about posts and their contents.</li>
+<li><strong>Video and photo storage, and cache:</strong> Blob storage, to store all the media included in the posts.</li>
+<li><strong>Newsfeed generation service:</strong> To gather and rank all the relevant posts for a user to generate newsfeed and store in the cache. This service will also receive live updates and will add these newer feed items to any user’s timeline.</li>
+<li><strong>Feed notification service:</strong> To notify the user that there are newer items available for their newsfeed.</li>
+</ol>
+<p>Following is the high-level architecture diagram of our system. User B and C are following User A.</p></div><div><h2>7. Detailed Component Design</h2>
+<p>Let’s discuss different components of our system in detail.</p>
+<p><strong>a. Feed generation</strong><br>
+Let’s take the simple case of the newsfeed generation service fetching most recent posts from all the users and entities that Jane follows; the query would look like this:</br></p>
+<pre><div><div><code><span>(</span><span>SELECT</span><span> </span><span>FeedItemID</span><span> </span><span>FROM</span><span> </span><span>FeedItem</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>in</span><span> </span><span>(</span><span>
+</span><span>    </span><span>SELECT</span><span> </span><span>EntityOrFriendID</span><span> </span><span>FROM</span><span> </span><span>UserFollow</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>=</span><span> </span><span>&lt;</span><span>current_user_id</span><span>&gt;</span><span> and type </span><span>=</span><span> </span><span>0</span><span>(</span><span>user</span><span>)</span><span>)</span><span>
+</span><span></span><span>)</span><span>
+</span><span></span><span>UNION</span><span>
+</span><span></span><span>(</span><span>SELECT</span><span> </span><span>FeedItemID</span><span> </span><span>FROM</span><span> </span><span>FeedItem</span><span> </span><span>WHERE</span><span> </span><span>EntityID</span><span> </span><span>in</span><span> </span><span>(</span><span>
+</span><span>    </span><span>SELECT</span><span> </span><span>EntityOrFriendID</span><span> </span><span>FROM</span><span> </span><span>UserFollow</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>=</span><span> </span><span>&lt;</span><span>current_user_id</span><span>&gt;</span><span> and type </span><span>=</span><span> </span><span>1</span><span>(</span><span>entity</span><span>)</span><span>)</span><span>
+</span><span></span><span>)</span><span>
+</span><span></span><span>ORDER</span><span> </span><span>BY</span><span> </span><span>CreationDate</span><span> </span><span>DESC</span><span> 
+</span><span></span><span>LIMIT</span><span> </span><span>100</span></code></div></div></pre>
+<p>Here are issues with this design for the feed generation service:</p>
+<ol>
+<li>Crazy slow for users with a lot of friends/follows as we have to perform sorting/merging/ranking of a huge number of posts.</li>
+<li>We generate the timeline when a user loads their page. This would be quite slow and have a high latency.</li>
+<li>For live updates, each status update will result in feed updates for all followers. This could result in high backlogs in our Newsfeed Generation Service.</li>
+<li>For live updates, the server pushing (or notifying about) newer posts to users could lead to very heavy loads, especially for people or pages that have a lot of followers.
+To improve the efficiency, we can pre-generate the timeline and store it in a memory.</li>
+</ol>
+<p><strong>Offline generation for newsfeed:</strong> We can have dedicated servers that are continuously generating users’ newsfeed and storing them in memory. So, whenever a user requests for the new posts for their feed, we can simply serve it from the pre-generated, stored location. Using this scheme, user&#x27;s newsfeed is not compiled on load, but rather on a regular basis and returned to users whenever they request for it.</p>
+<p>Whenever these servers need to generate the feed for a user, they will first query to see what was the last time the feed was generated for that user. Then, new feed data would be generated from that time onwards. We can store this data in a hash table where the “key” would be UserID and “value” would be a STRUCT like this:</p>
+<pre><div><div><code><span>Struct</span><span> </span><span>{</span><span>
+</span><span>    </span><span>LinkedHashMap</span><span>&lt;</span><span>FeedItemID</span><span>,</span><span> </span><span>FeedItem</span><span>&gt;</span><span> feedItems</span><span>;</span><span>
+</span><span>    </span><span>DateTime</span><span> lastGenerated</span><span>;</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<p>We can store FeedItemIDs in a data structure similar to <a href="https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html" target="_blank">Linked HashMap</a> or <a href="https://docs.oracle.com/javase/6/docs/api/java/util/TreeMap.html" target="_blank">TreeMap</a>, which can allow us to not only jump to any feed item but also iterate through the map easily. Whenever users want to fetch more feed items, they can send the last FeedItemID they currently see in their newsfeed, we can then jump to that FeedItemID in our hash-map and return next batch/page of feed items from there.</p>
+<p><strong>How many feed items should we store in memory for a user’s feed?</strong> Initially, we can decide to store 500 feed items per user, but this number can be adjusted later based on the usage pattern. For example, if we assume that one page of a user’s feed has 20 posts and most of the users never browse more than ten pages of their feed, we can decide to store only 200 posts per user. For any user who wants to see more posts (more than what is stored in memory), we can always query backend servers.</p>
+<p><strong>Should we generate (and keep in memory) newsfeeds for all users?</strong> There will be a lot of users that don’t log-in frequently. Here are a few things we can do to handle this; 1) a more straightforward approach could be, to use an LRU based cache that can remove users from memory that haven’t accessed their newsfeed for a long time 2) a smarter solution can figure out the login pattern of users to pre-generate their newsfeed, e.g., at what time of the day a user is active and which days of the week does a user access their newsfeed? etc.</p>
+<p>Let’s now discuss some solutions to our “live updates” problems in the following section.</p>
+<p><strong>b.    Feed publishing</strong><br>
+The process of pushing a post to all the followers is called fanout. By analogy, the push approach is called fanout-on-write, while the pull approach is called fanout-on-load.
+Let’s discuss different options for publishing feed data to users.</br></p>
+<ol>
+<li>
+<p><strong>&quot;Pull&quot; model or Fan-out-on-load:</strong> This method involves keeping all the recent feed data in memory so that users can pull it from the server whenever they need it. Clients can pull the feed data on a regular basis or manually whenever they need it. Possible problems with this approach are a) New data might not be shown to the users until they issue a pull request, b) It’s hard to find the right pull cadence, as most of the time pull requests will result in an empty response if there is no new data, causing waste of resources.</p>
+</li>
+<li>
+<p><strong>&quot;Push&quot; model or Fan-out-on-write:</strong> For a push system, once a user has published a post, we can immediately push this post to all the followers. The advantage is that when fetching feed you don’t need to go through your friend&#x27;s list and get feeds for each of them. It significantly reduces read operations. To efficiently handle this, users have to maintain a <a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling" target="_blank">Long Poll</a> request with the server for receiving the updates. A possible problem with this approach is that when a user has millions of followers (a celebrity-user) the server has to push updates to a lot of people.</p>
+</li>
+<li>
+<p><strong>Hybrid:</strong> An alternate method to handle feed data could be to use a hybrid approach, i.e., to do a combination of fan-out-on-write and fan-out-on-load. Specifically, we can stop pushing posts from users with a high number of followers (a celebrity user) and only push data for those users who have a few hundred (or thousand) followers. For celebrity users, we can let the followers pull the updates. Since the push operation can be extremely costly for users who have a lot of friends or followers, by disabling fanout for them, we can save a huge number of resources. Another alternate approach could be that, once a user publishes a post, we can limit the fanout to only her online friends. Also, to get benefits from both the approaches, a combination of &#x27;push to notify&#x27; and &#x27;pull for serving&#x27; end-users is a great way to go. Purely a push or pull model is less versatile.</p>
+</li>
+</ol>
+<p><strong>How many feed items can we return to the client in each request?</strong> We should have a maximum limit for the number of items a user can fetch in one request (say 20). But, we should let the client specify how many feed items they want with each request as the user may like to fetch a different number of posts depending on the device (mobile vs. desktop).</p>
+<p><strong>Should we always notify users if there are new posts available for their newsfeed?</strong> It could be useful for users to get notified whenever new data is available. However, on mobile devices, where data usage is relatively expensive, it can consume unnecessary bandwidth. Hence, at least for mobile devices, we can choose not to push data, instead, let users “Pull to Refresh” to get new posts.</p>
+<h2>8. Feed Ranking</h2>
+<p>The most straightforward way to rank posts in a newsfeed is by the creation time of the posts, but today’s ranking algorithms are doing a lot more than that to ensure “important” posts are ranked higher. The high-level idea of ranking is first to select key “signals” that make a post important and then to find out how to combine them to calculate a final ranking score.</p>
+<p>More specifically, we can select features that are relevant to the importance of any feed item, e.g., number of likes, comments, shares, time of the update, whether the post has images/videos, etc., and then, a score can be calculated using these features. This is generally enough for a simple ranking system. A better ranking system can significantly improve itself by constantly evaluating if we are making progress in user stickiness, retention, ads revenue, etc.</p>
+<h2>9. Data Partitioning</h2>
+<p><strong>a. Sharding posts and metadata</strong><br>
+Since we have a huge number of new posts every day and our read load is extremely high too, we need to distribute our data onto multiple machines such that we can read/write it efficiently. For sharding our databases that are storing posts and their metadata, we can have a similar design as discussed under &#x27;Designing Twitter&#x27;.</br></p>
+<p><strong>b.    Sharding feed data</strong><br>
+For feed data, which is being stored in memory, we can partition it based on UserID. We can try storing all the data of a user on one server. When storing, we can pass the UserID to our hash function that will map the user to a cache server where we will store the user’s feed objects. Also, for any given user, since we don’t expect to store more than 500 FeedItemIDs, we will not run into a scenario where feed data for a user doesn’t fit on a single server. To get the feed of a user, we would always have to query only one server. For future growth and replication, we must use &#x27;Consistent Hashing&#x27;.</br></p></div>
+  
+
+<h2>7. Production Python Implementation: Dynamic Feed Re-Ranker</h2>
+    <pre><code>from typing import List, Dict
+
+class NewsfeedReRanker:
+    @staticmethod
+    def dynamic_rerank(candidate_posts: List[Dict], user_recent_signals: Dict[str, float]) -> List[Dict]:
+        """
+        candidate_posts: List of {'post_id': str, 'base_ml_score': float, 'content_type': str}
+        user_recent_signals: {'video': 1.25, 'image': 1.05, 'text': 0.80}
+        """
+        for post in candidate_posts:
+            multiplier = user_recent_signals.get(post['content_type'], 1.0)
+            post['final_score'] = post['base_ml_score'] * multiplier
+            
+        return sorted(candidate_posts, key=lambda x: x['final_score'], reverse=True)</code></pre>
+
+
+<h2>Production JavaScript (Node.js / TypeScript) Implementation: Dynamic Newsfeed Re-Ranker</h2>
+    <pre><code>// TypeScript Dynamic Newsfeed Edge Re-Ranker
+interface CandidatePost {
+    postId: string;
+    baseMlScore: number;
+    contentType: "video" | "image" | "text";
+    finalScore?: number;
+}
+
+export class NewsfeedReRanker {
+    public static dynamicReRank(
+        candidates: CandidatePost[],
+        userRealtimeBoosts: Record<string, number>
+    ): CandidatePost[] {
+        for (const post of candidates) {
+            const multiplier = userRealtimeBoosts[post.contentType] ?? 1.0;
+            post.finalScore = post.baseMlScore * multiplier;
+        }
+
+        return candidates.sort((a, b) => (b.finalScore ?? 0) - (a.finalScore ?? 0));
+    }
+}</code></pre>
+
+<div class="interview-tweak-box">
+  <div class="tweak-header">
+    <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+    <h3>Advanced Interview Follow-Ups &amp; Edge Cases</h3>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 1: "How do you incorporate real-time user actions (e.g., user just liked a video 2 seconds ago) into the ML ranking model without recomputing the entire feed?"</h4>
+    <p><strong>Mitigation: Dynamic Re-ranking Tier:</strong></p>
+    <ul>
+      <li>Pre-compute the top 200 candidate posts using the heavy offline ML model.</li>
+      <li>When the user requests the next page of their feed, pass the pre-computed candidates through a lightweight, in-memory <strong>Dynamic Re-ranker</strong> running on the Edge Gateway.</li>
+      <li>The re-ranker checks the user's last 5 actions in Redis and applies real-time contextual boosts (e.g., +25% boost to video content if the user recently engaged with video).</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Designing Yelp or Nearby Friends</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Yelp &amp; Nearby Friends: Geospatial QuadTree &amp; Geohash Spatial Index</div>
+    <div class="diagram-badge">Geospatial</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradYelp" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- Proximity Search Request -->
+    <rect x="0" y="50" width="120" height="85" rx="8" fill="url(#gradYelp)" stroke="#ef4444" stroke-width="1.8"/>
+    <text x="60" y="82" fill="#f87171" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">NEARBY SEARCH</text>
+    <text x="60" y="102" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Lat, Lng, Rad=5km</text>
+
+    <!-- QuadTree / Geohash Index Service -->
+    <rect x="180" y="15" width="220" height="165" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="290" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">GEOSPATIAL QUADTREE INDEX</text>
+    <rect x="195" y="55" width="190" height="35" rx="3" fill="#78350f"/>
+    <text x="290" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">2D Space Recursive 4-Way Split</text>
+    <rect x="195" y="95" width="190" height="35" rx="3" fill="#1e293b"/>
+    <text x="290" y="115" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Leaf Node Cap: &lt;= 500 Places</text>
+    <rect x="195" y="135" width="190" height="35" rx="3" fill="#064e3b"/>
+    <text x="290" y="155" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">In-Memory Redis Geohash / H3</text>
+
+    <!-- Places Metadata DB -->
+    <rect x="460" y="25" width="180" height="145" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+    <text x="550" y="52" fill="#c7d2fe" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">PLACES DB (POSTGIS / MYSQL)</text>
+    <rect x="475" y="65" width="150" height="40" rx="3" fill="#0f172a"/>
+    <text x="550" y="85" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">PlaceID, Name, Reviews</text>
+    <text x="550" y="98" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Spatial R-Tree Index</text>
+    <rect x="475" y="112" width="150" height="40" rx="3" fill="#312e81"/>
+    <text x="550" y="132" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Read-Heavy Replication (10x)</text>
+
+    <!-- Results Response -->
+    <rect x="690" y="50" width="120" height="85" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+    <text x="750" y="82" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">TOP PLACES</text>
+    <text x="750" y="102" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">Sorted by Distance</text>
+
+    <!-- Connectors -->
+    <path d="M 120 92 L 180 92" stroke="#ef4444" stroke-width="2.5" class="flow-line"/>
+    <path d="M 400 92 L 460 92" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 640 92 L 690 92" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Recursively subdivides 2D geographical space into hierarchical QuadTree nodes, capping leaf nodes to 500 places for rapid logarithmic radius searches.
+  </div>
+</div>
+
+
+    <div><h2>1. Why Yelp or Proximity Server?</h2>
+<p>Proximity servers are used to discover nearby attractions like places, events, etc. If you haven’t used yelp.com before, please try it before proceeding (you can search for nearby restaurants, theaters, etc.) and spend some time understanding different options that the website offers. This will help you a lot in understanding this chapter better.</p>
+<h3>Try it yourself</h3>
+<p>Before looking at the solution, try designing it:</p></div><div><h3>Designing Yelp (video)</h3>
+<p>Here is a video discussing how to design Yelp or Proximity Server:</p></div><div><h2>2. Requirements and Goals of the System</h2>
+<p><strong>What do we wish to achieve from a Yelp like service?</strong> Our service will be storing information about different places so that users can perform a search on them. Upon querying, our service will return a list of places around the user.</p>
+<p>Our Yelp-like service should meet the following requirements:</p>
+<p><strong>Functional Requirements:</strong></p>
+<ol>
+<li>Users should be able to add/delete/update Places.</li>
+<li>Given their location (longitude/latitude), users should be able to find all nearby places within a given radius.</li>
+<li>Users should be able to add feedback/review about a place. The feedback can have pictures, text, and a rating.</li>
+</ol>
+<p><strong>Non-functional Requirements:</strong></p>
+<ol>
+<li>Users should have a real-time search experience with minimum latency.</li>
+<li>Our service should support a heavy search load. There will be a lot of search requests compared to adding a new place.</li>
+</ol>
+<h2>3. Scale Estimation</h2>
+<p>Let&#x27;s build our system assuming that we have 500M places and 100K queries per second (QPS). Let&#x27;s also assume a 20% growth in the number of places and QPS each year.</p>
+<h2>4. Database Schema</h2>
+<p>Each Place can have the following fields:</p>
+<ol>
+<li>LocationID (8 bytes): Uniquely identifies a location.</li>
+<li>Name (256 bytes)</li>
+<li>Latitude (8 bytes)</li>
+<li>Longitude (8 bytes)</li>
+<li>Description (512 bytes)</li>
+<li>Category (1 byte): E.g., coffee shop, restaurant, theater, etc.</li>
+</ol>
+<p>Although a four bytes number can uniquely identify 500M locations, with future growth in mind, we will go with 8 bytes for LocationID.</p>
+<p>Total size: 8 + 256 + 8 + 8 + 512 + 1 =&gt; 793 bytes</p>
+<p>We also need to store reviews, photos, and ratings of a Place. We can have a separate table to store reviews for Places:</p>
+<ol>
+<li>LocationID (8 bytes)</li>
+<li>ReviewID (4 bytes): Uniquely identifies a review, assuming any location will not have more than 2^32 reviews.</li>
+<li>ReviewText (512 bytes)</li>
+<li>Rating (1 byte): how many stars a place gets out of ten.</li>
+</ol>
+<p>Similarly, we can have a separate table to store photos for Places and Reviews.</p>
+<h2>5. System APIs</h2>
+<p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the API for searching:</p>
+<pre><div><div><code><span>search</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_terms</span><span>,</span><span> user_location</span><span>,</span><span> radius_filter</span><span>,</span><span> maximum_results_to_return</span><span>,</span><span> category_filter</span><span>,</span><span> sort</span><span>,</span><span> page_token</span><span>)</span></code></div></div></pre>
+<p><strong>Parameters:</strong><br>
+api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
+search_terms (string): A string containing the search terms.<br>
+user_location (string): Location of the user performing the search.<br>
+radius_filter (number): Optional search radius in meters.<br>
+maximum_results_to_return (number): Number of business results to return.<br>
+category_filter (string): Optional category to filter search results, e.g., Restaurants, Shopping Centers, etc.<br>
+sort (number): Optional sort mode: Best matched (0 - default), Minimum distance (1), Highest rated (2).<br>
+page_token (string): This token will specify a page in the result set that should be returned.</br></br></br></br></br></br></br></br></p>
+<p><strong>Returns:</strong> (JSON)<br>
+A JSON containing information about a list of businesses matching the search query. Each result entry will have the business name, address, category, rating, and thumbnail.</br></p>
+<h2>6. Basic System Design and Algorithm</h2>
+<p>At a high level, we need to store and index each dataset described above (places, reviews, etc.). For users to query this massive database, the indexing should be read efficient, since while searching for the nearby places users expect to see the results in real-time.</p>
+<p>Given that the location of a place doesn&#x27;t change that often, we don&#x27;t need to worry about frequent updates of the data. As a contrast, if we intend to build a service where objects do change their location frequently, e.g., people or taxis, then we might come up with a very different design.</p>
+<p>Let&#x27;s see what are different ways to store this data and also find out which method will suit best for our use cases:</p>
+<h3>a. SQL solution</h3>
+<p>One simple solution could be to store all the data in a database like MySQL. Each place will be stored in a separate row, uniquely identified by LocationID. Each place will have its longitude and latitude stored separately in two different columns, and to perform a fast search; we should have indexes on both these fields.</p>
+<p>To find all the nearby places of a given location (X, Y) within a radius &#x27;D&#x27;, we can query like this:</p>
+<center>Select * from Places where Latitude between X-D and X+D and Longitude between Y-D and Y+D</center>
+<p>The above query is not completely accurate, as we know that to find the distance between two points we have to use the distance formula (Pythagorean theorem), but for simplicity let&#x27;s take this.</p>
+<p><strong>How efficient would this query be?</strong> We have estimated 500M places to be stored in our service. Since we have two separate indexes, each index can return a huge list of places and performing an intersection on those two lists won&#x27;t be efficient. Another way to look at this problem is that there could be too many locations between &#x27;X-D&#x27; and &#x27;X+D&#x27;, and similarly between &#x27;Y-D&#x27; and &#x27;Y+D&#x27;. If we can somehow shorten these lists, it can improve the performance of our query.</p>
+<h3>b. Grids</h3>
+<p>We can divide the whole map into smaller grids to group locations into smaller sets. Each grid will store all the Places residing within a specific range of longitude and latitude. This scheme would enable us to query only a few grids to find nearby places. Based on a given location and radius, we can find all the neighboring grids and then query these grids to find nearby places.</p></div><div><p>Let&#x27;s assume that GridID (a four bytes number) would uniquely identify grids in our system.</p>
+<p><strong>What could be a reasonable grid size?</strong> Grid size could be equal to the distance we would like to query since we also want to reduce the number of grids. If the grid size is equal to the distance we want to query, then we only need to search within the grid which contains the given location and neighboring eight grids. Since our grids would be statically defined (from the fixed grid size), we can easily find the grid number of any location (lat, long) and its neighboring grids.</p>
+<p>In the database, we can store the GridID with each location and have an index on it, too, for faster searching. Now, our query will look like:</p>
+<center>Select * from Places where Latitude between X-D and X+D and Longitude between Y-D and Y+D and GridID in (GridID, GridID1, GridID2, ..., GridID8)</center>
+<p>This will undoubtedly improve the runtime of our query.</p>
+<p><strong>Should we keep our index in memory?</strong> Maintaining the index in memory will improve the performance of our service. We can keep our index in a hash table where &#x27;key&#x27; is the grid number and &#x27;value&#x27; is the list of places contained in that grid.</p>
+<p><strong>How much memory will we need to store the index?</strong> Let&#x27;s assume our search radius is 10 miles; given that the total area of the earth is around 200 million square miles, we will have 20 million grids. We would need a four bytes number to uniquely identify each grid and, since LocationID is 8 bytes, we would need 4GB of memory (ignoring hash table overhead) to store the index.</p>
+<center>
+(4 * 20M) + (8 * 500M) ~= 4 GB
+</center>
+<p>This solution can still run slow for those grids that have a lot of places since our places are not uniformly distributed among grids. We can have a thickly dense area with a lot of places, and on the other hand, we can have areas which are sparsely populated.</p>
+<p>This problem can be solved if we can dynamically adjust our grid size such that whenever we have a grid with a lot of places we break it down to create smaller grids. A couple of challenges with this approach could be: 1) how to map these grids to locations and 2) how to find all the neighboring grids of a grid.</p>
+<h3>c. Dynamic size grids</h3>
+<p>Let&#x27;s assume we don&#x27;t want to have more than 500 places in a grid so that we can have a faster searching. So, whenever a grid reaches this limit, we break it down into four grids of equal size and distribute places among them. This means thickly populated areas like downtown San Francisco will have a lot of grids, and sparsely populated area like the Pacific Ocean will have large grids with places only around the coastal lines.</p>
+<p><strong>What data-structure can hold this information?</strong> A tree in which each node has four children can serve our purpose. Each node will represent a grid and will contain information about all the places in that grid. If a node reaches our limit of 500 places, we will break it down to create four child nodes under it and distribute places among them. In this way, all the leaf nodes will represent the grids that cannot be further broken down. So leaf nodes will keep a list of places with them. This tree structure in which each node can have four children is called a <a href="https://en.wikipedia.org/wiki/Quadtree" target="_blank">QuadTree</a>.</p></div><div><p><strong>How will we build a QuadTree?</strong> We will start with one node that will represent the whole world in one grid. Since it will have more than 500 locations, we will break it down into four nodes and distribute locations among them. We will keep repeating this process with each child node until there are no nodes left with more than 500 locations.</p>
+<p><strong>How will we find the grid for a given location?</strong> We will start with the root node and search downward to find our required node/grid. At each step, we will see if the current node we are visiting has children. If it has, we will move to the child node that contains our desired location and repeat this process. If the node does not have any children, then that is our desired node.</p>
+<p><strong>How will we find neighboring grids of a given grid?</strong> Since only leaf nodes contain a list of locations, we can connect all leaf nodes with a doubly linked list. This way we can iterate forward or backward among the neighboring leaf nodes to find out our desired locations. Another approach for finding adjacent grids would be through parent nodes. We can keep a pointer in each node to access its parent, and since each parent node has pointers to all of its children, we can easily find siblings of a node. We can keep expanding our search for neighboring grids by going up through the parent pointers.</p>
+<p>Once we have nearby LocationIDs, we can query the backend database to find details about those places.</p>
+<p><strong>What will be the search workflow?</strong> We will first find the node that contains the user&#x27;s location. If that node has enough desired places, we can return them to the user. If not, we will keep expanding to the neighboring nodes (either through the parent pointers or doubly linked list) until either we find the required number of places or exhaust our search based on the maximum radius.</p>
+<p><strong>How much memory will be needed to store the QuadTree?</strong>
+For each Place, if we cache only LocationID and Lat/Long, we would need 12GB to store all places.</p>
+<center>
+24 * 500M =&gt; 12 GB
+</center>
+<p>Since each grid can have a maximum of 500 places, and we have 500M locations, how many total grids we will have?</p>
+<center>
+500M / 500 =&gt; 1M grids
+</center>
+<p>Which means we will have 1M leaf nodes and they will be holding 12GB of location data. A QuadTree with 1M leaf nodes will have approximately 1/3rd internal nodes, and each internal node will have 4 pointers (for its children). If each pointer is 8 bytes, then the memory we need to store all internal nodes would be:</p>
+<center>
+1M * 1/3 * 4 * 8 = 10 MB
+</center>
+<p>So, total memory required to hold the whole QuadTree would be 12.01GB. This can easily fit into a modern-day server.</p>
+<p><strong>How would we insert a new Place into our system?</strong> Whenever a new Place is added by a user, we need to insert it into the databases as well as in the QuadTree. If our tree resides on one server, it is easy to add a new Place, but if the QuadTree is distributed among different servers, first we need to find the grid/server of the new Place and then add it there (discussed in the next section).</p>
+<h2>7. Data Partitioning</h2>
+<p>What if we have a huge number of places such that our index does not fit into a single machine’s memory? With 20% growth each year we will reach the memory limit of the server in the future. Also, what if one server cannot serve the desired read traffic? To resolve these issues, we must partition our QuadTree!</p>
+<p>We will explore two solutions here (both of these partitioning schemes can be applied to databases, too):</p>
+<p><strong>a. Sharding based on regions:</strong>
+We can divide our places into regions (like zip codes), such that all places belonging to a region will be stored on a fixed node. To store a place we will find the server through its region and, similarly, while querying for nearby places we will ask the region server that contains user&#x27;s location. This approach has a couple of issues:</p>
+<ol>
+<li>What if a region becomes hot? There would be a lot of queries on the server holding that region, making it perform slow. This will affect the performance of our service.</li>
+<li>Over time, some regions can end up storing a lot of places compared to others. Hence, maintaining a uniform distribution of places, while regions are growing is quite difficult.</li>
+</ol>
+<p>To recover from these situations, either we have to repartition our data or use consistent hashing.</p>
+<p><strong>b. Sharding based on LocationID:</strong>
+Our hash function will map each LocationID to a server where we will store that place. While building our QuadTree, we will iterate through all the places and calculate the hash of each LocationID to find a server where it would be stored. To find places near a location, we have to query all servers and each server will return a set of nearby places. A centralized server will aggregate these results to return them to the user.</p>
+<p><strong>Will we have different QuadTree structure on different partitions?</strong> Yes, this can happen since it is not guaranteed that we will have an equal number of places in any given grid on all partitions. However, we do make sure that all servers have approximately an equal number of Places. This different tree structure on different servers will not cause any issue though, as we will be searching all the neighboring grids within the given radius on all partitions.</p>
+<p>The remaining part of this chapter assumes that we have partitioned our data based on LocationID.</p>
+<h2>8. Replication and Fault Tolerance</h2>
+<p>Having replicas of QuadTree servers can provide an alternate to data partitioning. To distribute read traffic, we can have replicas of each QuadTree server. We can have a primary-secondary configuration where replicas (secondaries) will only serve read traffic; all write traffic will first go to the primary and then applied to secondaries. Secondaries might not have some recently inserted places (a few milliseconds delay will be there), but this could be acceptable.</p>
+<p>What will happen when a QuadTree server dies? We can have a secondary replica of each server and, if the primary dies, it can take control after the failover. Both primary and secondary servers will have the same QuadTree structure.</p>
+<p><strong>What if both primary and secondary servers die at the same time?</strong> We have to allocate a new server and rebuild the same QuadTree on it. How can we do that, since we don&#x27;t know what places were kept on this server? The brute-force solution would be to iterate through the whole database and filter LocationIDs using our hash function to figure out all the required places that will be stored on this server. This would be inefficient and slow; also, during the time when the server is being rebuilt, we will not be able to serve any query from it, thus missing some places that should have been seen by users.</p>
+<p><strong>How can we efficiently retrieve a mapping between Places and QuadTree server?</strong> We have to build a reverse index that will map all the Places to their QuadTree server. We can have a separate QuadTree Index server that will hold this information. We will need to build a HashMap where the &#x27;key&#x27; is the QuadTree server number and the &#x27;value&#x27; is a HashSet containing all the Places being kept on that QuadTree server. We need to store LocationID and Lat/Long with each place because information servers can build their QuadTrees through this. Notice that we are keeping Places&#x27; data in a HashSet, this will enable us to add/remove Places from our index quickly. So now, whenever a QuadTree server needs to rebuild itself, it can simply ask the QuadTree Index server for all the Places it needs to store. This approach will surely be quite fast. We should also have a replica of the QuadTree Index server for fault tolerance. If a QuadTree Index server dies, it can always rebuild its index from iterating through the database.</p></div><div><h2>9. Cache</h2>
+<p>To deal with hot Places, we can introduce a cache in front of our database. We can use an off-the-shelf solution like Memcache, which can store all data about hot places. Application servers, before hitting the backend database, can quickly check if the cache has that Place. Based on clients’ usage pattern, we can adjust how many cache servers we need. For cache eviction policy, Least Recently Used (LRU) seems suitable for our system.</p>
+<h2>10. Load Balancing (LB)</h2>
+<p>We can add LB layer at two places in our system 1) Between Clients and Application servers and 2) Between Application servers and Backend server. Initially, a simple Round Robin approach can be adopted; that will distribute all incoming requests equally among backend servers. This LB is simple to implement and does not introduce any overhead. Another benefit of this approach is if a server is dead the load balancer will take it out of the rotation and will stop sending any traffic to it.</p>
+<p>A problem with Round Robin LB is, it won’t take server load into consideration. If a server is overloaded or slow, the load balancer will not stop sending new requests to that server. To handle this, a more intelligent LB solution would be needed that periodically queries backend server about their load and adjusts traffic based on that.</p>
+<h2>11. Ranking</h2>
+<p>How about if we want to rank the search results not just by proximity but also by popularity or relevance?</p>
+<p><strong>How can we return most popular places within a given radius?</strong> Let&#x27;s assume we keep track of the overall popularity of each place. An aggregated number can represent this popularity in our system, e.g., how many stars a place gets out of ten (this would be an average of different rankings given by users)? We will store this number in the database as well as in the QuadTree. While searching for the top 100 places within a given radius, we can ask each partition of the QuadTree to return the top 100 places with maximum popularity. Then the aggregator server can determine the top 100 places among all the places returned by different partitions.</p>
+<p>Remember that we didn&#x27;t build our system to update place&#x27;s data frequently. With this design, how can we modify the popularity of a place in our QuadTree?
+Although we can search a place and update its popularity in the QuadTree, it would take a lot of resources and can affect search requests and system throughput. Assuming the popularity of a place is not expected to reflect in the system within a few hours, we can decide to update it once or twice a day, especially when the load on the system is minimum.</p>
+<p>Our next problem, &#x27;Designing Uber backend&#x27;, discusses dynamic updates of the QuadTree in detail.</p></div>
+  
+
+<h2>7. Production Python Implementation: Dynamic QuadTree Spatial Index</h2>
+    <pre><code>class QuadTreeNode:
+    def __init__(self, x_min, y_min, x_max, y_max, capacity=100):
+        self.bounds = (x_min, y_min, x_max, y_max)
+        self.capacity = capacity
+        self.places = []
+        self.children = None
+
+    def insert(self, place: dict) -> bool:
+        x, y = place['lon'], place['lat']
+        x_min, y_min, x_max, y_max = self.bounds
+        
+        if not (x_min <= x <= x_max and y_min <= y <= y_max):
+            return False
+            
+        if len(self.places) < self.capacity and not self.children:
+            self.places.append(place)
+            return True
+            
+        if not self.children:
+            self._subdivide()
+            
+        for child in self.children:
+            if child.insert(place):
+                return True
+        return False
+
+    def _subdivide(self):
+        x_min, y_min, x_max, y_max = self.bounds
+        x_mid = (x_min + x_max) / 2
+        y_mid = (y_min + y_max) / 2
+        
+        self.children = [
+            QuadTreeNode(x_min, y_min, x_mid, y_mid, self.capacity),
+            QuadTreeNode(x_mid, y_min, x_max, y_mid, self.capacity),
+            QuadTreeNode(x_min, y_mid, x_mid, y_max, self.capacity),
+            QuadTreeNode(x_mid, y_mid, x_max, y_max, self.capacity)
+        ]
+        for p in self.places:
+            for child in self.children:
+                child.insert(p)
+        self.places = []</code></pre>
+
+
+<h2>Production JavaScript (Node.js / TypeScript) Implementation: Dynamic QuadTree Spatial Index</h2>
+    <pre><code>// TypeScript Dynamic QuadTree Spatial Partitioning
+interface Place {
+    id: string;
+    lat: number;
+    lon: number;
+}
+
+export class QuadTreeNode {
+    public bounds: { xMin: number; yMin: number; xMax: number; yMax: number };
+    public capacity: number;
+    public places: Place[] = [];
+    public children: QuadTreeNode[] | null = null;
+
+    constructor(xMin: number, yMin: number, xMax: number, yMax: number, capacity = 100) {
+        this.bounds = { xMin, yMin, xMax, yMax };
+        this.capacity = capacity;
+    }
+
+    public insert(place: Place): boolean {
+        const { lon: x, lat: y } = place;
+        const { xMin, yMin, xMax, yMax } = this.bounds;
+
+        if (x < xMin || x > xMax || y < yMin || y > yMax) return false;
+
+        if (this.places.length < this.capacity && !this.children) {
+            this.places.push(place);
+            return true;
+        }
+
+        if (!this.children) this.subdivide();
+
+        for (const child of this.children!) {
+            if (child.insert(place)) return true;
+        }
+        return false;
+    }
+
+    private subdivide(): void {
+        const { xMin, yMin, xMax, yMax } = this.bounds;
+        const xMid = (xMin + xMax) / 2;
+        const yMid = (yMin + yMax) / 2;
+
+        this.children = [
+            new QuadTreeNode(xMin, yMin, xMid, yMid, this.capacity),
+            new QuadTreeNode(xMid, yMin, xMax, yMid, this.capacity),
+            new QuadTreeNode(xMin, yMid, xMid, yMax, this.capacity),
+            new QuadTreeNode(xMid, yMid, xMax, yMax, this.capacity)
+        ];
+
+        for (const p of this.places) {
+            for (const child of this.children) child.insert(p);
+        }
+        this.places = [];
+    }
+}</code></pre>
+
+<div class="interview-tweak-box">
+  <div class="tweak-header">
+    <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+    <h3>Advanced Interview Follow-Ups &amp; Edge Cases</h3>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 1: "How do you handle QuadTree node rebalancing in hyper-dense urban areas like Manhattan vs. sparse rural farmland?"</h4>
+    <p><strong>Mitigation: Dynamic QuadTree Sub-division:</strong></p>
+    <ul>
+      <li>Set a hard capacity limit of 500 places per QuadTree leaf node.</li>
+      <li>In Manhattan, a single block may subdivide 10 times to keep leaf nodes $\le 500$, providing high spatial granularity.</li>
+      <li>In rural areas, a single leaf node may span an entire county (100km &times; 100km).</li>
+      <li>QuadTree nodes in RAM are updated with copy-on-write pointers to allow lock-free concurrent radius traversals.</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Designing Uber backend</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Uber Backend: DISCO In-Memory H3 Hexagon Location &amp; Dispatch Engine</div>
+    <div class="diagram-badge">Ride Matching</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradUber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- Driver Pings -->
+    <rect x="0" y="50" width="120" height="85" rx="8" fill="url(#gradUber)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="60" y="80" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">DRIVER APP</text>
+    <text x="60" y="100" fill="#93c5fd" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Ping Lat, Lng (4s)</text>
+
+    <!-- Location Ingestion Gateway -->
+    <rect x="180" y="20" width="190" height="155" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="275" y="48" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">LOCATION INGESTION (WS)</text>
+    <rect x="195" y="60" width="160" height="40" rx="3" fill="#78350f"/>
+    <text x="275" y="82" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Kafka Topic: "driver-locations"</text>
+    <text x="275" y="94" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Millions of pings per sec</text>
+    <rect x="195" y="108" width="160" height="45" rx="3" fill="#1e293b"/>
+    <text x="275" y="128" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Batched Buffer &amp; Flush</text>
+    <text x="275" y="142" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Smooths erratic GPS drift</text>
+
+    <!-- In-Memory Geospatial Hexagon Index (H3 / DISCO) -->
+    <rect x="420" y="20" width="200" height="155" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+    <text x="520" y="48" fill="#c7d2fe" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">DISCO LOCATION BUFFER</text>
+    <rect x="435" y="60" width="170" height="40" rx="3" fill="#312e81"/>
+    <text x="520" y="80" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Uber H3 Hexagonal Grid Index</text>
+    <text x="520" y="92" fill="#6ee7b7" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Hex ID ➔ [Driver_1, Driver_2]</text>
+    <rect x="435" y="108" width="170" height="45" rx="3" fill="#0f172a"/>
+    <text x="520" y="128" fill="#fbbf24" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Match &amp; Dispatch Algorithm</text>
+    <text x="520" y="142" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">K-Ring neighbor search</text>
+
+    <!-- Rider Dispatch Match -->
+    <rect x="670" y="50" width="130" height="85" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+    <text x="735" y="80" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RIDER MATCH</text>
+    <text x="735" y="100" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">Dispatches nearest ETA</text>
+
+    <!-- Connectors -->
+    <path d="M 120 92 L 180 92" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 370 92 L 420 92" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+    <path d="M 620 92 L 670 92" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Ingests millions of GPS pings per second into an in-memory H3 hexagonal spatial index to compute nearest driver ETAs with zero database bottleneck.
+  </div>
+</div>
+
+
+    <div><h2>1. What is Uber?</h2>
+<p>Uber enables its customers to book drivers for taxi rides. Uber drivers use their personal cars to drive customers around. Both customers and drivers communicate with each other through their smartphones using the Uber app.</p>
+<h3>Try it yourself</h3>
+<p>Before looking at the solution, try designing it:</p></div><div><h3>Designing Uber (video)</h3>
+<p>Here is a video discussing how to design Uber:</p></div><div><h2>2. Requirements and Goals of the System</h2>
+<p>Let’s start with building a simpler version of Uber.</p>
+<p>There are two types of users in our system: 1) Drivers 2) Customers.</p>
+<ul>
+<li>Drivers need to regularly notify the service about their current location and their availability to pick passengers.</li>
+<li>Passengers get to see all the nearby available drivers.</li>
+<li>Customer can request a ride; nearby drivers are notified that a customer is ready to be picked up.</li>
+<li>Once a driver and a customer accept a ride, they can constantly see each other&#x27;s current location until the trip finishes.</li>
+<li>Upon reaching the destination, the driver marks the journey complete to become available for the next ride.</li>
+</ul>
+<h2>3. Capacity Estimation and Constraints</h2>
+<ul>
+<li>Let&#x27;s assume we have 300M customers and 1M drivers with 1M daily active customers and 500K daily active drivers.</li>
+<li>Let&#x27;s assume 1M daily rides.</li>
+<li>Let’s assume that all active drivers notify their current location every three seconds.</li>
+<li>Once a customer puts in a request for a ride, the system should be able to contact drivers in real-time.</li>
+</ul>
+<h2>4. Basic System Design and Algorithm</h2>
+<p>We will take the solution discussed in &#x27;Designing Yelp&#x27; and modify it to make it work for the above-mentioned &quot;Uber&quot; use cases. The biggest difference we have is that our QuadTree was not built keeping in mind that there would be frequent updates to it. So, we have two issues with our Dynamic Grid solution:</p>
+<ul>
+<li>Since all active drivers are reporting their locations every three seconds, we need to update our data structures to reflect that. If we have to update the QuadTree for every change in the driver&#x27;s position, it will take a lot of time and resources. To update a driver to its new location, we must find the right grid based on the driver&#x27;s previous location. If the new position does not belong to the current grid, we must remove the driver from the current grid and move/reinsert the user to the correct grid. After this move, if the new grid reaches the maximum limit of drivers, we have to repartition it.</li>
+<li>We need to have a quick mechanism to propagate the current location of all the nearby drivers to any active customer in that area. Also, when a ride is in progress, our system needs to notify both the driver and passenger about the current location of the car.</li>
+</ul>
+<p>Although our QuadTree helps us find nearby drivers quickly, a fast update in the tree is not guaranteed.</p>
+<p><strong>Do we need to modify our QuadTree every time a driver reports their location?</strong> If we don&#x27;t update our QuadTree with every update from the driver, it will have some old data and will not reflect the current location of drivers correctly. If you recall, our purpose of building the QuadTree was to find nearby drivers (or places) efficiently. Since all active drivers report their location every three seconds, therefore there will be a lot more updates happening to our tree than querying for nearby drivers. So, what if we keep the latest position reported by all drivers in a hash table and update our QuadTree a little less frequently? Let&#x27;s assume we guarantee that a driver&#x27;s current location will be reflected in the QuadTree within 15 seconds. Meanwhile, we will maintain a hash table that will store the current location reported by drivers; let&#x27;s call this DriverLocationHT.</p>
+<p><strong>How much memory we need for DriverLocationHT?</strong>
+We need to store DriveID, their present and old location, in the hash table. So, we need a total of 35 bytes to store one record:</p>
+<ol>
+<li>DriverID (3 bytes - 1 million drivers)</li>
+<li>Old latitude (8 bytes)</li>
+<li>Old longitude (8 bytes)</li>
+<li>New latitude (8 bytes)</li>
+<li>New longitude (8 bytes)
+Total = 35 bytes</li>
+</ol>
+<p>If we have 1 million total drivers, we need the following memory (ignoring hash table overhead):</p>
+<center>
+1 million * 35 bytes =&gt; 35 MB
+</center>
+<p><strong>How much bandwidth will our service consume to receive location updates from all drivers?</strong>
+If we get DriverID and their location, it will be (3+16 =&gt; 19 bytes). If we receive this information every three seconds from 500K daily active drivers, we will be getting 9.5MB per three seconds.</p>
+<p><strong>Do we need to distribute DriverLocationHT onto multiple servers?</strong> Although our memory and bandwidth requirements don&#x27;t require this, since all this information can easily be stored on one server but, for scalability, performance, and fault tolerance, we should distribute DriverLocationHT onto multiple servers. We can distribute based on the DriverID to make the distribution completely random. Let&#x27;s call the machines holding DriverLocationHT the Driver Location server. Other than storing the driver&#x27;s location, each of these servers will do two things:</p>
+<ol>
+<li>As soon as the server receives an update for a driver&#x27;s location, they will broadcast that information to all the interested customers.</li>
+<li>The server needs to notify the respective QuadTree server to refresh the driver&#x27;s location. As discussed above, this can happen every 15 seconds.</li>
+</ol>
+<p><strong>How can we efficiently broadcast the driver&#x27;s location to customers?</strong> We can have a <strong>Push Model</strong> where the server will push the positions to all the relevant users. We can have a dedicated Notification Service that can broadcast drivers&#x27; current location to all the interested customers. We can build our Notification service on a publisher/subscriber model. When customers open the Uber app on their cell phones, they query the server to find nearby drivers. On the server-side, before returning the list of drivers to the customer, we will subscribe the customer for all the updates from those drivers. We can maintain a list of customers (subscribers) interested in knowing the location of a driver and, whenever we have an update in DriverLocationHT for that driver, we can broadcast the current location of the driver to all subscribed customers. This way, our system makes sure that we always show the driver&#x27;s current position to the customer.</p>
+<p><strong>How much memory will we need to store all these subscriptions?</strong> As we have estimated above, we will have 1M daily active customers and 500K daily active drivers. On average, let&#x27;s assume that five customers subscribe to one driver. Let&#x27;s assume we store all this information in a hash table so that we can update it efficiently. We need to store driver and customer IDs to maintain the subscriptions. Assuming we will need 3 bytes for DriverID and 8 bytes for CustomerID, we will need 21MB of memory.</p>
+<center>
+(500K * 3) + (500K * 5 * 8 ) ~= 21 MB
+</center>
+<p><strong>How much bandwidth will we need to broadcast the driver&#x27;s location to customers?</strong> For every active driver, we have five subscribers, so the total subscribers we have:</p>
+<center>
+5 * 500K =&gt; 2.5M
+</center>
+<p>To all these customers we need to send DriverID (3 bytes) and their location (16 bytes) every second, so, we need the following bandwidth:</p>
+<center>
+2.5M * 19 bytes =&gt; 47.5 MB/s
+</center>
+<p><strong>How can we efficiently implement the Notification service?</strong> We can either use HTTP long polling or push notifications.</p>
+<p><strong>How will the new publishers/drivers get added for a current customer?</strong> As we have proposed above, customers will be subscribed to nearby drivers when they open the Uber app for the first time; what will happen when a new driver enters the area the customer is looking at? To add a new customer/driver subscription dynamically, we need to keep track of the area the customer is watching. This will make our solution complicated; what if,  instead of pushing this information, clients pull it from the server?</p>
+<p><strong>How about if clients pull information about nearby drivers from the server?</strong> Clients can send their current location, and the server will find all the nearby drivers from the QuadTree to return them to the client. Upon receiving this information, the client can update their screen to reflect the current positions of the drivers. Clients can query every five seconds to limit the number of round trips to the server. This solution looks simpler compared to the push model described above.</p>
+<p><strong>Do we need to repartition a grid as soon as it reaches the maximum limit?</strong> We can have a cushion to let each grid grow a little bigger beyond the limit before we decide to partition it. Let&#x27;s say our grids can grow/shrink an extra 10% before we partition/merge them. This should decrease the load for a grid partition or merge on high traffic grids.</p></div><div><p><strong>How would &quot;Request Ride&quot; use case work?</strong></p>
+<ol>
+<li>The customer will put a request for a ride.</li>
+<li>One of the Aggregator servers will take the request and asks QuadTree servers to return nearby drivers.</li>
+<li>The Aggregator server collects all the results and sorts them by ratings.</li>
+<li>The Aggregator server will send a notification to the top (say three) drivers simultaneously, whichever driver accepts the request first will be assigned the ride. The other drivers will receive a cancellation request. If none of the three drivers respond, the Aggregator will request a ride from the next three drivers from the list.</li>
+<li>Once a driver accepts a request, the customer is notified.</li>
+</ol>
+<h2>5. Fault Tolerance and Replication</h2>
+<p><strong>What if a Driver Location server or Notification server dies?</strong> We would need replicas of these servers, so that if the primary dies the secondary can take control. Also, we can store this data in some persistent storage like SSDs that can provide fast IOs; this will ensure that if both primary and secondary servers die we can recover the data from the persistent storage.</p>
+<h2>6. Ranking</h2>
+<p>How about if we want to rank the search results not just by proximity but also by popularity or relevance?</p>
+<p><strong>How can we return top rated drivers within a given radius?</strong> Let&#x27;s assume we keep track of the overall ratings of each driver in our database and QuadTree. An aggregated number can represent this popularity in our system, e.g., how many stars does a driver get out of ten? While searching for the top 10 drivers within a given radius, we can ask each partition of the QuadTree to return the top 10 drivers with a maximum rating. The aggregator server can then determine the top 10 drivers among all the drivers returned by different partitions.</p>
+<h2>7. Advanced Issues</h2>
+<ol>
+<li>How will we handle clients on slow and disconnecting networks?</li>
+<li>What if a client gets disconnected when they are a part of a ride? How will we handle billing in such a scenario?</li>
+<li>How about if clients pull all the information, compared to servers always pushing it?</li>
+</ol></div>
+  
+
+<h2>7. Production Python Implementation: Uber Dynamic Surge Pricing Calculator</h2>
+    <pre><code>from typing import Dict
+
+class UberSurgeEngine:
+    SURGE_THRESHOLD = 1.25  # Riders outnumber drivers by > 25%
+
+    @classmethod
+    def calculate_hex_surge_multiplier(cls, rider_searches: int, available_drivers: int) -> float:
+        if available_drivers == 0:
+            return 3.0  # Max surge cap
+            
+        supply_demand_ratio = rider_searches / available_drivers
+        if supply_demand_ratio <= cls.SURGE_THRESHOLD:
+            return 1.0  # Base fare
+            
+        # Exponential surge scaling capped at 3.0x
+        surge = 1.0 + (supply_demand_ratio - cls.SURGE_THRESHOLD) * 0.5
+        return min(3.0, round(surge, 1))</code></pre>
+
+
+<h2>Production JavaScript (Node.js / TypeScript) Implementation: Uber Dynamic Surge Calculator</h2>
+    <pre><code>// TypeScript Uber Surge Pricing Engine
+export class UberSurgeEngine {
+    private static readonly SURGE_THRESHOLD = 1.25;
+
+    public static calculateSurgeMultiplier(riderSearches: number, activeDrivers: number): number {
+        if (activeDrivers === 0) return 3.0; // Max surge cap
+
+        const ratio = riderSearches / activeDrivers;
+        if (ratio <= this.SURGE_THRESHOLD) {
+            return 1.0; // Base fare
+        }
+
+        const rawSurge = 1.0 + (ratio - this.SURGE_THRESHOLD) * 0.5;
+        return Math.min(3.0, Math.round(rawSurge * 10) / 10);
+    }
+}</code></pre>
+
+<div class="interview-tweak-box">
+  <div class="tweak-header">
+    <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+    <h3>Advanced Interview Follow-Ups &amp; Edge Cases</h3>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 1: "How do you compute dynamic surge pricing in real-time across a city without lagging ride requests?"</h4>
+    <p><strong>Mitigation: Uber H3 Hexagonal Cell Aggregation:</strong></p>
+    <ul>
+      <li>Divide the city map into Uber H3 Hexagonal spatial cells (Resolution 8: ~460m edge length).</li>
+      <li>Stream driver GPS updates and rider app opens into Kafka topics partitioned by H3 cell ID.</li>
+      <li>A stream processor (Apache Flink) maintains a 15-second sliding window calculating: $	ext{Surge Ratio} = rac{	ext{Active Rider Searches}}{	ext{Available Drivers}}$.</li>
+      <li>If ratio exceeds 1.5, surge pricing is automatically set and cached in Redis with a 30-second TTL.</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Designing Ticketmaster</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">High-Concurrency Ticket Booking &amp; Temporary Lock Pipeline</div>
+    <div class="diagram-badge">Concurrency Control</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradTicket" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="20" y="20" width="800" height="220" rx="12" fill="url(#gradTicket)" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="420" y="48" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">HIGH-CONCURRENCY TICKET RESERVATION &amp; LOCKING PIPELINE</text>
+
+  <!-- Step 1: User Request -->
+  <g transform="translate(40, 75)">
+    <rect x="0" y="0" width="160" height="135" rx="8" fill="#1e1b4b" stroke="#38bdf8"/>
+    <text x="80" y="25" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">1. BOOKING REQUEST</text>
+    <rect x="15" y="40" width="130" height="35" rx="4" fill="#0f172a"/>
+    <text x="80" y="62" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">User: Select Seat 42A</text>
+    <rect x="15" y="85" width="130" height="35" rx="4" fill="#0369a1"/>
+    <text x="80" y="106" fill="#e0f2fe" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">POST /book/seat/42A</text>
+  </g>
+
+  <!-- Step 2: Distributed Lock (Redis Redlock) -->
+  <g transform="translate(240, 75)">
+    <rect x="0" y="0" width="220" height="135" rx="8" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="110" y="25" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">2. REDIS DISTRIBUTED LOCK</text>
+    <rect x="15" y="40" width="190" height="36" rx="4" fill="#0f172a"/>
+    <text x="110" y="58" fill="#fde68a" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">SET lock:seat:42A &lt;UUID&gt;</text>
+    <text x="110" y="70" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">NX EX 600 (10 Min TTL)</text>
+
+    <rect x="15" y="85" width="190" height="36" rx="4" fill="#1e293b"/>
+    <text x="110" y="102" fill="#38bdf8" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">Status: RESERVED_TEMP</text>
+    <text x="110" y="115" fill="#94a3b8" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">Prevents Double Booking</text>
+  </g>
+
+  <!-- Step 3: Payment & Final Settlement -->
+  <g transform="translate(500, 75)">
+    <rect x="0" y="0" width="300" height="135" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="150" y="25" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">3. PAYMENT &amp; DB COMMIT</text>
+    <rect x="15" y="40" width="270" height="36" rx="4" fill="#0f172a"/>
+    <text x="150" y="58" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">✔ Payment Success: Mark Seat CONFIRMED</text>
+    <text x="150" y="70" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Release Redis Lock &amp; Issue Ticket</text>
+
+    <rect x="15" y="85" width="270" height="36" rx="4" fill="#450a0a"/>
+    <text x="150" y="102" fill="#fca5a5" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">❌ Payment Timeout / Fail: Auto-Expire TTL</text>
+    <text x="150" y="115" fill="#f87171" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Seat reverts back to AVAILABLE</text>
+  </g>
+
+  <!-- Flow Connectors -->
+  <path d="M 200 142 L 240 142" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+  <path d="M 460 142 L 500 142" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Ticket booking platforms use atomic distributed locks (Redis SETNX with TTL) to reserve seats temporarily while users complete payment, preventing race conditions and double bookings.
+  </div>
+</div>
+
+
+    <div><h2>1. What is an online movie ticket booking system?</h2>
+<p>A movie ticket booking system provides its customers the ability to purchase theatre seats online. E-ticketing systems allow the customers to browse through movies currently being played and to book seats, anywhere anytime.</p>
+<h3>Try it yourself</h3>
+<p>Before looking at the solution, try designing it:</p></div><div><h3>Designing Ticketmaster (video)</h3>
+<p>Here is a video discussing how to design Ticketmaster:</p></div><div><h2>2. Requirements and Goals of the System</h2>
+<p>Our ticket booking service should meet the following requirements:</p>
+<p><strong>Functional Requirements:</strong></p>
+<ol>
+<li>Our ticket booking service should be able to list different cities where its affiliate cinemas are located.</li>
+<li>Once the user selects the city, the service should display the movies released in that particular city.</li>
+<li>Once the user selects a movie, the service should display the cinemas running that movie and its available showtimes.</li>
+<li>The user should be able to choose a show at a particular cinema and book their tickets.</li>
+<li>The service should be able to show the user the seating arrangement of the cinema hall. The user should be able to select multiple seats according to their preference.</li>
+<li>The user should be able to distinguish available seats from booked ones.</li>
+<li>Users should be able to put a hold on the seats for five minutes before they make a payment to finalize the booking.</li>
+<li>The user should be able to wait if there is a chance that the seats might become available, e.g., when holds by other users expire.</li>
+<li>Waiting customers should be serviced in a fair, first come, first serve manner.</li>
+</ol>
+<p><strong>Non-Functional Requirements:</strong></p>
+<ol>
+<li>The system would need to be highly concurrent. There will be multiple booking requests for the same seat at any particular point in time. The service should handle this gracefully and fairly.</li>
+<li>The core thing of the service is ticket booking, which means financial transactions. This means that the system should be secure and the database ACID compliant.</li>
+</ol>
+<h2>3. Some Design Considerations</h2>
+<ol>
+<li>For simplicity, let’s assume our service does not require any user authentication.</li>
+<li>The system will not handle partial ticket orders. Either user gets all the tickets they want or they get nothing.</li>
+<li>Fairness is mandatory for the system.</li>
+<li>To stop system abuse, we can restrict users from booking more than ten seats at a time.</li>
+<li>We can assume that traffic would spike on popular/much-awaited movie releases and the seats would fill up pretty fast. The system should be scalable and highly available to keep up with the surge in traffic.</li>
+</ol>
+<h2>4. Capacity Estimation</h2>
+<p><strong>Traffic estimates:</strong>
+Let’s assume that our service has 3 billion page views per month and sells 10 million tickets a month.</p>
+<p><strong>Storage estimates:</strong> Let’s assume that we have 500 cities and, on average each city has ten cinemas. If there are 2000 seats in each cinema and on average, there are two shows every day.</p>
+<p>Let’s assume each seat booking needs 50 bytes (IDs, NumberOfSeats, ShowID, MovieID, SeatNumbers, SeatStatus, Timestamp, etc.) to store in the database. We would also need to store information about movies and cinemas; let’s assume it’ll take 50 bytes. So, to store all the data about all shows of all cinemas of all cities for a day:</p>
+<center>
+500 cities * 10 cinemas * 2000 seats * 2 shows * (50+50) bytes = 2GB / day
+</center>
+<p>To store five years of this data, we would need around 3.6TB.</p>
+<h2>5. System APIs</h2>
+<p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the APIs to search movie shows and reserve seats.</p>
+<pre><div><div><code><span>SearchMovies</span><span>(</span><span>api_dev_key</span><span>,</span><span> keyword</span><span>,</span><span> city</span><span>,</span><span> lat_long</span><span>,</span><span> radius</span><span>,</span><span> start_datetime</span><span>,</span><span> end_datetime</span><span>,</span><span> postal_code</span><span>,</span><span> includeSpellcheck</span><span>,</span><span> results_per_page</span><span>,</span><span> sorting_order</span><span>)</span></code></div></div></pre>
+<p><strong>Parameters:</strong><br>
+<strong>api_dev_key (string):</strong> The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
+<strong>keyword (string):</strong> Keyword to search on.<br>
+<strong>city (string):</strong> City to filter movies by.<br>
+<strong>lat_long (string):</strong> Latitude and longitude to filter by.<br>
+<strong>radius (number):</strong> Radius of the area in which we want to search for events.<br>
+<strong>start_datetime (string):</strong> Filter movies with a starting datetime.<br>
+<strong>end_datetime (string):</strong> Filter movies with an ending datetime.<br>
+<strong>postal_code (string):</strong> Filter movies by postal code / zipcode.<br>
+<strong>includeSpellcheck (Enum: &quot;yes&quot; or &quot;no&quot;):</strong> Yes, to include spell check suggestions in the response.<br>
+<strong>results_per_page (number):</strong> Number of results to return per page. Maximum is 30.<br>
+<strong>sorting_order (string):</strong> Sorting order of the search result. Some allowable values : &#x27;name,asc&#x27;, &#x27;name,desc&#x27;, &#x27;date,asc&#x27;, &#x27;date,desc&#x27;, &#x27;distance,asc&#x27;, &#x27;name,date,asc&#x27;, &#x27;name,date,desc&#x27;, &#x27;date,name,asc&#x27;, &#x27;date,name,desc&#x27;.</br></br></br></br></br></br></br></br></br></br></br></p>
+<p><strong>Returns: (JSON)</strong><br>
+Here is a sample list of movies and their shows:</br></p>
+<pre><div><div><code><span>{</span><span>
+</span><span>    </span><span>&quot;MovieID&quot;</span><span>:</span><span> </span><span>1</span><span>,</span><span>
+</span><span>    </span><span>&quot;ShowID&quot;</span><span>:</span><span> </span><span>1</span><span>,</span><span>
+</span><span>    </span><span>&quot;Title&quot;</span><span>:</span><span> </span><span>&quot;Cars 2&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Description&quot;</span><span>:</span><span> </span><span>&quot;About cars&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Duration&quot;</span><span>:</span><span> </span><span>120</span><span>,</span><span>
+</span><span>    </span><span>&quot;Genre&quot;</span><span>:</span><span> </span><span>&quot;Animation&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Language&quot;</span><span>:</span><span> </span><span>&quot;English&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;ReleaseDate&quot;</span><span>:</span><span> </span><span>&quot;8th Oct. 2014&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Country&quot;</span><span>:</span><span> </span><span>USA</span><span>,</span><span>
+</span><span>    </span><span>&quot;StartTime&quot;</span><span>:</span><span> </span><span>&quot;14:00&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;EndTime&quot;</span><span>:</span><span> </span><span>&quot;16:00&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Seats&quot;</span><span>:</span><span> 
+</span><span>    </span><span>[</span><span>
+</span><span>    </span><span>{</span><span>  
+</span><span>        </span><span>&quot;Type&quot;</span><span>:</span><span> </span><span>&quot;Regular&quot;</span><span>
+</span><span>        </span><span>&quot;Price&quot;</span><span>:</span><span> </span><span>14.99</span><span>
+</span><span>        </span><span>&quot;Status: &quot;</span><span>Almost</span><span> </span><span>Full</span><span>&quot;
+</span><span>    </span><span>}</span><span>,</span><span>
+</span><span>    </span><span>{</span><span>  
+</span><span>        </span><span>&quot;Type&quot;</span><span>:</span><span> </span><span>&quot;Premium&quot;</span><span>
+</span><span>        </span><span>&quot;Price&quot;</span><span>:</span><span> </span><span>24.99</span><span>
+</span><span>        </span><span>&quot;Status: &quot;</span><span>Available</span><span>&quot;
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>]</span><span>
+</span><span></span><span>}</span><span>,</span><span>
+</span><span></span><span>{</span><span>
+</span><span>    </span><span>&quot;MovieID&quot;</span><span>:</span><span> </span><span>1</span><span>,</span><span>
+</span><span>    </span><span>&quot;ShowID&quot;</span><span>:</span><span> </span><span>2</span><span>,</span><span>
+</span><span>    </span><span>&quot;Title&quot;</span><span>:</span><span> </span><span>&quot;Cars 2&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Description&quot;</span><span>:</span><span> </span><span>&quot;About cars&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Duration&quot;</span><span>:</span><span> </span><span>120</span><span>,</span><span>
+</span><span>    </span><span>&quot;Genre&quot;</span><span>:</span><span> </span><span>&quot;Animation&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Language&quot;</span><span>:</span><span> </span><span>&quot;English&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;ReleaseDate&quot;</span><span>:</span><span> </span><span>&quot;8th Oct. 2014&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Country&quot;</span><span>:</span><span> </span><span>USA</span><span>,</span><span>
+</span><span>    </span><span>&quot;StartTime&quot;</span><span>:</span><span> </span><span>&quot;16:30&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;EndTime&quot;</span><span>:</span><span> </span><span>&quot;18:30&quot;</span><span>,</span><span>
+</span><span>    </span><span>&quot;Seats&quot;</span><span>:</span><span> 
+</span><span>    </span><span>[</span><span>
+</span><span>        </span><span>{</span><span>  
+</span><span>        </span><span>&quot;Type&quot;</span><span>:</span><span> </span><span>&quot;Regular&quot;</span><span>
+</span><span>        </span><span>&quot;Price&quot;</span><span>:</span><span> </span><span>14.99</span><span>
+</span><span>        </span><span>&quot;Status: &quot;</span><span>Full</span><span>&quot;
+</span><span>    </span><span>}</span><span>,</span><span>
+</span><span>        </span><span>{</span><span>  
+</span><span>        </span><span>&quot;Type&quot;</span><span>:</span><span> </span><span>&quot;Premium&quot;</span><span>
+</span><span>        </span><span>&quot;Price&quot;</span><span>:</span><span> </span><span>24.99</span><span>
+</span><span>        </span><span>&quot;Status: &quot;</span><span>Almost</span><span> </span><span>Full</span><span>&quot;
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span>]</span><span>
+</span><span></span><span>}</span></code></div></div></pre>
+<pre><div><div><code><span>ReserveSeats</span><span>(</span><span>api_dev_key</span><span>,</span><span> session_id</span><span>,</span><span> movie_id</span><span>,</span><span> show_id</span><span>,</span><span> seats_to_reserve</span><span>[</span><span>]</span><span>)</span></code></div></div></pre>
+<p><strong>Parameters:</strong><br>
+<strong>api_dev_key (string):</strong> same as above<br>
+<strong>session_id (string):</strong> User&#x27;s session ID to track this reservation. Once the reservation time expires, user&#x27;s reservation on the server will be removed using this ID.<br>
+<strong>movie_id (string):</strong> Movie to reserve.<br>
+<strong>show_id (string):</strong> Show to reserve.<br>
+<strong>seats_to_reserve (number):</strong> An array containing seat IDs to reserve.</br></br></br></br></br></p>
+<p><strong>Returns:</strong> (JSON)<br>
+Returns the status of the reservation, which would be one of the following: 1) &quot;Reservation Successful&quot; 2) &quot;Reservation Failed - Show Full,&quot; 3) &quot;Reservation Failed - Retry, as other users are holding reserved seats&quot;.</br></p>
+<h2>6. Database Design</h2>
+<p>Here are a few observations about the data we are going to store:</p>
+<ol>
+<li>Each City can have multiple Cinemas.</li>
+<li>Each Cinema will have multiple halls.</li>
+<li>Each Movie will have many Shows and each Show will have multiple Bookings.</li>
+<li>A user can have multiple bookings.</li>
+</ol></div><div><h2>7. High Level Design</h2>
+<p>At a high-level, our web servers will manage users’ sessions and application servers will handle all the ticket management, storing data in the databases as well as working with the cache servers to process reservations.</p></div><div><h2>8. Detailed Component Design</h2>
+<p>First, let’s try to build our service assuming it is being served from a single server.</p>
+<p><strong>Ticket Booking Workflow:</strong> The following would be a typical ticket booking workflow:</p>
+<ol>
+<li>The user searches for a movie.</li>
+<li>The user selects a movie.</li>
+<li>The user is shown the available shows of the movie.</li>
+<li>The user selects a show.</li>
+<li>The user selects the number of seats to be reserved.</li>
+<li>If the required number of seats are available, the user is shown a map of the theater to select seats. If not, the user is taken to ‘step 8’ below.</li>
+<li>Once the user selects the seat, the system will try to reserve those selected seats.</li>
+<li>If seats can’t be reserved, we have the following options:</li>
+</ol>
+<ul>
+<li>Show is full; the user is shown the error message.</li>
+<li>The seats the user wants to reserve are no longer available, but there are other seats available, so the user is taken back to the theater map to choose different seats.</li>
+<li>There are no seats available to reserve, but all the seats are not booked yet, as there are some seats that other users are holding in the reservation pool and have not booked yet. The user will be taken to a waiting page where they can wait until the required seats get freed from the reservation pool. This waiting could result in the following options:
+<ul>
+<li>If the required number of seats become available, the user is taken to the theater map page where they can choose seats.</li>
+<li>While waiting, if all seats get booked or there are fewer seats in the reservation pool than the user intends to book, the user is shown the error message.</li>
+<li>User cancels the waiting and is taken back to the movie search page.</li>
+<li>At maximum, a user can wait one hour, after that user’s session gets expired and the user is taken back to the movie search page.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>If seats are reserved successfully, the user has five minutes to pay for the reservation. After payment, the booking is marked complete. If the user is not able to pay within five minutes, all their reserved seats are freed to become available to other users.</li>
+</ol></div><div><p><strong>How would the server keep track of all the active reservations that haven’t been booked yet? And how would the server keep track of all the waiting customers?</strong><br>
+We need two daemon services, one to keep track of all active reservations and remove any expired reservation from the system; let’s call it <strong>ActiveReservationService</strong>. The other service would be keeping track of all the waiting user requests and, as soon as the required number of seats become available, it will notify the (the longest waiting) user to choose the seats; let’s call it <strong>WaitingUserService</strong>.</br></p>
+<h3>a. ActiveReservationsService</h3>
+<p>We can keep all the reservations of a &#x27;show&#x27; in memory in a data structure similar to <a href="https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html" target="_blank">Linked HashMap</a> or a <a href="https://docs.oracle.com/javase/6/docs/api/java/util/TreeMap.html" target="_blank">TreeMap</a> in addition to keeping all the data in the database. We will need a linked HashMap kind of data structure that allows us to jump to any reservation to remove it when the booking is complete. Also, since we will have expiry time associated with each reservation, the head of the HashMap will always point to the oldest reservation record so that the reservation can be expired when the timeout is reached.</p>
+<p>To store every reservation for every show, we can have a HashTable where the ‘key’ would be ‘ShowID’, and the ‘value’ would be the Linked HashMap containing ‘BookingID’ and creation ‘Timestamp’.</p>
+<p>In the database, we will store the reservation in the ‘Booking’ table and the expiry time will be in the Timestamp column. The ‘Status’ field will have a value of ‘Reserved (1)’ and, as soon as a booking is complete, the system will update the ‘Status’ to ‘Booked (2)’ and remove the reservation record from the Linked HashMap of the relevant show. When the reservation is expired, we can either remove it from the Booking table or mark it ‘Expired (3)’ in addition to removing it from memory.</p>
+<p>ActiveReservationsService will also work with the external financial service to process user payments.
+Whenever a booking is completed, or a reservation gets expired, WaitingUsersService will get a signal so that any waiting customer can be served.</p></div><div><h3>b. WaitingUsersService</h3>
+<p>Just like ActiveReservationsService, we can keep all the waiting users of a show in memory in a Linked HashMap or a TreeMap. We need a data structure similar to Linked HashMap so that we can jump to any user to remove them from the HashMap when the user cancels their request. Also, since we are serving in a first-come-first-serve manner, the head of the Linked HashMap would always be pointing to the longest waiting user, so that whenever seats become available, we can serve users in a fair manner.</p>
+<p>We will have a HashTable to store all the waiting users for every Show. The ‘key’ would be &#x27;ShowID, and the ‘value’ would be a Linked HashMap containing ‘UserIDs’ and their wait-start-time.</p>
+<p>Clients can use <a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling" target="_blank">Long Polling</a> for keeping themselves updated for their reservation status. Whenever seats become available, the server can use this request to notify the user.</p>
+<p><strong>Reservation Expiration</strong><br>
+On the server, ActiveReservationsService keeps track of expiry (based on reservation time) of active reservations. As the client will be shown a timer (for the expiration time), which could be a little out of sync with the server, we can add a buffer of five seconds on the server to safeguard from a broken experience, such that the client never times out after the server, preventing a successful purchase.</br></p>
+<h2>9. Concurrency</h2>
+<p><strong>How to handle concurrency, such that no two users are able to book the same seat.</strong>
+We can use transactions in SQL databases to avoid any clashes. For example, if we are using an SQL server we can utilize <a href="https://docs.microsoft.com/en-us/sql/odbc/reference/develop-app/transaction-isolation-levels" target="_blank">Transaction Isolation Levels</a> to lock the rows before we can update them. Here is the sample code:</p>
+<pre><div><div><code><span>SET</span><span> </span><span>TRANSACTION</span><span> </span><span>ISOLATION</span><span> </span><span>LEVEL</span><span> </span><span>SERIALIZABLE</span><span>;</span><span>
+</span>
+<span></span><span>BEGIN</span><span> </span><span>TRANSACTION</span><span>;</span><span>
+</span>
+<span>    </span><span>-- Suppose we intend to reserve three seats (IDs: 54, 55, 56) for ShowID=99 </span><span>
+</span><span>    </span><span>Select</span><span> </span><span>*</span><span> </span><span>From</span><span> Show_Seat </span><span>where</span><span> ShowID</span><span>=</span><span>99</span><span> </span><span>&amp;&amp;</span><span> ShowSeatID </span><span>in</span><span> </span><span>(</span><span>54</span><span>,</span><span> </span><span>55</span><span>,</span><span> </span><span>56</span><span>)</span><span> </span><span>&amp;&amp;</span><span> </span><span>Status</span><span>=</span><span>0</span><span> </span><span>-- free </span><span>
+</span>
+<span>    </span><span>-- if the number of rows returned by the above statement is three, we can update to </span><span>
+</span><span>    </span><span>-- return success otherwise return failure to the user.</span><span>
+</span><span>    </span><span>update</span><span> Show_Seat </span><span>.</span><span>.</span><span>.</span><span>
+</span><span>    </span><span>update</span><span> Booking </span><span>.</span><span>.</span><span>.</span><span>
+</span>
+<span></span><span>COMMIT</span><span> </span><span>TRANSACTION</span><span>;</span></code></div></div></pre>
+<p>&#x27;Serializable&#x27; is the highest isolation level and guarantees safety from <a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads" target="_blank">Dirty</a>, <a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads" target="_blank">Nonrepeatable</a>, and <a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads" target="_blank">Phantoms</a> reads. One thing to note here; within a transaction, if we read rows, we get a write lock on them so that they can&#x27;t be updated by anyone else.</p>
+<p>Once the above database transaction is successful, we can start tracking the reservation in ActiveReservationService.</p>
+<h2>10. Fault Tolerance</h2>
+<p><strong>What happens when ActiveReservationsService or WaitingUsersService crashes?</strong><br>
+Whenever ActiveReservationsService crashes, we can read all the active reservations from the ‘Booking’ table. Remember that we keep the ‘Status’ column as ‘Reserved (1)’ until a reservation gets booked. Another option is to have a primary-secondary configuration so that, when the primary crashes, the secondary can take over. We are not storing the waiting users in the database, so, when WaitingUsersService crashes, we don’t have any means to recover that data unless we have a primary-secondary setup.</br></p>
+<p>Similarly, we&#x27;ll have a primary-secondary setup for databases to make them fault-tolerant.</p>
+<h2>11. Data Partitioning</h2>
+<p><strong>Database partitioning:</strong> If we partition by ‘MovieID’, then all the Shows of a movie will be on a single server. For a very hot movie, this could cause a lot of load on that server. A better approach would be to partition based on ShowID; this way, the load gets distributed among different servers.</p>
+<p><strong>ActiveReservationService and WaitingUserService partitioning:</strong> Our web servers will manage all the active users’ sessions and handle all the communication with the users. We can use the Consistent Hashing to allocate application servers for both ActiveReservationService and WaitingUserService based upon the ‘ShowID’. This way, all reservations and waiting users of a particular show will be handled by a certain set of servers. Let’s assume for load balancing our &#x27;Consistent Hashing&#x27; allocates three servers for any Show, so whenever a reservation is expired, the server holding that reservation will do the following things:</p>
+<ol>
+<li>Update the database to remove the Booking (or mark it expired) and update the seats’ Status in ‘Show_Seats’ table.</li>
+<li>Remove the reservation from the Linked HashMap.</li>
+<li>Notify the user that their reservation has expired.</li>
+<li>Broadcast a message to all WaitingUserService servers that are holding waiting users of that Show to figure out the longest waiting user. Consistent Hashing scheme will tell what servers are holding these users.</li>
+<li>Send a message to the WaitingUserService server holding the longest waiting user to process their request if required seats have become available.</li>
+</ol>
+<p>Whenever a reservation is successful, following things will happen:</p>
+<ol>
+<li>The server holding that reservation sends a message to all servers holding the waiting users of that Show, so that those servers can expire all the waiting users that need more seats than the available seats.</li>
+<li>Upon receiving the above message, all servers holding the waiting users will query the database to find how many free seats are available now. A database cache would greatly help here to run this query only once.</li>
+<li>Expire all waiting users who want to reserve more seats than the available seats. For this, WaitingUserService has to iterate through the Linked HashMap of all the waiting users.</li>
+</ol></div>
+  
+
+<h2>7. Production Implementation: Atomic Seat Reservation (Redis Lua)</h2>
+    <pre><code>-- Redis Lua Script: Atomic Ticket Hold
+local seat_key = KEYS[1]
+local user_id = ARGV[1]
+local hold_ttl = tonumber(ARGV[2]) -- e.g. 600 seconds
+
+local current_owner = redis.call('GET', seat_key)
+if not current_owner then
+    redis.call('SET', seat_key, user_id, 'EX', hold_ttl)
+    return 1 -- Reservation Successful
+else
+    return 0 -- Seat already held/sold (409 Conflict)
+end</code></pre>
+
+
+<h2>Production JavaScript (Node.js / ioredis) Implementation: Atomic Seat Reservation</h2>
+    <pre><code>// Node.js Atomic Seat Reservation with ioredis
+import Redis from "ioredis";
+
+export class TicketmasterSeatService {
+    private redis: Redis;
+
+    constructor(redisClient: Redis) {
+        this.redis = redisClient;
+    }
+
+    async reserveSeat(eventId: string, seatId: string, userId: string, holdSeconds = 600): Promise<boolean> {
+        const key = `seat:${eventId}:${seatId}`;
+        // Atomic SET if Not eXists with expiration
+        const result = await this.redis.set(key, userId, "NX", "EX", holdSeconds);
+        return result === "OK";
+    }
+}</code></pre>
+
+<div class="interview-tweak-box">
+  <div class="tweak-header">
+    <span class="tweak-badge">STAFF INTERVIEW TWEAK &amp; CURVEBALLS</span>
+    <h3>Advanced Interview Follow-Ups &amp; Edge Cases</h3>
+  </div>
+
+  <div class="tweak-item">
+    <h4>Curveball 1: "What happens when 500,000 users click 'Buy Seat A1' at the exact same millisecond during a Taylor Swift concert flash sale?"</h4>
+    <p><strong>Mitigation: Atomic Redis Distributed Lock (SETNX) &amp; Token Admission:</strong></p>
+    <ul>
+      <li><strong>Virtual Waiting Room:</strong> 99% of users are held in a virtual token queue at the Cloudflare edge; only a controlled rate (e.g., 5,000 users/sec) is admitted into the seat selection API.</li>
+      <li><strong>Atomic Lock:</strong> The seat reservation service executes: <code>SET seat:{event_id}:{seat_id} {user_id} NX EX 600</code> (10-minute hold).</li>
+      <li>The single user whose command returns <code>OK</code> receives the reservation; all other 499,999 requests receive an instantaneous <code>409 Seat Taken</code> without touching the persistent database!</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_06_classic_system_design_problems__part_2_') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_06_classic_system_design_problems__part_2_', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

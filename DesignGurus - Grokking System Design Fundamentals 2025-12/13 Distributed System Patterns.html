@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed System Patterns - System Design Guide</title>
+    <meta property="og:title" content="Distributed System Patterns - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Distributed System Patterns</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (8)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="difference between longpolling, websockets, and serversent events"><a href="#chapter-01"><span class="chapter-num">01</span> Difference Between LongPolling, WebSockets, and ServerSent Events</a></li>
+<li class="sidebar-item" data-num="02" data-title="what is quorum"><a href="#chapter-02"><span class="chapter-num">02</span> What is Quorum</a></li>
+<li class="sidebar-item" data-num="03" data-title="what is heartbeat"><a href="#chapter-03"><span class="chapter-num">03</span> What is Heartbeat</a></li>
+<li class="sidebar-item" data-num="04" data-title="what is checksum"><a href="#chapter-04"><span class="chapter-num">04</span> What is Checksum</a></li>
+<li class="sidebar-item" data-num="05" data-title="uses of checksum"><a href="#chapter-05"><span class="chapter-num">05</span> Uses of Checksum</a></li>
+<li class="sidebar-item" data-num="06" data-title="what is leader and follower pattern"><a href="#chapter-06"><span class="chapter-num">06</span> What is Leader and Follower Pattern</a></li>
+<li class="sidebar-item" data-num="07" data-title="what is security and privacy"><a href="#chapter-07"><span class="chapter-num">07</span> What is Security and Privacy</a></li>
+<li class="sidebar-item" data-num="08" data-title="the dual-write problem, transactional outbox &amp; idempotency keys"><a href="#chapter-08"><span class="chapter-num">08</span> The Dual-Write Problem, Transactional Outbox &amp; Idempotency Keys</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Difference Between LongPolling, WebSockets, and ServerSent Events</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Long-Polling, WebSockets, and Server-Sent Events are popular communication protocols between a client like a web browser and a web server. First, let’s start with understanding what a standard HTTP web request looks like. Following are a sequence of events for regular HTTP request:</p>
+<ol>
+<li>The client opens a connection and requests data from the server.</li>
+<li>The server calculates the response.</li>
+<li>The server sends the response back to the client on the opened request.</li>
+</ol></div><div><h2>Ajax Polling</h2>
+<p>Polling is a standard technique used by the vast majority of AJAX applications. The basic idea is that the client repeatedly polls (or requests) a server for data. The client makes a request and waits for the server to respond with data. If no data is available, an empty response is returned.</p>
+<ol>
+<li>The client opens a connection and requests data from the server using regular HTTP.</li>
+<li>The requested webpage sends requests to the server at regular intervals (e.g., 0.5 seconds).</li>
+<li>The server calculates the response and sends it back, just like regular HTTP traffic.</li>
+<li>The client repeats the above three steps periodically to get updates from the server.</li>
+</ol>
+<p>The problem with Polling is that the client has to keep asking the server for any new data. As a result, a lot of responses are empty, creating HTTP overhead.</p></div><div><h2>HTTP Long-Polling</h2>
+<p>This is a variation of the traditional polling technique that allows the server to push information to a client whenever the data is available. With Long-Polling, the client requests information from the server exactly as in normal polling, but with the expectation that the server may not respond immediately. That’s why this technique is sometimes referred to as a &quot;Hanging GET&quot;.</p>
+<ul>
+<li>If the server does not have any data available for the client, instead of sending an empty response, the server holds the request and waits until some data becomes available.</li>
+<li>Once the data becomes available, a full response is sent to the client. The client then immediately re-request information from the server so that the server will almost always have an available waiting request that it can use to deliver data in response to an event.</li>
+</ul>
+<p>The basic life cycle of an application using HTTP Long-Polling is as follows:</p>
+<ol>
+<li>The client makes an initial request using regular HTTP and then waits for a response.</li>
+<li>The server delays its response until an update is available or a timeout has occurred.</li>
+<li>When an update is available, the server sends a full response to the client.</li>
+<li>The client typically sends a new long-poll request, either immediately upon receiving a response or after a pause to allow an acceptable latency period.</li>
+<li>Each Long-Poll request has a timeout. The client has to reconnect periodically after the connection is closed due to timeouts.</li>
+</ol></div><div><h2>WebSockets</h2>
+<p>WebSocket provides <a href="https://en.wikipedia.org/wiki/Duplex_(telecommunications)#Full_duplex" target="_blank">Full duplex</a> communication channels over a single TCP connection. It provides a persistent connection between a client and a server that both parties can use to start sending data at any time. The client establishes a WebSocket connection through a process known as the WebSocket handshake. If the process succeeds, then the server and client can exchange data in both directions at any time.
+The WebSocket protocol enables communication between a client and a server with lower overheads, facilitating real-time data transfer from and to the server. This is made possible by providing a standardized way for the server to send content to the browser without being asked by the client and allowing for messages to be passed back and forth while keeping the connection open. In this way, a two-way (bi-directional) ongoing conversation can take place between a client and a server.</p></div><div><h2>Server-Sent Events (SSEs)</h2>
+<p>Under SSEs the client establishes a persistent and long-term connection with the server. The server uses this connection to send data to a client. If the client wants to send data to the server, it would require the use of another technology/protocol to do so.</p>
+<ol>
+<li>Client requests data from a server using regular HTTP.</li>
+<li>The requested webpage opens a connection to the server.</li>
+<li>The server sends the data to the client whenever there&#x27;s new information available.</li>
+</ol>
+<p>SSEs are best when we need real-time traffic from the server to the client or if the server is generating data in a loop and will be sending multiple events to the client.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">What is Quorum</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Background</h2>
+<p>In Distributed Systems, data is replicated across multiple servers for fault tolerance and high availability. Once a system decides to maintain multiple copies of data, another problem arises: how to make sure that all replicas are consistent, i.e., if they all have the latest copy of the data and that all clients see the same view of the data?</p>
+<h2>Solution</h2>
+<p>In a distributed environment, a quorum is the minimum number of servers on which a distributed operation needs to be performed successfully before declaring the operation&#x27;s overall success.</p>
+<p>Suppose a database is replicated on five machines. In that case, quorum refers to the minimum number of machines that perform the same action (commit or abort) for a given transaction in order to decide the final operation for that transaction. So, in a set of 5 machines, three machines form the majority quorum, and if they agree, we will commit that operation. Quorum enforces the consistency requirement needed for distributed operations.</p>
+<p>In systems with multiple replicas, there is a possibility that the user reads inconsistent data. For example, when there are three replicas, <code>R1</code>, <code>R2</code>, and <code>R3</code> in a cluster, and a user writes value <code>v1</code> to replica <code>R1</code>. Then another user reads from replica <code>R2</code> or <code>R3</code> which are still behind <code>R1</code> and thus will not have the value <code>v1</code>, so the second user will not get the consistent state of data.</p>
+<p><strong>What value should we choose for a quorum?</strong> More than half of the number of nodes in the cluster: <span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="9.929ex" height="2.262ex" role="img" focusable="false" viewbox="0 -750 4388.4 1000" style="vertical-align:-0.566ex" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-1-TEX-I-1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path><path id="MJX-1-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-1-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-1-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-1-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-1-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="28" xlink:href="#MJX-1-TEX-N-28"></use></g><g transform="translate(389,0)" data-mml-node="mi"><use data-c="1D441" xlink:href="#MJX-1-TEX-I-1D441"></use></g><g transform="translate(1277,0)" data-mml-node="TeXAtom"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-1-TEX-N-2F"></use></g></g><g transform="translate(1777,0)" data-mml-node="mn"><use data-c="32" xlink:href="#MJX-1-TEX-N-32"></use></g><g transform="translate(2499.2,0)" data-mml-node="mo"><use data-c="2B" xlink:href="#MJX-1-TEX-N-2B"></use></g><g transform="translate(3499.4,0)" data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g><g transform="translate(3999.4,0)" data-mml-node="mo"><use data-c="29" xlink:href="#MJX-1-TEX-N-29"></use></g></g></g></svg></mjx-container></span> where <span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="2.009ex" height="1.545ex" role="img" focusable="false" viewbox="0 -683 888 683" style="vertical-align:0px" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-I-1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D441" xlink:href="#MJX-2-TEX-I-1D441"></use></g></g></g></svg></mjx-container></span> is the total number of nodes in the cluster, for example:</p>
+<ul>
+<li>In a 5-node cluster, three nodes must be online to have a majority.</li>
+<li>In a 4-node cluster, three nodes must be online to have a majority.</li>
+<li>With 5-node, the system can afford two node failures, whereas, with 4-node, it can afford only one node failure. Because of this logic, it is recommended to always have an odd number of total nodes in the cluster.</li>
+</ul>
+<p>Quorum is achieved when nodes follow the below protocol: <span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="11.88ex" height="1.731ex" role="img" focusable="false" viewbox="0 -683 5251 765" style="vertical-align:-0.186ex" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-I-1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path><path id="MJX-3-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-3-TEX-I-1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path><path id="MJX-3-TEX-N-3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path><path id="MJX-3-TEX-I-1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D445" xlink:href="#MJX-3-TEX-I-1D445"></use></g><g transform="translate(981.2,0)" data-mml-node="mo"><use data-c="2B" xlink:href="#MJX-3-TEX-N-2B"></use></g><g transform="translate(1981.4,0)" data-mml-node="mi"><use data-c="1D44A" xlink:href="#MJX-3-TEX-I-1D44A"></use></g><g transform="translate(3307.2,0)" data-mml-node="mo"><use data-c="3E" xlink:href="#MJX-3-TEX-N-3E"></use></g><g transform="translate(4363,0)" data-mml-node="mi"><use data-c="1D441" xlink:href="#MJX-3-TEX-I-1D441"></use></g></g></g></svg></mjx-container></span>, where:<br>
+<span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="2.009ex" height="1.545ex" role="img" focusable="false" viewbox="0 -683 888 683" style="vertical-align:0px" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D441" xlink:href="#MJX-4-TEX-I-1D441"></use></g></g></g></svg></mjx-container></span> = nodes in the quorum group<br>
+<span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="2.371ex" height="1.595ex" role="img" focusable="false" viewbox="0 -683 1048 705" style="vertical-align:-0.05ex" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-I-1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D44A" xlink:href="#MJX-5-TEX-I-1D44A"></use></g></g></g></svg></mjx-container></span> = minimum write nodes<br>
+<span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="1.717ex" height="1.593ex" role="img" focusable="false" viewbox="0 -683 759 704" style="vertical-align:-0.048ex" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D445" xlink:href="#MJX-6-TEX-I-1D445"></use></g></g></g></svg></mjx-container></span> = minimum read nodes</br></br></br></p>
+<p>If a distributed system follows <span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="11.88ex" height="1.731ex" role="img" focusable="false" viewbox="0 -683 5251 765" style="vertical-align:-0.186ex" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-7-TEX-I-1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path><path id="MJX-7-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-7-TEX-I-1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path><path id="MJX-7-TEX-N-3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path><path id="MJX-7-TEX-I-1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D445" xlink:href="#MJX-7-TEX-I-1D445"></use></g><g transform="translate(981.2,0)" data-mml-node="mo"><use data-c="2B" xlink:href="#MJX-7-TEX-N-2B"></use></g><g transform="translate(1981.4,0)" data-mml-node="mi"><use data-c="1D44A" xlink:href="#MJX-7-TEX-I-1D44A"></use></g><g transform="translate(3307.2,0)" data-mml-node="mo"><use data-c="3E" xlink:href="#MJX-7-TEX-N-3E"></use></g><g transform="translate(4363,0)" data-mml-node="mi"><use data-c="1D441" xlink:href="#MJX-7-TEX-I-1D441"></use></g></g></g></svg></mjx-container></span> rule, then every read will see at least one copy of the latest value written. For example, a common configuration could be (N=3, W=2, R=2) to ensure strong consistency. Here are a couple of other examples:</p>
+<ul>
+<li>(N=3, W=1, R=3): fast write, slow read, not very durable</li>
+<li>(N=3, W=3, R=1): slow write, fast read, durable</li>
+</ul>
+<p>The following two things should be kept in mind before deciding read/write quorum:</p>
+<ul>
+<li>R=1 and W=N ⇒ full replication (write-all, read-one): undesirable when servers can be unavailable because writes are not guaranteed to complete.</li>
+<li>Best performance (throughput/availability) when <span><mjx-container class="MathJax" jax="SVG"><svg xmlns="http://www.w3.org/2000/svg" width="14.18ex" height="1.597ex" role="img" focusable="false" viewbox="0 -666 6267.7 706" style="vertical-align:-0.09ex" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-8-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-8-TEX-N-3C" d="M694 -11T694 -19T688 -33T678 -40Q671 -40 524 29T234 166L90 235Q83 240 83 250Q83 261 91 266Q664 540 678 540Q681 540 687 534T694 519T687 505Q686 504 417 376L151 250L417 124Q686 -4 687 -5Q694 -11 694 -19Z"></path><path id="MJX-8-TEX-I-1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-8-TEX-I-1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path><path id="MJX-8-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use></g><g transform="translate(777.8,0)" data-mml-node="mo"><use data-c="3C" xlink:href="#MJX-8-TEX-N-3C"></use></g><g transform="translate(1833.6,0)" data-mml-node="mi"><use data-c="1D45F" xlink:href="#MJX-8-TEX-I-1D45F"></use></g><g transform="translate(2562.3,0)" data-mml-node="mo"><use data-c="3C" xlink:href="#MJX-8-TEX-N-3C"></use></g><g transform="translate(3618.1,0)" data-mml-node="mi"><use data-c="1D464" xlink:href="#MJX-8-TEX-I-1D464"></use></g><g transform="translate(4611.9,0)" data-mml-node="mo"><use data-c="3C" xlink:href="#MJX-8-TEX-N-3C"></use></g><g transform="translate(5667.7,0)" data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-8-TEX-I-1D45B"></use></g></g></g></svg></mjx-container></span>, because reads are more frequent than writes in most applications</li>
+</ul><style></style></div><div><h3>How It Works</h3>
+<ul>
+<li><strong>Majority-Based Quorum</strong>: The most common type of quorum where an operation requires a majority (more than half) of the nodes to agree or participate. For instance, in a system with 5 nodes, at least 3 must agree for a decision to be made.</li>
+<li><strong>Read and Write Quorums</strong>: For read and write operations, different quorum sizes can be defined. For example, a system might require a write quorum of 3 nodes and a read quorum of 2 nodes in a 5-node cluster.</li>
+</ul>
+<h2>Use Cases</h2>
+<h3>Distributed Databases</h3>
+<ul>
+<li>Ensuring consistency in a database cluster, where multiple nodes might hold copies of the same data.</li>
+</ul>
+<h3>Cluster Management</h3>
+<ul>
+<li>In server clusters, a quorum decides which nodes form the &#x27;active&#x27; cluster, especially important for avoiding &#x27;split-brain&#x27; scenarios where a cluster might be divided into two parts, each believing it is the active cluster.</li>
+</ul>
+<h3>Consensus Protocols</h3>
+<ul>
+<li>In algorithms like Paxos or Raft, a quorum is crucial for achieving consensus among distributed nodes regarding the state of the system or the outcome of an operation.</li>
+</ul>
+<h2>Advantages</h2>
+<ol>
+<li><strong>Fault Tolerance</strong>: Allows the system to tolerate a certain number of failures while still operating correctly.</li>
+<li><strong>Consistency</strong>: Helps maintain data consistency across distributed nodes.</li>
+<li><strong>Availability</strong>: Increases the availability of the system by allowing operations to proceed as long as the quorum condition is met.</li>
+</ol>
+<h2>Challenges</h2>
+<ol>
+<li><strong>Network Partitions</strong>: In cases of network failures, forming a quorum might be challenging, impacting system availability.</li>
+<li><strong>Performance Overhead</strong>: Achieving a quorum, especially in large clusters, can introduce latency in decision-making processes.</li>
+<li><strong>Complexity</strong>: Implementing and managing quorum-based systems can be complex, particularly in dynamic environments with frequent node or network changes.</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Quorum is a fundamental concept in distributed systems, playing a crucial role in ensuring consistency, reliability, and availability in environments where multiple nodes work together. While it enhances fault tolerance, it also introduces additional complexity and requires careful design and management to balance consistency, availability, and performance.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">What is Heartbeat</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Background</h2>
+<p>In a distributed environment, work/data is distributed among servers. To efficiently route requests in such a setup, servers need to know what other servers are part of the system. Furthermore, servers should know if other servers are alive and working. In a decentralized system, whenever a request arrives at a server, the server should have enough information to decide which server is responsible for entertaining that request. This makes the timely detection of server failure an important task, which also enables the system to take corrective actions and move the data/work to another healthy server and stop the environment from further deterioration.</p>
+<h2>Solution</h2>
+<p>Each server periodically sends a heartbeat message to a central monitoring server or other servers in the system to show that it is still alive and functioning.</p>
+<p>Heartbeating is one of the mechanisms for detecting failures in a distributed system. If there is a central server, all servers periodically send a heartbeat message to it. If there is no central server, all servers randomly choose a set of servers and send them a heartbeat message every few seconds. This way, if no heartbeat message is received from a server for a while, the system can suspect that the server might have crashed. If there is no heartbeat within a configured timeout period, the system can conclude that the server is not alive anymore and stop sending requests to it and start working on its replacement.</p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">What is Checksum</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Background</h2>
+<p>In a distributed system, while moving data between components, it is possible that the data fetched from a node may arrive corrupted. This corruption can occur because of faults in a storage device, network, software, etc. How can a distributed system ensure data integrity, so that the client receives an error instead of corrupt data?</p>
+<h2>Solution</h2>
+<p>Calculate a checksum and store it with data.</p>
+<p>To calculate a checksum, a cryptographic hash function like MD5, SHA-1, SHA-256, or SHA-512 is used. The hash function takes the input data and produces a string (containing letters and numbers) of fixed length; this string is called the checksum.</p>
+<p>When a system is storing some data, it computes a checksum of the data and stores the checksum with the data. When a client retrieves data, it verifies that the data it received from the server matches the checksum stored. If not, then the client can opt to retrieve that data from another replica.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Uses of Checksum</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Here are the top uses of checksum:</p>
+<ol>
+<li>
+<p><strong>Data Integrity Checks</strong>: Imagine sending a super-secret spy message - you wanna make sure it doesn’t get altered during transmission, right? Checksums ensure data hasn’t been tampered with during transmission by checking - you guessed it - the Checksum! If it doesn’t match, something’s fishy.</p>
+</li>
+<li>
+<p><strong>Error Detection</strong>: Ever download a file and it just won’t open? Checksums can help detect if a bit of data got scrambled during a download, helping systems know when they need to try downloading it again.</p>
+</li>
+<li>
+<p><strong>Data Retrieval and Verification</strong>: When you download software or a file from a website, they often provide a Checksum value. You can use this to verify the integrity of the data, ensuring that what you downloaded is exactly what the creators intended, no nasty surprises hiding inside!</p>
+</li>
+<li>
+<p><strong>Networking</strong>: In networking, Checksums help detect errors in packets of data sent over a network. If the arriving packet&#x27;s Checksum doesn’t match the one it was sent with, the packet can be rejected, ensuring no corrupted data gets through!</p>
+</li>
+<li>
+<p><strong>Secure Storage</strong>: In some databases, Checksums help maintain the integrity of the stored data. Periodically, the stored data is checked against the Checksum - if it doesn’t match, the system knows something’s amiss in the storage system!</p>
+</li>
+<li>
+<p><strong>Password Verification</strong>: Some systems store the Checksum of a password instead of the password itself. When you log in, the system runs the Checksum algorithm on the password you enter and checks that Checksum against the stored Checksum. If they match, you’re in! No need to store actual passwords, adding a layer of security!</p>
+</li>
+<li>
+<p><strong>Preventing Accidental Duplicates</strong>: Systems can use Checksums to prevent accidentally storing duplicate data. If two pieces of data have the same Checksum, they might be duplicates, saving storage space and preventing redundancy!</p>
+</li>
+</ol></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">What is Leader and Follower Pattern</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Raft Consensus Protocol &amp; Leader Election Term Lifecycle</div>
+    <div class="diagram-badge">Consensus Protocol</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradRaft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Raft Node Cluster -->
+  <g transform="translate(50, 20)">
+    <!-- Leader (Center Top) -->
+    <g transform="translate(180, 10)">
+      <circle cx="50" cy="50" r="40" fill="#1e1b4b" stroke="#f59e0b" stroke-width="2.5" class="glow-effect"/>
+      <text x="50" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">👑 LEADER</text>
+      <text x="50" y="60" fill="#fde68a" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">Term 4</text>
+      <text x="50" y="74" fill="#94a3b8" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">Node 1</text>
+    </g>
+
+    <!-- Follower 1 (Bottom Left) -->
+    <g transform="translate(40, 130)">
+      <circle cx="45" cy="45" r="35" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+      <text x="45" y="40" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FOLLOWER</text>
+      <text x="45" y="56" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Node 2</text>
+    </g>
+
+    <!-- Follower 2 (Bottom Center) -->
+    <g transform="translate(185, 130)">
+      <circle cx="45" cy="45" r="35" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+      <text x="45" y="40" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FOLLOWER</text>
+      <text x="45" y="56" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Node 3</text>
+    </g>
+
+    <!-- Follower 3 (Bottom Right) -->
+    <g transform="translate(330, 130)">
+      <circle cx="45" cy="45" r="35" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+      <text x="45" y="40" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">FOLLOWER</text>
+      <text x="45" y="56" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Node 4</text>
+    </g>
+
+    <!-- Heartbeat lines from Leader to Followers -->
+    <path d="M 200 90 L 95 135" stroke="#f59e0b" stroke-width="2" class="flow-line"/>
+    <path d="M 230 100 L 230 130" stroke="#f59e0b" stroke-width="2" class="flow-line"/>
+    <path d="M 260 90 L 365 135" stroke="#f59e0b" stroke-width="2" class="flow-line"/>
+    
+    <text x="230" y="240" fill="#f59e0b" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Periodic AppendEntries Heartbeats reset election timers</text>
+  </g>
+
+  <!-- Right: Raft State Machine Breakdown -->
+  <g transform="translate(480, 20)">
+    <rect x="0" y="0" width="330" height="240" rx="10" fill="url(#gradRaft)" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="165" y="28" fill="#818cf8" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">RAFT CONSENSUS LIFECYCLE</text>
+
+    <rect x="20" y="45" width="290" height="48" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+    <text x="35" y="65" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700">1. Follower State</text>
+    <text x="35" y="81" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9">Passively accepts heartbeats; starts election if timer expires.</text>
+
+    <rect x="20" y="103" width="290" height="48" rx="6" fill="#4c1d95" stroke="#a855f7" stroke-width="0.8"/>
+    <text x="35" y="123" fill="#c084fc" font-family="Outfit, sans-serif" font-size="11" font-weight="700">2. Candidate State (Election)</text>
+    <text x="35" y="139" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9">Increments Term, votes for self, requests majority vote (N/2 + 1).</text>
+
+    <rect x="20" y="161" width="290" height="48" rx="6" fill="#78350f" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="35" y="181" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700">3. Leader State (Authority)</text>
+    <text x="35" y="197" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9">Manages all client writes, replicates logs, maintains quorum lease.</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Raft simplifies distributed consensus by decomposing it into leader election, log replication, and safety; heartbeats lease term authority while majority quorum votes elect new leaders upon failure.
+  </div>
+</div>
+
+
+    <div><h2>Background</h2>
+<p>Distributed systems keep multiple copies of data for fault tolerance and higher availability. A system can use quorum to ensure data consistency between replicas, i.e., all reads and writes are not considered successful until a majority of nodes participate in the operation. However, using quorum can lead to another problem, that is, lower availability; at any time, the system needs to ensure that at least a majority of replicas are up and available, otherwise the operation will fail. Quorum is also not sufficient, as in certain failure scenarios, the client can still see inconsistent data.</p>
+<h2>Solution</h2>
+<p>Allow only a single server (called leader) to be responsible for data replication and to coordinate work.</p>
+<p>At any time, one server is elected as the leader. This leader becomes responsible for data replication and can act as the central point for all coordination. The followers only accept writes from the leader and serve as a backup. In case the leader fails, one of the followers can become the leader. In some cases, the follower can serve read requests for load balancing.</p></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">What is Security and Privacy</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Ensuring security and privacy in distributed systems is essential to protect sensitive data, user information, and system integrity. Distributed systems face unique challenges related to security and privacy due to their distributed nature, which makes them more vulnerable to attacks and data breaches. Here&#x27;s an overview of various aspects of security and privacy in distributed systems:</p>
+<h2>A. Authentication and Authorization</h2>
+<p>Authentication and authorization are critical components of security in distributed systems. Authentication is the process of verifying the identity of users, services, or nodes before allowing them access to the system. Authorization, on the other hand, determines what actions or resources the authenticated entity is allowed to access. Implementing strong authentication and authorization mechanisms, such as OAuth, JWT, or Kerberos, can help protect your distributed system from unauthorized access and malicious activities.</p>
+<h2>B. Data Encryption</h2>
+<p>Data encryption is the process of converting data into an encoded format that can only be decrypted and read by someone with the correct decryption key. In distributed systems, encrypting data both at rest and in transit is crucial to protect sensitive information and ensure privacy. Techniques like symmetric and asymmetric encryption, as well as protocols such as TLS/SSL, can be used to secure data in distributed systems.</p>
+<h2>C. Secure Communication</h2>
+<p>Secure communication between nodes in a distributed system is vital to prevent eavesdropping, tampering, or forgery of messages. Implementing secure communication protocols, such as TLS/SSL, IPSec, or application-level encryption, can help protect the integrity and confidentiality of data exchanged between nodes.</p>
+<h2>D. Intrusion Detection and Prevention</h2>
+<p>Intrusion detection and prevention systems (IDPS) are designed to monitor network traffic, detect malicious activities or policy violations, and take appropriate actions to mitigate potential threats. By deploying IDPS solutions in your distributed system, you can identify and respond to security incidents more effectively, thus reducing the risk of data breaches and system compromise.</p></div>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">The Dual-Write Problem, Transactional Outbox &amp;amp;amp;amp;amp;amp; Idempotency Keys</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="chapter-body-content">
+  <p>In distributed microservices, a service often needs to update its local database <em>and</em> publish an event to a message broker (Kafka/RabbitMQ). Doing both directly in code leads to the notorious <strong>Dual-Write Problem</strong>.</p>
+
+  <h2>1. The Dual-Write Problem</h2>
+  <p>Consider this naïve pseudocode:</p>
+  <pre><code>db.save(order);             // Step 1: Local DB Write
+kafka.publish("order", msg); // Step 2: Publish Event</code></pre>
+  <p>If the network fails or the app crashes between Step 1 and Step 2, the order exists in the database but the event is never published, leaving downstream services (Payment, Shipping) out of sync forever.</p>
+
+  
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Transactional Outbox Pattern &amp; Change Data Capture (CDC) Architecture</div>
+    <div class="diagram-badge">Distributed Transactions</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradOut" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Step 1: Atomic Local DB Transaction -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="280" height="240" rx="10" fill="url(#gradOut)" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="140" y="28" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">1. ATOMIC LOCAL DB TRANSACTION</text>
+
+    <!-- App Server -->
+    <rect x="20" y="45" width="240" height="40" rx="6" fill="#1e1b4b" stroke="#6366f1"/>
+    <text x="140" y="70" fill="#c7d2fe" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">Order Service (BEGIN TX)</text>
+
+    <!-- Database Schema Tables -->
+    <g transform="translate(20, 95)">
+      <rect x="0" y="0" width="240" height="55" rx="5" fill="#064e3b" stroke="#10b981"/>
+      <text x="15" y="22" fill="#34d399" font-family="Fira Code, monospace" font-size="10" font-weight="700">orders TABLE</text>
+      <text x="15" y="40" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8.5">INSERT INTO orders (id, amt, user)</text>
+
+      <rect x="0" y="65" width="240" height="55" rx="5" fill="#4c1d95" stroke="#a855f7"/>
+      <text x="15" y="87" fill="#c084fc" font-family="Fira Code, monospace" font-size="10" font-weight="700">outbox TABLE</text>
+      <text x="15" y="105" fill="#e9d5ff" font-family="Fira Code, monospace" font-size="8.5">INSERT INTO outbox (payload, state)</text>
+    </g>
+    <text x="140" y="230" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">✔ Atomic ACID Commit (Zero Inconsistency)</text>
+  </g>
+
+  <!-- Flow to CDC Relay -->
+  <path d="M 305 145 L 355 145" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+
+  <!-- Step 2: Change Data Capture (CDC / Debezium) -->
+  <g transform="translate(360, 45)">
+    <rect x="0" y="0" width="180" height="190" rx="10" fill="url(#gradOut)" stroke="#f59e0b" stroke-width="2"/>
+    <text x="90" y="28" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">2. CDC / RELAY</text>
+    <text x="90" y="46" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">(Debezium / Binlog)</text>
+
+    <rect x="15" y="60" width="150" height="45" rx="4" fill="#78350f" stroke="#f59e0b"/>
+    <text x="90" y="80" fill="#fde68a" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Tails DB WAL / Binlog</text>
+    <text x="90" y="94" fill="#fde68a" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">Guaranteed At-Least-Once</text>
+
+    <rect x="15" y="115" width="150" height="45" rx="4" fill="#1e293b" stroke="#475569"/>
+    <text x="90" y="135" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">Marks outbox event</text>
+    <text x="90" y="148" fill="#10b981" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">as PROCESSED</text>
+  </g>
+
+  <!-- Flow to Message Broker -->
+  <path d="M 545 145 L 595 145" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+
+  <!-- Step 3: Message Broker & Downstream Consumers -->
+  <g transform="translate(600, 20)">
+    <rect x="0" y="0" width="220" height="240" rx="10" fill="url(#gradOut)" stroke="#10b981" stroke-width="1.5"/>
+    <text x="110" y="28" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">3. MESSAGE BROKER</text>
+
+    <!-- Kafka Topic -->
+    <rect x="15" y="45" width="190" height="40" rx="4" fill="#064e3b" stroke="#10b981"/>
+    <text x="105" y="70" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Kafka Topic: "order-created"</text>
+
+    <!-- Downstream Consumers -->
+    <g transform="translate(15, 95)">
+      <rect x="0" y="0" width="190" height="35" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+      <text x="95" y="22" fill="#38bdf8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Payment Service</text>
+
+      <rect x="0" y="45" width="190" height="35" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+      <text x="95" y="67" fill="#38bdf8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Inventory Service</text>
+
+      <rect x="0" y="90" width="190" height="35" rx="4" fill="#1e1b4b" stroke="#38bdf8"/>
+      <text x="95" y="112" fill="#38bdf8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Notification Service</text>
+    </g>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> The Transactional Outbox pattern writes business entities and outbound events atomically into the same database transaction; a dedicated CDC engine tails the write-ahead log to publish events to Kafka with guaranteed at-least-once delivery.
+  </div>
+</div>
+
+
+  <h2>2. The Transactional Outbox Solution</h2>
+  <p>Instead of publishing directly to Kafka:</p>
+  <ol>
+    <li>The service saves the order in the <code>orders</code> table and writes an event record to an <code>outbox</code> table inside the <strong>same atomic local database transaction</strong>.</li>
+    <li>A Change Data Capture (CDC) worker (e.g. <strong>Debezium</strong>, DynamoDB Streams) tails the database transaction log (WAL / Binlog) and reliably streams outbox events to Kafka.</li>
+    <li>This guarantees <strong>At-Least-Once Delivery</strong> without requiring slow two-phase commit (2PC) distributed locks.</li>
+  </ol>
+
+  <h2>3. Idempotency Keys (Handling At-Least-Once Duplicates)</h2>
+  <p>Because network retries can deliver duplicate events, consumers must be <strong>idempotent</strong>. Clients pass a unique <code>X-Idempotency-Key</code> (UUID) with mutating requests:</p>
+  <ul>
+    <li>The consumer checks if the idempotency key exists in Redis or a unique SQL constraint table.</li>
+    <li>If already processed, it returns the cached response immediately without re-executing the payment or decrementing inventory twice.</li>
+  </ul>
+</div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_13_distributed_system_patterns') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_13_distributed_system_patterns', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

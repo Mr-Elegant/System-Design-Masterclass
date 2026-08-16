@@ -1,0 +1,35 @@
+=== LINKEDIN MICROSERVICES POST #03: Transactional Outbox Pattern & Debezium Change Data Capture (CDC) ===
+Target Chapter: 11 Event-Driven Architecture Pattern.html
+
+--- [COPY POST BODY BELOW] ---
+
+📦 How to update your SQL database and publish to Kafka without dual-write inconsistency:
+
+The Dual-Write Problem:
+```python
+db.save(order)        # Step 1: Succeeds
+kafka.publish(order)  # Step 2: Fails or network timeout!
+```
+If Step 2 fails, your DB has the order, but downstream services never get notified! If you swap the order, Kafka gets the message but the DB write might fail!
+
+💡 The Solution: Transactional Outbox Pattern + Debezium CDC.
+
+1️⃣ Atomic Local Commit:
+In a single ACID database transaction, insert the Order into the `Orders` table AND an event record into an `Outbox` table:
+```sql
+BEGIN;
+INSERT INTO orders (id, user_id, amount) VALUES (101, 42, 99.00);
+INSERT INTO outbox (event_id, aggregate_type, payload) VALUES (uuid(), 'ORDER_CREATED', json_payload);
+COMMIT;
+```
+
+2️⃣ Change Data Capture (Debezium):
+Debezium tails the database Transaction Log (PostgreSQL WAL / MySQL binlog) and streams events to Kafka with **At-Least-Once delivery guarantees** and zero application polling overhead!
+
+💬 Have you implemented the Outbox pattern with Debezium in production?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Kafka #EventDriven #PostgreSQL #Debezium #Microservices #SystemDesign
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

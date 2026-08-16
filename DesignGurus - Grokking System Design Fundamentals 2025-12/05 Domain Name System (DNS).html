@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Name System (DNS) - System Design Guide</title>
+    <meta property="og:title" content="Domain Name System (DNS) - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Domain Name System (DNS)</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (3)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to dns"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to DNS</a></li>
+<li class="sidebar-item" data-num="02" data-title="dns resolution process"><a href="#chapter-02"><span class="chapter-num">02</span> DNS Resolution Process</a></li>
+<li class="sidebar-item" data-num="03" data-title="dns load balancing and high availability"><a href="#chapter-03"><span class="chapter-num">03</span> DNS Load Balancing and High Availability</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to DNS</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>What is DNS (Domain Name System)?</h2>
+<p>DNS, or Domain Name System, is a system used to translate human-readable domain names (e.g., <a href="http://www.designgurus.com/" target="_blank">www.designgurus.com</a>) into IP addresses (e.g., 198.47.25.1) that computers can understand. This translation process is crucial because computers and networking devices rely on IP addresses to identify and communicate with each other on the internet. In simple terms, DNS acts like a phonebook for the internet, allowing users to access websites using easy-to-remember domain names instead of having to memorize numeric IP addresses.</p>
+<h2>Purpose and Importance of DNS</h2>
+<p>The primary purpose of DNS is to make it easier for people to access websites and other online resources. By providing a human-readable naming system for computers and other devices connected to the internet, DNS enables users to navigate the internet using familiar and intuitive domain names.</p>
+<p>DNS is essential for the smooth functioning of the internet. Some of its key benefits include:</p>
+<ul>
+<li><strong>User-friendliness:</strong> Domain names are easier to remember and type than IP addresses, which are long strings of numbers.</li>
+<li><strong>Scalability:</strong> DNS is a distributed and hierarchical system, allowing it to handle the ever-growing number of domain names and IP addresses on the internet.</li>
+<li><strong>Flexibility:</strong> DNS allows websites to change their IP addresses without affecting users. When a website&#x27;s IP address changes, the DNS records are updated, and users can continue accessing the site using the same domain name.</li>
+<li><strong>Load balancing:</strong> DNS can distribute user requests across multiple servers, improving the performance and reliability of websites.</li>
+</ul>
+<h2>DNS Components and Terminology</h2>
+<h3>1. Domain names, TLDs (Top-Level Domains), and subdomains</h3>
+<ul>
+<li>
+<p><strong>Domain names:</strong> A domain name is a human-readable address used to access a website or other resources on the internet. It consists of a series of character strings separated by dots, such as <a href="http://www.example.com/" target="_blank">www.example.com</a>. Domain names are easier to remember and use than IP addresses.</p>
+</li>
+<li>
+<p><strong>TLDs (Top-Level Domains):</strong> A top-level domain (TLD) is the rightmost part of a domain name, such as &quot;.com&quot; in <a href="http://www.example.com/" target="_blank">www.example.com</a>. TLDs are managed by various organizations and can be divided into two categories: generic TLDs (gTLDs), like .com, .org, or .net, and country-code TLDs (ccTLDs), which represent specific countries or territories, like .us for the United States or .uk for the United Kingdom.</p>
+</li>
+<li>
+<p><strong>Subdomains:</strong> A subdomain is a subdivision of a domain name, allowing the creation of separate sections or areas within a website. Subdomains appear to the left of the main domain name, such as blog.example.com, where &quot;blog&quot; is the subdomain of example.com.</p>
+</li>
+</ul>
+<h3>2. DNS servers: Root, TLD, and Authoritative Name Servers</h3>
+<ul>
+<li>
+<p><strong>Root servers:</strong> Root servers are the highest level of DNS servers and are responsible for directing queries to the appropriate TLD servers. There are 13 root server clusters worldwide, managed by various organizations, each having multiple servers for redundancy and reliability.</p>
+</li>
+<li>
+<p><strong>TLD servers:</strong> TLD servers store information about domain names within their specific TLD. When they receive a query, they direct it to the appropriate authoritative name server responsible for that domain.</p>
+</li>
+<li>
+<p><strong>Authoritative name servers:</strong> These servers hold the actual DNS records for a domain, including its IP address and other information. They provide the final answer to DNS queries, allowing users to access the desired website or resource.</p>
+</li>
+</ul></div><div><h2>3. DNS resolvers</h2>
+<p>A <strong>DNS resolver</strong> is any component (software or hardware) responsible for translating a human-friendly domain name (like <code>example.com</code>) into the IP address that the computer needs to connect to (such as <code>93.184.216.34</code>).</p>
+<p>When you type a website address into your browser or click a link, your system relies on DNS resolvers to figure out the correct IP address. There are several types of DNS resolvers, each serving different roles in the DNS lookup process.</p>
+<h3>The DNS Lookup Process in Brief</h3>
+<p>Before diving into the types of DNS resolvers, it helps to have a high-level overview of the DNS lookup process:</p>
+<ol>
+<li><strong>You request a domain name</strong> (e.g., <code>example.com</code>) from your computer or device.</li>
+<li>Your <strong>computer’s resolver</strong> (or <strong>stub resolver</strong>) sends the request to a DNS <strong>recursive resolver</strong> (often your ISP’s or a public DNS like Google’s <code>8.8.8.8</code>).</li>
+<li>The recursive resolver checks if it already has the domain name’s IP address in its <strong>cache</strong>. If so, it returns it immediately.</li>
+<li>If not, the recursive resolver queries the <strong>root DNS servers</strong>, then the <strong>TLD (Top-Level Domain) DNS servers</strong>, then the <strong>authoritative DNS server</strong> for the domain, following DNS hierarchy.</li>
+<li>Once the IP address is found, the resolver returns it to your computer. Your computer can then contact the web server at that IP.</li>
+</ol>
+<h3>1. Stub Resolver</h3>
+<p>A <strong>stub resolver</strong> is the minimal DNS client software running on your device (laptop, smartphone, IoT gadget, etc.) that <em>starts</em> the DNS lookup process. It typically does <strong>not</strong> perform the full DNS query process by itself.</p>
+<h4>How It Works</h4>
+<ul>
+<li>The stub resolver knows one or more DNS servers to send queries to. These DNS servers are often configured automatically (for example, via DHCP on your home router) or manually by users (e.g., configuring 8.8.8.8 for Google DNS).</li>
+<li>When your device needs to resolve a domain name, the stub resolver sends a request to the configured DNS server and waits for the response.</li>
+<li>The stub resolver takes the response (the IP address or an error) and hands it back to the application (like a web browser).</li>
+</ul>
+<h4>Example</h4>
+<ul>
+<li>On Windows or macOS, you can see your DNS server addresses in your network settings. These addresses often point to your <strong>router</strong> (which might act as a basic DNS forwarder) or directly to an ISP-provided DNS server.</li>
+<li>If you have manually configured <strong>8.8.8.8</strong> (Google Public DNS) or <strong>1.1.1.1</strong> (Cloudflare DNS), your computer’s stub resolver sends all DNS queries to Google or Cloudflare, respectively.</li>
+</ul>
+<h3>2. Recursive Resolver</h3>
+<p>A <strong>recursive resolver</strong> is a DNS server that <strong>actively performs the DNS query process</strong> on behalf of the client. It hunts down the IP address by querying multiple DNS servers until it gets the final answer.</p>
+<h4>How It Works</h4>
+<ol>
+<li>The recursive resolver receives a request from a stub resolver (or another forwarder).</li>
+<li>It first checks its <strong>local cache</strong> to see if the requested domain’s IP address is stored there.
+<ul>
+<li>If found, it returns the cached answer immediately.</li>
+</ul>
+</li>
+<li>If the record is <strong>not cached</strong>, the resolver queries the <strong>root DNS servers</strong> to learn which TLD server (e.g., <code>.com</code>, <code>.org</code>) to query next.</li>
+<li>It then queries the relevant TLD server to find the authoritative DNS server for the specific domain.</li>
+<li>Finally, it queries the authoritative server to obtain the required DNS records (e.g., the A record for IPv4).</li>
+<li>The resolved IP is cached for future requests and returned to the stub resolver.</li>
+</ol>
+<h4>Example</h4>
+<ul>
+<li><strong>ISP DNS Resolver</strong>: Most internet service providers run their own recursive DNS resolvers that their customers use by default.</li>
+<li><strong>Public DNS Resolver</strong>: Google Public DNS (<code>8.8.8.8</code>), Cloudflare DNS (<code>1.1.1.1</code>), and OpenDNS (<code>208.67.222.222</code>) are common public recursive resolvers.</li>
+</ul>
+<h3>3. Caching-Only Resolver</h3>
+<p>A <strong>caching-only resolver</strong> is a type of DNS server whose primary function is to <strong>cache DNS query results</strong> and reuse them to speed up subsequent lookups. It does not host any DNS zones (i.e., it is not authoritative for any domain) and typically performs recursive lookups on behalf of clients.</p>
+<h4>How It Works</h4>
+<ul>
+<li>Like a recursive resolver, a caching-only resolver forwards queries to other DNS servers if the record is not already in its cache.</li>
+<li>Once it obtains the result, it stores (caches) the DNS records for the duration specified by their <strong>TTL (Time to Live)</strong>.</li>
+<li>Subsequent queries for the same domain within the TTL period are served faster from the cache, reducing the need for external lookups.</li>
+</ul>
+<h4>Example</h4>
+<ul>
+<li>Many <strong>home routers</strong> or <strong>DNS forwarders</strong> act as caching-only resolvers. Once a family member’s device visits <code>example.com</code>, the router caches the IP for that domain. If another device requests <code>example.com</code> soon after, it is resolved almost instantly from the router’s cache.</li>
+</ul>
+<h3>4. Forwarder</h3>
+<p>A <strong>forwarder</strong> is a DNS server that <strong>forwards all queries</strong> (or queries that it cannot resolve locally) to another DNS server instead of performing the complete recursive resolution process itself.</p>
+<h4>How It Works</h4>
+<ul>
+<li>A DNS server is configured to send queries to an upstream DNS server, often a well-known public DNS or an ISP DNS.</li>
+<li>The forwarder may still maintain a local cache to speed up DNS resolution for repeated queries.</li>
+<li>This setup is common in corporate networks to manage and log DNS queries centrally or apply custom policies (e.g., content filtering).</li>
+</ul>
+<h4>Example</h4>
+<ul>
+<li>A small business might have a local DNS server that <strong>forwards</strong> any external domain queries to their ISP’s DNS servers or Google DNS. This helps centralize DNS settings and possibly implement local domain resolutions (like <code>intranet.local</code>) without handling the complexity of a full recursive resolver setup.</li>
+</ul>
+<h3>5. Iterative (Non-Recursive) Resolver</h3>
+<p>Sometimes called a <strong>non-recursive</strong> resolver, an <strong>iterative resolver</strong> typically gives back partial results or referrals, instructing the client to continue the resolution process on its own.</p>
+<h4>How It Works</h4>
+<ul>
+<li>If a client asks this resolver for a record, the resolver either:
+<ul>
+<li>Returns the answer if it is authoritative or has it cached, or</li>
+<li>Returns a referral with the address of another DNS server (for instance, the root or TLD server), prompting the client to “try there next.”</li>
+</ul>
+</li>
+</ul>
+<p>This type is less common for end-user devices; it is often used by <strong>authoritative DNS servers</strong> to direct queries up or down the DNS hierarchy.</p>
+<h3>Example</h3>
+<ul>
+<li>An <strong>authoritative</strong> DNS server for <code>example.com</code> typically returns referrals for subdomains it does not know. If you ask it about <code>sub.example.com</code> but that subdomain is handled by a different name server, it might respond with the details of that other name server rather than performing the recursion on your behalf.</li>
+</ul>
+<h3>Visualizing the DNS Resolution Chain</h3>
+<p>Below is a simplified chart showing the typical path of a DNS query:</p>
+<pre><code>User&#x27;s Device (Stub Resolver)
+     |
+     v
+Recursive Resolver (Often ISP/ Public)
+     |
+     v
+  Root Server
+     |
+     v
+ TLD Server (.com, .net, etc.)
+     |
+     v
+ Authoritative Server (example.com)
+     |
+     v
+   IP Address
+</code></pre>
+<ul>
+<li><strong>Stub resolver</strong>: Passes the domain name request to the recursive resolver.</li>
+<li><strong>Recursive resolver</strong>: Takes on the hard work of querying each layer (root, TLD, authoritative) if it doesn’t have the answer cached.</li>
+<li><strong>Caching</strong>: Each resolver may cache responses to speed up future queries.</li>
+</ul>
+<h3>Putting It All Together</h3>
+<ol>
+<li>
+<p><strong>Stub Resolver</strong> on your device:</p>
+<ul>
+<li>Minimal functionality—just sends the query to a <strong>DNS server</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Recursive Resolver</strong> (may also be a <strong>Caching-Only</strong> Resolver):</p>
+<ul>
+<li>Receives queries from stub resolvers.</li>
+<li>Looks up (recursively) the chain of DNS servers if not cached.</li>
+<li>Caches the response for future requests.</li>
+</ul>
+</li>
+<li>
+<p><strong>Forwarder</strong>:</p>
+<ul>
+<li>A DNS server configured to pass queries on to another resolver rather than doing the full lookup.</li>
+<li>Can also cache responses.</li>
+</ul>
+</li>
+<li>
+<p><strong>Iterative (Non-Recursive) Resolver</strong>:</p>
+<ul>
+<li>Responds with direct answers if known or references to other DNS servers (referrals), but doesn’t do recursion.</li>
+</ul>
+</li>
+</ol>
+<h3>Real-World Example Scenario</h3>
+<ol>
+<li><strong>Your Laptop</strong> (Stub Resolver) is set to use <strong>8.8.8.8</strong> (Google DNS).</li>
+<li>You type <code>www.example.com</code> into your browser.</li>
+<li>The stub resolver on your laptop sends the DNS query to <strong>8.8.8.8</strong> (a Public <strong>Recursive Resolver</strong>).</li>
+<li>Google DNS checks its cache:
+<ul>
+<li>If <strong><a href="http://www.example.com/" target="_blank">www.example.com</a></strong> is <strong>cached</strong>, it returns the IP right away.</li>
+<li>If not, it queries the <strong>root server</strong>, then <code>.com</code> TLD server, then the <strong>example.com</strong> authoritative server in turn.</li>
+</ul>
+</li>
+<li>Once found, the IP address is cached in Google’s DNS servers and returned to your laptop’s stub resolver.</li>
+<li>Your laptop connects to the returned IP address, and the website loads.</li>
+</ol></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">DNS Resolution Process</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Hierarchical Recursive DNS Resolution Flow</div>
+    <div class="diagram-badge">DNS Resolution</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradDNS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Client Browser -->
+  <g transform="translate(30, 90)">
+    <rect x="0" y="0" width="110" height="75" rx="8" fill="url(#gradDNS)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="55" y="32" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">CLIENT</text>
+    <text x="55" y="50" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9.5" text-anchor="middle">example.com ?</text>
+  </g>
+
+  <!-- 1 & 8 Query/Response Arrow -->
+  <path d="M 145 115 L 235 115" fill="none" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+  <text x="190" y="105" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">1. Query</text>
+
+  <path d="M 235 140 L 145 140" fill="none" stroke="#10b981" stroke-width="2.5" class="flow-line"/>
+  <text x="190" y="155" fill="#10b981" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">8. 93.184.216.34</text>
+
+  <!-- Recursive DNS Resolver -->
+  <g transform="translate(240, 70)">
+    <rect x="0" y="0" width="140" height="120" rx="10" fill="url(#gradDNS)" stroke="#6366f1" stroke-width="2"/>
+    <text x="70" y="30" fill="#818cf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">DNS RESOLVER</text>
+    <text x="70" y="48" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">(ISP / 8.8.8.8)</text>
+    <rect x="15" y="65" width="110" height="40" rx="4" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.8"/>
+    <text x="70" y="82" fill="#c7d2fe" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Cache Check</text>
+    <text x="70" y="96" fill="#f59e0b" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">TTL Lookup</text>
+  </g>
+
+  <!-- Hierarchy Resolution Flow -->
+  <!-- 1. Root Server -->
+  <g transform="translate(460, 25)">
+    <rect x="0" y="0" width="170" height="55" rx="6" fill="url(#gradDNS)" stroke="#f59e0b" stroke-width="1.3"/>
+    <text x="85" y="25" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">ROOT SERVER (.)</text>
+    <text x="85" y="42" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Points to .COM TLD</text>
+  </g>
+  <path d="M 385 105 C 415 105, 420 52, 455 52" fill="none" stroke="#f59e0b" stroke-width="1.8" class="flow-line"/>
+
+  <!-- 2. TLD Server -->
+  <g transform="translate(460, 105)">
+    <rect x="0" y="0" width="170" height="55" rx="6" fill="url(#gradDNS)" stroke="#a855f7" stroke-width="1.3"/>
+    <text x="85" y="25" fill="#c084fc" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">TLD SERVER (.com)</text>
+    <text x="85" y="42" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Points to NS Nameserver</text>
+  </g>
+  <path d="M 385 130 L 455 130" fill="none" stroke="#a855f7" stroke-width="1.8" class="flow-line"/>
+
+  <!-- 3. Authoritative Nameserver -->
+  <g transform="translate(460, 185)">
+    <rect x="0" y="0" width="170" height="55" rx="6" fill="url(#gradDNS)" stroke="#10b981" stroke-width="1.3"/>
+    <text x="85" y="25" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">AUTHORITATIVE (NS)</text>
+    <text x="85" y="42" fill="#94a3b8" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Holds A-Record (IP Address)</text>
+  </g>
+  <path d="M 385 155 C 415 155, 420 212, 455 212" fill="none" stroke="#10b981" stroke-width="1.8" class="flow-line"/>
+
+  <!-- Legend / Flow summary -->
+  <g transform="translate(650, 45)">
+    <rect x="0" y="0" width="165" height="175" rx="8" fill="#111827" stroke="#374151"/>
+    <text x="82" y="25" fill="#e2e8f0" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RESOLUTION ORDER</text>
+    <text x="15" y="55" fill="#f59e0b" font-family="Fira Code, monospace" font-size="9">1. Root (.)</text>
+    <text x="15" y="80" fill="#a855f7" font-family="Fira Code, monospace" font-size="9">2. TLD (.com)</text>
+    <text x="15" y="105" fill="#10b981" font-family="Fira Code, monospace" font-size="9">3. Authoritative</text>
+    <text x="15" y="130" fill="#38bdf8" font-family="Fira Code, monospace" font-size="9">4. Cache in Resolver</text>
+    <text x="15" y="155" fill="#10b981" font-family="Fira Code, monospace" font-size="9">5. Return IP to Client</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Recursive DNS resolvers walk down the global DNS hierarchy (Root ➔ TLD ➔ Authoritative Nameservers) to resolve domain names to IP addresses, utilizing caching at each layer to achieve sub-millisecond response times.
+  </div>
+</div>
+
+
+    <div><p>The DNS resolution process involves a series of recursive and iterative queries, utilizing a distributed and hierarchical infrastructure of DNS servers, resolvers, and caching mechanisms.</p>
+<h2>1. Recursive and Iterative DNS queries</h2>
+<p>DNS resolution is the process of converting a domain name into its corresponding IP address. There are two types of DNS queries involved in this process: recursive and iterative queries.</p>
+<ul>
+<li>
+<p><strong>Recursive query:</strong> In a recursive query, the DNS resolver asks for the complete answer to a query from the DNS server. If the server has the answer, it responds with the required information. If not, the server takes responsibility for contacting other DNS servers to find the answer and then returns it to the resolver. Recursive queries put more responsibility on the DNS server to find the requested information.</p>
+</li>
+<li>
+<p><strong>Iterative query:</strong> In an iterative query, the DNS resolver asks the DNS server for the best answer it has at the moment. If the server doesn&#x27;t have the complete answer, it responds with a referral to another server that might have more information. The resolver then contacts that server with a new iterative query, repeating the process until it finds the complete answer. In iterative queries, the resolver takes on more responsibility for finding the requested information.</p>
+</li>
+</ul>
+<h2>2. DNS caching and TTL (Time To Live)</h2>
+<p>To speed up the DNS resolution process, resolvers and servers cache the results of previous queries. When a resolver receives a query, it first checks its cache to see if the answer is already available. If it finds the cached information, it returns the answer without contacting other servers, saving time and reducing network traffic.</p>
+<p>Each DNS record has an associated Time To Live (TTL) value, which specifies how long the record should be stored in the cache. TTL is measured in seconds, and once the TTL expires, the cached information is removed to ensure that outdated information is not used.</p>
+<h2>3. Negative caching</h2>
+<p>Negative caching is the process of caching the non-existence of a DNS record. When a resolver receives a query for a non-existent domain or record, it caches this information as a negative response, preventing repeated queries for the same non-existent resource. This reduces the load on DNS servers and improves overall performance.</p>
+<p>In short, the DNS resolution process involves converting a domain name into its corresponding IP address using recursive and iterative queries. Resolvers and servers cache the results of previous queries to speed up the resolution process, with TTL values determining how long the records are stored. Negative caching helps improve performance by caching the non-existence of DNS records.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">DNS Load Balancing and High Availability</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>The Domain Name System (DNS) plays a critical role in the smooth functioning of the internet, translating human-readable domain names into IP addresses that computers can understand. As the number of users and services on the internet continues to grow, ensuring the performance, reliability, and availability of DNS becomes increasingly important. DNS load balancing and high availability techniques, such as round-robin DNS, geographically distributed servers, anycast routing, and Content Delivery Networks (CDNs), help distribute the load among multiple servers, reduce latency for end-users, and maintain uninterrupted service, even in the face of server failures or network outages. This chapter provides an overview of these techniques, explaining how they contribute to a more efficient and resilient DNS infrastructure.</p>
+<h2>1. Round-robin DNS</h2>
+<p>Round-robin DNS is a simple load balancing technique in which multiple IP addresses are associated with a single domain name. When a resolver queries the domain name, the DNS server responds with one of the available IP addresses, rotating through them in a round-robin fashion. This distributes the load among multiple servers or resources, improving the performance and availability of the website or service.</p>
+<p>However, round-robin DNS does not take into account the actual load on each server or the geographic location of the client, which can lead to uneven load distribution or increased latency in some cases.</p>
+<h2>2. Geographically distributed DNS servers</h2>
+<p>To improve the performance and availability of DNS services, operators can deploy DNS servers in multiple geographic locations. By distributing DNS servers across different regions, they can provide faster and more reliable DNS resolution for users located closer to a server.</p>
+<p>Geographically distributed servers also offer increased redundancy, reducing the impact of server failures or network outages. If one server becomes unreachable, users can still access the service through other available servers in different locations.</p>
+<h2>3. Anycast routing</h2>
+<p>Anycast routing is a networking technique that allows multiple servers to share the same IP address. When a resolver sends a query to an anycast IP address, the network routes the query to the nearest server, based on factors like network latency and server availability.</p>
+<p>Anycast provides several benefits for DNS:</p>
+<ul>
+<li><strong>Load balancing:</strong> Anycast distributes DNS queries among multiple servers, preventing any single server from becoming a bottleneck.</li>
+<li><strong>Reduced latency:</strong> By directing users to the nearest server, anycast can significantly reduce the time it takes for DNS resolution.</li>
+<li><strong>High availability:</strong> If a server fails or becomes unreachable, anycast automatically redirects queries to the next closest server, ensuring uninterrupted service.</li>
+</ul>
+<h2>4. Content Delivery Networks (CDNs) and their relation to DNS</h2>
+<p>A Content Delivery Network (CDN) is a network of distributed servers that cache and deliver web content to users based on their geographic location. CDNs help improve the performance, reliability, and security of websites and web services by distributing the load among multiple servers and serving content from the server closest to the user.</p>
+<p>DNS plays a crucial role in the functioning of CDNs. When a user requests content from a website using a CDN, the CDN&#x27;s DNS server determines the best server to deliver the content based on the user&#x27;s location and other factors. The DNS server then responds with the IP address of the chosen server, allowing the user to access the content quickly and efficiently.</p>
+<p>In short, DNS load balancing and high availability techniques, such as round-robin DNS, geographically distributed servers, anycast routing, and CDNs, help improve the performance, reliability, and availability of websites and web services by distributing the load among multiple servers and reducing latency for end-users.</p></div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_05_domain_name_system__dns_') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_05_domain_name_system__dns_', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

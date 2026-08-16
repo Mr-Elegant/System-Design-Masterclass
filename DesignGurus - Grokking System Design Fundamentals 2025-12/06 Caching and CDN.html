@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caching &amp; Content Delivery Networks (CDN) - System Design Guide</title>
+    <meta property="og:title" content="Caching &amp; Content Delivery Networks (CDN) - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Caching &amp; Content Delivery Networks (CDN)</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (14)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to caching"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Caching</a></li>
+<li class="sidebar-item" data-num="02" data-title="why is caching important"><a href="#chapter-02"><span class="chapter-num">02</span> Why is Caching Important</a></li>
+<li class="sidebar-item" data-num="03" data-title="types of caching"><a href="#chapter-03"><span class="chapter-num">03</span> Types of Caching</a></li>
+<li class="sidebar-item" data-num="04" data-title="cache replacement policies"><a href="#chapter-04"><span class="chapter-num">04</span> Cache Replacement Policies</a></li>
+<li class="sidebar-item" data-num="05" data-title="cache invalidation"><a href="#chapter-05"><span class="chapter-num">05</span> Cache Invalidation</a></li>
+<li class="sidebar-item" data-num="06" data-title="cache read strategies"><a href="#chapter-06"><span class="chapter-num">06</span> Cache Read Strategies</a></li>
+<li class="sidebar-item" data-num="07" data-title="cache coherence and consistency models"><a href="#chapter-07"><span class="chapter-num">07</span> Cache Coherence and Consistency Models</a></li>
+<li class="sidebar-item" data-num="08" data-title="caching challenges"><a href="#chapter-08"><span class="chapter-num">08</span> Caching Challenges</a></li>
+<li class="sidebar-item" data-num="09" data-title="cache performance metrics"><a href="#chapter-09"><span class="chapter-num">09</span> Cache Performance Metrics</a></li>
+<li class="sidebar-item" data-num="10" data-title="what is cdn"><a href="#chapter-10"><span class="chapter-num">10</span> What is CDN</a></li>
+<li class="sidebar-item" data-num="11" data-title="origin server vs edge server"><a href="#chapter-11"><span class="chapter-num">11</span> Origin Server vs Edge Server</a></li>
+<li class="sidebar-item" data-num="12" data-title="cdn architecture"><a href="#chapter-12"><span class="chapter-num">12</span> CDN Architecture</a></li>
+<li class="sidebar-item" data-num="13" data-title="push cdn vs pull cdn"><a href="#chapter-13"><span class="chapter-num">13</span> Push CDN vs Pull CDN</a></li>
+<li class="sidebar-item" data-num="14" data-title="production caching failures: cache stampede, avalanche &amp; penetration"><a href="#chapter-14"><span class="chapter-num">14</span> Production Caching Failures: Cache Stampede, Avalanche &amp; Penetration</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to Caching</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>What is Caching?</h2>
+<p>The cache is a high-speed storage layer that sits between the application and the original source of the data, such as a database, a file system, or a remote web service. When data is requested by the application, it is first checked in the cache. If the data is found in the cache, it is returned to the application. If the data is not found in the cache, it is retrieved from its original source, stored in the cache for future use, and returned to the application.</p>
+<p>Caching can be used for various types of data, such as web pages, database queries, API responses, images, and videos. The goal of caching is to reduce the number of times data needs to be fetched from its original source, which can result in faster processing and reduced latency.</p>
+<p>Caching can be implemented in various ways, including in-memory caching, disk caching, database caching, and CDN caching. In-memory caching stores data in the main memory of the computer, which is faster to access than disk storage. Disk caching stores data on the hard disk, which is slower than main memory but faster than retrieving data from a remote source. Database caching stores frequently accessed data in the database itself, reducing the need to access external storage. CDN caching stores data on a distributed network of servers, reducing the latency of accessing data from remote locations.</p>
+<h2>Key terminology and concepts</h2>
+<p><strong>1. Cache:</strong> A temporary storage location for data or computation results, typically designed for fast access and retrieval.</p>
+<p><strong>2. Cache hit:</strong> When a requested data item or computation result is found in the cache.</p>
+<p><strong>3. Cache miss:</strong> When a requested data item or computation result is not found in the cache and needs to be fetched from the original data source or recalculated.</p>
+<p><strong>4. Cache eviction:</strong> The process of removing data from the cache, typically to make room for new data or based on a predefined cache eviction policy.</p>
+<p><strong>5. Cache staleness:</strong> When the data in the cache is outdated compared to the original data source.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Why is Caching Important</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Caching plays a critical role in improving system performance and user experience in software engineering. By storing frequently accessed data in a cache, applications can reduce the response time and latency of operations, resulting in faster and more efficient processing. Here are some reasons why caching is important:</p>
+<h2>1. Reduced latency</h2>
+<p>By serving data from the cache, which is typically faster to access than the original data source, caching can significantly reduce the time it takes to retrieve the data.</p>
+<h2>2. Improved system performance</h2>
+<p>Caching can significantly improve the performance of an application by reducing the number of times data needs to be fetched from its original source. Since cached data can be retrieved faster than from the original source, this results in a significant reduction in processing time, which leads to a more responsive application.</p>
+<h2>3. Reduced network load</h2>
+<p>Caching can also reduce network load by minimizing the amount of data that needs to be transmitted over the network. Since cached data is stored locally, there is no need to fetch data from the original source, reducing the amount of data that needs to be transferred over the network.</p>
+<h2>4. Increased scalability</h2>
+<p>Caching can improve the scalability of an application by reducing the load on the original source. By storing frequently accessed data in a cache, the original source is less likely to be overwhelmed with requests, making it more scalable.</p>
+<h2>5. Better user experience</h2>
+<p>Faster response times and reduced latency can lead to a better user experience. Applications that load quickly and respond to user requests in a timely manner are more likely to be used and preferred by users.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Types of Caching</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Caching can be implemented in various ways, depending on the specific use case and the type of data being cached. Here are some of the most common types of caching:</p></div><div><h2>1. In-memory caching</h2>
+<p>In-memory caching stores data in the main memory of the computer, which is faster to access than disk storage. In-memory caching is useful for frequently accessed data that can fit into the available memory. This type of caching is commonly used for caching API responses, session data, and web page fragments. To implement in-memory caching, software engineers can use various techniques, including using a cache library like Memcached or Redis, or implementing custom caching logic within the application code.</p>
+<h2>2. Disk caching</h2>
+<p>Disk caching stores data on the hard disk, which is slower than main memory but faster than retrieving data from a remote source. Disk caching is useful for data that is too large to fit in memory or for data that needs to persist between application restarts. This type of caching is commonly used for caching database queries and file system data.</p>
+<h2>3. Database caching</h2>
+<p>Database caching stores frequently accessed data in the database itself, reducing the need to access external storage. This type of caching is useful for data that is stored in a database and frequently accessed by multiple users. Database caching can be implemented using a variety of techniques, including database query caching and result set caching.</p>
+<h2>4. Client-side caching</h2>
+<p>This type of caching occurs on the client device, such as a web browser or mobile app. Client-side caching stores frequently accessed data, such as images, CSS, or JavaScript files, to reduce the need for repeated requests to the server. Examples of client-side caching include browser caching and local storage.</p>
+<h2>5. Server-side caching</h2>
+<p>This type of caching occurs on the server, typically in web applications or other backend systems. Server-side caching can be used to store frequently accessed data, precomputed results, or intermediate processing results to improve the performance of the server. Examples of server-side caching include full-page caching, fragment caching, and object caching.</p>
+<h2>6. CDN caching</h2>
+<p>CDN caching stores data on a distributed network of servers, reducing the latency of accessing data from remote locations. This type of caching is useful for data that is accessed from multiple locations around the world, such as images, videos, and other static assets. CDN caching is commonly used for content delivery networks and large-scale web applications.</p>
+<h2>7. DNS caching</h2>
+<p>DNS cache is a type of cache used in the Domain Name System (DNS) to store the results of DNS queries for a period of time. When a user requests to access a website, their computer sends a DNS query to a DNS server to resolve the website’s domain name to an IP address. The DNS server responds with the IP address, and the user’s computer can then access the website using the IP address. DNS caching improves the performance of the DNS system by reducing the number of requests made to DNS servers. When a DNS server receives a request for a domain name, it checks its local cache to see if it has the IP address for that domain name. If the IP address is in the cache, the DNS server can immediately respond with the IP address without having to query other servers. This can significantly reduce the response time for DNS queries and improve the overall performance of the system.</p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Cache Replacement Policies</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>When implementing caching, it’s important to have a cache replacement policy to determine which items in the cache should be removed when the cache becomes full. Here are some of the most common cache replacement policies:</p>
+<h2>1. Least Recently Used (LRU)</h2>
+<p>LRU is a cache replacement policy that removes the least recently used item from the cache when it becomes full. This policy assumes that items that have been accessed more recently are more likely to be accessed again in the future.</p>
+<h2>2. Least Frequently Used (LFU)</h2>
+<p>LFU is a cache replacement policy that removes the least frequently used item from the cache when it becomes full. This policy assumes that items that have been accessed more frequently are more likely to be accessed again in the future.</p>
+<h2>3. First In, First Out (FIFO)</h2>
+<p>FIFO is a cache replacement policy that removes the oldest item from the cache when it becomes full. This policy assumes that the oldest items in the cache are the least likely to be accessed again in the future.</p>
+<h2>4. Random Replacement</h2>
+<p>Random replacement is a cache replacement policy that removes a random item from the cache when it becomes full. This policy doesn’t make any assumptions about the likelihood of future access and can be useful when the access pattern is unpredictable.</p>
+<h1>Comparison of different replacement policies</h1>
+<p>Each cache replacement policy has its advantages and disadvantages, and the best policy to use depends on the specific use case. LRU and LFU are generally more effective than FIFO and random replacement since they take into account the access pattern of the cache. However, LRU and LFU can be more expensive to implement since they require maintaining additional data structures to track access patterns. FIFO and random replacement are simpler to implement but may not be as effective in optimizing cache performance. Overall, the cache replacement policy used should be chosen carefully to balance the trade-off between performance and complexity.</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Cache Invalidation</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Cache Invalidation Strategies</h2>
+<p>While caching can significantly improve performance, we must ensure that the data in the cache is still correct—otherwise, we serve out-of-date (stale) information. This is where <strong>cache invalidation</strong> comes in.</p>
+<ol>
+<li>
+<p><strong>Ensure Data Freshness</strong></p>
+<ul>
+<li>When the underlying data changes—say a product’s price updates in your database—you must mark or remove the old (cached) data so users don’t see stale information. This process is called “cache invalidation.”</li>
+<li>Without invalidation, caches will keep serving outdated data and lead to inconsistencies across your application.</li>
+</ul>
+</li>
+<li>
+<p><strong>Maintain System Consistency</strong></p>
+<ul>
+<li>Large systems often have multiple caching layers. If any of these layers serve old data while others serve new data, users can encounter conflicting information.</li>
+<li>Properly invalidating caches at each layer helps maintain a consistent view of your system’s state.</li>
+</ul>
+</li>
+<li>
+<p><strong>Balance Performance and Accuracy</strong></p>
+<ul>
+<li>Cache invalidation strategies (e.g., time-to-live/TTL, manual triggers, event-based invalidation) are designed to minimize the performance cost of continuously “refreshing” the cache.</li>
+<li>The goal is to keep data as accurate as possible while still benefiting from the high-speed data retrieval that caching offers.</li>
+</ul>
+</li>
+<li>
+<p><strong>Reduce Errors and Mismatched States</strong></p>
+<ul>
+<li>When caches go stale, you risk presenting users with wrong information or invalid results (e.g., displaying an out-of-stock product).</li>
+<li>By strategically invalidating caches when data changes, you reduce the odds of users experiencing buggy or contradictory behavior.</li>
+</ul>
+</li>
+</ol>
+<p>There are three main cache invalidation schemes that are used:</p>
+<h3>1. Write-through cache</h3>
+<p>Under this scheme, data is written into the cache and the corresponding database simultaneously. The cached data allows for fast retrieval and, since the same data gets written in the permanent storage, we will have complete data consistency between the cache and the storage. Also, this scheme ensures that nothing will get lost in case of a crash, power failure, or other system disruptions. Although, write-through minimizes the risk of data loss, since every write operation must be done twice before returning success to the client, this scheme has the disadvantage of higher latency for write operations.</p></div><div><h3>2. Write-around cache</h3>
+<p>This technique is similar to write-through cache, but data is written directly to permanent storage, bypassing the cache. This can reduce the cache being flooded with write operations that will not subsequently be re-read, but has the disadvantage that a read request for recently written data will create a “cache miss” and must be read from slower back-end storage and experience higher latency.</p></div><div><h3>3. Write-back cache</h3>
+<p>Under this scheme, data is written to cache alone, and completion is immediately confirmed to the client. The write to the permanent storage is done based on certain conditions, for example, when the system needs some free space. This results in low-latency and high-throughput for write-intensive applications; however, this speed comes with the risk of data loss in case of a crash or other adverse event because the only copy of the written data is in the cache.</p></div><div><h3>4. Write-behind cache</h3>
+<p>It is quite similar to write-back cache. In this scheme, data is written to the cache and acknowledged to the application immediately, but it is not immediately written to the permanent storage. Instead, the write operation is deferred, and the data is eventually written to the permanent storage at a later time. The main difference between write-back cache and write-behind cache is when the data is written to the permanent storage. In write-back caching, data is only written to the permanent storage when it is necessary for the cache to free up space, while in write-behind caching, data is written to the permanent storage at specified intervals.</p></div><div><h2>Cache Invalidations Methods</h2>
+<p>Here are the famous cache invalidation methods:</p>
+<h3>Purge</h3>
+<p>The purge method removes cached content for a specific object, URL, or a set of URLs. It’s typically used when there is an update or change to the content and the cached version is no longer valid. When a purge request is received, the cached content is immediately removed, and the next time that URL or key is requested, the cache must fetch a fresh copy from the origin server, store it, and return it to the client.</p>
+<h3>Refresh</h3>
+<p>Fetches requested content from the origin server, even if cached content is available. When a refresh request is received, the cached content is updated with the latest version from the origin server, ensuring that the content is up-to-date. Unlike a purge, a refresh request doesn’t remove the existing cached content; instead, it updates it with the latest version.</p>
+<h3>Ban</h3>
+<p>The ban method invalidates cached content based on specific criteria, such as a URL pattern or header. When a ban command is issued (e.g. “ban all URLs matching <code>/category/holiday-sales</code>”), the cache doesn’t purge those objects at once. Instead, it adds the criteria to a <strong>ban list</strong>. From that point on, every client request is checked against the ban list; if a requested resource matches an invalidation rule, the cache will treat it as stale and fetch a fresh version from the origin, then update the cache. Items not matching any ban rule continue to be served normally. Over time, as banned items are requested and refreshed, they get replaced with updated content and the ban rule can eventually be dropped once all outdated content is gone.</p>
+<p><strong>What is the difference between Purge and Ban?</strong></p>
+<ul>
+<li><strong>Purge</strong> is like doing a “hard delete” on a cache entry: it is removed right away so that any subsequent requests must go back to the origin server. Also, Purge typically works on a specific cache key (e.g., a URL) so we know exactly which object is being deleted.</li>
+<li><strong>Ban</strong> is more like flagging an entry (or set of entries) as no longer valid. The entry may still reside in memory until eventually cleaned up, but it won’t be served because it has been marked as invalid. Also, you can ban a group of objects by specifying conditions (such as a pattern in the URL or a header value), which makes it flexible when you need to invalidate multiple related objects.</li>
+</ul>
+<h3>Time-to-live (TTL) expiration</h3>
+<p>This method involves setting a time-to-live value for cached content, after which the content is considered stale and must be refreshed. When a request is received for the content, the cache checks the time-to-live value and serves the cached content only if the value hasn’t expired. If the value has expired, the cache fetches the latest version of the content from the origin server and caches it.</p>
+<h3>Stale-while-revalidate</h3>
+<p>This method is used in web browsers and CDNs to serve stale content from the cache while the content is being updated in the background. When a request is received for a piece of content, the cached version is immediately served to the user, and an asynchronous request is made to the origin server to fetch the latest version of the content. Once the latest version is available, the cached version is updated. This method ensures that the user is always served content quickly, even if the cached version is slightly outdated.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Cache Read Strategies</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Cache-Aside, Write-Through &amp; Write-Behind Consistency Patterns</div>
+    <div class="diagram-badge">Caching Architecture</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradCache" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: Cache-Aside Pattern -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="380" height="250" rx="10" fill="url(#gradCache)" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="190" y="28" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">CACHE-ASIDE (LAZY LOADING)</text>
+
+    <!-- App Server -->
+    <rect x="25" y="60" width="100" height="60" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="75" y="88" fill="#818cf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Application</text>
+    <text x="75" y="104" fill="#c7d2fe" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Server</text>
+
+    <!-- Redis Cache -->
+    <rect x="240" y="55" width="115" height="70" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="297" y="85" fill="#f87171" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Redis Cache</text>
+    <text x="297" y="103" fill="#fca5a5" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">RAM (Sub-ms)</text>
+
+    <!-- Database -->
+    <rect x="240" y="160" width="115" height="70" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="297" y="190" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Main Database</text>
+    <text x="297" y="208" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">PostgreSQL / MySQL</text>
+
+    <!-- Flow 1: 1. Check Cache -->
+    <path d="M 125 80 L 240 80" fill="none" stroke="#38bdf8" stroke-width="2" class="flow-line"/>
+    <text x="180" y="73" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">1. Read Key</text>
+
+    <!-- Flow 2: Miss -> Query DB -->
+    <path d="M 75 120 C 75 195, 140 195, 240 195" fill="none" stroke="#f59e0b" stroke-width="2" class="flow-line"/>
+    <text x="150" y="188" fill="#fbbf24" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">2. Cache Miss: Query DB</text>
+
+    <!-- Flow 3: Update Cache -->
+    <path d="M 297 160 L 297 125" fill="none" stroke="#10b981" stroke-width="2" class="flow-line"/>
+    <text x="330" y="145" fill="#10b981" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">3. Populate</text>
+  </g>
+
+  <!-- Right: Write-Through & Write-Behind -->
+  <g transform="translate(420, 20)">
+    <rect x="0" y="0" width="400" height="250" rx="10" fill="url(#gradCache)" stroke="#10b981" stroke-width="1.2"/>
+    <text x="200" y="28" fill="#10b981" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">WRITE STRATEGIES: WRITE-THROUGH VS. WRITE-BEHIND</text>
+
+    <!-- App Server -->
+    <rect x="25" y="90" width="90" height="60" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="70" y="118" fill="#818cf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Client Write</text>
+    <text x="70" y="134" fill="#c7d2fe" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Request</text>
+
+    <!-- Cache Layer -->
+    <rect x="160" y="85" width="105" height="70" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="212" y="115" fill="#f87171" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Cache Layer</text>
+    <text x="212" y="133" fill="#fca5a5" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Synchronous</text>
+
+    <!-- Database Layer -->
+    <rect x="300" y="85" width="85" height="70" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="342" y="115" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Database</text>
+    <text x="342" y="133" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Persistent</text>
+
+    <!-- Flow: App to Cache -->
+    <path d="M 115 120 L 160 120" fill="none" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+
+    <!-- Flow: Write-Through (Sync) -->
+    <path d="M 265 110 L 300 110" fill="none" stroke="#10b981" stroke-width="2" class="flow-line"/>
+    <text x="282" y="103" fill="#10b981" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Sync</text>
+
+    <!-- Flow: Write-Behind (Async Queue) -->
+    <path d="M 212 155 C 212 210, 342 210, 342 155" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="277" y="200" fill="#fbbf24" font-family="Fira Code, monospace" font-size="8.5" text-anchor="middle">Async Queue (Write-Behind)</text>
+
+    <!-- Comparison Footnote -->
+    <rect x="25" y="220" width="350" height="20" rx="4" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="0.8"/>
+    <text x="200" y="234" fill="#34d399" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Write-Through = Consistency | Write-Behind = Ultra Low Latency Writes</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Cache-Aside lazy-loads entries on demand, Write-Through guarantees synchronous cache-DB consistency, and Write-Behind queues asynchronous batch writes for maximum write throughput.
+  </div>
+</div>
+
+
+    <div><p>Here are the two famous cache read strategies:</p>
+<h2>Read through cache</h2>
+<p>A read-through cache strategy is a caching mechanism where the cache itself is responsible for retrieving the data from the underlying data store when a cache miss occurs. In this strategy, the application requests data from the cache instead of the data store directly. If the requested data is not found in the cache (cache miss), the cache retrieves the data from the data store, updates the cache with the retrieved data, and returns the data to the application.</p>
+<p>This approach helps to maintain consistency between the cache and the data store, as the cache is always responsible for retrieving and updating the data. It also simplifies the application code since the application doesn&#x27;t need to handle cache misses and data retrieval logic. The read-through cache strategy can significantly improve performance in scenarios where data retrieval from the data store is expensive, and cache misses are relatively infrequent.</p></div><div><h2>Read aside cache</h2>
+<p>A read-aside cache strategy, also known as cache-aside or lazy-loading, is a caching mechanism where the application is responsible for retrieving the data from the underlying data store when a cache miss occurs. In this strategy, the application first checks the cache for the requested data. If the data is found in the cache (cache hit), the application uses the cached data. However, if the data is not present in the cache (cache miss), the application retrieves the data from the data store, updates the cache with the retrieved data, and then uses the data.</p>
+<p>The read-aside cache strategy provides better control over the caching process, as the application can decide when and how to update the cache. However, it also adds complexity to the application code, as the application must handle cache misses and data retrieval logic.</p>
+<p>You should use cache-aside when you need caching but also need to ensure that a failure of the cache won’t take down your whole system – the application can always go to the DB if needed. This approach can also be beneficial in scenarios where the application wants to optimize cache usage based on specific data access patterns.</p></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Cache Coherence and Consistency Models</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Cache coherence and consistency models are essential concepts in the context of caching, particularly in distributed systems or multi-core processors. These models ensure that data remains accurate and up-to-date across multiple caches or processing units.</p>
+<h2>Cache Coherence</h2>
+<p>Cache coherence is a property of multi-core processors or distributed systems that ensures all processors or nodes see the same view of shared data. In a system with multiple caches, each cache may store a local copy of the shared data. When one cache modifies its copy, it is essential that all other caches are aware of the change to maintain a consistent view of the data.</p>
+<p>To achieve cache coherence, various protocols and techniques can be employed, such as:</p>
+<ul>
+<li>
+<p><strong>Write-invalidate:</strong> When a cache writes to its copy of the shared data, it broadcasts a message to other caches, invalidating their copies. When another cache requires the updated data, it fetches the new data from the memory or the cache that made the change.</p>
+</li>
+<li>
+<p><strong>Write-update (or write-broadcast):</strong> When a cache writes to its copy of the shared data, it broadcasts the updated data to all other caches, which update their local copies accordingly.</p>
+</li>
+</ul>
+<h2>Cache Consistency Models</h2>
+<p>Cache consistency models define the rules and guarantees for how data is updated and accessed in a distributed system with multiple caches. Different consistency models offer varying levels of strictness, balancing performance with the need for data accuracy.</p>
+<ul>
+<li>
+<p><strong>Strict Consistency:</strong> In this model, any write to a data item is instantly visible to all caches. This model provides the highest level of consistency but is difficult to achieve in practice, as it may require significant synchronization overhead and negatively impact performance.</p>
+</li>
+<li>
+<p><strong>Sequential Consistency:</strong> In this model, all operations on data items appear to occur in a specific sequential order across all caches. While this model allows for better performance than strict consistency, it still requires considerable synchronization and may not be practical in many distributed systems.</p>
+</li>
+<li>
+<p><strong>Causal Consistency:</strong> In this model, operations that are causally related (i.e., one operation depends on the outcome of another) are guaranteed to appear in order across all caches. Operations that are not causally related can occur in any order. This model provides better performance than sequential consistency while still ensuring a reasonable level of data accuracy.</p>
+</li>
+<li>
+<p><strong>Eventual Consistency:</strong> In this model, all updates to a data item will eventually propagate to all caches, but there is no guarantee about the order or timing of the updates. This model offers the best performance among the consistency models but provides the weakest consistency guarantees. Eventual consistency is often used in distributed systems where performance and scalability are prioritized over strict data accuracy.</p>
+</li>
+</ul>
+<p>Understanding cache coherence and consistency models is crucial when designing caching strategies for distributed systems or multi-core processors. By selecting the appropriate model for your system, you can strike a balance between performance and data accuracy to meet your specific requirements.</p></div>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">Caching Challenges</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Cache-related problems are a set of challenges that arise when implementing and managing caching systems in software applications. Here are the top cache-related problems and their possible workarounds:</p>
+<h2>1. Thundering Herd</h2>
+<p>The thundering herd problem occurs when a popular piece of data expires from the cache, leading to a sudden surge in requests to the origin server to fetch the missing data. This can cause excessive load on the origin server and degrade performance. Solutions to the thundering herd problem include using staggered expiration times, implementing a cache lock, or using background updates to refresh the cache before the data expires.</p>
+<h2>2. Cache Penetration</h2>
+<p>Cache penetration refers to the situation where requests for data bypass the cache and directly access the origin server, reducing the benefits of caching. This typically happens when requests are made for non-existent or rarely accessed data. To mitigate cache penetration, negative caching (caching negative responses) or using a bloom filter to check for the existence of data before querying the cache can be employed.</p>
+<h2>3. Big Key</h2>
+<p>A big key is a large piece of data that consumes a significant portion of the cache&#x27;s capacity. Storing big keys can lead to cache evictions, reducing the overall effectiveness of the caching system. Solutions for handling big keys include compressing the data before caching, breaking the data into smaller chunks, or using a separate caching strategy specifically designed for large objects.</p>
+<h2>4. Hot Key</h2>
+<p>A hot key refers to a piece of data that is frequently accessed, causing contention and performance issues in the caching system. Hot keys can lead to cache thrashing and an unbalanced distribution of load. Solutions for dealing with hot keys include using consistent hashing to distribute the load more evenly, replicating the hot key across multiple cache nodes, or implementing a load balancing strategy to distribute requests across multiple instances of the hot key.</p>
+<h2>5. Cache Stampede (or Dogpile)</h2>
+<p>Cache stampede occurs when multiple requests for the same data are made simultaneously, causing excessive load on the cache and the origin server. Cache stampede can be addressed using techniques such as request coalescing (combining multiple requests for the same data into a single request) or implementing a read-through cache, where the cache itself fetches the missing data from the origin server.</p></div><div><h2>6. Cache Pollution</h2>
+<p>Cache pollution occurs when less frequently accessed data displaces more frequently accessed data in the cache, leading to a reduced cache hit rate. To mitigate cache pollution, eviction policies like LRU (Least Recently Used) or LFU (Least Frequently Used) can be employed, which prioritize retaining frequently accessed data in the cache.</p>
+<h2>7. Cache Drift</h2>
+<p>Cache drift refers to the inconsistency between cached data and the data on the origin server, typically caused by updates or changes in the data. To handle cache drift, proper cache invalidation strategies should be implemented to ensure that the cache is updated or invalidated when the data on the origin server changes.</p>
+<p>By understanding and addressing these cache-related problems, we can improve the efficiency, performance, and reliability of their caching systems. This, in turn, can enhance the overall performance and user experience of their applications.</p></div>
+  </div>
+</section>
+
+<section id="chapter-09" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">09</span>
+    <h1 class="chapter-title">Cache Performance Metrics</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>When implementing caching, it’s important to measure the performance of the cache to ensure that it is effective in reducing latency and improving system performance. Here are some of the most common cache performance metrics:</p>
+<h2>Hit rate</h2>
+<p>The hit rate is the percentage of requests that are served by the cache without accessing the original source. A high hit rate indicates that the cache is effective in reducing the number of requests to the original source, while a low hit rate indicates that the cache may not be providing significant performance benefits.</p>
+<h2>Miss rate</h2>
+<p>The miss rate is the percentage of requests that are not served by the cache and need to be fetched from the original source. A high miss rate indicates that the cache may not be caching the right data or that the cache size may not be large enough to store all frequently accessed data.</p>
+<h2>Cache size</h2>
+<p>The cache size is the amount of memory or storage allocated for the cache. The cache size can impact the hit rate and miss rate of the cache. A larger cache size can result in a higher hit rate, but it may also increase the cost and complexity of the caching solution.</p>
+<h2>Cache latency</h2>
+<p>The cache latency is the time it takes to access data from the cache. A lower cache latency indicates that the cache is faster and more effective in reducing latency and improving system performance. The cache latency can be impacted by the caching technology used, the cache size, and the cache replacement and invalidation policies.</p></div>
+  </div>
+</section>
+
+<section id="chapter-10" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">10</span>
+    <h1 class="chapter-title">What is CDN</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>A Content Delivery Network (CDN) is a distributed network of servers strategically located across various geographical locations to deliver web content, such as images, videos, and other static assets, more efficiently to users. The primary purpose of a CDN is to reduce latency and improve the overall performance of web applications by serving content from the server nearest to the user. CDNs can also help improve reliability, availability, and security of web applications.</p>
+<h2>How CDNs work?</h2>
+<p>When a user requests content from a web application, the request is routed to the nearest CDN server (also known as an edge server) based on factors such as network latency and server load. The edge server then checks if the requested content is already cached. If it is, the content is served directly from the cache; otherwise, the edge server fetches the content from the origin server, caches it, and serves it to the user. Subsequent requests for the same content can then be served from the cache, reducing latency and offloading traffic from the origin server.</p></div><div><h2>Key terminology and concepts</h2>
+<p><strong>1. Point of Presence (PoP):</strong> A PoP is a physical location where CDN servers are deployed, typically in data centers distributed across various geographical locations. PoPs are strategically placed close to end-users to minimize latency and improve content delivery performance.</p>
+<p><strong>2. Edge Server:</strong> An edge server is a CDN server located at a PoP, responsible for caching and delivering content to end-users. These servers store cached copies of the content, reducing the need to fetch data from the origin server.</p>
+<p><strong>3. Origin Server:</strong> The origin server is the primary server where the original content is stored. CDNs fetch content from the origin server and cache it on edge servers for faster delivery to end-users.</p>
+<p><strong>4. Cache Warming:</strong> Cache warming is the process of preloading content into the edge server&#x27;s cache before it is requested by users, ensuring that the content is available for fast delivery when it is needed.</p>
+<p><strong>5. Time to Live (TTL)</strong> : TTL is a value that determines how long a piece of content should be stored in the cache before it is considered stale and needs to be refreshed from the origin server.</p>
+<p><strong>6. Anycast:</strong> Anycast is a network routing technique used by CDNs to direct user requests to the nearest available edge server, based on the lowest latency or the shortest network path.</p>
+<p><strong>7. Content Invalidation:</strong> Content invalidation is the process of removing or updating cached content when the original content on the origin server changes, ensuring that end-users receive the most up-to-date version of the content.</p>
+<p><strong>8. Cache Purging:</strong> Cache purging is the process of forcibly removing content from the edge server&#x27;s cache, usually triggered manually or automatically when specific conditions are met.</p>
+<h2>Benefits of using a CDN</h2>
+<p>CDNs play a crucial role in enhancing the performance, reliability, and security of modern web applications. By serving content from geographically distributed edge servers, CDNs can provide users with a fast and seamless experience, while reducing load on origin servers and protecting against security threats. Here are the top benefits of using CDNs:</p>
+<p><strong>1. Reduced latency:</strong> By serving content from geographically distributed edge servers, CDNs reduce the time it takes for content to travel from the server to the user, resulting in faster page load times and improved user experience.</p>
+<p><strong>2. Improved performance:</strong> CDNs can offload static content delivery from the origin server, freeing up resources for dynamic content generation and reducing server load. This can lead to improved overall performance for web applications.</p>
+<p><strong>3. Enhanced reliability and availability:</strong> With multiple edge servers in different locations, CDNs can provide built-in redundancy and fault tolerance. If one server becomes unavailable, requests can be automatically rerouted to another server, ensuring continuous content delivery.</p>
+<p><strong>4. Scalability:</strong> CDNs can handle sudden traffic spikes and large volumes of concurrent requests, making it easier to scale web applications to handle growing traffic demands.</p>
+<p><strong>5. Security:</strong> Many CDNs offer additional security features, such as DDoS protection, Web Application Firewalls (WAF), and SSL/TLS termination at the edge, helping to safeguard web applications from various security threats.</p></div>
+  </div>
+</section>
+
+<section id="chapter-11" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">11</span>
+    <h1 class="chapter-title">Origin Server vs Edge Server</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Origin servers and edge servers are key components in the delivery of web content, especially in content delivery networks (CDNs). They serve different roles in ensuring that users access web content quickly and efficiently. Understanding the distinction between the two is crucial in the context of web architecture and CDN functionality.</p>
+<h2>Origin Server</h2>
+<p>The origin server is the primary source of the original, unmodified content. It hosts the website&#x27;s content, including HTML files, images, stylesheets, JavaScript, videos, and other digital assets. When a user requests a web resource (like a webpage), the request is directed to the origin server if the content is not cached elsewhere.</p>
+<h3>Characteristics:</h3>
+<ul>
+<li><strong>Centralized Content Storage</strong>: It is the central repository where all the website&#x27;s original content is stored and managed.</li>
+<li><strong>Content Source</strong>: It provides the original content to edge servers or directly to users if the content is not cached or when a CDN is not used.</li>
+<li><strong>Performance Limitations</strong>: Directly serving all user requests, especially for sites with a global audience, can lead to slower response times due to geographical distance and increased load.</li>
+</ul>
+<h2>Edge Server</h2>
+<p>Edge servers, on the other hand, are part of a distributed network of servers, typically provided by a CDN. They cache content from the origin server and deliver it to users from a location closer to the user, thereby reducing latency and improving load times.</p>
+<h3>Characteristics:</h3>
+<ul>
+<li><strong>Geographical Distribution</strong>: Located in various locations (edge locations) closer to the end-users to reduce the distance that data travels over the network.</li>
+<li><strong>Content Caching</strong>: Stores cached copies of content from the origin server. This caching mechanism allows for faster delivery of content to users and reduces the load on the origin server.</li>
+<li><strong>Load Balancing and Scalability</strong>: Helps in distributing user requests efficiently, handling traffic spikes, and improving the scalability of web content delivery.</li>
+</ul>
+<h2>Example Scenario</h2>
+<p>Imagine a user from Paris attempting to access a video hosted on a website whose origin server is located in New York. If the website uses a CDN, the user&#x27;s request might be routed to an edge server in Paris. If the requested video is cached on the Paris edge server, it is delivered quickly to the user from there, significantly reducing the time it would take to fetch the video directly from the origin server in New York.</p>
+<h2>Conclusion</h2>
+<p>While the origin server is the source of the original content, edge servers play a crucial role in optimizing content delivery to end-users by caching content closer to where users are located. This architecture significantly improves website performance, reduces latency, and enhances user experience, especially for websites with a global audience.</p></div>
+  </div>
+</section>
+
+<section id="chapter-12" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">12</span>
+    <h1 class="chapter-title">CDN Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div><h2>Points of Presence (PoPs) and Edge Servers</h2>
+<p>A Point of Presence (PoP) is a physical location containing a group of edge servers within the CDN&#x27;s distributed network. PoPs are strategically situated across various geographical regions to minimize the latency experienced by users when requesting content. Each PoP typically consists of multiple edge servers to provide redundancy, fault tolerance, and load balancing.</p>
+<p>Edge servers are the servers within a PoP that store cached content and serve it to users. When a user makes a request for content, the request is directed to the nearest edge server, which either serves the content from its cache or fetches it from the origin server and then caches it for future requests. By serving content from the geographically nearest server, CDNs can significantly reduce latency and improve the overall user experience.</p>
+<h2>CDN Routing and Request Handling</h2>
+<p>CDN routing is the process of directing user requests to the most suitable edge server. Routing decisions are typically based on factors such as network latency, server load, and the user&#x27;s geographical location. Various techniques can be employed to determine the optimal edge server for handling a request, including:</p>
+<ul>
+<li>
+<p><strong>Anycast Routing:</strong> In anycast routing, multiple edge servers share a single IP address. When a user sends a request to that IP address, the network&#x27;s routing system directs the request to the nearest edge server based on network latency or the number of hops. This approach helps ensure that requests are automatically routed to the most appropriate server.</p>
+</li>
+<li>
+<p><strong>DNS-based Routing:</strong> With DNS-based routing, when a user requests content, the CDN&#x27;s DNS server responds with the IP address of the most suitable edge server. This approach can take into account factors such as geographical proximity and server load to select the best edge server for handling the request.</p>
+</li>
+<li>
+<p><strong>GeoIP-based Routing:</strong> In this approach, the user&#x27;s geographical location is determined based on their IP address. The request is then directed to the nearest edge server in terms of geographical distance, which often corresponds to lower network latency.</p>
+</li>
+</ul>
+<h2>Caching Mechanisms</h2>
+<p>Caching is a crucial component of CDN architecture. Edge servers cache content to reduce latency and offload traffic from the origin server. Various caching mechanisms can be employed to determine what content is stored, when it is updated, and when it should be removed from the cache. Some common caching mechanisms include:</p>
+<ul>
+<li>
+<p><strong>Time-to-Live (TTL):</strong> TTL is a value set by the origin server that determines how long a piece of content should be stored in the cache before it is considered stale and needs to be fetched again from the origin server.</p>
+</li>
+<li>
+<p><strong>Cache Invalidation:</strong> Cache invalidation is the process of removing content from the cache before its TTL expires. This is typically done when content is updated or deleted on the origin server and needs to be reflected immediately in the CDN.</p>
+</li>
+<li>
+<p><strong>Cache Control Headers:</strong> Cache control headers are used by the origin server to provide instructions to the CDN regarding caching behavior. These headers can dictate the cacheability of content, its TTL, and other caching-related settings.</p>
+</li>
+</ul>
+<h2>CDN Network Topologies</h2>
+<p>CDN network topologies describe the structure and organization of the CDN&#x27;s distributed network. Different topologies can be employed to optimize content delivery based on factors such as performance, reliability, and cost. Some common CDN network topologies include:</p>
+<ul>
+<li>
+<p><strong>Flat Topology:</strong> In a flat topology, all edge servers in the CDN are directly connected to the origin server. This approach can be effective for smaller CDNs, but may not scale well as the network grows.</p>
+</li>
+<li>
+<p><strong>Hierarchical Topology:</strong> In a hierarchical topology, edge servers are organized into multiple tiers, with each tier being responsible for serving content to the tier below it. This approach can improve scalability by distributing the load among multiple levels of servers and reducing the number of direct connections to the origin server.</p>
+</li>
+<li>
+<p><strong>Mesh Topology:</strong> In a mesh topology, edge servers are interconnected, allowing them to share content and load with each other. This approach can enhance the redundancy and fault tolerance of the CDN, as well as improve content delivery performance by reducing the need to fetch content from the origin server.</p>
+</li>
+<li>
+<p><strong>Hybrid Topology:</strong> A hybrid topology combines elements from various topologies to create an optimized CDN architecture tailored to specific needs. For example, a CDN could use a hierarchical structure for serving static content, while employing a mesh topology for dynamic content delivery.</p>
+</li>
+</ul>
+<h2>Summary</h2>
+<p>CDN architecture involves the strategic placement of PoPs and edge servers, efficient routing and request handling mechanisms, effective caching strategies, and the appropriate selection of network topologies to optimize content delivery. By considering these factors, CDNs can provide significant improvements in latency, performance, reliability, and security for web applications.</p></div>
+  </div>
+</section>
+
+<section id="chapter-13" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">13</span>
+    <h1 class="chapter-title">Push CDN vs Pull CDN</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>CDNs can be categorized into two types: Pull CDNs and Push CDNs. Both types aim to deliver content efficiently, but they differ in how they handle and distribute the content.</p>
+<h2>Pull CDN</h2>
+<p>In a Pull CDN, the content is not stored on the CDN&#x27;s servers by default. Instead, the CDN &quot;pulls&quot; the content from the origin server when a user requests it for the first time. Once the content is cached on the CDN&#x27;s edge server, subsequent requests for the same content will be served directly from the CDN, reducing the load on the origin server.</p>
+<p>When the cached content expires or reaches its Time-to-Live (TTL), the CDN will fetch the content again from the origin server, ensuring that users receive up-to-date content.</p>
+<p>Examples of Pull CDNs include Cloudflare, Fastly, and Amazon CloudFront.</p>
+<p><strong>Advantages of Pull CDN</strong></p>
+<ul>
+<li>Easy to set up and requires minimal changes to the existing infrastructure.</li>
+<li>The origin server is only accessed when content is not available on the CDN, reducing the load and bandwidth usage.</li>
+<li>The CDN automatically handles cache management and content expiration.</li>
+</ul>
+<p><strong>Disadvantages of Pull CDN</strong></p>
+<ul>
+<li>The first user to request the content may experience slightly slower load times as the CDN fetches the content from the origin server.</li>
+<li>The origin server must be accessible at all times for the CDN to fetch the content when needed.</li>
+</ul>
+<h2>Push CDN</h2>
+<p>In a Push CDN, the content is &quot;pushed&quot; to the CDN&#x27;s servers by the content provider, usually through manual uploads or automated processes. The content is proactively distributed across the CDN&#x27;s edge servers, making it readily available for user requests.</p>
+<p>Push CDNs are typically used for large files or less frequently accessed content, as they allow for better control over content distribution and caching.</p>
+<p>Examples of Push CDNs include Rackspace Cloud Files and Akamai NetStorage.</p>
+<p><strong>Advantages of Push CDN</strong></p>
+<ul>
+<li>Better control over content distribution and cache management, especially for large or infrequently accessed files.</li>
+<li>Content is readily available on the CDN&#x27;s servers, ensuring consistent load times for users.</li>
+</ul>
+<p><strong>Disadvantages of Push CDN</strong></p>
+<ul>
+<li>More complex to set up and maintain, as content must be manually uploaded or synced to the CDN.</li>
+<li>Increased storage costs, as content is stored on both the origin server and the CDN&#x27;s servers.</li>
+<li>The responsibility of cache management and content expiration lies with the content provider.</li>
+</ul>
+<p>In short, Pull CDNs are best suited for frequently accessed content and are easier to set up, while Push CDNs offer more control and are ideal for large or infrequently accessed files.</p></div>
+  </div>
+</section>
+
+<section id="chapter-14" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">14</span>
+    <h1 class="chapter-title">Production Caching Failures: Cache Stampede, Avalanche &amp;amp;amp;amp;amp;amp; Penetration</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="chapter-body-content">
+  <p>In high-throughput systems serving hundreds of thousands of queries per second, naïve caching introduces severe production failure modes that can crash entire database clusters.</p>
+
+  
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Cache Stampede (Thundering Herd) vs. Probabilistic Mitigations</div>
+    <div class="diagram-badge">Cache Failure Architecture</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 270" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradCF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: The Cache Stampede Problem -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="380" height="230" rx="10" fill="url(#gradCF)" stroke="#ef4444" stroke-width="1.2"/>
+    <text x="190" y="28" fill="#f87171" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">CACHE STAMPEDE (THUNDERING HERD)</text>
+
+    <!-- Concurrent Clients -->
+    <rect x="20" y="55" width="80" height="150" rx="6" fill="#1e1b4b" stroke="#ef4444"/>
+    <text x="60" y="80" fill="#fca5a5" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">50,000</text>
+    <text x="60" y="96" fill="#fca5a5" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Concurrent</text>
+    <text x="60" y="112" fill="#fca5a5" font-family="Inter, sans-serif" font-size="9" text-anchor="middle">Requests / sec</text>
+
+    <!-- Expired Hot Key -->
+    <rect x="140" y="65" width="95" height="60" rx="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="187" y="90" fill="#f87171" font-family="Fira Code, monospace" font-size="10" font-weight="700" text-anchor="middle">KEY EXPIRED</text>
+    <text x="187" y="108" fill="#fca5a5" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">TTL = 0s 💥</text>
+
+    <!-- Database Melt -->
+    <rect x="270" y="60" width="95" height="140" rx="6" fill="#450a0a" stroke="#ef4444" stroke-width="2"/>
+    <text x="317" y="88" fill="#fca5a5" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">DATABASE</text>
+    <text x="317" y="106" fill="#ef4444" font-family="Fira Code, monospace" font-size="11" font-weight="700" text-anchor="middle">MELTDOWN</text>
+    <text x="317" y="130" fill="#fca5a5" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">All 50k reqs hit DB</text>
+    <text x="317" y="146" fill="#fca5a5" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">simultaneously.</text>
+    <text x="317" y="162" fill="#fca5a5" font-family="Inter, sans-serif" font-size="8.5" text-anchor="middle">CPU = 100%</text>
+
+    <!-- Arrows -->
+    <path d="M 100 120 L 140 120" stroke="#ef4444" stroke-width="2" class="flow-line"/>
+    <path d="M 235 95 L 270 95" stroke="#ef4444" stroke-width="3" class="flow-line-fast"/>
+  </g>
+
+  <!-- Right: Solutions (XFetch & Mutex) -->
+  <g transform="translate(420, 20)">
+    <rect x="0" y="0" width="400" height="230" rx="10" fill="url(#gradCF)" stroke="#10b981" stroke-width="1.2"/>
+    <text x="200" y="28" fill="#10b981" font-family="Outfit, sans-serif" font-size="13" font-weight="700" text-anchor="middle">PRODUCTION SOLUTIONS &amp; MITIGATIONS</text>
+
+    <!-- 1. Mutex Lock -->
+    <rect x="20" y="48" width="360" height="50" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+    <text x="35" y="68" fill="#34d399" font-family="Outfit, sans-serif" font-size="11" font-weight="700">1. Distributed Mutex Lock (SETNX lock:key)</text>
+    <text x="35" y="86" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9">Only 1 worker queries DB to re-populate cache; all others wait or serve stale.</text>
+
+    <!-- 2. Probabilistic Early Expiration (XFetch) -->
+    <rect x="20" y="106" width="360" height="50" rx="6" fill="#1e1b4b" stroke="#38bdf8" stroke-width="0.8"/>
+    <text x="35" y="126" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700">2. Probabilistic Early Refresh (XFetch)</text>
+    <text x="35" y="144" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9">Worker refreshes key *before* expiry: -β * delta * ln(rand()) &gt; TTL.</text>
+
+    <!-- 3. Jittered TTL -->
+    <rect x="20" y="164" width="360" height="50" rx="6" fill="#78350f" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="35" y="184" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700">3. TTL Jitter (Avoids Cache Avalanche)</text>
+    <text x="35" y="202" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9">Add random noise: TTL = Base_TTL + rand(0, 300s) to prevent simultaneous expiry.</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Cache Stampede crashes databases when hot keys expire under load; mitigate via Distributed Mutex locking, Probabilistic Early Expiration (XFetch), and Jittered TTLs.
+  </div>
+</div>
+
+
+  <h2>1. The Four Classic Production Caching Failures</h2>
+  
+  <h3>A. Cache Stampede (Thundering Herd)</h3>
+  <p><strong>Scenario:</strong> A hot cache key (e.g. homepage catalog data) expires. Under 50,000 QPS, all 50,000 requests experience a cache miss simultaneously and attempt to compute the expensive SQL query at once, causing instant database CPU saturation and connection starvation.</p>
+  <p><strong>Solutions:</strong></p>
+  <ul>
+    <li><strong>Distributed Mutex Lock:</strong> The first request acquires a Redis lock (<code>SET lock:key token NX EX 5</code>) to fetch from the DB and update the cache. All concurrent requests wait briefly or serve stale data.</li>
+    <li><strong>Probabilistic Early Expiration (XFetch Algorithm):</strong> Background workers probabilistically refresh the cache entry before it expires based on computation time $\delta$ and remaining TTL: <code>-(beta * delta * ln(random())) &gt; TTL_remaining</code>.</li>
+  </ul>
+
+  <h3>B. Cache Avalanche</h3>
+  <p><strong>Scenario:</strong> Thousands of cache keys are loaded at the same time (e.g. daily cron job) with the exact same 24-hour TTL. Exactly 24 hours later, all keys expire simultaneously, shifting massive traffic directly to the database.</p>
+  <p><strong>Solution:</strong> Add <strong>TTL Jitter</strong> (random noise) to expiration times: <code>TTL = BASE_TTL + rand(0, 300)</code>. This spreads key evictions evenly across time.</p>
+
+  <h3>C. Cache Penetration</h3>
+  <p><strong>Scenario:</strong> Attackers or buggy clients repeatedly query non-existent IDs (e.g., <code>GET /user/-99999</code>). Because the ID never exists in the DB, it is never cached, forcing every single request to hit disk.</p>
+  <p><strong>Solutions:</strong></p>
+  <ul>
+    <li><strong>Bloom Filter Guard:</strong> Place an in-memory Bloom Filter in front of the cache. If the filter returns "Definitely Not in Set", immediately reject the query with 404 without touching the database.</li>
+    <li><strong>Cache Null Objects:</strong> Store <code>null</code> with a short TTL (e.g. 60 seconds) so repeated queries hit cache.</li>
+  </ul>
+
+  <h3>D. Cache Breakdown (Hot Key Eviction)</h3>
+  <p><strong>Scenario:</strong> An ultra-popular celebrity tweet or breaking news item experiences a cache eviction. Solved by marking hot keys with infinite TTL and updating them via background event-driven message queues.</p>
+</div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_06_caching_and_cdn') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_06_caching_and_cdn', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

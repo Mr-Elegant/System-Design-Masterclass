@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Design Fundamentals - System Design Guide</title>
+    <meta property="og:title" content="System Design Fundamentals - System Design Guide">
+    <meta property="og:description" content="Interactive System Design & Microservices Architecture Study Guide with Dark Mode, Search & Bookmarks.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-sidebar: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #38bdf8;
+            --border-color: #2d2d2d;
+            --code-bg: #181818;
+            --card-bg: #1a1a1a;
+            --sidebar-width: 340px;
+            
+            --heading-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --strong-color: #fbbf24;
+            --strong-bg: rgba(251, 191, 36, 0.05);
+            --strong-border: rgba(251, 191, 36, 0.3);
+            --bullet-color: #38bdf8;
+            --blockquote-border: #38bdf8;
+            --blockquote-bg: rgba(56, 189, 248, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-sidebar: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --card-bg: #f8fafc;
+            
+            --heading-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            --strong-color: #b45309;
+            --strong-bg: rgba(180, 83, 9, 0.05);
+            --strong-border: rgba(180, 83, 9, 0.25);
+            --bullet-color: #0284c7;
+            --blockquote-border: #0284c7;
+            --blockquote-bg: rgba(2, 132, 199, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: margin-left 0.3s ease, background-color 0.3s, border-color 0.3s;
+        }
+
+        body.sidebar-collapsed .sidebar {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .floating-sidebar-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 9999;
+            background-color: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .floating-sidebar-toggle:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        body.sidebar-collapsed .floating-sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header {
+            padding: 24px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--code-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .sidebar-menu-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 16px 12px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-item a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            transition: background-color 0.2s, color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-item a:hover, .sidebar-item.active a {
+            background-color: rgba(128, 128, 128, 0.08);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active a {
+            border-left: 3px solid var(--accent-color);
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            padding-left: 11px;
+            font-weight: 500;
+        }
+
+        .chapter-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+
+        .no-bookmarks-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            height: 100%;
+        }
+
+        .content-inner {
+            max-width: 850px;
+            margin: 0 auto;
+            padding-bottom: 300px;
+            transition: max-width 0.3s ease;
+        }
+
+        body.layout-full .content-inner {
+            max-width: 95% !important;
+        }
+
+        .chapter-section {
+            padding-top: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 60px;
+        }
+
+        .chapter-section:first-of-type {
+            padding-top: 0;
+        }
+
+        .chapter-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        .bookmark-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Content Styling */
+        .chapter-body p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chapter-body h1, .chapter-body h2, .chapter-body h3, .chapter-body h4 {
+            font-family: 'Outfit', sans-serif;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .chapter-body h2 { font-size: 1.6rem; color: var(--accent-color); }
+        .chapter-body h3 { font-size: 1.3rem; }
+        .chapter-body h4 { font-size: 1.1rem; }
+
+        .chapter-body ul, .chapter-body ol {
+            margin-bottom: 24px;
+            padding-left: 28px;
+        }
+
+        .chapter-body li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .chapter-body strong, .chapter-body b {
+            font-weight: 600;
+            color: var(--strong-color);
+            background-color: var(--strong-bg);
+            padding: 1px 5px;
+            border-radius: 4px;
+            border: 1px solid var(--strong-border);
+        }
+
+        .chapter-body blockquote {
+            border-left: 4px solid var(--blockquote-border);
+            background-color: var(--blockquote-bg);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .chapter-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        .chapter-body th, .chapter-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .chapter-body th {
+            background-color: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .chapter-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-body svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid] {
+            width: 24px !important;
+            height: 24px !important;
+            max-width: 24px !important;
+            max-height: 24px !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 40vh;
+            }
+            .content {
+                padding: 24px 20px;
+            }
+        }
+    
+/* ANIMATED SYSTEM DESIGN DIAGRAMS */
+.diagram-card {
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border-color, #2d2d2d);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0 32px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.diagram-card:hover {
+    border-color: var(--accent-color, #38bdf8);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+}
+.diagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color, #2d2d2d);
+}
+.diagram-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-color, #38bdf8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.diagram-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite;
+}
+.diagram-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+}
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 16px;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(128, 128, 128, 0.05);
+    border-left: 3px solid var(--accent-color, #38bdf8);
+}
+.diagram-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+@keyframes flowDash { to { stroke-dashoffset: -32; } }
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+@keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4)); } 50% { filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9)); } }
+.flow-line { stroke-dasharray: 6 6; animation: flowDash 1.2s linear infinite; }
+.flow-line-fast { stroke-dasharray: 6 6; animation: flowDash 0.7s linear infinite; }
+.glow-effect { animation: glowPulse 2.5s ease-in-out infinite; }
+
+
+        /* Strict sizing constraint for inline icons */
+        .chapter-body a svg,
+        .chapter-body svg.MuiSvgIcon-root,
+        .chapter-body svg[data-testid],
+        .chapter-body svg:not(.diagram-svg):not(.bookmark-btn svg) {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            margin: 0 4px !important;
+        }
+
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="floating-sidebar-toggle" class="floating-sidebar-toggle" title="Open Sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">System Design Fundamentals</div>
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search chapters...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (9)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
+            </div>
+        </div>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item" data-num="01" data-title="introduction to system design"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to System Design</a></li>
+<li class="sidebar-item" data-num="02" data-title="scalability"><a href="#chapter-02"><span class="chapter-num">02</span> Scalability</a></li>
+<li class="sidebar-item" data-num="03" data-title="availability"><a href="#chapter-03"><span class="chapter-num">03</span> Availability</a></li>
+<li class="sidebar-item" data-num="04" data-title="latency and performance"><a href="#chapter-04"><span class="chapter-num">04</span> Latency and Performance</a></li>
+<li class="sidebar-item" data-num="05" data-title="concurrency and coordination"><a href="#chapter-05"><span class="chapter-num">05</span> Concurrency and Coordination</a></li>
+<li class="sidebar-item" data-num="06" data-title="monitoring and observability"><a href="#chapter-06"><span class="chapter-num">06</span> Monitoring and Observability</a></li>
+<li class="sidebar-item" data-num="07" data-title="resilience and error handling"><a href="#chapter-07"><span class="chapter-num">07</span> Resilience and Error Handling</a></li>
+<li class="sidebar-item" data-num="08" data-title="fault tolerance vs high availability"><a href="#chapter-08"><span class="chapter-num">08</span> Fault Tolerance vs High Availability</a></li>
+<li class="sidebar-item" data-num="09" data-title="distributed unique id generation (twitter snowflake &amp; ulid)"><a href="#chapter-09"><span class="chapter-num">09</span> Distributed Unique ID Generation (Twitter Snowflake &amp; ULID)</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content" id="main-content">
+        <div class="content-inner">
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">Introduction to System Design</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>To excel in system design, one of the most crucial aspects is to develop a deep understanding of fundamental system design concepts such as <strong>Load Balancing</strong>, <strong>Caching</strong>, <strong>Partitioning</strong>, <strong>Replication</strong>, <strong>Databases</strong>, and <strong>Proxies</strong>.</p>
+<p>This course will go through key concepts that can make a significant difference in your ability to tackle system design problems. These concepts range from understanding the intricacies of API Gateway and mastering Load Balancing techniques to grasping the importance of CDNs and appreciating the role of Caching in modern distributed systems. By the end of this course, you’ll have a comprehensive understanding of these essential ideas and the confidence to apply them in your next interview.</p>
+<p>When discussing system design interviews, it&#x27;s important to note that they are unstructured by nature. During the interview, it can be challenging to maintain focus and ensure all crucial elements of the design are addressed. This course should guide you in answering any system design interview question by making sure that you have not missed discussing any critical aspect.</p>
+<p>Let&#x27;s get started.</p></div>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">Scalability</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Horizontal vs. Vertical Scaling Architecture</div>
+    <div class="diagram-badge">Architecture Visual</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 310" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradScale1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="gradNode" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="glowG" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Left: Vertical Scaling (Scale Up) -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="370" height="265" rx="10" fill="url(#gradScale1)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="185" y="32" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="15" font-weight="700" text-anchor="middle">VERTICAL SCALING (SCALE UP)</text>
+    <text x="185" y="52" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Single server upgraded with bigger CPU / RAM / SSD</text>
+
+    <!-- Client -->
+    <rect x="30" y="110" width="70" height="45" rx="6" fill="url(#gradNode)" stroke="#64748b" stroke-width="1.2"/>
+    <text x="65" y="137" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="11" text-anchor="middle">Client</text>
+
+    <!-- Flow Arrow -->
+    <path d="M 100 132 L 180 132" fill="none" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    
+    <!-- Big Beefy Server -->
+    <rect x="185" y="75" width="155" height="155" rx="10" fill="url(#gradNode)" stroke="#f59e0b" stroke-width="2" class="glow-effect"/>
+    <rect x="195" y="85" width="135" height="25" rx="4" fill="#334155" stroke="#475569" stroke-width="1"/>
+    <text x="262" y="102" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">🚀 128 Core / 512GB RAM</text>
+    
+    <rect x="195" y="118" width="135" height="20" rx="3" fill="#1e293b" stroke="#334155"/>
+    <text x="262" y="132" fill="#94a3b8" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">App Server Instance</text>
+    
+    <rect x="195" y="145" width="135" height="20" rx="3" fill="#1e293b" stroke="#334155"/>
+    <text x="262" y="159" fill="#94a3b8" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">In-Memory Cache (RAM)</text>
+    
+    <rect x="195" y="172" width="135" height="20" rx="3" fill="#1e293b" stroke="#334155"/>
+    <text x="262" y="186" fill="#94a3b8" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">Local NVMe Storage</text>
+
+    <!-- Downside Label -->
+    <rect x="195" y="200" width="135" height="20" rx="4" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="1"/>
+    <text x="262" y="214" fill="#f87171" font-family="Inter, sans-serif" font-size="9.5" font-weight="600" text-anchor="middle">⚠️ Hard Hardware Limits &amp; SPOF</text>
+  </g>
+
+  <!-- Right: Horizontal Scaling (Scale Out) -->
+  <g transform="translate(440, 20)">
+    <rect x="0" y="0" width="380" height="265" rx="10" fill="url(#gradScale1)" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4"/>
+    <text x="190" y="32" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="15" font-weight="700" text-anchor="middle">HORIZONTAL SCALING (SCALE OUT)</text>
+    <text x="190" y="52" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Elastic pool of commodity servers with Load Balancer</text>
+
+    <!-- Clients -->
+    <rect x="15" y="110" width="60" height="45" rx="6" fill="url(#gradNode)" stroke="#64748b" stroke-width="1.2"/>
+    <text x="45" y="137" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">Traffic</text>
+
+    <!-- Flow Arrow to LB -->
+    <path d="M 75 132 L 115 132" fill="none" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+
+    <!-- Load Balancer -->
+    <rect x="115" y="90" width="65" height="85" rx="8" fill="url(#gradNode)" stroke="#38bdf8" stroke-width="1.8"/>
+    <text x="147" y="130" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">LOAD</text>
+    <text x="147" y="145" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="11" font-weight="700" text-anchor="middle">BALANCER</text>
+
+    <!-- Flow lines from LB to servers -->
+    <path d="M 180 110 C 210 110, 220 85, 245 85" fill="none" stroke="#10b981" stroke-width="2" class="flow-line"/>
+    <path d="M 180 132 L 245 132" fill="none" stroke="#10b981" stroke-width="2" class="flow-line"/>
+    <path d="M 180 155 C 210 155, 220 180, 245 180" fill="none" stroke="#10b981" stroke-width="2" class="flow-line"/>
+    <path d="M 180 165 C 210 165, 220 225, 245 225" fill="none" stroke="#a855f7" stroke-width="2" class="flow-line-fast"/>
+
+    <!-- Server Nodes -->
+    <rect x="245" y="65" width="115" height="38" rx="6" fill="url(#gradNode)" stroke="#10b981" stroke-width="1.2"/>
+    <text x="302" y="88" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="10.5" text-anchor="middle">Node 01 (Healthy)</text>
+
+    <rect x="245" y="112" width="115" height="38" rx="6" fill="url(#gradNode)" stroke="#10b981" stroke-width="1.2"/>
+    <text x="302" y="135" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="10.5" text-anchor="middle">Node 02 (Healthy)</text>
+
+    <rect x="245" y="160" width="115" height="38" rx="6" fill="url(#gradNode)" stroke="#10b981" stroke-width="1.2"/>
+    <text x="302" y="183" fill="#e2e8f0" font-family="Fira Code, monospace" font-size="10.5" text-anchor="middle">Node 03 (Healthy)</text>
+
+    <!-- Auto-scaled new node -->
+    <rect x="245" y="206" width="115" height="38" rx="6" fill="url(#gradNode)" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="302" y="229" fill="#c084fc" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">+ Auto-scaled Node</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Horizontal scaling distributes incoming load elastically across homogeneous worker nodes, avoiding single points of failure (SPOF) and physical hardware capacity ceilings.
+  </div>
+</div>
+
+
+    <div><p>Scalability is the ability of a system to handle an increasing workload, either by adding more resources (scaling out) or by upgrading the capacity of existing resources (scaling up). In distributed systems, scalability is essential to ensure that the system can effectively manage the growing demands of users, data, and processing power. Here&#x27;s an overview of the different aspects of scalability:</p>
+<h2>A. Horizontal Scaling</h2>
+<p>Horizontal scaling, also known as scaling out, involves adding more machines or nodes to a system to distribute the workload evenly. This approach allows the system to handle an increased number of requests without overloading individual nodes. Horizontal scaling is particularly useful in distributed systems because it provides a cost-effective way to manage fluctuating workloads and maintain high availability.</p>
+<h2>B. Vertical Scaling</h2>
+<p>Vertical scaling, or scaling up, refers to increasing the capacity of individual nodes within a system. This can be achieved by upgrading the hardware, such as adding more CPU, memory, or storage. Vertical scaling can help improve the performance of a system by allowing it to handle more workloads on a single node. However, this approach has limitations, as there is a physical limit to the amount of resources that can be added to a single machine, and it can also lead to single points of failure.</p>
+<p><strong>Horizontal vs. Vertical Scaling</strong></p>
+<p>With horizontal-scaling it is often easier to scale dynamically by adding more machines into the existing pool; Vertical-scaling is usually limited to the capacity of a single server and scaling beyond that capacity often involves downtime and comes with an upper limit.</p>
+<p>Good examples of horizontal scaling are Cassandra and MongoDB as they both provide an easy way to scale horizontally by adding more machines to meet growing needs. Similarly, a good example of vertical scaling is MySQL as it allows for an easy way to scale vertically by switching from smaller to bigger machines. However, this process often involves downtime.</p></div>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Availability</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Availability is a measure of how accessible and reliable a system is to its users. In distributed systems, high availability is crucial to ensure that the system remains operational even in the face of failures or increased demand. It is the backbone that enables businesses to provide uninterrupted services to their users, regardless of any unforeseen circumstances. In today’s fast-paced digital world, where downtime can lead to significant financial losses and reputational damage, high availability has become a critical requirement for organizations across various industries.</p>
+<h2>Definition of High Availability</h2>
+<p>High availability is often measured in terms of uptime, which is the ratio of time that a system is operational to the total time it is supposed to be operational. Achieving high availability involves minimizing planned and unplanned downtime, eliminating single points of failure, and implementing redundant systems and processes.</p>
+<p>When it comes to distributed systems, high availability goes beyond simply ensuring that the system is up and running. It also involves guaranteeing that the system can handle increased load and traffic without compromising its performance. This scalability aspect is crucial, especially in scenarios where the user base grows rapidly or experiences sudden spikes in demand.</p>
+<h2>Strategies for Achieving High Availability</h2>
+<p>To achieve high availability, organizations implement various strategies that focus on redundancy, replication, load balancing, distributed data storage, health monitoring, regular system maintenance, and geographic distribution.</p>
+<h3>1. High Availability through Redundancy and Replication</h3>
+<p>One of the most effective strategies for achieving high availability is redundancy and replication. By duplicating critical components or entire systems, organizations can ensure that if one fails, the redundant system takes over seamlessly, avoiding any interruption in service. Replication involves creating multiple copies of data, ensuring that it is available even if one copy becomes inaccessible.</p>
+<p>Redundancy and replication are commonly used in mission-critical systems such as data centers, where multiple servers are deployed to handle the workload. In the event of a hardware failure or system crash, the redundant server takes over, ensuring uninterrupted service for users.</p>
+<h3>2. Availability through Load Balancing</h3>
+<p>Load balancing involves distributing workloads across multiple servers, ensuring that no single server is overwhelmed. Through intelligent load-balancing algorithms, organizations can optimize resource utilization, prevent bottlenecks, and enhance high availability by evenly distributing traffic.</p>
+<p>Load balancing is particularly useful in web applications, where a large number of users access the system simultaneously. By distributing incoming requests across multiple servers, load balancers ensure that no single server becomes overloaded, leading to improved performance and availability.</p>
+<h3>3. Availability through Distributed Data Storage</h3>
+<p>Storing data across multiple locations or data centers enhances high availability by reducing the risk of data loss or corruption. Distributed data storage systems replicate data across geographically diverse locations, ensuring that even if one site experiences an outage, data remains accessible from other locations.</p>
+<p>Distributed data storage is crucial for organizations that deal with large volumes of data and cannot afford to lose it. By replicating data across multiple sites, organizations can ensure that data is always available, even in the event of a catastrophic failure at one location.</p>
+<h3>4. Availability and Consistency Models (Strong, Weak, Eventual)</h3>
+<p>Consistency models define how a distributed system maintains a coherent and up-to-date view of its data across all replicas. Different consistency models provide different trade-offs between availability, performance, and data correctness. Strong consistency ensures that all replicas have the same data at all times, at the cost of reduced availability and performance. Weak consistency allows for temporary inconsistencies between replicas, with the advantage of improved availability and performance. Eventual consistency guarantees that all replicas will eventually converge to the same data, providing a balance between consistency, availability, and performance.</p>
+<h3>5. Availability through Health Monitoring and Alerts</h3>
+<p>Implementing robust health monitoring systems ensures that organizations can proactively identify and address potential issues before they impact system availability. Real-time monitoring and automated alerts enable timely response and rapid resolution of problems, minimizing downtime.</p>
+<p>Health monitoring involves continuously monitoring system performance, resource utilization, and various metrics to detect any anomalies or potential issues. Alerts are triggered when predefined thresholds are exceeded, allowing IT teams to take immediate action and prevent service disruptions.</p>
+<h3>6. Availability through Regular System Maintenance and Updates</h3>
+<p>Regular system maintenance and updates are crucial for achieving high availability. By keeping systems up to date with the latest patches, security enhancements, and bug fixes, organizations can mitigate the risk of failures and vulnerabilities that could compromise system availability.</p>
+<p>System maintenance involves tasks such as hardware inspections, software updates, and routine checks to ensure that all components are functioning correctly. By staying proactive and addressing any potential issues promptly, organizations can maintain high availability and minimize the impact of system failures.</p>
+<h3>7. Availability through Geographic Distribution</h3>
+<p>Geographic distribution is a strategy that involves deploying system components across multiple locations or data centers. This ensures that even if one region or data center experiences an outage, users can still access the system from other geographically dispersed locations.</p>
+<p>Geographic distribution is particularly important for organizations with a global presence or those that rely heavily on cloud infrastructure. By strategically placing system components in different geographical areas, organizations can ensure that users from various locations can access the system without any interruptions, regardless of localized incidents or natural disasters.</p></div>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Latency and Performance</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Latency and performance are critical aspects of distributed systems, as they directly impact the user experience and the system&#x27;s ability to handle large amounts of data and traffic. In distributed systems, optimizing latency and performance involves considering factors such as data locality, load balancing, and caching strategies. Here&#x27;s an overview of these aspects of latency and performance:</p>
+<h2>A. Data Locality</h2>
+<p>Data locality refers to the organization and distribution of data within a distributed system to minimize the amount of data that needs to be transferred between nodes. By storing related data close together or near the nodes that access it most frequently, you can reduce the latency associated with data retrieval and improve overall performance. Techniques to achieve data locality include data partitioning, sharding, and data replication.</p>
+<h2>B. Load Balancing</h2>
+<p>Load balancing is the process of distributing incoming network traffic or computational workload across multiple nodes or resources to ensure that no single node is overwhelmed. This helps to optimize resource utilization, minimize response times, and prevent system overloads. Various load balancing algorithms, such as round-robin, least connections, and consistent hashing, can be employed to achieve efficient load distribution and improved system performance.</p>
+<h2>C. Caching Strategies</h2>
+<p>Caching is a technique used to store frequently accessed data or computed results temporarily, allowing the system to quickly retrieve the data from cache instead of recalculating or fetching it from the primary data source. By implementing effective caching strategies, you can significantly reduce latency and improve the performance of your distributed system. Common caching strategies include in-memory caching, distributed caching, and content delivery networks (CDNs).</p></div>
+  </div>
+</section>
+
+<section id="chapter-05" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">05</span>
+    <h1 class="chapter-title">Concurrency and Coordination</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>In distributed systems, multiple processes or components often need to work together concurrently, which can introduce challenges related to coordination, synchronization, and data consistency. Here&#x27;s an overview of concurrency and coordination in distributed systems and the key aspects to consider:</p>
+<h2>A. Concurrency Control</h2>
+<p>Concurrency control is the process of managing simultaneous access to shared resources or data in a distributed system. It ensures that multiple processes can work together efficiently while avoiding conflicts or inconsistencies. Techniques for implementing concurrency control include:</p>
+<ul>
+<li><strong>Locking:</strong> Locks are used to restrict access to shared resources or data, ensuring that only one process can access them at a time.</li>
+<li><strong>Optimistic concurrency control:</strong> This approach assumes that conflicts are rare and allows multiple processes to work simultaneously. Conflicts are detected and resolved later, usually through a validation and rollback mechanism.</li>
+<li><strong>Transactional memory:</strong> This technique uses transactions to group together multiple operations that should be executed atomically, ensuring data consistency and isolation.</li>
+</ul>
+<h2>B. Synchronization</h2>
+<p>Synchronization is the process of coordinating the execution of multiple processes or threads in a distributed system to ensure correct operation. Synchronization can be achieved using various mechanisms, such as:</p>
+<ul>
+<li><strong>Barriers:</strong> Barriers are used to synchronize the execution of multiple processes or threads, ensuring that they all reach a specific point before proceeding.</li>
+<li><strong>Semaphores:</strong> Semaphores are signaling mechanisms that control access to shared resources and maintain synchronization among multiple processes or threads.</li>
+<li><strong>Condition variables:</strong> Condition variables allow processes or threads to wait for specific conditions to be met before proceeding with their execution.</li>
+</ul>
+<h3>Concurrency Control vs. Synchronization</h3>
+<ol>
+<li>
+<p><strong>Concurrency Control</strong>:</p>
+<ul>
+<li><strong>Primary Goal</strong>: The main objective of concurrency control is to manage access to shared resources (like data or hardware resources) in an environment where multiple processes or threads are executing simultaneously.</li>
+<li><strong>Focus</strong>: It is concerned with how to handle situations where multiple processes need to access or modify shared data at the same time.</li>
+</ul>
+</li>
+<li>
+<p><strong>Synchronization</strong>:</p>
+<ul>
+<li><strong>Primary Goal</strong>: The purpose of synchronization is to coordinate the timing of multiple concurrent processes or threads. It&#x27;s about managing the execution order and timing of processes to ensure correct operation.</li>
+<li><strong>Focus</strong>: It ensures that concurrent processes execute in a way that respects certain timing constraints, like making sure certain operations happen before others or that operations do not interfere destructively with one another.</li>
+</ul>
+</li>
+</ol>
+<h2>C. Coordination Services</h2>
+<p>Coordination services are specialized components or tools that help manage distributed systems&#x27; complexity by providing a set of abstractions and primitives for tasks like configuration management, service discovery, leader election, and distributed locking. Examples of coordination services include Apache ZooKeeper, etcd, and Consul.</p>
+<h2>D. Consistency Models</h2>
+<p>In distributed systems, consistency models define the rules for maintaining data consistency across multiple nodes or components. Various consistency models, such as strict consistency, sequential consistency, eventual consistency, and causal consistency, provide different levels of guarantees for data consistency and can impact the overall system performance, availability, and complexity.</p>
+<p>Consistency models are fundamental in distributed systems, defining the rules for how and when changes made by one operation (like a write) become visible to other operations (like reads). Different models offer various trade-offs between consistency, availability, and partition tolerance. Here are some of the key consistency models, along with examples:</p>
+<h3>1. Strong Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: After a write operation completes, any subsequent read operation will immediately see the new value.</li>
+<li><strong>Example</strong>: Traditional relational databases (RDBMS) like MySQL or PostgreSQL typically offer strong consistency. If a record is updated in one transaction, any subsequent transaction will see that update.</li>
+</ul>
+<h3>2. Eventual Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: Over time, all accesses to a particular data item will eventually return the last updated value. The time it takes to achieve consistency after a write is not guaranteed.</li>
+<li><strong>Example</strong>: Amazon&#x27;s DynamoDB uses eventual consistency. If you update a data item, the change might not be immediately visible to all users, but it will eventually propagate to all nodes.</li>
+</ul>
+<h3>3. Causal Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: Operations that are causally related are seen by all processes in the same order. Concurrent operations might be seen in a different order on different nodes.</li>
+<li><strong>Example</strong>: In a social media app, if a user posts a message and then comments on that post, any user who sees the comment must also see the original post.</li>
+</ul>
+<h3>4. Read-Your-Writes Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: Guarantees that once a write operation completes, any subsequent reads (by the same client) will see that write or its effects.</li>
+<li><strong>Example</strong>: A user profile update in a web application. Once the user updates their profile, they immediately see the updated profile data.</li>
+</ul>
+<h3>5. Session Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: A stronger version of read-your-writes consistency. It extends this guarantee to a session of interactions, ensuring consistency within the context of a single user session.</li>
+<li><strong>Example</strong>: In an e-commerce site&#x27;s shopping cart, items added to the cart in a session will be consistently visible throughout that session.</li>
+</ul>
+<h3>6. Sequential Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: Operations from all nodes or processes are seen in the same order. There is a global order of operations, but it doesn&#x27;t have to be real-time.</li>
+<li><strong>Example</strong>: A distributed logging system where logs from different servers are merged into a single, sequentially consistent log.</li>
+</ul>
+<h3>7. Monotonic Read Consistency</h3>
+<ul>
+<li><strong>Definition</strong>: Ensures that if a read operation reads a value of a data item, any subsequent read operations will never see an older value.</li>
+<li><strong>Example</strong>: A user checking a flight status on an airline app will not see a departure time that goes back in time; it will only move forward.</li>
+</ul>
+<h3>8. Linearizability (Strong Consistency)</h3>
+<ul>
+<li><strong>Definition</strong>: A stronger version of sequential consistency, it ensures that all operations are atomic and instantly visible to all nodes.</li>
+<li><strong>Example</strong>: In a distributed key-value store, once a new value is written to a key, any read operation on any node immediately reflects this change.</li>
+</ul>
+<p>Each consistency model addresses specific requirements and challenges in distributed systems, balancing the trade-offs between providing timely, consistent views of data and maintaining system performance and availability. The choice of a consistency model often depends on the specific requirements of the application and the nature of the data being managed.</p></div>
+  </div>
+</section>
+
+<section id="chapter-06" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">06</span>
+    <h1 class="chapter-title">Monitoring and Observability</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Monitoring and observability are essential aspects of managing distributed systems, as they help identify issues, understand system behavior, and ensure optimal performance. Here&#x27;s an overview of various components of monitoring and observability in distributed systems:</p>
+<h2>A. Metrics Collection</h2>
+<p>Metrics are quantitative measurements that provide insights into the performance, health, and behavior of a distributed system. Collecting and analyzing metrics, such as latency, throughput, error rates, and resource utilization, can help identify performance bottlenecks, potential issues, and areas for improvement. Tools like Prometheus, Graphite, or InfluxDB can be used to collect, store, and query metrics in distributed systems.</p>
+<h2>B. Distributed Tracing</h2>
+<p>Distributed tracing is a technique for tracking and analyzing requests as they flow through a distributed system, allowing you to understand the end-to-end performance and identify issues in specific components or services. Implementing distributed tracing using tools like Jaeger, Zipkin, or OpenTelemetry can provide valuable insights into the behavior of your system, making it easier to debug and optimize.</p>
+<h2>C. Logging</h2>
+<p>Logs are records of events or messages generated by components of a distributed system, providing a detailed view of system activity and helping identify issues or anomalies. Collecting, centralizing, and analyzing logs from all services and nodes in a distributed system can provide valuable insights into system behavior and help with debugging and troubleshooting. Tools like Elasticsearch, Logstash, and Kibana (ELK Stack) or Graylog can be used for log aggregation and analysis.</p>
+<h2>D. Alerting and Anomaly Detection</h2>
+<p>Alerting and anomaly detection involve monitoring the distributed system for unusual behavior or performance issues and notifying the appropriate teams when such events occur. By setting up alerts based on predefined thresholds or detecting anomalies using machine learning algorithms, you can proactively identify issues and take corrective actions before they impact users or system performance. Tools like Grafana, PagerDuty, or Sensu can help you set up alerting and anomaly detection for your distributed system.</p>
+<h2>E. Visualization and Dashboards</h2>
+<p>Visualizing metrics, traces, and logs in an easy-to-understand format can help you better comprehend the state of your distributed system and make data-driven decisions. Dashboards are an effective way to aggregate and display this information, providing a unified view of your system&#x27;s performance and health. Tools like Grafana, Kibana, or Datadog can be used to create customizable dashboards for monitoring and observability purposes.</p></div>
+  </div>
+</section>
+
+<section id="chapter-07" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">07</span>
+    <h1 class="chapter-title">Resilience and Error Handling</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Circuit Breaker State Machine (Closed ➔ Open ➔ Half-Open)</div>
+    <div class="diagram-badge">Resilience Pattern</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradCBNode" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- State 1: CLOSED (Normal Operation) -->
+  <g transform="translate(30, 25)">
+    <rect x="0" y="0" width="220" height="205" rx="10" fill="url(#gradCBNode)" stroke="#10b981" stroke-width="2"/>
+    <circle cx="110" cy="40" r="16" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2"/>
+    <path d="M 103 40 L 108 45 L 118 35" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="110" y="80" fill="#10b981" font-family="Outfit, sans-serif" font-size="16" font-weight="700" text-anchor="middle">CLOSED</text>
+    <text x="110" y="102" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Normal State</text>
+    <line x1="20" y1="115" x2="200" y2="115" stroke="#334155" stroke-width="1"/>
+    <text x="110" y="138" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Traffic flows to backend.</text>
+    <text x="110" y="156" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Failures counted in window.</text>
+    <rect x="25" y="170" width="170" height="22" rx="4" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="0.8"/>
+    <text x="110" y="185" fill="#fca5a5" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Failure Rate &gt; Threshold ➔</text>
+  </g>
+
+  <!-- Arrow Closed -> Open -->
+  <path d="M 255 110 L 305 110" fill="none" stroke="#ef4444" stroke-width="2.5" class="flow-line"/>
+
+  <!-- State 2: OPEN (Fail Fast) -->
+  <g transform="translate(310, 25)">
+    <rect x="0" y="0" width="220" height="205" rx="10" fill="url(#gradCBNode)" stroke="#ef4444" stroke-width="2"/>
+    <circle cx="110" cy="40" r="16" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+    <path d="M 103 33 L 117 47 M 117 33 L 103 47" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="110" y="80" fill="#ef4444" font-family="Outfit, sans-serif" font-size="16" font-weight="700" text-anchor="middle">OPEN</text>
+    <text x="110" y="102" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Tripped State (Fail-Fast)</text>
+    <line x1="20" y1="115" x2="200" y2="115" stroke="#334155" stroke-width="1"/>
+    <text x="110" y="138" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Immediate fallback returned.</text>
+    <text x="110" y="156" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Backend receives 0 requests.</text>
+    <rect x="25" y="170" width="170" height="22" rx="4" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="110" y="185" fill="#fcd34d" font-family="Fira Code, monospace" font-size="9" text-anchor="middle">Timeout Timer Expired ➔</text>
+  </g>
+
+  <!-- Arrow Open -> Half-Open -->
+  <path d="M 535 110 L 585 110" fill="none" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+
+  <!-- State 3: HALF-OPEN (Canary Test) -->
+  <g transform="translate(590, 25)">
+    <rect x="0" y="0" width="220" height="205" rx="10" fill="url(#gradCBNode)" stroke="#f59e0b" stroke-width="2"/>
+    <circle cx="110" cy="40" r="16" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="2"/>
+    <text x="110" y="46" fill="#f59e0b" font-family="Outfit, sans-serif" font-size="16" font-weight="700" text-anchor="middle">½</text>
+    <text x="110" y="80" fill="#f59e0b" font-family="Outfit, sans-serif" font-size="16" font-weight="700" text-anchor="middle">HALF-OPEN</text>
+    <text x="110" y="102" fill="#94a3b8" font-family="Inter, sans-serif" font-size="11" text-anchor="middle">Canary Probe State</text>
+    <line x1="20" y1="115" x2="200" y2="115" stroke="#334155" stroke-width="1"/>
+    <text x="110" y="138" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Trial requests sent to backend.</text>
+    <text x="110" y="156" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Success ➔ Reset to CLOSED</text>
+    <text x="110" y="174" fill="#f87171" font-family="Inter, sans-serif" font-size="10.5" text-anchor="middle">Fail ➔ Re-trip to OPEN</text>
+  </g>
+
+  <!-- Return Flow Curve (Half-Open -> Closed) -->
+  <path d="M 700 235 C 700 255, 140 255, 140 235" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="420" y="252" fill="#10b981" font-family="Fira Code, monospace" font-size="10" text-anchor="middle">✔ Canary Successful (Reset Circuit)</text>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Circuit breakers protect cascading service collapse by failing fast when downstream services become unresponsive, automatically testing recovery via canary requests in the Half-Open state.
+  </div>
+</div>
+
+
+    <div><p>Resilience and error handling help minimize the impact of failures and ensure that the system can recover gracefully from unexpected events. Here&#x27;s an overview of various components of resilience and error handling in distributed systems:</p>
+<h2>A. Fault Tolerance</h2>
+<p>Fault tolerance is the ability of a system to continue functioning correctly in the presence of faults or failures. Designing a fault-tolerant system involves incorporating redundancy at various levels (data, services, nodes) and implementing strategies like replication, sharding, and load balancing to ensure that the system can withstand failures without impacting users or overall performance.</p>
+<h2>B. Graceful Degradation</h2>
+<p>Graceful degradation refers to the ability of a system to continue providing limited functionality when certain components or services fail. Instead of completely shutting down or becoming unavailable, a gracefully degrading system can continue serving user requests, albeit with reduced functionality or performance. Techniques like circuit breakers, timeouts, and fallbacks can be employed to implement graceful degradation in distributed systems.</p>
+<h2>C. Retry and Backoff Strategies</h2>
+<p>In distributed systems, transient failures like network issues, timeouts, or service unavailability are common. Implementing retry and backoff strategies can help improve resilience by automatically reattempting failed operations with an increasing delay between retries. This can increase the likelihood of successful operation completion while preventing excessive load on the system during failure scenarios.</p>
+<h2>D. Error Handling and Reporting</h2>
+<p>Proper error handling and reporting are crucial for understanding and addressing issues in distributed systems. By consistently logging errors, categorizing them, and generating alerts when necessary, you can quickly identify and diagnose problems in the system. Additionally, exposing error information through monitoring and observability tools can help provide insights into system health and behavior.</p>
+<h2>E. Chaos Engineering</h2>
+<p>Chaos engineering is the practice of intentionally injecting failures into a distributed system to test its resilience and identify weaknesses. By simulating real-world failure scenarios, you can evaluate the system&#x27;s ability to recover and adapt, ensuring that it can withstand various types of failures. Tools like Chaos Monkey or Gremlin can be used to implement chaos engineering in your distributed system.</p></div>
+  </div>
+</section>
+
+<section id="chapter-08" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">08</span>
+    <h1 class="chapter-title">Fault Tolerance vs High Availability</h1>
+  </div>
+  <div class="chapter-body">
+    <div><p>Fault Tolerance and High Availability are both critical concepts in system design, especially in the context of distributed systems, cloud computing, and IT infrastructure. They are strategies used to ensure reliable and continuous operation of a system, but they address different aspects and have distinct operational focuses.</p>
+<h2>Fault Tolerance</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>Fault Tolerance</strong> refers to a system&#x27;s ability to continue operating without interruption when one or more of its components fail. Fault-tolerant systems are designed to handle hardware, software, and network failures seamlessly.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Redundancy</strong>: Incorporates redundancy in system components (like servers, networks, storage) to ensure no single point of failure.</li>
+<li><strong>Automatic Failover</strong>: Automatically switches to a redundant or standby system upon the failure of a system component.</li>
+<li><strong>No Data Loss</strong>: Ensures that no data is lost in the event of a failure.</li>
+<li><strong>Cost</strong>: Generally more expensive due to the need for redundant components.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Critical applications in sectors like finance, healthcare, and aviation, where system downtime can have severe consequences.</li>
+</ul>
+<h2>High Availability</h2>
+<h3>Definition</h3>
+<ul>
+<li><strong>High Availability</strong> refers to a system&#x27;s ability to remain operational and accessible for a very high percentage of the time, minimizing downtime as much as possible.</li>
+</ul>
+<h3>Characteristics</h3>
+<ul>
+<li><strong>Uptime Guarantee</strong>: Designed to ensure a high level of operational performance and uptime (often quantified in terms of “nines” – for example, 99.999% availability).</li>
+<li><strong>Load Balancing and Redundancy</strong>: Achieved through techniques like load balancing, redundant systems, and clustering.</li>
+<li><strong>Rapid Recovery</strong>: Focuses on quickly restoring service after a failure, though a brief disruption is acceptable.</li>
+<li><strong>Cost-Effectiveness</strong>: Balances cost against the desired level of availability.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Online services, e-commerce platforms, and enterprise applications where availability is critical for customer satisfaction and business continuity.</li>
+</ul>
+<h2>Key Differences</h2>
+<ol>
+<li>
+<p><strong>Objective</strong>:</p>
+<ul>
+<li><strong>Fault Tolerance</strong> is about continuous operation without failure being noticeable to the end-user. It is about designing the system to handle failures as they occur.</li>
+<li><strong>High Availability</strong> is about ensuring that the system is operational and accessible over a specified period, with minimal downtime. It focuses on quick recovery from failures.</li>
+</ul>
+</li>
+<li>
+<p><strong>Approach</strong>:</p>
+<ul>
+<li><strong>Fault Tolerance</strong>: Involves redundancy and automatic failover mechanisms.</li>
+<li><strong>High Availability</strong>: Focuses on preventing downtime through redundant resources and rapid recovery strategies.</li>
+</ul>
+</li>
+<li>
+<p><strong>Downtime</strong>:</p>
+<ul>
+<li><strong>Fault Tolerance</strong>: No downtime even during failure.</li>
+<li><strong>High Availability</strong>: Minimal downtime, but brief interruptions are acceptable.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cost and Complexity</strong>:</p>
+<ul>
+<li><strong>Fault Tolerance</strong>: More expensive and complex due to the need for exact replicas and seamless failover.</li>
+<li><strong>High Availability</strong>: More cost-effective, balancing the level of availability with associated costs.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Integrity</strong>:</p>
+<ul>
+<li><strong>Fault Tolerance</strong>: Maintains data integrity even in failure scenarios.</li>
+<li><strong>High Availability</strong>: Prioritizes system uptime, with potential for minimal data loss in certain failure conditions.</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>While both fault tolerance and high availability are about ensuring reliable system operations, they address different levels of resilience and operational continuity. Fault tolerance is about uninterrupted operation even in the face of component failures, while high availability is about keeping the overall system operational as much as possible. The choice between them depends on the specific requirements, criticality, and budget constraints of the business or application in question.</p></div>
+  </div>
+</section>
+
+<section id="chapter-09" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">09</span>
+    <h1 class="chapter-title">Distributed Unique ID Generation (Twitter Snowflake &amp;amp;amp;amp;amp;amp; ULID)</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="chapter-body-content">
+  <p>In massive-scale distributed databases, primary keys must be globally unique, generated with zero inter-node coordination locks, and strictly ordered by time to maintain B-Tree index efficiency.</p>
+  
+  <h2>1. Why Traditional UUIDv4 Fails at Scale</h2>
+  <p>A standard <strong>UUIDv4</strong> is a 128-bit random number (e.g., <code>9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d</code>). While virtually collision-free, using it as a primary key causes severe database degradation:</p>
+  <ul>
+    <li><strong>Catastrophic B-Tree Fragmentation:</strong> Because random UUIDs have no temporal order, database engines (InnoDB, PostgreSQL) must insert rows at arbitrary pages across disk. This leads to continuous page splits, bloated indexes, and constant random disk I/O.</li>
+    <li><strong>Storage Overhead:</strong> Storing 128-bit strings (36 bytes formatted) doubles index size compared to native 64-bit integers (8 bytes), exhausting database RAM cache (Buffer Pool).</li>
+  </ul>
+
+  
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-title">Twitter Snowflake 64-Bit Time-Sortable Unique ID Generator</div>
+    <div class="diagram-badge">Distributed ID Engine</div>
+  </div>
+  <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradSnow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="20" y="20" width="800" height="200" rx="10" fill="url(#gradSnow)" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="420" y="50" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="14" font-weight="700" text-anchor="middle">TWITTER SNOWFLAKE 64-BIT UNIQUE ID ANATOMY</text>
+
+  <!-- Bitfield Box (64 Bits) -->
+  <g transform="translate(40, 75)">
+    <!-- 1 Bit Sign (Unused) -->
+    <rect x="0" y="0" width="30" height="55" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+    <text x="15" y="28" fill="#94a3b8" font-family="Fira Code, monospace" font-size="11" font-weight="700" text-anchor="middle">0</text>
+    <text x="15" y="46" fill="#64748b" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">1b</text>
+
+    <!-- 41 Bits Epoch Milliseconds Timestamp -->
+    <rect x="30" y="0" width="370" height="55" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2"/>
+    <text x="215" y="26" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">TIMESTAMP (41 BITS)</text>
+    <text x="215" y="44" fill="#93c5fd" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">Milliseconds since Custom Epoch (~69 Years lifetime)</text>
+
+    <!-- 10 Bits Machine / Datacenter ID -->
+    <rect x="400" y="0" width="180" height="55" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="490" y="26" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">NODE ID (10 BITS)</text>
+    <text x="490" y="44" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">1,024 Datacenter / Worker Nodes</text>
+
+    <!-- 12 Bits Sequence Counter -->
+    <rect x="580" y="0" width="180" height="55" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <text x="670" y="26" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SEQUENCE (12 BITS)</text>
+    <text x="670" y="44" fill="#fde68a" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">4,096 IDs / millisecond / node</text>
+  </g>
+
+  <!-- Summary Footnote -->
+  <g transform="translate(40, 150)">
+    <rect x="0" y="0" width="760" height="50" rx="6" fill="#0f172a" stroke="#334155"/>
+    <text x="380" y="22" fill="#e2e8f0" font-family="Inter, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">🔥 Peak Throughput: 4,096,000 IDs / sec / node | 64-bit integer fits in standard BigInt</text>
+    <text x="380" y="38" fill="#10b981" font-family="Fira Code, monospace" font-size="9.5" text-anchor="middle">✔ Time-Sortable (B-Tree index friendly) | 0% Random I/O Fragmentation (unlike UUIDv4)</text>
+  </g>
+</svg>
+  </div>
+  <div class="diagram-caption">
+    💡 <strong>Key Architecture Takeaway:</strong> Snowflake combines a 41-bit millisecond timestamp, 10-bit worker ID, and 12-bit sequential counter into a compact 64-bit integer that sorts chronologically to eliminate B-Tree index fragmentation.
+  </div>
+</div>
+
+
+  <h2>2. Twitter Snowflake Structure &amp; Generation Algorithm</h2>
+  <p>Snowflake generates <strong>64-bit integers</strong> divided into 4 structured bitfields:</p>
+  <ol>
+    <li><strong>1 Unused Sign Bit:</strong> Always set to <code>0</code> so the integer remains positive across all programming languages.</li>
+    <li><strong>41 Timestamp Bits:</strong> Milliseconds elapsed since a custom epoch (e.g., <code>2024-01-01T00:00:00Z</code>). $2^41$ milliseconds gives <strong>69.7 years</strong> of operation before overflow.</li>
+    <li><strong>10 Worker / Machine ID Bits:</strong> Encodes up to 1,024 independent physical or container nodes ($2^10 = 1024$).</li>
+    <li><strong>12 Sequence Number Bits:</strong> Increments for every ID created within the same millisecond on the same node ($2^12 = 4096$). Resets to <code>0</code> on the next millisecond.</li>
+  </ol>
+
+  <h2>3. Handling Clock Drift (NTP Desynchronization)</h2>
+  <p>If a server's clock drifts backward due to Network Time Protocol (NTP) adjustments, a naïve generator might produce duplicate IDs. Production implementations employ strict safeguards:</p>
+  <ul>
+    <li>If <code>current_time &lt; last_timestamp</code>, wait until the clock catches up (if difference &lt; 5ms) or reject requests and raise an alert to prevent duplicate keys.</li>
+    <li><strong>Alternative (ULID):</strong> Universally Unique Lexicographically Sortable Identifier encodes 48-bit timestamp + 80-bit randomness into a 26-character Crockford Base32 string.</li>
+  </ul>
+</div>
+  </div>
+</section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('dg_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+        if (floatingSidebarToggle) floatingSidebarToggle.addEventListener('click', toggleSidebar);
+
+        if (localStorage.getItem('dg_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('dg_theme') || 'dark';
+        htmlEl.setAttribute('data-theme', savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('dg_theme', newTheme);
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('search-input');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            sidebarItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const num = item.getAttribute('data-num');
+                if (title.includes(query) || num.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Active Scroll Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const num = id.replace('chapter-', '');
+                    
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-num') === num) {
+                            item.classList.add('active');
+                            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        document.querySelectorAll('.chapter-section').forEach(section => observer.observe(section));
+
+        // Bookmarks Logic
+        let bookmarks = JSON.parse(localStorage.getItem('dg_bookmarks_01_system_design_fundamentals') || '[]');
+        
+        function updateBookmarkUI() {
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const bookmarksMenu = document.getElementById('bookmarks-menu');
+            bookmarksMenu.innerHTML = '';
+            
+            if (bookmarks.length === 0) {
+                bookmarksMenu.innerHTML = '<div class="no-bookmarks-msg">No bookmarked chapters yet.</div>';
+            } else {
+                bookmarks.forEach(num => {
+                    const originalItem = document.querySelector(`.sidebar-item[data-num="${num}"]`);
+                    if (originalItem) {
+                        const clone = originalItem.cloneNode(true);
+                        clone.addEventListener('click', () => {
+                            const target = document.getElementById(`chapter-${num}`);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                        bookmarksMenu.appendChild(clone);
+                    }
+                });
+            }
+        }
+
+        document.querySelectorAll('.bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const num = btn.getAttribute('data-chapter');
+                if (bookmarks.includes(num)) {
+                    bookmarks = bookmarks.filter(n => n !== num);
+                } else {
+                    bookmarks.push(num);
+                }
+                localStorage.setItem('dg_bookmarks_01_system_design_fundamentals', JSON.stringify(bookmarks));
+                updateBookmarkUI();
+            });
+        });
+
+        // Tabs Switching
+        const tabChapters = document.getElementById('tab-chapters');
+        const tabBookmarks = document.getElementById('tab-bookmarks');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const bookmarksMenu = document.getElementById('bookmarks-menu');
+
+        tabChapters.addEventListener('click', () => {
+            tabChapters.classList.add('active');
+            tabBookmarks.classList.remove('active');
+            sidebarMenu.style.display = 'block';
+            bookmarksMenu.style.display = 'none';
+        });
+
+        tabBookmarks.addEventListener('click', () => {
+            tabBookmarks.classList.add('active');
+            tabChapters.classList.remove('active');
+            sidebarMenu.style.display = 'none';
+            bookmarksMenu.style.display = 'block';
+            updateBookmarkUI();
+        });
+
+        updateBookmarkUI();
+    </script>
+</body>
+</html>

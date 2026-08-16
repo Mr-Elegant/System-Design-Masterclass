@@ -1,0 +1,33 @@
+=== LINKEDIN POST #12: Bloom Filters: $O(1)$ Probabilistic Space-Saving Data Structures ===
+Target Chapter: 12 Bloom Filters.html
+
+--- [COPY POST BODY BELOW] ---
+
+🔍 How Bloom Filters save Bigtable, Cassandra, and Redis from wasted disk lookups in $O(1)$ time:
+
+How do you check if a username exists across 500,000,000 records without touching disk?
+
+💡 The Solution: Bloom Filters (A space-efficient probabilistic bit array).
+
+1️⃣ The Mechanism:
+• A bit array of size $m$ initialized to all 0s.
+• Uses $k$ independent cryptographic hash functions.
+• When adding an element: Set bits at indices $h_1(x), h_2(x), \dots, h_k(x)$ to 1.
+• When querying: If ANY of the $k$ bits is 0 -> The element is **DEFINITIVELY NOT** in the set (0% False Negative)!
+• If ALL $k$ bits are 1 -> The element is **PROBABLY** in the set (small, tunable False Positive probability).
+
+2️⃣ The Math:
+For 1 billion keys with 1% false positive rate: Requires only ~1.2 GB of RAM (less than 10 bits per key)!
+
+3️⃣ Applications:
+• Cassandra/RocksDB: Skips disk SSTable reads for non-existent keys.
+• Web Crawlers: Avoids re-crawling URLs.
+• Medium/Twitter: Avoids showing users recommended articles they already read.
+
+💬 Have you used Bloom Filters or Cuckoo Filters in your projects?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#BloomFilters #Algorithms #Redis #DataStructures #SystemDesign #Performance
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

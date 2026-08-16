@@ -1,0 +1,33 @@
+=== LINKEDIN POST #07: Database Sharding: Range vs Hash vs Directory-Based Partitioning ===
+Target Chapter: 07 Data Partitioning and Sharding.html
+
+--- [COPY POST BODY BELOW] ---
+
+🗄️ When your database exceeds 5TB and 50,000 QPS: How to shard like a FAANG architect:
+
+Vertical scaling hits a physical hardware ceiling. Horizontal sharding splits large datasets across multiple independent database servers.
+
+🔍 3 Sharding Strategies Compared:
+
+1️⃣ Range-Based Sharding:
+• Keys partitioned by value ranges (e.g., User IDs 1-1M -> Shard 1; 1M-2M -> Shard 2).
+• Strength: Easy range queries (`BETWEEN 100 AND 500`).
+• Weakness: Severe Hotspotting! New active users all hammer the highest shard.
+
+2️⃣ Hash-Based Sharding (Consistent Hashing):
+• `Shard = Hash(UserID) % N_Shards`.
+• Strength: Perfectly uniform data distribution.
+• Weakness: Range queries require querying ALL shards (Scatter-Gather).
+
+3️⃣ Directory-Based Sharding:
+• A centralized lookup service maps entity IDs to specific shard locations.
+• Strength: Flexible dynamic rebalancing and custom customer tenant routing.
+• Weakness: Lookup service becomes a single point of failure (SPOF) if not heavily cached.
+
+💬 What sharding key do you pick for multi-tenant SaaS: OrganizationId or UserId?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Sharding #Databases #PostgreSQL #Scalability #SystemDesign #Architecture
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

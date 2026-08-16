@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18. AI & Large Language Model (LLM) System Fundamentals - System Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --accent-tertiary: #a855f7;
+            --border-color: #334155;
+            --sidebar-width: 320px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 32px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+        .chapter-list {
+            overflow-y: auto;
+            flex: 1;
+            padding: 10px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--bg-primary);
+            color: var(--accent-primary);
+        }
+        .nav-item.active {
+            border-left: 3px solid var(--accent-primary);
+            font-weight: 600;
+        }
+        .chapter-number {
+            margin-right: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .chapter-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .reading-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px 100px;
+            width: 100%;
+        }
+        .chapter-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        .chapter-header .chapter-number {
+            font-size: 1rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+        .chapter-title-main {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-top: 8px;
+        }
+        .chapter-body {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #cbd5e1;
+        }
+        .chapter-body h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin: 32px 0 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px;
+        }
+        .chapter-body h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #38bdf8;
+            margin: 24px 0 12px;
+        }
+        .chapter-body p { margin-bottom: 16px; }
+        .chapter-body ul, .chapter-body ol {
+            margin: 0 0 20px 24px;
+        }
+        .chapter-body li { margin-bottom: 8px; }
+        .chapter-body code {
+            font-family: 'Fira Code', monospace;
+            background-color: #1e1b4b;
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+        .chapter-body pre {
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        .chapter-body pre code {
+            background: none;
+            padding: 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: var(--bg-secondary);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.5);
+        }
+        .diagram-card {
+            margin: 28px 0;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .diagram-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 10px;
+        }
+        .diagram-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+        .diagram-badge {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .diagram-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .diagram-caption {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+        .flow-line {
+            stroke-dasharray: 6;
+            animation: flowAnim 1.5s linear infinite;
+        }
+        @keyframes flowAnim {
+            from { stroke-dashoffset: 12; }
+            to { stroke-dashoffset: 0; }
+        }
+        .chapter-section { display: none; }
+        .chapter-section.active { display: block; }
+    </style>
+<!-- Content Protection & Anti-Theft Scripts -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        /* Allow selecting code blocks if desired, or keep protected */
+        pre, code {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+    <script>
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Disable DevTools / Source Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">18. AI &amp; LLM Systems</div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search topics...">
+            </div>
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('topics')">Topics (4)</button>
+            </div>
+        </div>
+        <nav class="chapter-list">
+                <a href="#chapter-01" class="nav-item active" data-chapter="chapter-01">
+                    <span class="chapter-number">01</span>
+                    <span class="chapter-title">GPU Clusters &amp;amp;amp;amp; Distributed Training / Inference Parallelism</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-02" class="nav-item" data-chapter="chapter-02">
+                    <span class="chapter-number">02</span>
+                    <span class="chapter-title">LLM Inference Optimization &amp;amp;amp;amp; KV-Cache Architecture</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-03" class="nav-item" data-chapter="chapter-03">
+                    <span class="chapter-number">03</span>
+                    <span class="chapter-title">Speculative Decoding &amp;amp;amp;amp; Model Quantization</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+                <a href="#chapter-04" class="nav-item" data-chapter="chapter-04">
+                    <span class="chapter-number">04</span>
+                    <span class="chapter-title">Semantic Vector Caching &amp;amp;amp;amp; Prompt Engineering Systems</span>
+                    <span class="reading-time">10 min</span>
+                </a>
+            </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="content-container">
+
+<section id="chapter-01" class="chapter-section active">
+  <div class="chapter-header">
+    <span class="chapter-number">01</span>
+    <h1 class="chapter-title">GPU Clusters &amp;amp;amp;amp; Distributed Training / Inference Parallelism</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+      <div class="diagram-header">
+        <div class="diagram-title">Distributed GPU Parallelism Mesh (TP + PP + ZeRO/FSDP)</div>
+        <div class="diagram-badge">GPU INFRASTRUCTURE</div>
+      </div>
+      <div class="diagram-body">
+        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradGpu" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- Node 1: Tensor Parallelism (Within Node NVLink) -->
+    <rect x="0" y="15" width="240" height="175" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+    <text x="120" y="42" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">TENSOR PARALLELISM (TP=8)</text>
+    <rect x="15" y="55" width="210" height="35" rx="3" fill="#0369a1"/>
+    <text x="120" y="75" fill="#e0f2fe" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Intra-Node: NVLink 900 GB/s</text>
+    <rect x="15" y="95" width="210" height="40" rx="3" fill="#1e1b4b"/>
+    <text x="120" y="115" fill="#38bdf8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Splits Matrix Weights: Column/Row Parallel</text>
+    <text x="120" y="128" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">All-Reduce Communication per Layer</text>
+    <text x="120" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Ideal for low-latency multi-GPU inference</text>
+
+    <!-- Node 2: Pipeline Parallelism (Across Nodes) -->
+    <rect x="290" y="15" width="240" height="175" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="410" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">PIPELINE PARALLELISM (PP=4)</text>
+    <rect x="305" y="55" width="210" height="35" rx="3" fill="#78350f"/>
+    <text x="410" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Inter-Node: InfiniBand 400 Gbps</text>
+    <rect x="305" y="95" width="210" height="40" rx="3" fill="#1e293b"/>
+    <text x="410" y="115" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Splits Layers across Node Stages</text>
+    <text x="410" y="128" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">1F1B (One Forward, One Backward) Schedule</text>
+    <text x="410" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Reduces bubble overhead to &lt; 15%</text>
+
+    <!-- Node 3: ZeRO / FSDP Data Parallelism -->
+    <rect x="580" y="15" width="220" height="175" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="690" y="42" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">ZeRO-3 / FSDP DATA PARALLEL</text>
+    <rect x="595" y="55" width="190" height="35" rx="3" fill="#022c22"/>
+    <text x="690" y="75" fill="#a7f3d0" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Shards Weights, Gradients &amp; Optimizer</text>
+    <rect x="595" y="95" width="190" height="40" rx="3" fill="#064e3b"/>
+    <text x="690" y="115" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Zero Redundancy Memory (8x RAM)</text>
+    <text x="690" y="128" fill="#fde68a" font-family="Inter, sans-serif" font-size="7" text-anchor="middle">All-Gather weights just-in-time</text>
+    <text x="690" y="170" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Enables training 100B+ models on commodity clusters</text>
+
+    <!-- Connectors -->
+    <path d="M 240 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 530 100 L 580 100" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+      </div>
+      <div class="diagram-caption">
+        💡 <strong>Key Architecture Takeaway:</strong> 3D Parallelism coordinates Tensor Parallelism (TP) across intra-node NVLink (900 GB/s), Pipeline Parallelism (PP) across inter-node InfiniBand (400 Gbps), and ZeRO-3/FSDP Data Parallelism to scale models beyond single-GPU VRAM limits.
+      </div>
+    </div>
+
+    <h2>1. The Hardware Physics &amp; The Memory Wall</h2>
+    <p>State-of-the-art Large Language Models (e.g., Llama-3 70B, GPT-4 with ~1.8 Trillion mixture-of-experts parameters) fundamentally challenge modern computing hardware. To design AI systems at scale, an architect must understand the physical constraints of GPU memory bandwidth, compute FLOPS, and interconnect topology.</p>
+
+    <h3>A. The Roofline Model &amp; Arithmetic Intensity</h3>
+    <p>Every GPU workload falls into one of two operational regimes based on its <strong>Arithmetic Intensity</strong> (FLOPs per byte of memory transfer):</p>
+    <p><code>Arithmetic Intensity = Total Compute Operations (FLOPs) / Total Memory Access (Bytes)</code></p>
+    <ul>
+      <li><strong>Compute-Bound (Prefill Phase):</strong> In the prompt processing phase, all tokens in the prompt are processed concurrently as large matrix multiplications (Q, K, V projections). High arithmetic intensity (&gt;&gt; 100 FLOPs/byte) saturates GPU Tensor Cores (e.g., Nvidia H100 SXM achieving ~1,979 TFLOPs of FP16 compute).</li>
+      <li><strong>Memory-Bandwidth-Bound (Decoding Phase):</strong> In the token generation phase, the GPU fetches the entire model's weights (~140GB for a 70B model in FP16) from High Bandwidth Memory (HBM3) to generate <em>just one token</em>. The arithmetic intensity is tiny (~1 FLOP/byte). Generation speed is strictly bottlenecked by HBM memory bandwidth (3.35 TB/s on H100):
+      <br><code>Max Generation Speed = HBM Bandwidth / Model Weight Size = 3,350 GB/s / 140 GB ≈ 23.9 tokens/sec per GPU.</code>
+      </li>
+    </ul>
+
+    <h2>2. Tensor Parallelism (TP - Megatron-LM)</h2>
+    <p>Tensor Parallelism partitions the weight matrices of individual Linear and Self-Attention layers across multiple GPUs within the same server node.</p>
+
+    <h3>Column-Parallel &amp; Row-Parallel Architecture</h3>
+    <p>A standard Multi-Head Attention block consists of Q, K, V projection matrices followed by an Output projection matrix W_O:</p>
+    <ol>
+      <li><strong>Column-Parallel (Q, K, V Projections):</strong> The weight matrix W is split along its columns into N shards (W = [W_1 | W_2 | ... | W_N]). Each GPU computes Y_i = X * W_i independently without inter-GPU communication.</li>
+      <li><strong>Row-Parallel (Output Projection W_O):</strong> The output matrix is split along its rows (W_O = [W_O,1; W_O,2; ...; W_O,N]). Each GPU computes its partial matrix product Z_i = Y_i * W_O,i.</li>
+      <li><strong>All-Reduce Sum:</strong> The final output is aggregated via an <code>All-Reduce</code> collective communication: Z = Sum(Z_i).</li>
+    </ol>
+
+    <pre><code># PyTorch Conceptual Megatron-LM Tensor Parallel Layer
+import torch
+import torch.nn as nn
+import torch.distributed as dist
+
+class ColumnParallelLinear(nn.Module):
+    def __init__(self, in_features, out_features, world_size, rank):
+        super().__init__()
+        self.split_out = out_features // world_size
+        self.weight = nn.Parameter(torch.empty(in_features, self.split_out))
+        self.rank = rank
+
+    def forward(self, x):
+        # Local matrix multiplication without communication
+        return torch.matmul(x, self.weight)
+
+class RowParallelLinear(nn.Module):
+    def __init__(self, in_features, out_features, world_size, rank):
+        super().__init__()
+        self.split_in = in_features // world_size
+        self.weight = nn.Parameter(torch.empty(self.split_in, out_features))
+
+    def forward(self, x):
+        local_out = torch.matmul(x, self.weight)
+        # Synchronize partial results across all GPUs in the TP group
+        dist.all_reduce(local_out, op=dist.ReduceOp.SUM)
+        return local_out</code></pre>
+
+    <h2>3. Pipeline Parallelism (PP) &amp; The 1F1B Schedule</h2>
+    <p>Pipeline Parallelism distributes consecutive transformer layers across distinct server nodes (e.g., Node 0 holds Layers 1-20, Node 1 holds Layers 21-40). To prevent massive idle time ("the pipeline bubble"), training mini-batches are divided into m micro-batches.</p>
+
+    <h3>Mathematical Bubble Fraction:</h3>
+    <p><code>F_bubble = (p - 1) / (m + p - 1)</code></p>
+    <p>Where p is the number of pipeline stages and m is the number of micro-batches (m &ge; 4p is typical in production to reduce bubble overhead to &lt; 15%). In the <strong>1F1B (One Forward, One Backward)</strong> schedule, each stage alternates between computing one forward micro-batch and one backward micro-batch, keeping peak activation memory bounded to p micro-batches.</p>
+
+    <h2>4. ZeRO (Zero Redundancy Optimizer) &amp; FSDP</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>ZeRO Stage</th>
+          <th>What is Sharded?</th>
+          <th>Memory Reduction (70B Model)</th>
+          <th>Communication Overhead</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ZeRO-Stage 1</strong></td>
+          <td>Optimizer States (Adam m, v moments: 12 bytes/param)</td>
+          <td>4x Memory Reduction (~840GB -&gt; 210GB)</td>
+          <td>0% (Replaces All-Reduce with Reduce-Scatter)</td>
+        </tr>
+        <tr>
+          <td><strong>ZeRO-Stage 2</strong></td>
+          <td>Optimizer States + Gradients (4 bytes/param)</td>
+          <td>8x Memory Reduction (~1,120GB -&gt; 140GB)</td>
+          <td>0% (Gradients reduced in-place)</td>
+        </tr>
+        <tr>
+          <td><strong>ZeRO-Stage 3 / FSDP</strong></td>
+          <td>Optimizer States + Gradients + Model Parameters (2 bytes/param)</td>
+          <td>Linear reduction with GPU count (1/N)</td>
+          <td>+50% overhead (All-Gather parameters JIT before forward/backward pass)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="chapter-02" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">02</span>
+    <h1 class="chapter-title">LLM Inference Optimization &amp;amp;amp;amp; KV-Cache Architecture</h1>
+  </div>
+  <div class="chapter-body">
+    <div class="diagram-card">
+      <div class="diagram-header">
+        <div class="diagram-title">vLLM PagedAttention Virtual Memory Block Mapping</div>
+        <div class="diagram-badge">INFERENCE ENGINE</div>
+      </div>
+      <div class="diagram-body">
+        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradPaged" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)">
+    <!-- Logical Token Sequence -->
+    <rect x="0" y="25" width="220" height="160" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+    <text x="110" y="52" fill="#c7d2fe" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">LOGICAL KV-TOKENS (REQUEST)</text>
+    <rect x="15" y="65" width="190" height="30" rx="3" fill="#312e81"/>
+    <text x="110" y="85" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Block 0: ["The", "system", "design", "interview"]</text>
+    <rect x="15" y="105" width="190" height="30" rx="3" fill="#312e81"/>
+    <text x="110" y="125" fill="#a5b4fc" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Block 1: ["requires", "deep", "GPU", "memory"]</text>
+    <text x="110" y="160" fill="#93c5fd" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Continuous logical sequence in prompt</text>
+
+    <!-- Block Table Mapping (OS Virtual Memory) -->
+    <rect x="270" y="15" width="240" height="175" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="390" y="42" fill="#fbbf24" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">PAGEDATTENTION BLOCK TABLE</text>
+    <rect x="285" y="55" width="210" height="35" rx="3" fill="#78350f"/>
+    <text x="390" y="75" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Logical Block 0 -> Physical GPU Frame 7</text>
+    <rect x="285" y="95" width="210" height="35" rx="3" fill="#78350f"/>
+    <text x="390" y="115" fill="#fde68a" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Logical Block 1 -> Physical GPU Frame 2</text>
+    <text x="390" y="150" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Eliminates 96% Memory Fragmentation</text>
+    <text x="390" y="170" fill="#38bdf8" font-family="Inter, sans-serif" font-size="7.5" text-anchor="middle">Enables 4x higher request concurrency</text>
+
+    <!-- Non-Contiguous Physical GPU HBM -->
+    <rect x="560" y="15" width="240" height="175" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="680" y="42" fill="#34d399" font-family="Outfit, sans-serif" font-size="12" font-weight="700" text-anchor="middle">PHYSICAL GPU HBM3 (80GB)</text>
+    <rect x="575" y="55" width="210" height="30" rx="3" fill="#022c22"/>
+    <text x="680" y="75" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Physical Frame 2 [Block 1 KV Tensor]</text>
+    <rect x="575" y="90" width="210" height="30" rx="3" fill="#1e293b"/>
+    <text x="680" y="110" fill="#94a3b8" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Physical Frame 5 [Model Weights]</text>
+    <rect x="575" y="125" width="210" height="30" rx="3" fill="#022c22"/>
+    <text x="680" y="145" fill="#6ee7b7" font-family="Fira Code, monospace" font-size="8" text-anchor="middle">Physical Frame 7 [Block 0 KV Tensor]</text>
+
+    <!-- Connectors -->
+    <path d="M 220 100 L 270 100" stroke="#818cf8" stroke-width="2.5" class="flow-line"/>
+    <path d="M 510 100 L 560 100" stroke="#f59e0b" stroke-width="2.5" class="flow-line"/>
+  </g>
+</svg>
+      </div>
+      <div class="diagram-caption">
+        💡 <strong>Key Architecture Takeaway:</strong> PagedAttention divides contiguous logical token sequences into non-contiguous physical GPU memory pages, eliminating 96% of VRAM fragmentation and enabling 4x higher request concurrency.
+      </div>
+    </div>
+
+    <h2>1. Full VRAM Allocation Breakdown in Production Serving</h2>
+    <p>When deploying an LLM inference server (vLLM / TensorRT-LLM), total GPU VRAM is partitioned into four critical segments:</p>
+    <p><code>VRAM_Total = M_Weights + M_KV_Cache + M_Activations + M_Workspace</code></p>
+    <ul>
+      <li><strong>Model Weights (M_Weights):</strong> For Llama-3 70B in FP16 (2 bytes/param), 70 * 10^9 * 2 = <strong>140 GB</strong>. In INT4 AWQ (0.5 bytes/param), this shrinks to <strong>35 GB</strong>.</li>
+      <li><strong>KV-Cache Pool (M_KV_Cache):</strong> All remaining VRAM after loading weights is allocated to the dynamic KV-cache block pool.</li>
+      <li><strong>Activation Memory (M_Activations):</strong> Temporary tensors created during the forward attention pass (Batch_size * Seq_len * Hidden_dim).</li>
+    </ul>
+
+    <h2>2. Python PagedAttention Block Manager Implementation</h2>
+    <p>The following production Python engine illustrates how vLLM allocates non-contiguous physical GPU blocks to logical request sequences:</p>
+
+    <pre><code>from typing import List, Dict
+import math
+
+class PhysicalGPUBlock:
+    def __init__(self, block_number: int, block_size: int = 16):
+        self.block_number = block_number
+        self.block_size = block_size
+        self.ref_count = 0  # For Copy-on-Write sharing
+
+class BlockTableManager:
+    def __init__(self, total_gpu_blocks: int, block_size: int = 16):
+        self.block_size = block_size
+        self.free_blocks: List[PhysicalGPUBlock] = [
+            PhysicalGPUBlock(i, block_size) for i in range(total_gpu_blocks)
+        ]
+        # Maps request_id -> list of PhysicalGPUBlocks
+        self.block_tables: Dict[str, List[PhysicalGPUBlock]] = {}
+
+    def allocate_prompt(self, request_id: str, prompt_tokens: int) -> bool:
+        num_blocks_needed = math.ceil(prompt_tokens / self.block_size)
+        if len(self.free_blocks) < num_blocks_needed:
+            return False  # Trigger KV-cache preemption or swap to CPU
+        
+        allocated = []
+        for _ in range(num_blocks_needed):
+            block = self.free_blocks.pop()
+            block.ref_count = 1
+            allocated.append(block)
+            
+        self.block_tables[request_id] = allocated
+        return True
+
+    def append_token(self, request_id: str, current_token_count: int) -> PhysicalGPUBlock:
+        table = self.block_tables[request_id]
+        if current_token_count % self.block_size == 1:
+            # Need a new physical block for the next token page
+            if not self.free_blocks:
+                raise MemoryError("GPU VRAM Full: Preemption required")
+            new_block = self.free_blocks.pop()
+            new_block.ref_count = 1
+            table.append(new_block)
+        return table[-1]
+
+    def free_request(self, request_id: str):
+        if request_id in self.block_tables:
+            for block in self.block_tables[request_id]:
+                block.ref_count -= 1
+                if block.ref_count == 0:
+                    self.free_blocks.append(block)
+            del self.block_tables[request_id]</code></pre>
+
+    <h2>3. FlashAttention-3: SRAM Block Tiling &amp; Online Softmax</h2>
+    <p>Standard attention materializes the massive S * S attention matrix in slow HBM (O(S^2) memory reads and writes). <strong>FlashAttention</strong> tiles the Query, Key, and Value matrices into fast on-chip SRAM (O(1) memory overhead):</p>
+    <ul>
+      <li><strong>Online Softmax Rescaling:</strong> Computes softmax incrementally across blocks using local running maximums (m) and normalizers (l):
+      <br><code>m_new = max(m_prev, m_block), l_new = l_prev * exp(m_prev - m_new) + sum(exp(x_i - m_new))</code>
+      </li>
+      <li><strong>Hardware Asynchrony:</strong> FlashAttention-3 utilizes Nvidia Hopper Tensor Memory Accelerator (TMA) and FP8 Tensor Core hardware pipelines to overlap computation with memory movement.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="chapter-03" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">03</span>
+    <h1 class="chapter-title">Speculative Decoding &amp;amp;amp;amp; Model Quantization</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. Speculative Decoding Rejection Sampling Algorithm</h2>
+    <p>Speculative decoding guarantees <strong>100% mathematical output fidelity</strong> (identical probability distribution as the target model) while breaking the memory bandwidth wall.</p>
+
+    <h3>The Verification Protocol:</h3>
+    <pre><code>import numpy as np
+
+def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
+    """
+    draft_tokens: List of K speculative tokens from draft model (e.g. Llama-3 8B)
+    draft_probs: Probabilities q(x) from draft model
+    target_probs: Probabilities p(x) from target model (e.g. Llama-3 70B)
+    """
+    accepted_tokens = []
+    
+    for i, token in enumerate(draft_tokens):
+        p = target_probs[i][token]
+        q = draft_probs[i][token]
+        
+        # Acceptance probability alpha = min(1, p/q)
+        alpha = min(1.0, p / max(q, 1e-8))
+        r = np.random.uniform(0.0, 1.0)
+        
+        if r <= alpha:
+            accepted_tokens.append(token)
+        else:
+            # Token rejected: Sample recovery token from normalized max(0, p - q)
+            rescaled_p = np.maximum(0, target_probs[i] - draft_probs[i])
+            rescaled_p /= np.sum(rescaled_p)
+            recovery_token = np.random.choice(len(rescaled_p), p=rescaled_p)
+            accepted_tokens.append(recovery_token)
+            break  # Stop verification on first rejection
+            
+    return accepted_tokens</code></pre>
+
+    <h2>2. Advanced Quantization Mechanics: SmoothQuant &amp; AWQ</h2>
+    <h3>A. SmoothQuant (INT8 Weight &amp; Activation Quantization)</h3>
+    <p>Activation tensors in LLMs exhibit extreme channel outliers (e.g., 100x larger than normal values in 0.1% of channels), causing naive INT8 activation quantization to collapse model accuracy. <strong>SmoothQuant</strong> mathematically migrates the quantization difficulty from activations to weights:</p>
+    <p><code>Y = (X * diag(s)^-1) * (diag(s) * W) = X_hat * W_hat</code></p>
+    <p>Where migration scale s_j = max(|X_j|)^alpha / max(|W_j|)^(1-alpha) (with hyperparameter alpha = 0.5).</p>
+
+    <h3>B. AWQ (Activation-aware Weight Quantization - INT4)</h3>
+    <p>AWQ observes that not all weights are equally important: protecting the top 1% salient weight channels (determined by average activation magnitude) prevents perplexity degradation. AWQ scales salient channels by factor s &gt; 1 before per-group INT4 quantization without requiring expensive backpropagation retraining.</p>
+  </div>
+</section>
+
+<section id="chapter-04" class="chapter-section">
+  <div class="chapter-header">
+    <span class="chapter-number">04</span>
+    <h1 class="chapter-title">Semantic Vector Caching &amp;amp;amp;amp; Prompt Engineering Systems</h1>
+  </div>
+  <div class="chapter-body">
+    <h2>1. Enterprise Semantic Caching Architecture (Redis Vector Cache)</h2>
+    <p>Semantic caching saves over 40% of LLM compute costs by returning cached responses for semantically identical queries.</p>
+
+    <h3>Mathematical Similarity Threshold &amp; Metric Budget:</h3>
+    <p>Given incoming query vector q and cached vector c:</p>
+    <p><code>Cosine Similarity(q, c) = (q . c) / (||q||_2 * ||c||_2)</code></p>
+    <ul>
+      <li><strong>Similarity &ge; 0.96:</strong> Exact semantic match. Return cached answer immediately with zero LLM invocation (Latency &lt; 15ms).</li>
+      <li><strong>0.88 &le; Similarity &lt; 0.96:</strong> Partial match. Use cached answer as an in-context few-shot demonstration in the prompt to reduce output token generation time.</li>
+      <li><strong>Similarity &lt; 0.88:</strong> Cache miss. Dispatch request to inference cluster.</li>
+    </ul>
+
+    <h2>2. RadixAttention: Automatic KV-Cache Tree Prefix Sharing</h2>
+    <p>RadixAttention maintains an in-memory Radix Tree (compact Trie) of token sequences in the inference engine:</p>
+    <ul>
+      <li><strong>System Prompt Caching:</strong> When 1,000 users send prompts sharing a 2,000-token system instruction, the system prompt's KV-cache is computed <em>exactly once</em> and shared across all 1,000 requests.</li>
+      <li><strong>Multi-Turn Chat Reuse:</strong> In a 10-turn chat, Turn N reuses the KV blocks of Turns 1 ... N-1 directly from memory, reducing TTFT from 1,200ms to &lt; 60ms.</li>
+    </ul>
+  </div>
+</section>
+
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabName) {
+            console.log('Tab switched to:', tabName);
+        }
+
+        // Active link handling
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.chapter-section');
+
+        function setActiveSection(id) {
+            sections.forEach(s => s.classList.remove('active'));
+            navItems.forEach(n => n.classList.remove('active'));
+
+            const targetSection = document.getElementById(id);
+            const targetNav = document.querySelector(`.nav-item[href="#${id}"]`);
+
+            if (targetSection) targetSection.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const targetId = item.getAttribute('href').substring(1);
+                setActiveSection(targetId);
+            });
+        });
+
+        // Check URL hash on load
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            setActiveSection(hash);
+        }
+    </script>
+</body>
+</html>

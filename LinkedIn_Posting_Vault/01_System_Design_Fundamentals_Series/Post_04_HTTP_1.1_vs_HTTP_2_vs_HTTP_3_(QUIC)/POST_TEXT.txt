@@ -1,0 +1,31 @@
+=== LINKEDIN POST #04: HTTP/1.1 vs HTTP/2 vs HTTP/3 (QUIC) vs WebSockets ===
+Target Chapter: 04 Networking Protocols.html
+
+--- [COPY POST BODY BELOW] ---
+
+🌐 The evolution of web protocols: Why HTTP/3 moves from TCP to UDP (QUIC):
+
+Understanding networking protocols is essential for optimizing client-server latency:
+
+1️⃣ HTTP/1.1: Head-of-Line (HoL) Blocking
+• Only 1 request/response per TCP connection at a time. Browsers open 6 parallel TCP connections to compensate, causing connection churn.
+
+2️⃣ HTTP/2: Binary Framing & Multiplexing
+• Multiplexes dozens of concurrent streams over a single TCP connection.
+• Limitation: TCP-level packet loss stalls ALL multiplexed streams (TCP Head-of-Line blocking).
+
+3️⃣ HTTP/3 over QUIC (UDP):
+• Runs over UDP with user-space congestion control.
+• Solves TCP HoL blocking: Packet loss on Stream A does NOT block Stream B!
+• Zero-RTT Handshake: Re-establishes encrypted connections in 0 milliseconds using cached connection tokens.
+
+4️⃣ WebSockets:
+• Full-duplex persistent bidirectional TCP connection with minimal 2-byte framing overhead (ideal for multiplayer games, chat, Figma canvas sync).
+
+💬 Is your production API running HTTP/2 or HTTP/3 yet?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Networking #HTTP3 #QUIC #WebSockets #Performance #SystemDesign
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

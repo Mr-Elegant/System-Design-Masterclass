@@ -1,0 +1,28 @@
+=== LINKEDIN POST #14: Zero Trust Security, TLS 1.3 Handshake & JWT Best Practices ===
+Target Chapter: 14 Security and Privacy.html
+
+--- [COPY POST BODY BELOW] ---
+
+🔒 Zero-Trust Architecture: Why perimeter firewalls are dead in modern cloud engineering:
+
+The old security model assumed everything inside the corporate intranet was safe. Zero Trust assumes the internal network is ALREADY compromised!
+
+💡 Core Zero-Trust Principles:
+
+1️⃣ Mutual TLS (mTLS) Everywhere:
+• Microservices don't just verify client identity; every East-West microservice connection validates cryptographic X.509 certificates in both directions via Envoy sidecars.
+
+2️⃣ TLS 1.3 1-RTT Handshake:
+• Slashes connection latency by removing round trips: Establishes cipher negotiation and key exchange in a single round trip (or 0-RTT resumption).
+
+3️⃣ Stateless Short-Lived JWT + Refresh Token Rotation:
+• Access tokens expire in 15 minutes (cryptographically verified locally via RS256 public key without hitting Auth DB).
+• Refresh tokens stored in Redis with one-time-use rotation (any reused refresh token revokes the entire user session immediately!).
+
+💬 Do you use asymmetric RS256 or symmetric HS256 for your JWT signatures?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Security #ZeroTrust #JWT #OAuth #DevOps #SystemDesign #CyberSecurity
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/

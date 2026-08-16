@@ -1,0 +1,31 @@
+=== LINKEDIN SDI FLAGSHIP POST: Designing Uber Backend: H3 Hexagons & Dynamic Surge Multiplier ===
+Target Chapter: 06 Classic System Design Problems (Part 2).html
+
+--- [COPY POST BODY BELOW] ---
+
+🚕 How Uber matches riders to nearby drivers in < 2 seconds across 10,000+ global cities:
+
+Traditional SQL spatial queries (`ST_DWithin` on latitude/longitude) degrade exponentially when ingesting 1,000,000 GPS updates every 4 seconds.
+
+💡 The Uber Architecture:
+1️⃣ Uber H3 Hierarchical Spatial Index:
+Partitions city terrain into uniform hexagons (Resolution 7 to 9). Unlike squares, hexagons have identical distances to all 6 neighboring cells, preventing directional distortion!
+
+2️⃣ Ingestion Pipeline:
+Drivers stream GPS pings over persistent WebSockets -> Ingested into Redis Geospatial (`GEOADD`) with 30-second TTLs.
+
+3️⃣ Dynamic Surge Pricing Engine:
+Computes the supply-demand ratio per hexagon cell:
+$$\text{Ratio} = \frac{\text{Rider App Searches}}{\text{Active Available Drivers}}$$
+If $\text{Ratio} > 1.25$, apply exponential multiplier capped at 3.0x to balance local ride requests.
+
+4️⃣ Atomic Trip Dispatch:
+Uses distributed Redis locks (`SETNX trip_lock EX 5`) to prevent duplicate dispatches to the same driver.
+
+💬 Have you worked with Geospatial indexing: H3, S2 Geometry, or QuadTrees?
+
+(🔗 Full live interactive guide in first comment below! 👇)
+#Uber #Geospatial #Algorithms #SystemDesign #Redis #SoftwareEngineering
+
+--- [COPY FIRST COMMENT BELOW] ---
+🔗 Live interactive masterclass & code repository: https://<YOUR_GITHUB_USERNAME>.github.io/system-design-masterclass/
