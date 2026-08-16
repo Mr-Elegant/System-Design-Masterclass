@@ -133,6 +133,23 @@ Contributions, feedback, and architecture suggestions are always welcome!
 
 ---
 
+
+---
+
+## 👨‍💻 Author & Maintainer
+
+<div align="center">
+
+### **Preet Karwal**
+*Distributed Systems Architect & Software Engineer*
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Preet%20Karwal-0077b5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/preetkarwal/)
+[![GitHub](https://img.shields.io/badge/GitHub-@Mr--Elegant-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Mr-Elegant)
+[![Portfolio](https://img.shields.io/badge/Portfolio-preetportfol.vercel.app-0284c7?style=for-the-badge&logo=vercel&logoColor=white)](https://preetportfol.vercel.app/)
+[![Instagram](https://img.shields.io/badge/Instagram-@preet__karwal-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/preet_karwal/)
+
+</div>
+
 ## 📄 License
 
 Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
