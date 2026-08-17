@@ -863,11 +863,52 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Introduction</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Introduction</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Bulkhead pattern is a strategy used in the design of distributed systems to prevent failures from propagating across different parts of the system. The name &quot;bulkhead&quot; is inspired by a nautical term. On a ship, bulkheads are compartments designed to contain water in case of a hull breach. If water enters one compartment, the bulkhead prevents it from flooding the entire ship, hence limiting the damage.</p>
 <p>How does this concept relate to distributed systems? In a distributed system, a bulkhead is a mechanism that isolates different parts of the system so that if one part fails, it doesn&#x27;t cause the rest of the system to fail.</p>
 <h2>The Challenge of Cascading Failures</h2>
@@ -877,11 +918,52 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Failure Propagation in Distributed Systems</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Problem Failure Propagation in Distributed Systems</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Problem Failure Prop</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Imagine you&#x27;re on a large ship, cruising across the vast ocean. Suddenly, there&#x27;s a breach in the hull, and water starts pouring into the ship. What do you think will happen? The ship will start to sink, right? But, does the whole ship sink immediately? Thanks to the architecture of modern ships, the answer is no. The ship is divided into several watertight compartments or &#x27;bulkheads&#x27;. If water floods one compartment, the others remain unaffected, at least for some time, buying valuable time for rescue efforts.</p>
 <p>But what if our ship didn&#x27;t have these bulkheads? The water would quickly flood the entire ship, causing it to sink rapidly. The failure (hull breach) would propagate across the entire ship, leading to a total system failure (the ship sinking). This is an example of a cascading failure in a physical system.</p>
 <p>Now, let&#x27;s bring this concept back to distributed systems. Like our ship, a distributed system consists of multiple components (services, processes, etc.). Ideally, these components work together seamlessly to provide a functional system. But, in reality, failures can and do occur.</p>
@@ -893,11 +975,52 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Bulkhead Pattern A Solution</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Bulkhead Pattern A Solution</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Bulkhead Pattern A S</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The essence of the Bulkhead pattern lies in isolation. Like the watertight compartments in a ship, the Bulkhead pattern partitions the components of a system into isolated units or &#x27;bulkheads&#x27;. Each bulkhead is designed to operate independently of the others. So, if one bulkhead fails, the others can continue to function, thus preventing the failure from spreading across the system.</p>
 <p>You can think of bulkheads as a form of &#x27;failure containment&#x27;. By isolating different parts of the system, bulkheads limit the scope of any potential failures. A failure in one part of the system doesn&#x27;t automatically mean a failure in the entire system. The unaffected parts can still provide some level of service, maintaining system availability as much as possible.</p>
 <h2>A Solution to the Problem of Failure Propagation</h2>
@@ -911,11 +1034,52 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Architecture</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Architecture</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Now that we understand the basics of the Bulkhead pattern, it&#x27;s time to explore its architecture. How are bulkheads designed within a distributed system? How do they interact with other components? Let&#x27;s explore these questions and more in this section.</p>
 <h2>The Building Blocks of the Bulkhead Pattern</h2>
 <p>The architecture of the Bulkhead pattern revolves around two key concepts: isolation and resources. To implement the Bulkhead pattern, we need to create isolated units within our system (the bulkheads) and allocate resources to these units.</p>
@@ -948,11 +1112,52 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">The Inner Workings</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Inner Workings</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Inner Workings</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Understanding the architecture of the Bulkhead pattern is one thing, but to truly appreciate its power and utility, we need to dive into its inner workings. How does this pattern function in real-time in a running system? How does it handle the inevitable failures that arise in distributed systems? Let&#x27;s take a closer look.</p>
 <h2>Isolation in Practice: Maintaining Independence</h2>
 <p>In the context of the Bulkhead pattern, the concept of isolation is fundamental. Each bulkhead within the system needs to operate independently of others. This independence is what enables the bulkheads to contain failures and prevent them from spreading.</p>
@@ -973,11 +1178,52 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Bulkhead Pattern An Example</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Bulkhead Pattern An Example</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Bulkhead Pattern An Exam</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Seeing the Bulkhead pattern in practice helps us to understand how it functions in a live setting. Here, we will use Java to create a basic representation of this pattern. As we progress, we will analyze each segment and discuss how it contributes to the whole mechanism. However, remember that the example is for demonstrative purposes and might not cover all real-world considerations for a production-grade system. Let&#x27;s get started!</p>
 <h2>Conceptualizing the Example</h2>
 <p>For our illustration, let&#x27;s imagine a typical microservice-based application where different microservices are responsible for different tasks. We are focusing on the &quot;Order Service&quot; which is primarily responsible for creating orders and has to communicate with two other services: the &quot;Inventory Service&quot; and the &quot;Shipping Service&quot;.</p>
@@ -1008,11 +1254,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Performance Implications and Special Considerations</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Performance Implications and Special Considerations</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Performance Implications</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>While the Bulkhead pattern undoubtedly enhances the resilience of our distributed systems, like every design pattern, it comes with its considerations and potential pitfalls. Understanding these is critical to effectively leveraging the pattern and avoiding undesired side effects.</p>
 <h2>Performance Implications</h2>
 <h3>Efficient Resource Utilization</h3>
@@ -1036,11 +1323,52 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">System Design Examples</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">System Design Examples</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">System Design Examples</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Bulkhead pattern finds its footing in an array of distributed system scenarios. It&#x27;s a pattern that parallels real-world applications, as it&#x27;s inspired by a naval architecture concept. But how do these ship compartments translate into software systems? Let&#x27;s illustrate this through some real-world use cases.</p>
 <h2>Use Cases</h2>
 <h3>E-Commerce Platforms</h3>
@@ -1065,11 +1393,52 @@
 </section>
 
 <section id="chapter-09" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Conclusion</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Conclusion</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Conclusion</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h2>The Value of the Bulkhead Pattern in Distributed Systems</h2>
 <p>In the world of distributed systems, the Bulkhead pattern has proven itself as an effective strategy to prevent failure propagation, enhancing the system&#x27;s overall resilience. This pattern, borrowed from naval architecture, has brought us a long way in ensuring a healthy segregation of resources and operations, ensuring that a failure in one part doesn&#x27;t sink the entire ship — or in our case, the entire system.</p>
 <p>This chapter took you on a deep dive into the Bulkhead pattern, its rationale, implementation, and its working mechanism. We started with the problem statement, describing the challenges faced in distributed systems when a single service failure can lead to a cascade of issues across the system. It is akin to a single weak link compromising the strength of the entire chain.</p>

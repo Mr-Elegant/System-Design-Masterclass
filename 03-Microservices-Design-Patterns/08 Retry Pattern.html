@@ -861,11 +861,52 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Introduction</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Introduction</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h2>The World of Distributed Systems and the Retry Pattern</h2>
 <p>Have you ever wondered how modern applications handle failures? Have you ever been curious about the mechanisms that prevent a temporary issue from turning into a system-wide outage? If you&#x27;ve nodded your head in agreement, then this chapter is tailor-made for you! We are going to discuss one of the most fundamental design patterns used in distributed systems – the Retry Pattern.</p>
 <h2>Background &amp; Problem Statement</h2>
@@ -876,11 +917,52 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Retry Pattern A Solution to Unreliable External Resources</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Retry Pattern A Solution to Unreliable External Resources</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Retry Pattern A Solu</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Retry Pattern addresses transient failures by <strong>attempting the operation again</strong>, giving the system a second (or third, etc.) chance to succeed. The core idea is simple: if an operation fails due to a temporary issue, wait a short period and try it again, on the assumption that the issue may have been resolved in the interim. Many distributed systems fail in <em>partial</em> ways – a subset of requests fail while others succeed – or suffer <em>short-lived</em> outages. In fact, “often, trying the same request again causes the request to succeed.” By re-issuing the request, a client can <strong>ride through brief disruptions</strong>. For example, if a service didn’t respond because of a momentary spike, a retry a few moments later might hit a less-busy instance and succeed. In effect, retries <strong>mask sporadic failures</strong>, increasing the apparent reliability as seen by the user.</p>
 <h2>How Retries Mitigate Failures</h2>
 <p>Retries work under the assumption that the failure was transient or non-deterministic. Network blips clear up, threads get freed, and services restart – so a subsequent attempt has a good chance of succeeding where the first failed. This dramatically reduces the error rate seen by higher-level services or end-users. Instead of immediately giving up when a downstream call fails, a microservice can retry and often complete the operation without needing any manual fix. The result is fewer errors returned to users and more robust inter-service communication. The Retry Pattern thus <strong>improves overall availability</strong> by leveraging the fact that many failures resolve themselves quickly.</p>
@@ -892,11 +974,52 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Architecture of the Retry Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Architecture of the Retry Pattern</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Architecture of the </text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>At its core, the Retry Pattern is implemented as a <strong>wrapper around an operation</strong> that intercepts failures and repeats the operation according to a policy. There are a few key components and concepts that make up the pattern’s architecture:</p>
 <ul>
 <li>
@@ -926,11 +1049,52 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Retry Pattern An Example</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Retry Pattern An Example</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Retry Pattern An Example</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>To solidify these concepts, let’s examine a simple Java implementation of the Retry pattern <strong>without using any external frameworks</strong>. We’ll implement a utility that retries a given operation with a configurable policy. The code will illustrate a basic retry loop with options for constant vs. exponential backoff and jitter.</p>
 <pre><div><div><code><span>import</span><span> </span><span>java</span><span>.</span><span>util</span><span>.</span><span>concurrent</span><span>.</span><span>Callable</span><span>;</span><span>
 </span><span></span><span>import</span><span> </span><span>java</span><span>.</span><span>util</span><span>.</span><span>Random</span><span>;</span><span>
@@ -1045,11 +1209,52 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Performance Implications</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Performance Implications</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Performance Implications</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>While the Retry Pattern can greatly enhance reliability, it also introduces <strong>performance considerations and risks</strong> that architects must carefully manage:</p>
 <ul>
 <li>
@@ -1089,11 +1294,52 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Use Cases and System Design Examples</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Use Cases and System Design Examples</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Use Cases and System Des</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Let&#x27;s dive right into the real-world use cases and system design examples of the Retry Pattern.</p>
 <h2>System Design Use Cases</h2>
 <p>Think of the Retry Pattern as a boxer in the ring. It&#x27;s relentless, always ready to take another swing even when it misses the first time. But just like in boxing, strategy and timing matter. Let&#x27;s explore some scenarios where the Retry Pattern steps into the ring.</p>
@@ -1137,11 +1383,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Conclusion</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Conclusion</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Conclusion</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Retry Pattern is a powerful tool in the microservices and distributed systems toolbox. It <strong>addresses the inherent unreliability of distributed communications</strong>, allowing systems to recover from transient blips automatically. By understanding that failures will happen and designing our calls to <strong>“try again”</strong> when it makes sense, we significantly improve resilience and user experience. Key takeaways and best practices include:</p>
 <ul>
 <li><strong>Use retries for transient failures</strong> (network issues, timeouts, throttling, etc.) – they can turn a momentary failure into a success without human intervention.</li>

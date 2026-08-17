@@ -946,11 +946,54 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Databases</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>A database is an organized collection of structured data that is stored and managed electronically. Databases are essential tools for managing, storing, and retrieving data efficiently, and they play a vital role in modern applications.</p>
 <h2>Database Management Systems (DBMS)</h2>
 <p>A Database Management System (DBMS) is software that interacts with users, applications, and the database itself to capture, store, and manage data. It provides an interface for performing various operations on the data, such as inserting, updating, deleting, and retrieving data. The primary goal of a DBMS is to ensure that data remains consistent, secure, and easily accessible.</p>
@@ -980,11 +1023,54 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">SQL Databases</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>SQL (Structured Query Language) databases, also known as relational databases, are the most commonly used type of databases in software applications. They store data in tables, where each table consists of rows and columns. Relationships between tables are established using primary and foreign keys. SQL databases follow the ACID properties (Atomicity, Consistency, Isolation, Durability) to ensure reliable data transactions.</p>
 <h2>RDBMS Concepts</h2>
 <ul>
@@ -1047,11 +1133,54 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">NoSQL Databases</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>NoSQL databases, also known as &quot;Not Only SQL&quot; databases, are a diverse group of non-relational databases designed to address the limitations of traditional SQL databases, particularly in terms of scalability, flexibility, and performance under specific workloads. NoSQL databases do not adhere to the relational model and typically do not use SQL as their primary query language. Instead, they employ various data models and query languages, depending on the specific type of NoSQL database being used.</p>
 <p>The key characteristics of NoSQL databases include their schema-less design, which allows for greater flexibility in handling data; horizontal scalability, which makes it easier to distribute data across multiple servers; and their ability to perform well under specific workloads, such as high write loads or large-scale data storage and retrieval.</p>
 <h2>Types of NoSQL Databases</h2>
@@ -1172,11 +1301,52 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">SQL vs NoSQL</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">SQL vs NoSQL</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">SQL vs NoSQL</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>As a software engineer preparing for system design interviews, understanding when to use SQL (relational) databases and when to use NoSQL databases is crucial. Both database types have their strengths and weaknesses, and the choice depends on your specific use case and requirements.</p>
 <h2>1. Data Model and Schema</h2>
 <p>One of the primary factors to consider when selecting a database is the data model and structure of the information you plan to store. Understanding the complexity, diversity, and relationships within the data will help you determine the most appropriate database type.</p>
@@ -1212,11 +1382,52 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">ACID vs BASE Properties</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">ACID vs BASE Properties</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ACID vs BASE Properties</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>When we use an application – whether it&#x27;s online banking or a shopping site – we expect the data to be correct and the system to work reliably. If you transfer money and a glitch happens, you wouldn’t want the bank to deduct money from your account without adding it to the recipient’s account. This is why database consistency and reliability matter so much. A reliable database ensures that even if something goes wrong (like a crash or network issue), your data isn’t lost or corrupted.</p>
 <p>In the world of databases, there are two common models for handling consistency and reliability: <strong>ACID</strong> and <strong>BASE</strong>. These acronyms stand for different approaches in database design. In simple terms, <strong>ACID</strong> is about keeping transactions <em>strictly correct and reliable</em>, while <strong>BASE</strong> is about keeping the system <em>basically available and scalable</em> (even if data might be briefly inconsistent). They’re often seen as opposites, but each has its own use cases and trade-offs. In this post, we’ll explain what each term means, give easy examples, compare their differences, and help you decide which approach fits which situation.</p>
 <h2>What is ACID?</h2>
@@ -1259,11 +1470,52 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">RealWorld Examples and Case Studies</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">RealWorld Examples and Case Studies</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">RealWorld Examples and C</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>Understanding the theoretical differences between SQL and NoSQL databases is essential, but examining real-world examples and case studies can provide valuable insights into how these databases are used in practice. This section will explore various use cases where SQL and NoSQL databases have been successfully implemented, highlighting their respective strengths and showcasing how they can be employed to address specific application requirements. Additionally, we will discuss hybrid solutions that combine the capabilities of both database types to create robust and versatile systems. By exploring these real-world scenarios, you can gain a deeper understanding of how to select the appropriate database in your system design interview.</p>
 <h2>A. SQL Databases in Action</h2>
 <ol>
@@ -1286,11 +1538,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">SQL Normalization and Denormalization</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">SQL Normalization and Denormalization</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">SQL Normalization and De</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><h2>SQL Normalization</h2>
 <p>Normalization in SQL is a database design technique that organizes tables in a manner that reduces redundancy and dependency. It involves dividing a database into two or more tables and defining relationships between them to achieve a more efficient database structure.</p>
 <h3>Characteristics</h3>
@@ -1387,11 +1680,54 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">InMemory Database vs OnDisk Database</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>In-memory databases and on-disk databases are two types of database systems designed for storing and managing data, but they fundamentally differ in how and where they store their data. Understanding these differences is key to choosing the right type of database for a specific application or workload.</p>
 <h2>In-Memory Database (IMDB)</h2>
 <h3>Storage Mechanism:</h3>
@@ -1553,11 +1889,52 @@
 </section>
 
 <section id="chapter-09" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Data Replication vs Data Mirroring</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Data Replication vs Data Mirroring</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Data Replication vs Data</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>Data replication and data mirroring are both methods used in managing and safeguarding data, particularly in the context of databases and storage systems. While they share similarities in creating copies of data, they serve different purposes and have distinct operational characteristics.</p>
 <h2>Data Replication</h2>
 <h3>Definition</h3>
@@ -1634,11 +2011,54 @@
 </section>
 
 <section id="chapter-10" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">Database Federation</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p><strong>Database federation</strong> (also known as a <em>federated database system</em>) is an approach where multiple independent databases are virtually integrated to appear as one single database to the end user. Each underlying database (often called a <em>component database</em> or <em>data source</em>) remains autonomous and self-contained – it keeps its own data, schema, and database engine. The federation layer or system acts as a coordinator, so when an application issues a query, it doesn’t need to know which database holds the data. The federated system will route the request to the appropriate source(s) and combine the results for the application.</p>
 <p>In simpler terms, database federation is like having a <em>virtual single database</em> on top of many databases. For example, imagine a city library system with several branch libraries. Each branch library has its own catalog of books (akin to separate databases). Database federation is like a <strong>unified catalog</strong> that lets you search all branch libraries at once. You submit one book query, and the system figures out which branches have that book and brings the information back to you, as if you searched one big library. From the user’s perspective, it all feels like one database, even though the data is actually distributed across multiple libraries.</p>
 <p><strong>Key characteristics of federated databases</strong> include transparency, heterogeneity, and autonomy:</p>
@@ -1805,11 +2225,54 @@
 </section>
 
 <section id="chapter-12" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">Types of Indexes</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>Database indexes are designed to improve the speed and efficiency of data retrieval operations. They function by maintaining a separate structure that points to the rows in a table, allowing the database to look up data more quickly without scanning the entire table.</p>
 <p>There are various types of database indexes, each with its unique characteristics and use cases. Understanding these different index types is crucial for optimizing the performance of database systems and ensuring efficient data retrieval.</p>
 <p>In this section, we will explore several common types of database indexes.</p></div><div><h2>Primary Index</h2>

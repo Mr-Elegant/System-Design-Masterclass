@@ -863,11 +863,52 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Introduction</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Introduction</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Have you ever considered how the process of managing configurations can dramatically influence the success of your microservices? Today, we&#x27;re going to delve into a vital aspect of microservices design: the Configuration Externalization Pattern.</p>
 <p>But before we jump into the details, let&#x27;s take a moment to set the scene. Picture yourself as an architect, designing a city. Would you place the blueprint of every building inside each one, hard-coded into the walls? Or would you keep it separate, accessible, and modifiable, so that each building can adapt to changing needs? The answer seems obvious when we consider physical structures, doesn&#x27;t it? The same principle applies in the realm of software development.</p>
 <h2>The Art of Configuration in Microservices</h2>
@@ -882,11 +923,52 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Configuration Management in a Microservices Architecture</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Problem Configuration Management in a Microservices Architecture</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Problem Configuratio</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Configuration management is a critical element in the design and maintenance of microservices. With an inadequate configuration management strategy, even the most well-designed microservices architecture can quickly become unmanageable. To truly understand why the Configuration Externalization Pattern is so crucial, we first need to fully comprehend the challenges we face in configuration management within a microservices architecture.</p>
 <h2>The Challenge of Volume and Diversity</h2>
 <p>Just picture your architecture as a bustling city, teeming with activity. Each microservice is a building within this city, each with its unique purpose and set of configurations - akin to blueprints. Now imagine each building is from a different era, built with diverse architectural styles and materials. This is what a microservices architecture often looks like. With a multitude of services, each possibly written in different languages and using different technology stacks, managing configurations can quickly become a nightmare.</p>
@@ -910,11 +992,52 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Solution Configuration Externalization Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Solution Configuration Externalization Pattern</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Solution Configurati</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>We&#x27;ve navigated the turbulent seas of configuration management problems, and now it&#x27;s time to anchor ourselves in the calm waters of a solution - the Configuration Externalization Pattern. This pattern is our lighthouse, guiding us to overcome the challenges we previously outlined. But how does it work, and what makes it so efficient? Let&#x27;s delve into its depths together.</p>
 <h2>What is the Configuration Externalization Pattern?</h2>
 <p>Simply put, the Configuration Externalization Pattern takes the principle of <strong>&#x27;separation of concerns&#x27;</strong> and applies it to configuration management. It emphasizes the need to externalize configurations from application code, storing and managing them in a separate, centralized location. Imagine taking all the blueprints of our city&#x27;s buildings and keeping them in a central town hall, away from the buildings themselves. This way, the blueprints become easy to update and review without disturbing the buildings. That&#x27;s exactly what this pattern accomplishes!</p>
@@ -936,11 +1059,52 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Unveiling the Architecture How Does Configuration Externalization Work</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Unveiling the Architecture How Does Configuration Externalization Work</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Unveiling the Architectu</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>You&#x27;ve heard about the value that the Configuration Externalization Pattern brings to the table, but now let&#x27;s roll up our sleeves and dive into the intricate workings of this pattern. We&#x27;ll start by examining the architecture of the pattern, unveiling its structure, and exploring the mechanisms that make it tick.</p>
 <h2>A Walkthrough of the Configuration Externalization Architecture</h2>
 <p>At the heart of the Configuration Externalization Pattern, you&#x27;ll find two main components - the microservice itself and the configuration server (or configuration file). These two actors interact harmoniously to manage configurations in a microservices architecture effectively.</p>
@@ -965,11 +1129,52 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Delving into Code An Example</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Delving into Code An Example</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Delving into Code An Exa</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>After a deep dive into the architecture and design of the Configuration Externalization Pattern, you&#x27;re probably curious about its implementation. And what better way to see it in action than through a real-world Java example? So, let&#x27;s get our hands dirty with some code.</p>
 <h2>The Set-Up: Using Spring Cloud Config</h2>
 <p>To demonstrate the Configuration Externalization Pattern in Java, we&#x27;re going to utilize Spring Cloud Config, an excellent tool for centralized configuration management. It&#x27;s widely adopted in the Java community for microservices architecture due to its simplicity and efficiency. Ready to see the magic it can do?</p>
@@ -1007,11 +1212,52 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Considerations and Implications</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Considerations and Implications</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Considerations and Impli</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>So, we&#x27;ve seen the power of the Configuration Externalization Pattern. Its ability to simplify and secure configuration management is impressive, isn&#x27;t it? However, before you jump into implementing this pattern, let&#x27;s put our critical thinking hats on. It&#x27;s important to understand some considerations and implications. Ready to delve deeper?</p>
 <h2>Data Security</h2>
 <p>While we&#x27;ve already discussed how the Configuration Externalization Pattern aids security, it also introduces a new surface area for potential attacks. Think about it. You&#x27;re now storing sensitive configuration data remotely. How secure is your storage? Is your data transfer secure? To ensure the security of our configurations, we need to consider encryption. Remember our &#x27;MySuperSecretKey&#x27; example from earlier? That&#x27;s just the tip of the iceberg. From using secure and encrypted connections to regularly rotating keys, you need to stay one step ahead in the security game.</p>
@@ -1028,11 +1274,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Use Cases and Real-world Examples</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Use Cases and Real-world Examples</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Use Cases and Real-world</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>By now, you&#x27;ve learned a lot about the Configuration Externalization Pattern, right? But, as you know, abstract theory isn&#x27;t enough. We need to see this pattern in action. So let&#x27;s dive into some real-world examples and use cases that bring the power and utility of this pattern to life.</p>
 <h2>E-commerce Platform</h2>
 <p>Imagine you&#x27;re working on an e-commerce platform. You have several microservices - Inventory, Order, User Management, etc. Each of these services needs to interface with various databases and APIs, each with its own set of configuration. With hundreds of services running in production, staging, and development environments, managing configurations can be a nightmare.</p>
@@ -1054,11 +1341,52 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Conclusion</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Conclusion</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Conclusion</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h2>The Power of Externalization</h2>
 <p>What is it that makes the Configuration Externalization Pattern so compelling? It&#x27;s the promise of simplicity and elegance in the face of complexity. Remember the days when managing configurations across your microservices was like a high-stakes juggling act? When a minor change could lead to a cascade of updates, and things could go wrong in a blink of an eye?</p>
 <p>By externalizing configurations, we&#x27;ve removed this complexity. Each microservice fetches its configuration from a central location, making changes easier and more manageable. Sounds simple, right? That&#x27;s the beauty of this pattern.</p>
@@ -1072,11 +1400,52 @@
 </section>
 
 <section id="chapter-09" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Embrace the Future of Software Architecture</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Embrace the Future of Software Architecture</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Embrace the Future of So</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>As we reach the end of our journey through the vibrant landscape of microservice design patterns, it&#x27;s time for some reflection. From understanding why every service needs its own database, to learning how an API Gateway simplifies client interaction, to mitigating service failures with the Circuit Breaker Pattern, we&#x27;ve explored a plethora of concepts that can transform your perspective on software architecture.</p>
 <p>But what does it all boil down to? Why should you, as an IT professional, software developer or architect, invest your valuable time in understanding these patterns?</p>
 <h2>The Ever-Evolving Tech World</h2>

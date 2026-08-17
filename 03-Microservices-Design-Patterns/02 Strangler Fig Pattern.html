@@ -860,11 +860,52 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Introduction</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Introduction</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p><strong>What is Strangler Fig Pattern?</strong> It is an approach used in software development when transitioning from a monolithic architecture to a microservices architecture. The pattern is named after the strangler fig tree, which gradually grows around and eventually replaces existing trees. In the context of software engineering, it refers to the gradual process of replacing parts of a legacy system with new applications and services.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Fig Tree</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>Imagine an ancient, humongous tree in a dense forest. This tree represents your old legacy system. One day, a new plant, the Strangler Fig, starts growing at the base of this tree. Over time, the fig grows, wrapping itself around the ancient tree. As it expands, it replaces more and more parts of the original tree until the old tree is entirely enveloped and replaced by the Strangler Fig.</p>
 <p>This tree is a metaphor for legacy systems. These systems, often outdated yet deeply integrated, support critical business operations. They&#x27;re like the old tree - rooted deeply within the organization&#x27;s architecture, its many branches representing the various functions it supports. And replacing these systems can be just as daunting as replacing the old tree.</p>
 <p>So how can we replace such deeply rooted legacy systems? There is a solution that allows you to gradually replace parts of the legacy system without causing business disruption. That solution is the Strangler Fig Pattern. It&#x27;s named after the Strangler Fig, a tree that grows by gradually enveloping other trees, eventually replacing them.</p>
@@ -882,11 +923,52 @@ The Strangler Fig Pattern in software design mimics the process of gradually rep
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Legacy Systems</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Problem Legacy Systems</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Problem Legacy Syste</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p><strong>What are Legacy System?</strong>
 Legacy systems are old softwares, technologies, tools, or infrastructures used by an organization. They were often introduced ages ago and might be based on outdated technologies, but they continue to provide essential functions, and that&#x27;s why they&#x27;ve stuck around.</p>
 <h2>Challenges with Legacy Systems:</h2>
@@ -954,11 +1036,58 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Strangler Pattern A Solution</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Strangler Pattern A Solution</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The implementation of the Strangler Pattern begins by identifying a single functionality of the legacy system that can be rebuilt and redirected to the new system.</p>
 <p>Once a functionality is identified, it&#x27;s duplicated in the new system, and traffic is rerouted to the new implementation using a Facade interface. This interface is the gatekeeper, directing incoming requests either to the new system or to the old one. Over time, more and more functionality is migrated to the new system, and traffic to the old system decreases until it&#x27;s finally phased out.</p>
 <p><strong>Steps</strong>:</p>
@@ -972,11 +1101,58 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Strangler Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Architecture of the Strangler Pattern</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h2>A Layered Approach</h2>
 <p>The Strangler Pattern adopts a layered approach in its architecture. Imagine peeling an onion layer by layer, with each layer representing a part of the legacy system being replaced by the new system.</p>
 <h2>Facade Interface: The Gatekeeper</h2>
@@ -1014,11 +1190,58 @@ Imagine we have an old system for user management and we want to replace the &qu
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Strangler Pattern A Detailed Example</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Strangler Pattern A Detailed Example</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Let&#x27;s work on a Java code example that puts the Strangler Pattern into action.</p>
 <h2>Setting the Stage: The Legacy System</h2>
 <p>First, let&#x27;s set the stage with a simple example of a legacy system. Imagine a basic class, <code>LegacySystem</code>, which has methods for <code>createAccount()</code>, <code>deposit()</code>, <code>withdraw()</code>, and <code>checkBalance()</code>. Here&#x27;s how this class might look:</p>
@@ -1112,11 +1335,52 @@ Imagine we have an old system for user management and we want to replace the &qu
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Key Insights and Implications</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Key Insights and Implications</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Key Insights and Implica</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Here are some critical insights into implementing Strangler Fig pattern effectively:</p>
 <ol>
 <li>

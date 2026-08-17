@@ -484,11 +484,52 @@
 
   <div class="content">
     <div class="section" id="chapter-01">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">01</span>
     <h2 class="section-title">Problem 1: Design Tic-Tac-Toe (O(1) Win Condition)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 1: Design Tic-Tac-Toe (O(1) Win Condition)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">OOP</span><span class="tag blue">Tic-Tac-Toe</span><span class="tag purple">Board State</span></div>
                 <p>Design a Tic-Tac-Toe game supporting $N \times N$ board size with $O(1)$ win-condition evaluation.</p>
                 <div class="code-block"><span class="code-label">JavaScript — Tic-Tac-Toe Engine</span><pre>
@@ -518,11 +559,52 @@ console.log(game.makeMove(0, 0, 'X'));</pre></div>
 </div>
 
 <div class="section" id="chapter-02">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">02</span>
     <h2 class="section-title">Problem 2: Design Vending Machine (State Pattern &amp; Refunds)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 2: Design Vending Machine (State Pattern &amp; Refunds)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">State Pattern</span><span class="tag blue">Vending Machine</span><span class="tag purple">Refunds</span></div>
                 <p>Complete Vending Machine handling Idle, Coin Insertion, Product Selection, Dispensing, and Refund Cancellation using the State Pattern.</p>
                 <div class="code-block"><span class="code-label">JavaScript — Vending Machine State Pattern</span><pre>
@@ -594,11 +676,52 @@ vm.dispense();</pre></div>
 </div>
 
 <div class="section" id="chapter-04">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">04</span>
     <h2 class="section-title">Problem 4: Design Library Management System (Modelling &amp; Loans)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 4: Design Library Management System (Modelling &amp; Loans)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">Modelling</span><span class="tag blue">Library</span><span class="tag purple">Catalog</span></div>
                 <p>Library management system supporting ISBN catalog search, member loan checkouts, fine calculation, and reservation queues.</p>
                 <div class="code-block"><span class="code-label">JavaScript — Library Management System</span><pre>
@@ -654,11 +777,52 @@ lib.returnBook("ISBN-101", "Member_77");</pre></div>
 </div>
 
 <div class="section" id="chapter-06">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">06</span>
     <h2 class="section-title">Problem 6: Design Snake &amp; Ladder (Turn Queue &amp; Board Jumps)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 6: Design Snake &amp; Ladder (Turn Queue &amp; Board Jumps)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">OOP</span><span class="tag blue">Snake & Ladder</span><span class="tag purple">Turn Queue</span></div>
                 <p>Snake & Ladder board game with dynamic snakes/ladders jump map, dice rolling, and circular player turn queue.</p>
                 <div class="code-block"><span class="code-label">JavaScript — Snake & Ladder Game Engine</span><pre>
@@ -714,11 +878,52 @@ game.playTurn();</pre></div>
 </div>
 
 <div class="section" id="chapter-07">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">07</span>
     <h2 class="section-title">Problem 7: Design Chess (Piece Hierarchy &amp; Command Pattern Undo)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 7: Design Chess (Piece Hierarchy &amp; Command Pattern Undo)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">Complex Modelling</span><span class="tag blue">Chess</span><span class="tag purple">Command Pattern</span></div>
                 <p>Complete Chess game with Piece hierarchy (King, Queen, Rook, Bishop, Knight, Pawn), 8x8 matrix board, move validation, and Command pattern for Undo/Redo.</p>
                 <div class="code-block"><span class="code-label">JavaScript — Chess Game Engine</span><pre>
@@ -780,11 +985,52 @@ cmd.undo(); console.log("Move undone! Rook back at (0,0)");</pre></div>
 </div>
 
 <div class="section" id="chapter-09">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">09</span>
     <h2 class="section-title">Problem 9: Design ATM System (State Pattern &amp; Cash Dispenser)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 9: Design ATM System (State Pattern &amp; Cash Dispenser)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">State</span><span class="tag blue">ATM</span><span class="tag purple">Greedy Dispenser</span></div>
                 <p>ATM System with PIN verification, card validation, and greedy Cash Dispenser algorithm ($100, $50, $20 bills).</p>
                 <div class="code-block"><span class="code-label">JavaScript — ATM Cash Dispenser Engine</span><pre>
@@ -827,11 +1073,52 @@ atm.dispense(270); // 2x $100, 1x $50, 1x $20</pre></div>
 </div>
 
 <div class="section" id="chapter-10">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">10</span>
     <h2 class="section-title">Problem 10: Design Coffee Machine (Factory &amp; Strategy Pattern)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Problem 10: Design Coffee Machine (Factory &amp; Strategy Pattern)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">Factory</span><span class="tag blue">Coffee Machine</span><span class="tag purple">Strategy</span></div>
                 <p>Automated Coffee Machine preparing Espresso, Cappuccino, and Latte with ingredient inventory validation.</p>
                 <div class="code-block"><span class="code-label">JavaScript — Coffee Machine Factory</span><pre>

@@ -862,11 +862,58 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to the Sidecar Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Introduction to the Sidecar Pattern</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Sidecar Pattern is a popular design pattern, where a helper service is attached to a primary application service, providing supplementary features or handling cross-cutting concerns. This pattern takes its name from the concept of a motorcycle sidecar, where the sidecar is attached to and operates alongside the motorcycle.</p>
 <h2>The Sidekick Your Application Needs</h2>
 <p>The Sidecar Pattern, as the name suggests, is like having a sidekick, but for your service or application. It&#x27;s like Batman having Robin at his side, or Sherlock Holmes having Dr. Watson. Imagine having an aide that can handle specific tasks, operate autonomously, and yet be a part of a single, larger entity - wouldn&#x27;t that be a great asset? That&#x27;s essentially what the Sidecar Pattern brings to the table.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Sidecar</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>The Sidecar Pattern encapsulates the concept of modularity and separation of concerns. It involves deploying components of an application as separate processes that run alongside the main application. Each sidecar is dedicated to a specific function and provides its service to the main application. This allows developers to encapsulate the logic and complexities related to these functions in the sidecar, thus reducing the complexity of the main application.</p>
@@ -876,11 +923,52 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Monolithic Application Management</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Problem Monolithic Application Management</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">The Problem Monolithic A</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>One of the most significant challenges with monolithic applications is their lack of isolation. Since all components are closely intertwined, a failure in one component can potentially bring down the entire application. It&#x27;s like having all your eggs in one basket - if the basket falls, all the eggs break. This lack of fault isolation makes monolithic applications highly vulnerable and risky. It&#x27;s one of the reasons why developers started seeking alternatives.</p>
 <h2>Moving the Mountain: The Problem of Scalability</h2>
 <p>In today&#x27;s dynamic digital world, scalability is a must-have feature for any application. However, with monolithic applications, scaling is akin to moving a mountain. You cannot just scale a particular component or functionality; you need to scale the entire application, even if only one component needs it. This leads to unnecessary resource consumption and inefficient scaling, making it a significant roadblock in the path of application growth.</p>
@@ -894,11 +982,52 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">A Solution to the Monolithic Mayhem</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">A Solution to the Monolithic Mayhem</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">A Solution to the Monoli</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Sidecar Pattern proposes that each service in an application should be paired with a secondary component – a &#x27;sidecar&#x27; – that takes over some of the responsibilities of the main service. The sidecar and the main service run in the same process and communicate with each other directly, creating a self-contained module that&#x27;s easy to manage and scale.</p>
 <h2>Sidecar: The Flexible Warrior</h2>
 <p>Remember how we talked about the lack of flexibility being a major issue with monolithic applications. Well, the Sidecar Pattern tackles this head-on. By separating the main service from its secondary functions, the Sidecar Pattern makes it easier to update, modify, or replace individual components without affecting the others.</p>
@@ -915,11 +1044,58 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Sidecar Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">The Architecture of the Sidecar Pattern</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h2>The Containerized Confluence</h2>
 <p>One of the most distinctive features of the Sidecar Pattern&#x27;s architecture is its use of containers. The main application and its sidecar are deployed together in the same container, allowing them to share resources and communicate efficiently. This shared environment enables them to operate as a single unit while maintaining their individuality.</p>
 <h2>Sidecars Galore: A Multifaceted Approach</h2>
@@ -933,11 +1109,58 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Sidecar Pattern Bringing Theory to Practice with an Example</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Sidecar Pattern Bringing Theory to Practice with an Example</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>In this section, we&#x27;ll bring the Sidecar Pattern to life, showing you just how it operates in a real-world scenario.</p>
 <h2>Creating the Main Application</h2>
 <p>First things first, we need an application. Let&#x27;s create a simple Java web application. This application will expose a RESTful API and will serve as our main application.</p>
@@ -1018,11 +1241,52 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Performance Implications</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Performance Implications</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Performance Implications</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>The Sidecar Pattern comes with unique performance implications and special considerations that you must be aware of when using this pattern. Understanding these details is key to leveraging the full potential of the Sidecar Pattern.</p>
 <h2>Understanding the Performance Implications</h2>
 <p>You might wonder, &quot;Does adding a sidecar to my application slow things down?&quot; A legitimate question, indeed. Let&#x27;s break it down.</p>
@@ -1045,11 +1309,58 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">System Design Examples Bringing the Sidecar Pattern to Life</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> PATTERN ARCHITECTURE TOPOLOGY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">System Design Examples Bringing the Sidecar Pattern to Life</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-int" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mono" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+            <linearGradient id="g-ms" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 430 90 L 550 50" stroke="#94a3b8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 430 130 L 550 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-c3)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Traffic</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Unified URL Endpoint</text>
+        </g>
+        <g transform="translate(250, 45)">
+            <rect width="180" height="130" rx="12" fill="url(#g-int)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="90" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ROUTER / INTERCEPTOR</text>
+            <text x="90" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Path &amp; Header Based Rules</text>
+            <text x="90" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v1 &rarr; Monolith</text>
+            <text x="90" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">/api/v2 &rarr; Microservices</text>
+        </g>
+        <g transform="translate(550, 20)">
+            <rect width="240" height="70" rx="10" fill="url(#g-mono)" stroke="#64748b" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">LEGACY MONOLITH (Deprecating)</text>
+            <text x="120" y="52" fill="#cbd5e1" font-size="8.5" text-anchor="middle">Handles Legacy Un-migrated Domains</text>
+        </g>
+        <g transform="translate(550, 130)">
+            <rect width="240" height="70" rx="10" fill="url(#g-ms)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="120" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">MODERN MICROSERVICE FLEET</text>
+            <text x="120" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Scalable Go/Node Container Pods</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Incremental Migration:</strong> By routing specific endpoints gradually from legacy architectures to modern microservices, teams eliminate big-bang migration risks while preserving backward API compatibility.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>You might be wondering, &quot;Where can I use this pattern?&quot; or &quot;How does it fit into my system&#x27;s design?&quot; Let&#x27;s explore this together through practical use cases and system design examples.</p>
 <h2>Use Cases: Where Does the Sidecar Pattern Shine?</h2>
 <p>The Sidecar Pattern is an incredible tool that can be used in a variety of scenarios. Here are some common use cases where the pattern truly shines:</p>
@@ -1075,11 +1386,52 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Service Mesh Architecture &amp;amp;amp;amp;amp;amp; Ambassador Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Service Mesh Architecture &amp;amp;amp;amp;amp;amp; Ambassador Pattern</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Service Mesh Architectur</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <h2>1. Monolithic Sidecar vs. Service Mesh (Envoy & Istio)</h2>
             <p>As microservice counts grow into hundreds or thousands of instances, managing cross-cutting network concerns (mTLS encryption, retries, rate limiting, distributed tracing, circuit breaking) inside application code becomes impossible.</p>
             

@@ -484,11 +484,48 @@
 
   <div class="content">
     <div class="section" id="chapter-01">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">01</span>
     <h2 class="section-title">OOP Fundamentals (Encapsulation, Abstraction, Inheritance, Polymorphism)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> OOP &amp; SOLID DESIGN HIERARCHY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">OOP Fundamentals (Encapsulation, Abstraction, Inheritance, Polymorphism)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-abs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-con1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-con2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 410 80 L 220 120" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4"/>
+        <path d="M 410 80 L 600 120" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(285, 20)">
+            <rect width="250" height="60" rx="10" fill="url(#g-abs)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="125" y="26" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">&lt;&lt;interface&gt;&gt; IPaymentProcessor</text>
+            <text x="125" y="46" fill="#e9d5ff" font-size="9" text-anchor="middle" font-family="Fira Code">+processPayment(amount: number): boolean</text>
+        </g>
+        <g transform="translate(80, 120)">
+            <rect width="280" height="65" rx="10" fill="url(#g-con1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="140" y="28" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle" font-family="Outfit">StripeProcessor (implements)</text>
+            <text x="140" y="48" fill="#bae6fd" font-size="8.5" text-anchor="middle" font-family="Fira Code">+processPayment(): StripeSDK.charge()</text>
+        </g>
+        <g transform="translate(460, 120)">
+            <rect width="280" height="65" rx="10" fill="url(#g-con2)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="140" y="28" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PayPalProcessor (implements)</text>
+            <text x="140" y="48" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">+processPayment(): PayPalAPI.execute()</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Clean OOP Architecture:</strong> High-level modules depend on abstractions rather than low-level concrete implementations (Dependency Inversion Principle), allowing seamless strategy swapping without modifying core business logic.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">OOP</span><span class="tag blue">Encapsulation</span><span class="tag purple">Prototype Chain</span></div>
                     <p>Object-Oriented Programming (OOP) structures software into objects containing data (fields) and methods. In JavaScript, OOP is backed by the prototype chain and V8 hidden classes.</p>
                     <div class="card-grid">
@@ -516,11 +553,48 @@ console.log(`Balance: $${acc.getBalance()} | Interest: $${acc.calculateInterest(
 </div>
 
 <div class="section" id="chapter-02">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">02</span>
     <h2 class="section-title">SOLID Principles in JavaScript &amp; Refactoring Guide</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> OOP &amp; SOLID DESIGN HIERARCHY
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">SOLID Principles in JavaScript &amp; Refactoring Guide</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-abs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-con1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-con2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 410 80 L 220 120" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4"/>
+        <path d="M 410 80 L 600 120" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(285, 20)">
+            <rect width="250" height="60" rx="10" fill="url(#g-abs)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="125" y="26" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">&lt;&lt;interface&gt;&gt; IPaymentProcessor</text>
+            <text x="125" y="46" fill="#e9d5ff" font-size="9" text-anchor="middle" font-family="Fira Code">+processPayment(amount: number): boolean</text>
+        </g>
+        <g transform="translate(80, 120)">
+            <rect width="280" height="65" rx="10" fill="url(#g-con1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="140" y="28" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle" font-family="Outfit">StripeProcessor (implements)</text>
+            <text x="140" y="48" fill="#bae6fd" font-size="8.5" text-anchor="middle" font-family="Fira Code">+processPayment(): StripeSDK.charge()</text>
+        </g>
+        <g transform="translate(460, 120)">
+            <rect width="280" height="65" rx="10" fill="url(#g-con2)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="140" y="28" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PayPalProcessor (implements)</text>
+            <text x="140" y="48" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">+processPayment(): PayPalAPI.execute()</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Clean OOP Architecture:</strong> High-level modules depend on abstractions rather than low-level concrete implementations (Dependency Inversion Principle), allowing seamless strategy swapping without modifying core business logic.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">SOLID</span><span class="tag blue">Clean Code</span><span class="tag purple">Architecture</span></div>
                     <p>The SOLID principles prevent code rigidity and fragility in enterprise software systems.</p>
                     <div class="callout callout-tip">

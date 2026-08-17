@@ -941,11 +941,60 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Load Balancing</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LOAD BALANCING PIPELINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Traffic Ingestion &amp; Health Probing</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 130 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 90 L 530 45" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 530 110" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 130 L 530 175" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="110" height="100" rx="12" fill="url(#g-c2)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">50,000 Concurrent</text>
+            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTPS / WSS</text>
+        </g>
+        <g transform="translate(250, 50)">
+            <rect width="150" height="120" rx="12" fill="url(#g-lb)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">LOAD BALANCER</text>
+            <text x="75" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">L4 Maglev / L7 Envoy</text>
+            <text x="75" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consistent Hashing</text>
+            <text x="75" y="96" fill="#a7f3d0" font-size="8" text-anchor="middle">Active Health Checks</text>
+        </g>
+        <g transform="translate(530, 15)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 01 (Low CPU)</text>
+        </g>
+        <g transform="translate(530, 85)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 02 (Active)</text>
+        </g>
+        <g transform="translate(530, 155)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 03 (Auto-Scaled)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Dispatch Mechanism:</strong> Incoming TCP/HTTP sessions terminate at the load balancing layer, where weighted routing algorithms distribute traffic across healthy upstream backend workers while isolating failed instances.
+    </div>
+</div>
+
     <div><p>Load balancing is a crucial component of System Design, as it helps distribute incoming requests and traffic evenly across multiple servers. The main goal of load balancing is to ensure high availability, reliability, and performance by avoiding overloading a single server and avoiding downtime.</p>
 <p>Typically a load balancer sits between the client and the server accepting incoming network and application traffic and distributing the traffic across multiple backend servers using various algorithms. By balancing application requests across multiple servers, a load balancer reduces the load on individual servers and prevents any one server from becoming a single point of failure, thus improving overall application availability and responsiveness.</p></div><div><p>To utilize full scalability and redundancy, we can try to balance the load at each layer of the system. We can add LBs at three places:</p>
 <ul>
@@ -1277,11 +1326,60 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Uses of Load Balancing</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LOAD BALANCING PIPELINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Traffic Ingestion &amp; Health Probing</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 130 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 90 L 530 45" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 530 110" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 130 L 530 175" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="110" height="100" rx="12" fill="url(#g-c2)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">50,000 Concurrent</text>
+            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTPS / WSS</text>
+        </g>
+        <g transform="translate(250, 50)">
+            <rect width="150" height="120" rx="12" fill="url(#g-lb)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">LOAD BALANCER</text>
+            <text x="75" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">L4 Maglev / L7 Envoy</text>
+            <text x="75" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consistent Hashing</text>
+            <text x="75" y="96" fill="#a7f3d0" font-size="8" text-anchor="middle">Active Health Checks</text>
+        </g>
+        <g transform="translate(530, 15)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 01 (Low CPU)</text>
+        </g>
+        <g transform="translate(530, 85)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 02 (Active)</text>
+        </g>
+        <g transform="translate(530, 155)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 03 (Auto-Scaled)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Dispatch Mechanism:</strong> Incoming TCP/HTTP sessions terminate at the load balancing layer, where weighted routing algorithms distribute traffic across healthy upstream backend workers while isolating failed instances.
+    </div>
+</div>
+
     <div><p>Load balancing is a technique used to distribute workloads evenly across multiple computing resources, such as servers, network links, or other devices, in order to optimize resource utilization, minimize response time, and maximize throughput. This technique helps ensure that no single resource is overwhelmed, thus maintaining a high level of performance and reliability. Here are some common uses of load balancing:</p>
 <h2>1. Improving website performance</h2>
 <p>Load balancing can distribute incoming web traffic among multiple servers, reducing the load on individual servers and ensuring faster response times for end users.</p>
@@ -1317,11 +1415,60 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Load Balancer Types</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LOAD BALANCING PIPELINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Traffic Ingestion &amp; Health Probing</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 130 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 90 L 530 45" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 530 110" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 130 L 530 175" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="110" height="100" rx="12" fill="url(#g-c2)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">50,000 Concurrent</text>
+            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTPS / WSS</text>
+        </g>
+        <g transform="translate(250, 50)">
+            <rect width="150" height="120" rx="12" fill="url(#g-lb)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">LOAD BALANCER</text>
+            <text x="75" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">L4 Maglev / L7 Envoy</text>
+            <text x="75" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consistent Hashing</text>
+            <text x="75" y="96" fill="#a7f3d0" font-size="8" text-anchor="middle">Active Health Checks</text>
+        </g>
+        <g transform="translate(530, 15)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 01 (Low CPU)</text>
+        </g>
+        <g transform="translate(530, 85)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 02 (Active)</text>
+        </g>
+        <g transform="translate(530, 155)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 03 (Auto-Scaled)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Dispatch Mechanism:</strong> Incoming TCP/HTTP sessions terminate at the load balancing layer, where weighted routing algorithms distribute traffic across healthy upstream backend workers while isolating failed instances.
+    </div>
+</div>
+
     <div><p>A load balancing type refers to the method or approach used to distribute incoming network traffic across multiple servers or resources to ensure efficient utilization, improve overall system performance, and maintain high availability and reliability. Different load balancing types are designed to meet various requirements and can be implemented using hardware, software, or cloud-based solutions.</p>
 <p>Each load balancing type has its own set of advantages and disadvantages, making it suitable for specific scenarios and use cases. Some common load balancing types include hardware load balancing, software load balancing, cloud-based load balancing, DNS load balancing, and Layer 4 and Layer 7 load balancing. By understanding the different load balancing types and their characteristics, you can select the most appropriate solution for your specific needs and infrastructure.</p>
 <h2>1. Hardware Load Balancing</h2>
@@ -1448,11 +1595,60 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Stateless vs Stateful Load Balancing</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LOAD BALANCING PIPELINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Traffic Ingestion &amp; Health Probing</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 130 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 90 L 530 45" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 530 110" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 130 L 530 175" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="110" height="100" rx="12" fill="url(#g-c2)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">50,000 Concurrent</text>
+            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTPS / WSS</text>
+        </g>
+        <g transform="translate(250, 50)">
+            <rect width="150" height="120" rx="12" fill="url(#g-lb)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">LOAD BALANCER</text>
+            <text x="75" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">L4 Maglev / L7 Envoy</text>
+            <text x="75" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consistent Hashing</text>
+            <text x="75" y="96" fill="#a7f3d0" font-size="8" text-anchor="middle">Active Health Checks</text>
+        </g>
+        <g transform="translate(530, 15)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 01 (Low CPU)</text>
+        </g>
+        <g transform="translate(530, 85)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 02 (Active)</text>
+        </g>
+        <g transform="translate(530, 155)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 03 (Auto-Scaled)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Dispatch Mechanism:</strong> Incoming TCP/HTTP sessions terminate at the load balancing layer, where weighted routing algorithms distribute traffic across healthy upstream backend workers while isolating failed instances.
+    </div>
+</div>
+
     <div><p>Stateless and stateful load balancing represent two distinct methods for distributing traffic among multiple servers or resources.</p>
 <h2>Stateless Load Balancing</h2>
 <p>Stateless load balancers operate without maintaining any information about the clients&#x27; session or connection state. They make routing decisions based solely on the incoming request data, such as the client&#x27;s IP address, request URL, or other headers. Because stateless load balancers do not store session information, they can quickly and efficiently distribute incoming traffic without considering the clients&#x27; history or past interactions with the application.</p>
@@ -1474,11 +1670,52 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">High Availability and Fault Tolerance</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">High Availability and Fault Tolerance</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">High Availability and Fa</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><h2>Redundancy and failover strategies for load balancers</h2>
 <p>To ensure high availability and fault tolerance, load balancers should be designed and deployed with redundancy in mind. This means having multiple instances of load balancers that can take over if one fails. Redundancy can be achieved through several failover strategies:</p>
 <ul>
@@ -1508,11 +1745,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Scalability and Performance</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Scalability and Performance</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Scalability and Performa</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><h2>Horizontal and vertical scaling of load balancers</h2>
 <p>As traffic to an application increases, it is essential to ensure that the load balancer can handle the increased demand. There are two primary methods for scaling load balancers:</p>
 <ul>
@@ -1547,11 +1825,60 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Challenges of Load Balancers</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LOAD BALANCING PIPELINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Traffic Ingestion &amp; Health Probing</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 130 110 L 250 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 90 L 530 45" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 530 110" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 400 130 L 530 175" stroke="#a855f7" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="110" height="100" rx="12" fill="url(#g-c2)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENTS</text>
+            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">50,000 Concurrent</text>
+            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTPS / WSS</text>
+        </g>
+        <g transform="translate(250, 50)">
+            <rect width="150" height="120" rx="12" fill="url(#g-lb)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">LOAD BALANCER</text>
+            <text x="75" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">L4 Maglev / L7 Envoy</text>
+            <text x="75" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consistent Hashing</text>
+            <text x="75" y="96" fill="#a7f3d0" font-size="8" text-anchor="middle">Active Health Checks</text>
+        </g>
+        <g transform="translate(530, 15)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 01 (Low CPU)</text>
+        </g>
+        <g transform="translate(530, 85)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 02 (Active)</text>
+        </g>
+        <g transform="translate(530, 155)">
+            <rect width="250" height="50" rx="8" fill="url(#g-s)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="125" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">APP WORKER NODE 03 (Auto-Scaled)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Dispatch Mechanism:</strong> Incoming TCP/HTTP sessions terminate at the load balancing layer, where weighted routing algorithms distribute traffic across healthy upstream backend workers while isolating failed instances.
+    </div>
+</div>
+
     <div><p>Load balancers play a crucial role in distributing traffic and optimizing resource utilization in modern applications. However, they are not without potential challenges or problems. Some common issues associated with load balancers include:</p>
 <h2>1. Single Point of Failure</h2>
 <p>If not designed with redundancy and fault tolerance in mind, a load balancer can become a single point of failure in the system. If the load balancer experiences an outage, it could impact the entire application.</p>

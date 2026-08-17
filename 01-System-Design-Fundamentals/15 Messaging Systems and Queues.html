@@ -940,11 +940,57 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Kafka</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> DISTRIBUTED MESSAGE BROKER
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Asynchronous Ingestion &amp; Consumer Group Fanout</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-pub" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-kfk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sub" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 260 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 620 50" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 520 140 L 620 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-pub)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">PRODUCER API</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">Async Write Batching</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">acks=all (Durability)</text>
+        </g>
+        <g transform="translate(260, 45)">
+            <rect width="260" height="130" rx="12" fill="url(#g-kfk)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="130" y="35" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">KAFKA / RABBITMQ CLUSTER</text>
+            <text x="130" y="60" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Partition 00 · [Msg 01 | Msg 02 | Msg 03]</text>
+            <text x="130" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Partition 01 · [Msg 04 | Msg 05 | Msg 06]</text>
+            <text x="130" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sequential Disk Append Log (Zero-Copy)</text>
+        </g>
+        <g transform="translate(620, 20)">
+            <rect width="170" height="70" rx="10" fill="url(#g-sub)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="85" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">CONSUMER GROUP A</text>
+            <text x="85" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Realtime Analytics Worker</text>
+        </g>
+        <g transform="translate(620, 130)">
+            <rect width="170" height="70" rx="10" fill="url(#g-sub)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="85" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">CONSUMER GROUP B</text>
+            <text x="85" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Notification Dispatcher</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Decoupled Processing:</strong> Producers publish events to append-only partitioned commit logs at microsecond speed, allowing competing consumer groups to process events at their own pace without dropping traffic during peak load spikes.
+    </div>
+</div>
+
     <div><h2>What is Kafka?</h2>
 <p>Apache Kafka is an open-source <strong>publish-subscribe</strong>-based messaging system. It is <strong>distributed</strong>, <strong>durable</strong>, <strong>fault-tolerant</strong>, and <strong>highly scalable</strong> by design. Fundamentally, it is a system that takes streams of messages from applications known as producers, stores them reliably on a central cluster (containing a set of brokers), and allows those messages to be received by applications (known as consumers) that process the messages.</p></div><div><h2>Background</h2>
 <p>Kafka was created at LinkedIn around 2010 to track various events, such as page views, messages from the messaging system, and logs from various services. Later, it was made open-source and developed into a comprehensive system which is used for:</p>
@@ -1158,11 +1204,57 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Popular Messaging Queue Systems</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> DISTRIBUTED MESSAGE BROKER
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Asynchronous Ingestion &amp; Consumer Group Fanout</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-pub" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-kfk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sub" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 260 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 620 50" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 520 140 L 620 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-pub)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">PRODUCER API</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">Async Write Batching</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">acks=all (Durability)</text>
+        </g>
+        <g transform="translate(260, 45)">
+            <rect width="260" height="130" rx="12" fill="url(#g-kfk)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="130" y="35" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">KAFKA / RABBITMQ CLUSTER</text>
+            <text x="130" y="60" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Partition 00 · [Msg 01 | Msg 02 | Msg 03]</text>
+            <text x="130" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Partition 01 · [Msg 04 | Msg 05 | Msg 06]</text>
+            <text x="130" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sequential Disk Append Log (Zero-Copy)</text>
+        </g>
+        <g transform="translate(620, 20)">
+            <rect width="170" height="70" rx="10" fill="url(#g-sub)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="85" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">CONSUMER GROUP A</text>
+            <text x="85" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Realtime Analytics Worker</text>
+        </g>
+        <g transform="translate(620, 130)">
+            <rect width="170" height="70" rx="10" fill="url(#g-sub)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="85" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">CONSUMER GROUP B</text>
+            <text x="85" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Notification Dispatcher</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Decoupled Processing:</strong> Producers publish events to append-only partitioned commit logs at microsecond speed, allowing competing consumer groups to process events at their own pace without dropping traffic during peak load spikes.
+    </div>
+</div>
+
     <div><p>In this section, we will discuss some popular messaging queue systems and provide a brief overview of their key features and use cases. The following messaging queue systems have gained popularity due to their robustness, scalability, and performance:</p>
 <h2>a. RabbitMQ</h2>
 <p>RabbitMQ is an open-source message broker that provides support for various messaging patterns, including publish-subscribe, request-reply, and point-to-point communication. Key features of RabbitMQ include:</p>
@@ -1199,11 +1291,57 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">RabbitMQ vs Kafka vs ActiveMQ</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> DISTRIBUTED MESSAGE BROKER
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Asynchronous Ingestion &amp; Consumer Group Fanout</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-pub" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-kfk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sub" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 260 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 620 50" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 520 140 L 620 170" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-pub)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">PRODUCER API</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">Async Write Batching</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">acks=all (Durability)</text>
+        </g>
+        <g transform="translate(260, 45)">
+            <rect width="260" height="130" rx="12" fill="url(#g-kfk)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="130" y="35" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">KAFKA / RABBITMQ CLUSTER</text>
+            <text x="130" y="60" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Partition 00 · [Msg 01 | Msg 02 | Msg 03]</text>
+            <text x="130" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Partition 01 · [Msg 04 | Msg 05 | Msg 06]</text>
+            <text x="130" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sequential Disk Append Log (Zero-Copy)</text>
+        </g>
+        <g transform="translate(620, 20)">
+            <rect width="170" height="70" rx="10" fill="url(#g-sub)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="85" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">CONSUMER GROUP A</text>
+            <text x="85" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Realtime Analytics Worker</text>
+        </g>
+        <g transform="translate(620, 130)">
+            <rect width="170" height="70" rx="10" fill="url(#g-sub)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="85" y="32" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">CONSUMER GROUP B</text>
+            <text x="85" y="52" fill="#d1fae5" font-size="8.5" text-anchor="middle">Notification Dispatcher</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Decoupled Processing:</strong> Producers publish events to append-only partitioned commit logs at microsecond speed, allowing competing consumer groups to process events at their own pace without dropping traffic during peak load spikes.
+    </div>
+</div>
+
     <div><p>Here are the top differences between RabbitMQ, Kafka, and ActiveMQ:</p>
 <ol>
 <li>
@@ -1242,11 +1380,52 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Scalability and Performance (2)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Scalability and Performance (2)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Scalability and Performa</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>Scalability and performance are critical aspects of designing messaging systems in distributed environments. Ensuring that a messaging system can handle a growing number of messages and maintain an acceptable level of performance is crucial for its success. In this section, we will explore different concepts related to scalability and performance for messaging systems, along with examples to illustrate their practical application.</p>
 <h2>a. Partitioning</h2>
 <p>Partitioning is the process of dividing a data set into smaller, manageable pieces called partitions. This approach is used in messaging systems to distribute messages evenly among multiple nodes, ensuring that the system can scale horizontally. For example, Apache Kafka uses partitions to divide a topic&#x27;s messages across multiple brokers, allowing the system to handle large amounts of data and maintain high throughput.</p>
@@ -1260,11 +1439,52 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">What is a Distributed File System</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">What is a Distributed File System</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">What is a Distributed Fi</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>Distributed File Systems are a type of file system that manage the storage and retrieval of data across multiple servers and locations, making the distributed nature of the storage transparent to the user. These systems are designed to provide reliable, efficient access to files over a network, typically in a large-scale environment.</p>
 <h2>Key Characteristics</h2>
 <h3>Data Distribution</h3>
@@ -1332,11 +1552,52 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Architecture of a Distributed File System</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Architecture of a Distributed File System</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Architecture of a Distri</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>The internal architecture of a distributed file system (DFS) is designed to manage data across a network of machines efficiently. While the specific architecture can vary depending on the particular DFS, there are common components and principles that many distributed file systems share.</p>
 <h2>Key Components of a Distributed File System</h2>
 <h3>1. Client Interface</h3>

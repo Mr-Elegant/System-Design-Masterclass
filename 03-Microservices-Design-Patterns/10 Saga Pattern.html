@@ -864,11 +864,54 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Saga Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h1>The Saga Pattern: Mastering Transactions in a Microservices World</h1>
 <p>Have you ever been intrigued by the intricacies of transaction management in distributed systems? Ever wondered how complex transactions are handled so seamlessly in the world of microservices? In this chapter, we&#x27;ll try to find answers to these questions. We&#x27;ll embark on a journey to unravel the mysteries of the Saga Pattern - an ingenious solution to managing transactions in the world of distributed systems.</p>
 <p>Before diving in, let&#x27;s ask ourselves a simple question - why should we care about transactions in distributed systems? Whether you&#x27;re an experienced software engineer, an up-and-coming developer, or a tech enthusiast, the principles and practices of transaction management are crucial to understand. Efficient transaction management is the heartbeat of any system, ensuring that data remains consistent and operations run smoothly. But things get complicated when we move from a single, unified system to a distributed one. That&#x27;s where our protagonist, the Saga Pattern, enters the scene.</p>
@@ -887,11 +930,54 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Traditional Transaction Models</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Diving deeper into the transactional labyrinth of distributed systems, we first need to look back and understand the roots of the problem. This journey takes us back to the traditional transaction models that were the norm in the era of monolithic applications.</p>
 <h2>A Trip Down Memory Lane: Traditional Transaction Models</h2>
 <p>In the world of monolithic systems, transactions were simple. Recall the e-commerce checkout example we discussed earlier. In a monolithic application, this transaction would usually be handled using ACID transactions. ACID, standing for Atomicity, Consistency, Isolation, and Durability, is a set of properties that guarantee that database transactions are processed reliably.</p>
@@ -914,11 +1000,54 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Saga Pattern A Solution</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>As we&#x27;ve seen, the challenge is real, and the need for a solution is urgent. Enter the Saga Pattern, a design pattern that has proven to be a highly effective way to manage transactions in the complex landscape of distributed systems.</p>
 <h2>A New Hope: Introduction to the Saga Pattern</h2>
 <p>In the simplest terms, a saga is a sequence of local transactions. Each local transaction updates the database and publishes an event to trigger the next local transaction in the saga. If a local transaction fails because it violates a business rule, the saga executes a series of compensating transactions that undo the changes that were made by the preceding local transactions.</p>
@@ -949,11 +1078,54 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Saga Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>We&#x27;ve discussed what the Saga Pattern is and why it&#x27;s essential in distributed systems. We&#x27;ve also seen how the pattern works in general. Now, let&#x27;s get under the hood and understand the architecture that powers this ingenious pattern. But before we begin, let&#x27;s recall that in the world of distributed systems, the Saga Pattern is our &quot;power line&quot; — it&#x27;s the element that ensures transactions across different services are consistent and reliable. So, how does it do it?</p>
 <h2>The Backbone: Local Transactions</h2>
 <p>A saga is composed of multiple local transactions. Each of these transactions is executed within a single service and its corresponding database. These local transactions form the backbone of the Saga Pattern, akin to the individual sections of a power line. Each local transaction carries its own responsibilities but when strung together, they work towards a common objective — maintaining data consistency across the system.</p>
@@ -978,11 +1150,54 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">The Inner Workings of the Saga Pattern</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Now that we&#x27;ve explored the architecture of the Saga Pattern, let&#x27;s delve deeper into how the magic happens, how this pattern manages to maintain data consistency in complex distributed systems. This section will be your &quot;behind the scenes&quot; tour, revealing the inner workings of the Saga Pattern.</p>
 <h2>A Saga&#x27;s Life Journey: The Sequence of Transactions</h2>
 <p>A saga is essentially a sequence of local transactions. Each transaction is like a step in a journey. But remember, the Saga Pattern is not just about taking those steps; it&#x27;s also about knowing when to step back.</p>
@@ -1009,11 +1224,54 @@
 </section>
 
 <section id="chapter-06" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Saga Pattern A Example</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>Understanding the concept is great, but seeing it in action is even better! Let&#x27;s now illustrate the Saga Pattern using Java. We will create a simple online shopping scenario, involving two services: the Order Service and the Inventory Service. Ready to turn theory into code? Let&#x27;s go!</p>
 <h2>Setting the Stage: The Scenario</h2>
 <p>Picture yourself shopping online. You add items to your cart and proceed to checkout, creating an order. The Inventory Service then checks if the items are available. If yes, it updates the inventory, and the order is completed. If not, the order is cancelled. Seems simple, right? But under the hood, it&#x27;s a perfect use case for the Saga Pattern.</p>
@@ -1078,11 +1336,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Performance Implications</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Performance Implications</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Performance Implications</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><h1>Issues, Special Considerations, and Performance Implications</h1>
 <p>As we saw in our Java example, the Saga Pattern elegantly tackles the problem of data consistency in microservices. But, just like any other pattern or technology, it&#x27;s not without its issues and special considerations. You&#x27;re curious about what these are, right? So, let&#x27;s dive in!</p>
 <h2>Issue 1: Complexity</h2>
@@ -1110,11 +1409,52 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">System Design Examples</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">System Design Examples</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">System Design Examples</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>In the vast realm of distributed systems, the Saga Pattern emerges as a knight in shining armor, resolving consistency issues and ensuring successful transactions. But where is this knight most effective? Which battles are best fought using this strategy? And how does it look like in a real-world battlefield? To answer these, we will delve into the use cases and system design examples where the Saga Pattern truly shines.</p>
 <h2>Use Case 1: E-commerce Systems</h2>
 <p>Consider an e-commerce platform, a bustling marketplace brimming with transactions. An order placement in this system is a perfect example of a distributed transaction. What does it entail?</p>
@@ -1139,11 +1479,52 @@
 </section>
 
 <section id="chapter-09" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Conclusion</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Conclusion</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Conclusion</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+    </div>
+</div>
+
     <div><div><div><div><div><div><div><div><p>In the grand scheme of software architecture, the Saga Pattern stands as an innovative and robust approach to handle distributed transactions. By this point in our journey, we have not only discovered the reasons behind its conception but also examined its inner workings and witnessed its implementation in real-world scenarios. However, the beauty of learning lies in revisiting the crux of our newfound knowledge. Let&#x27;s embark on a recap of our journey and reflect upon the essence of the Saga Pattern.</p>
 <h2>Revisiting The Saga Pattern</h2>
 <p>We began our exploration with an understanding of traditional transaction models and their limitations in distributed systems. Remember how our knight, the Saga Pattern, came into existence to challenge the reign of these monolithic systems? By allowing us to perform a series of local transactions, each with their own compensation transactions, Saga gave us a newfound way to ensure consistency across microservices. But, was this transformation seamless?</p>
@@ -1171,11 +1552,54 @@
 </section>
 
 <section id="chapter-10" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">Transactional Outbox &amp;amp;amp;amp;amp;amp; Change Data Capture (CDC)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> DISTRIBUTED SAGA TRANSACTION ORCHESTRATOR
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Forward Execution &amp; Compensating Rollback Flow</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-orch" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-s3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 75 L 360 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 360 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 145 L 360 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="14" fill="url(#g-orch)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="38" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SAGA ORCHESTRATOR</text>
+            <text x="100" y="62" fill="#e9d5ff" font-size="9" text-anchor="middle">Temporal / Step Functions</text>
+            <text x="100" y="80" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">State Machine Engine</text>
+            <text x="100" y="98" fill="#fca5a5" font-size="8" text-anchor="middle">Triggers Compensating Tx</text>
+        </g>
+        <g transform="translate(360, 15)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 1: ORDER SERVICE &rarr; CreatePendingOrder() [ACID Local]</text>
+        </g>
+        <g transform="translate(360, 85)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 2: PAYMENT SERVICE &rarr; ChargeCard() [Local Tx Success]</text>
+        </g>
+        <g transform="translate(360, 155)">
+            <rect width="420" height="50" rx="8" fill="url(#g-s3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="210" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">STEP 3: INVENTORY SERVICE &rarr; ReserveStock() [Fail &rarr; Rollback 1 &amp; 2]</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Compensating Mechanics:</strong> When a distributed transaction step fails (e.g. inventory out of stock), the orchestrator executes reverse compensating transactions in exact reverse order (RefundPayment &rarr; CancelOrder) ensuring eventual consistency.
+    </div>
+</div>
+
     <h2>1. The Problem: The Dual-Write Vulnerability</h2>
             <p>In a microservices architecture, a business operation often requires updating a local database and publishing a domain event to a message broker (e.g., Apache Kafka, RabbitMQ). Performing these operations sequentially in application code creates a critical reliability flaw known as the <strong>Dual-Write Problem</strong>.</p>
             

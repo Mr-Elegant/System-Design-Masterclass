@@ -947,11 +947,52 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Caching</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><h2>What is Caching?</h2>
 <p>The cache is a high-speed storage layer that sits between the application and the original source of the data, such as a database, a file system, or a remote web service. When data is requested by the application, it is first checked in the cache. If the data is found in the cache, it is returned to the application. If the data is not found in the cache, it is retrieved from its original source, stored in the cache for future use, and returned to the application.</p>
 <p>Caching can be used for various types of data, such as web pages, database queries, API responses, images, and videos. The goal of caching is to reduce the number of times data needs to be fetched from its original source, which can result in faster processing and reduced latency.</p>
@@ -966,11 +1007,52 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Why is Caching Important</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>Caching plays a critical role in improving system performance and user experience in software engineering. By storing frequently accessed data in a cache, applications can reduce the response time and latency of operations, resulting in faster and more efficient processing. Here are some reasons why caching is important:</p>
 <h2>1. Reduced latency</h2>
 <p>By serving data from the cache, which is typically faster to access than the original data source, caching can significantly reduce the time it takes to retrieve the data.</p>
@@ -986,11 +1068,52 @@
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Types of Caching</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>Caching can be implemented in various ways, depending on the specific use case and the type of data being cached. Here are some of the most common types of caching:</p></div><div><h2>1. In-memory caching</h2>
 <p>In-memory caching stores data in the main memory of the computer, which is faster to access than disk storage. In-memory caching is useful for frequently accessed data that can fit into the available memory. This type of caching is commonly used for caching API responses, session data, and web page fragments. To implement in-memory caching, software engineers can use various techniques, including using a cache library like Memcached or Redis, or implementing custom caching logic within the application code.</p>
 <h2>2. Disk caching</h2>
@@ -1009,11 +1132,52 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Cache Replacement Policies</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>When implementing caching, it’s important to have a cache replacement policy to determine which items in the cache should be removed when the cache becomes full. Here are some of the most common cache replacement policies:</p>
 <h2>1. Least Recently Used (LRU)</h2>
 <p>LRU is a cache replacement policy that removes the least recently used item from the cache when it becomes full. This policy assumes that items that have been accessed more recently are more likely to be accessed again in the future.</p>
@@ -1029,11 +1193,52 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Cache Invalidation</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><h2>Cache Invalidation Strategies</h2>
 <p>While caching can significantly improve performance, we must ensure that the data in the cache is still correct—otherwise, we serve out-of-date (stale) information. This is where <strong>cache invalidation</strong> comes in.</p>
 <ol>
@@ -1198,11 +1403,52 @@
 </section>
 
 <section id="chapter-07" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Cache Coherence and Consistency Models</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>Cache coherence and consistency models are essential concepts in the context of caching, particularly in distributed systems or multi-core processors. These models ensure that data remains accurate and up-to-date across multiple caches or processing units.</p>
 <h2>Cache Coherence</h2>
 <p>Cache coherence is a property of multi-core processors or distributed systems that ensures all processors or nodes see the same view of shared data. In a system with multiple caches, each cache may store a local copy of the shared data. When one cache modifies its copy, it is essential that all other caches are aware of the change to maintain a consistent view of the data.</p>
@@ -1236,11 +1482,52 @@
 </section>
 
 <section id="chapter-08" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Caching Challenges</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>Cache-related problems are a set of challenges that arise when implementing and managing caching systems in software applications. Here are the top cache-related problems and their possible workarounds:</p>
 <h2>1. Thundering Herd</h2>
 <p>The thundering herd problem occurs when a popular piece of data expires from the cache, leading to a sudden surge in requests to the origin server to fetch the missing data. This can cause excessive load on the origin server and degrade performance. Solutions to the thundering herd problem include using staggered expiration times, implementing a cache lock, or using background updates to refresh the cache before the data expires.</p>
@@ -1260,11 +1547,52 @@
 </section>
 
 <section id="chapter-09" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Cache Performance Metrics</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>When implementing caching, it’s important to measure the performance of the cache to ensure that it is effective in reducing latency and improving system performance. Here are some of the most common cache performance metrics:</p>
 <h2>Hit rate</h2>
 <p>The hit rate is the percentage of requests that are served by the cache without accessing the original source. A high hit rate indicates that the cache is effective in reducing the number of requests to the original source, while a low hit rate indicates that the cache may not be providing significant performance benefits.</p>
@@ -1278,11 +1606,52 @@
 </section>
 
 <section id="chapter-10" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">What is CDN</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>A Content Delivery Network (CDN) is a distributed network of servers strategically located across various geographical locations to deliver web content, such as images, videos, and other static assets, more efficiently to users. The primary purpose of a CDN is to reduce latency and improve the overall performance of web applications by serving content from the server nearest to the user. CDNs can also help improve reliability, availability, and security of web applications.</p>
 <h2>How CDNs work?</h2>
 <p>When a user requests content from a web application, the request is routed to the nearest CDN server (also known as an edge server) based on factors such as network latency and server load. The edge server then checks if the requested content is already cached. If it is, the content is served directly from the cache; otherwise, the edge server fetches the content from the origin server, caches it, and serves it to the user. Subsequent requests for the same content can then be served from the cache, reducing latency and offloading traffic from the origin server.</p></div><div><h2>Key terminology and concepts</h2>
@@ -1305,11 +1674,52 @@
 </section>
 
 <section id="chapter-11" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">Origin Server vs Edge Server</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Origin Server vs Edge Server</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Origin Server vs Edge Se</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <div><p>Origin servers and edge servers are key components in the delivery of web content, especially in content delivery networks (CDNs). They serve different roles in ensuring that users access web content quickly and efficiently. Understanding the distinction between the two is crucial in the context of web architecture and CDN functionality.</p>
 <h2>Origin Server</h2>
 <p>The origin server is the primary source of the original, unmodified content. It hosts the website&#x27;s content, including HTML files, images, stylesheets, JavaScript, videos, and other digital assets. When a user requests a web resource (like a webpage), the request is directed to the origin server if the content is not cached elsewhere.</p>
@@ -1335,11 +1745,52 @@
 </section>
 
 <section id="chapter-12" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">CDN Architecture</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><h2>Points of Presence (PoPs) and Edge Servers</h2>
 <p>A Point of Presence (PoP) is a physical location containing a group of edge servers within the CDN&#x27;s distributed network. PoPs are strategically situated across various geographical regions to minimize the latency experienced by users when requesting content. Each PoP typically consists of multiple edge servers to provide redundancy, fault tolerance, and load balancing.</p>
 <p>Edge servers are the servers within a PoP that store cached content and serve it to users. When a user makes a request for content, the request is directed to the nearest edge server, which either serves the content from its cache or fetches it from the origin server and then caches it for future requests. By serving content from the geographically nearest server, CDNs can significantly reduce latency and improve the overall user experience.</p>
@@ -1391,11 +1842,52 @@
 </section>
 
 <section id="chapter-13" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">13</span>
     <h1 class="chapter-title">Push CDN vs Pull CDN</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <div><p>CDNs can be categorized into two types: Pull CDNs and Push CDNs. Both types aim to deliver content efficiently, but they differ in how they handle and distribute the content.</p>
 <h2>Pull CDN</h2>
 <p>In a Pull CDN, the content is not stored on the CDN&#x27;s servers by default. Instead, the CDN &quot;pulls&quot; the content from the origin server when a user requests it for the first time. Once the content is cached on the CDN&#x27;s edge server, subsequent requests for the same content will be served directly from the CDN, reducing the load on the origin server.</p>

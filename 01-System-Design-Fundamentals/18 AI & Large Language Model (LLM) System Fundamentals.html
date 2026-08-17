@@ -940,11 +940,52 @@ class BlockTableManager:
 </section>
 
 <section id="chapter-03" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Speculative Decoding &amp;amp;amp;amp; Model Quantization</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> ARCHITECTURAL FLOW
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Speculative Decoding &amp;amp;amp;amp; Model Quantization</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-node1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-node2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-node3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-node1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / INGRESS</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Request Payload</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-node2)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Speculative Decoding &am</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Distributed Logic &amp; Policy</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Consensus &amp; State Validation</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Fault-Tolerant Execution</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-node3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DATA / STORAGE TIER</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">State Replication &amp; Log</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Quorum Read/Write</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
+        <strong>Component Interaction:</strong> High-throughput request processing pipeline ensuring linear scalability, high availability, and sub-millisecond data delivery across multi-region infrastructure.
+    </div>
+</div>
+
     <h2>1. Speculative Decoding Rejection Sampling Algorithm</h2>
     <p>Speculative decoding guarantees <strong>100% mathematical output fidelity</strong> (identical probability distribution as the target model) while breaking the memory bandwidth wall.</p>
 
@@ -991,11 +1032,52 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Semantic Vector Caching &amp;amp;amp;amp; Prompt Engineering Systems</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span> CACHING TOPOLOGY &amp; INVALIDATION
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Cache-Aside vs Write-Through Strategy</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-app" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dc2626"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
+            <linearGradient id="g-db" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 200 80 L 370 80" stroke="#ef4444" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 200 140 L 590 140" stroke="#f59e0b" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 520 80 L 590 80" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="170" height="120" rx="12" fill="url(#g-app)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="85" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">APPLICATION SERVICE</text>
+            <text x="85" y="70" fill="#bae6fd" font-size="9" text-anchor="middle">1. Check Cache First</text>
+            <text x="85" y="90" fill="#fef08a" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cache Miss &rarr; DB Query</text>
+        </g>
+        <g transform="translate(370, 40)">
+            <rect width="150" height="90" rx="12" fill="url(#g-red)" stroke="#f87171" stroke-width="1.5"/>
+            <text x="75" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">REDIS / MEMCACHED</text>
+            <text x="75" y="58" fill="#fecaca" font-size="9" text-anchor="middle">In-Memory RAM (0.2ms)</text>
+            <text x="75" y="75" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">LRU / LFU Eviction</text>
+        </g>
+        <g transform="translate(590, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-db)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PRIMARY DATABASE</text>
+            <text x="90" y="70" fill="#fef3c7" font-size="9" text-anchor="middle">Persistent Disk Storage</text>
+            <text x="90" y="90" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">B-Tree Indexes / ACID</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #f59e0b;">
+        <strong>Cache-Aside Flow:</strong> App reads cache first &rarr; on cache hit, returns data in &lt;1ms. On cache miss, reads primary DB, populates cache with TTL, and returns payload to avoid subsequent database load.
+    </div>
+</div>
+
     <h2>1. Enterprise Semantic Caching Architecture (Redis Vector Cache)</h2>
     <p>Semantic caching saves over 40% of LLM compute costs by returning cached responses for semantically identical queries.</p>
 

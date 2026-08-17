@@ -6719,11 +6719,61 @@ class LikesCounterAggregator:
 </section>
 
 <section id="chapter-13" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">13</span>
     <h1 class="chapter-title">Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        </g>
+        <g transform="translate(230, 45)">
+            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
+            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
+            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
+            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        </g>
+        <g transform="translate(460, 45)">
+            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
+            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
+            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
+            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        </g>
+        <g transform="translate(680, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
+            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
+            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+    </div>
+</div>
+
     <h2>1. What is a Live Video Streaming Platform?</h2>
     <p>A distributed live video streaming platform (e.g., Twitch, YouTube Live, TikTok Live) ingests high-bitrate live video feeds from hundreds of thousands of broadcasters over RTMP/WebRTC, transcodes streams in real time into multiple Adaptive Bitrate (ABR) renditions, and distributes low-latency video chunks (HLS/DASH/CMAF) to millions of concurrent viewers globally with sub-3-second glass-to-glass latency.</p>
 
@@ -6939,11 +6989,61 @@ class HNSWVectorSearchReranker:
 </section>
 
 <section id="chapter-15" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">15</span>
     <h1 class="chapter-title">Designing a Global Distributed Object Storage Service (AWS S3 Architecture)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Global Distributed Object Storage Service (AWS S3 Architecture)</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        </g>
+        <g transform="translate(230, 45)">
+            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
+            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
+            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
+            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        </g>
+        <g transform="translate(460, 45)">
+            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
+            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
+            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
+            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        </g>
+        <g transform="translate(680, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
+            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
+            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+    </div>
+</div>
+
     <h2>1. What is a Distributed Object Storage System?</h2>
     <p>A distributed object storage system (e.g., AWS S3, Google Cloud Storage, MinIO) stores trillions of immutable binary blobs (images, backups, datasets) with 99.999999999% (11 9's) durability. The architecture decouples high-speed metadata indexing (LSM-trees / Spanner) from raw chunk storage nodes utilizing Reed-Solomon Erasure Coding.</p>
 
@@ -6986,11 +7086,61 @@ class StorageNodeScrubber:
 </section>
 
 <section id="chapter-16" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">16</span>
     <h1 class="chapter-title">Designing a Real-Time Collaborative Canvas &amp;amp;amp; Document Editor (Figma / Google Docs)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Real-Time Collaborative Canvas &amp;amp;amp; Document Editor (Figma / Google Docs)</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        </g>
+        <g transform="translate(230, 45)">
+            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
+            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
+            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
+            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        </g>
+        <g transform="translate(460, 45)">
+            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
+            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
+            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
+            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        </g>
+        <g transform="translate(680, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
+            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
+            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+    </div>
+</div>
+
     <h2>1. What is a Real-Time Collaborative Canvas?</h2>
     <p>A real-time collaborative canvas (e.g., Figma, Miro, Google Docs) allows dozens of concurrent designers to edit vector shapes, move layout layers, and manipulate text frames simultaneously with sub-30ms local feedback and zero conflict merge collisions.</p>
 
@@ -7029,11 +7179,61 @@ class CanvasShapeCRDT:
 </section>
 
 <section id="chapter-17" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">17</span>
     <h1 class="chapter-title">Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        </g>
+        <g transform="translate(230, 45)">
+            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
+            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
+            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
+            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        </g>
+        <g transform="translate(460, 45)">
+            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
+            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
+            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
+            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        </g>
+        <g transform="translate(680, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
+            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
+            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+    </div>
+</div>
+
     <h2>1. What is a Distributed Time-Series Database?</h2>
     <p>A distributed Time-Series Database (TSDB) ingests billions of timestamped floating-point metric points per second (CPU usage, memory, request latencies) from millions of servers, compacting historical data using Facebook Gorilla Float XOR compression.</p>
 
@@ -7070,11 +7270,61 @@ class GorillaTimestampCompressor:
 </section>
 
 <section id="chapter-18" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">18</span>
     <h1 class="chapter-title">Designing an Event-Sourced Banking &amp;amp;amp; Financial Ledger Platform (Stripe)</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Designing an Event-Sourced Banking &amp;amp;amp; Financial Ledger Platform (Stripe)</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(20, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
+            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
+            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        </g>
+        <g transform="translate(230, 45)">
+            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
+            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
+            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
+            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        </g>
+        <g transform="translate(460, 45)">
+            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
+            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
+            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
+            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        </g>
+        <g transform="translate(680, 55)">
+            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
+            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
+            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+    </div>
+</div>
+
     <h2>1. What is an Event-Sourced Banking Ledger?</h2>
     <p>A financial banking ledger (e.g., Stripe Ledger, Modern Treasury) records immutable money movements across millions of accounts using <strong>Double-Entry Bookkeeping</strong>. In double-entry accounting, money is never created or destroyed: every financial transaction must contain equal and balancing Debits and Credits ($\sum 	ext{Debits} = \sum 	ext{Credits}$).</p>
 

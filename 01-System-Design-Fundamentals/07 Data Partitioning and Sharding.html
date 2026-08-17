@@ -938,11 +938,54 @@
         </div>
 
 <section id="chapter-01" class="chapter-section active">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Data Partitioning</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>Data partitioning is a technique used in distributed systems and databases to divide a large dataset into smaller, more manageable parts, referred to as partitions. Each partition is independent and contains a subset of the overall data.</p>
 <p>In data partitioning, the dataset is typically partitioned based on a certain criterion, such as data range, data size, or data type. Each partition is then assigned to a separate processing node, which can perform operations on its assigned data subset independently of the others.</p>
 <p>Data partitioning can help improve the performance and scalability of large-scale data processing applications, as it allows processing to be distributed across multiple nodes, minimizing data transfer and reducing processing time. Secondly, by distributing the data across multiple nodes or servers, the workload can be balanced, and the system can handle more requests and process data more efficiently.</p>
@@ -962,11 +1005,54 @@
 </section>
 
 <section id="chapter-02" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Partitioning Methods</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>Designing an effective partitioning scheme can be challenging and requires careful consideration of the application requirements and the characteristics of the data being processed. Below are three of the most popular schemes used by various large-scale applications.</p>
 <h2>a. Horizontal Partitioning</h2>
 <p>Also known as sharding, horizontal data partitioning involves dividing a database table into multiple partitions or shards, with each partition containing a subset of rows. Each shard is typically assigned to a different database server, which allows for parallel processing and faster query execution times.</p>
@@ -1084,11 +1170,54 @@
 </section>
 
 <section id="chapter-04" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Benefits of Data Partitioning</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>Data partitioning offers a wide range of benefits that can significantly improve the performance, scalability, and resilience of data-driven systems. By understanding the various advantages and their real-world applications, we can effectively implement data partitioning strategies tailored to our specific needs, resulting in more efficient and reliable data management. Here are the top benefits of data partitioning:</p>
 <h2>1. Improved Query Performance</h2>
 <p>Data partitioning can significantly improve query performance by reducing the amount of data that needs to be processed for a given query. When data is partitioned, queries can be targeted at specific partitions, enabling the system to retrieve only the necessary data and ignore irrelevant partitions.</p>
@@ -1124,11 +1253,54 @@
 </section>
 
 <section id="chapter-05" class="chapter-section">
-  <div class="chapter-header">
+<div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Common Problems Associated with Data Partitioning</h1>
   </div>
   <div class="chapter-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> SHARDING &amp; PARTITIONING ENGINE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Consistent Hashing &amp; Virtual VNode Ring</span>
+    </div>
+    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-router" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sh1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sh2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sh3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 230 110 L 370 45" stroke="#38bdf8" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 110" stroke="#10b981" stroke-width="2" fill="none" class="flow-line-fast"/>
+        <path d="M 230 110 L 370 175" stroke="#fbbf24" stroke-width="2" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 45)">
+            <rect width="200" height="130" rx="12" fill="url(#g-router)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="100" y="40" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD ROUTER</text>
+            <text x="100" y="65" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Hash(Key) % Total Shards</text>
+            <text x="100" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">MurmurHash3 / MD5</text>
+            <text x="100" y="105" fill="#a7f3d0" font-size="8.5" text-anchor="middle">256 Virtual Nodes / Ring</text>
+        </g>
+        <g transform="translate(370, 15)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh1)" stroke="#38bdf8" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 01 &rarr; User ID [0 - 100M] (PostgreSQL Partition A)</text>
+        </g>
+        <g transform="translate(370, 85)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh2)" stroke="#34d399" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 02 &rarr; User ID [100M - 200M] (PostgreSQL Partition B)</text>
+        </g>
+        <g transform="translate(370, 155)">
+            <rect width="400" height="50" rx="8" fill="url(#g-sh3)" stroke="#fbbf24" stroke-width="1.2"/>
+            <text x="200" y="28" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">SHARD 03 &rarr; User ID [200M - 300M] (PostgreSQL Partition C)</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
+        <strong>Partitioning Tradeoff:</strong> Horizontal sharding partitions writes evenly across independent physical nodes to avoid single-master write bottlenecks, using consistent hashing to limit data rebalancing during node scaling.
+    </div>
+</div>
+
     <div><p>While data partitioning offers numerous benefits, it also comes with some disadvantages and challenges that organizations must consider when implementing partitioning strategies. Some of these drawbacks include:</p>
 <h2>1. Complexity</h2>
 <p>Data partitioning adds complexity to system architecture, design, and management. Organizations must carefully plan and implement partitioning strategies, taking into account the unique requirements of their data and systems. This added complexity can lead to increased development and maintenance efforts, as well as a steeper learning curve for team members.</p>

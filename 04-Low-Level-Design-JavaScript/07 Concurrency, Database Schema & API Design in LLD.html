@@ -479,11 +479,52 @@
 
   <div class="content">
     <div class="section" id="chapter-01">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">01</span>
     <h2 class="section-title">Concurrency Primitives (Mutex, Deadlocks &amp; Optimistic Locking)</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">Concurrency Primitives (Mutex, Deadlocks &amp; Optimistic Locking)</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">Concurrency</span><span class="tag blue">Mutex</span><span class="tag red">Deadlocks</span><span class="tag purple">DB Locking</span></div>
                 <p>Race conditions happen when multiple concurrent async workers mutate shared memory state simultaneously. A <strong>Mutex</strong> guarantees mutual exclusion during state mutation.</p>
 
@@ -538,11 +579,52 @@ Promise.all([withdraw("A", 80), withdraw("B", 80)]);</pre></div>
 </div>
 
 <div class="section" id="chapter-02">
-  <div class="section-header">
+<div class="section-header">
     <span class="section-num">02</span>
     <h2 class="section-title">REST API Design &amp; X-Idempotency-Key Middleware</h2>
   </div>
   <div class="section-body">
+    <div class="diagram-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> LLD MACHINE CODING ARCHITECTURE
+        </span>
+        <span style="font-size:0.75rem; color:#94a3b8;">REST API Design &amp; X-Idempotency-Key Middleware</span>
+    </div>
+    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <defs>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-mgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-ent" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        
+        <g transform="translate(30, 50)">
+            <rect width="150" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT / CONTROLLER</text>
+            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">API Route Handler</text>
+            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">DTO Validation</text>
+        </g>
+        <g transform="translate(290, 40)">
+            <rect width="220" height="120" rx="12" fill="url(#g-mgr)" stroke="#c084fc" stroke-width="1.5"/>
+            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">MANAGER / SERVICE</text>
+            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">State Orchestrator &amp; Mutex</text>
+            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Strategy / Factory Hook</text>
+            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Thread-Safe Concurrency</text>
+        </g>
+        <g transform="translate(610, 50)">
+            <rect width="180" height="100" rx="12" fill="url(#g-ent)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ENTITY MODELS</text>
+            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Encapsulated Domain State</text>
+            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">In-Memory Collections</text>
+        </g>
+    </svg>
+    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
+        <strong>Low-Level Architecture:</strong> Encapsulates domain business invariants within rich entity models, managed by decoupled service orchestrators adhering to Gang of Four (GoF) structural and behavioral design patterns.
+    </div>
+</div>
+
     <div class="tags"><span class="tag accent">API Design</span><span class="tag blue">Express.js</span><span class="tag purple">Idempotency</span></div>
                 <p>Idempotent REST APIs ensure that repeating an HTTP request multiple times yields the exact same server state without duplicate charges.</p>
                 <div class="code-block"><span class="code-label">JavaScript / Express.js — Idempotency Middleware</span><pre>
