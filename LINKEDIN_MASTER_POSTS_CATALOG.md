@@ -5,7 +5,7 @@ This catalog contains ready-to-publish, high-converting LinkedIn posts mapped ac
 ---
 
 
-## 🏛️ Course: System Design Interview Masterclass
+## 🏛️ Course: Grokking the System Design Interview
 
 ### 📌 Post #01: The 45-Minute 7-Step FAANG Interview Framework
 **Target File:** [`01 System Design Interview Basics & Preparation.html`](01 System Design Interview Basics & Preparation.html)
@@ -286,7 +286,7 @@ All modern cloud architectures (AWS, GCP, Kafka, Cassandra) are direct implement
 ---
 
 
-## 🏛️ Course: System Design Fundamentals Masterclass
+## 🏛️ Course: Grokking System Design Fundamentals
 
 ### 📌 Post #10: Layer 4 vs Layer 7 Load Balancing & Consistent Hashing
 **Target File:** [`02 Load Balancing.html`](02 Load Balancing.html)
@@ -378,7 +378,7 @@ The fundamental tradeoff in database storage engines comes down to Read Latency 
 ---
 
 
-## 🏛️ Course: Microservices Architecture & Design Patterns
+## 🏛️ Course: Grokking Microservices Design Patterns
 
 ### 📌 Post #13: Circuit Breaker Pattern: Preventing Cascading Failures with Resilience4j
 **Target File:** [`06 Circuit Breaker Pattern.html`](06 Circuit Breaker Pattern.html)

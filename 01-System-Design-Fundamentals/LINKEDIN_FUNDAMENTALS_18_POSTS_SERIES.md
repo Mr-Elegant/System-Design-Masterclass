@@ -1,4 +1,4 @@
-# 🏛️ Complete 18-Part LinkedIn Series: System Design Fundamentals Masterclass
+# 🏛️ Complete 18-Part LinkedIn Series: Grokking System Design Fundamentals
 
 This guide contains ready-to-publish, high-impact LinkedIn posts for all 18 chapters in `01-System-Design-Fundamentals`.
 
