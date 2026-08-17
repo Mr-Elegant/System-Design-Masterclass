@@ -192,6 +192,241 @@
             transform: translateY(-1px);
         }
 
+    
+        /* ==========================================================================
+           3D GLASSMORPHISM & MODERN DEPTH DESIGN SYSTEM (2026 EDITION)
+           ========================================================================== */
+        :root {
+            --bg-base: #060913;
+            --bg-surface: rgba(15, 23, 42, 0.7);
+            --bg-surface-hover: rgba(30, 41, 59, 0.8);
+            --bg-card-3d: rgba(17, 24, 39, 0.75);
+            
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(56, 189, 248, 0.4);
+            --border-glow-purple: rgba(168, 85, 247, 0.4);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --cyan-glow: #38bdf8;
+            --purple-glow: #a855f7;
+            --emerald-glow: #10b981;
+            --amber-glow: #f59e0b;
+            
+            --shadow-3d: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(56, 189, 248, 0.12);
+            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] {
+            --bg-base: #f1f5f9;
+            --bg-surface: rgba(255, 255, 255, 0.85);
+            --bg-surface-hover: rgba(241, 245, 249, 0.95);
+            --bg-card-3d: rgba(255, 255, 255, 0.9);
+            --border-glass: rgba(0, 0, 0, 0.08);
+            --border-glow: rgba(2, 132, 199, 0.4);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-dim: #94a3b8;
+            --shadow-3d: 0 20px 40px -15px rgba(0, 0, 0, 0.12), 0 0 20px rgba(2, 132, 199, 0.1);
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* Ambient 3D Glowing Mesh Background Orbs */
+        .ambient-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(120px);
+            opacity: 0.16;
+            animation: orbFloat 18s ease-in-out infinite alternate;
+        }
+        .orb-1 {
+            top: -100px;
+            left: 20%;
+            background: radial-gradient(circle, #38bdf8, #0284c7);
+        }
+        .orb-2 {
+            bottom: -150px;
+            right: 10%;
+            background: radial-gradient(circle, #a855f7, #6366f1);
+            animation-duration: 22s;
+            animation-delay: -5s;
+        }
+        .orb-3 {
+            top: 40%;
+            right: 35%;
+            background: radial-gradient(circle, #10b981, #06b6d4);
+            animation-duration: 26s;
+            animation-delay: -10s;
+        }
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, 40px) scale(1.15); }
+            100% { transform: translate(-40px, 80px) scale(0.9); }
+        }
+
+        /* Glassmorphism Sidebar */
+        .sidebar {
+            background: rgba(10, 15, 29, 0.72) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            border-right: 1px solid var(--border-glass) !important;
+            z-index: 10;
+        }
+        .sidebar-header {
+            background: transparent !important;
+            border-bottom: 1px solid var(--border-glass) !important;
+        }
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif !important;
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        .search-box {
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid var(--border-glass) !important;
+            border-radius: 10px !important;
+            color: #ffffff !important;
+            transition: all 0.25s !important;
+        }
+        .search-box:focus {
+            border-color: var(--cyan-glow) !important;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25) !important;
+            background: rgba(15, 23, 42, 0.9) !important;
+        }
+        .sidebar-item a {
+            border-radius: 10px !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .sidebar-item a:hover {
+            background: var(--bg-surface-hover) !important;
+            color: #ffffff !important;
+            transform: translateX(4px) !important;
+        }
+        .sidebar-item.active a {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(99, 102, 241, 0.12)) !important;
+            color: #ffffff !important;
+            border-left: 3px solid var(--cyan-glow) !important;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.1) !important;
+            font-weight: 600 !important;
+        }
+
+        /* Glassmorphism Main Content */
+        .content {
+            background: transparent !important;
+            z-index: 1;
+            position: relative;
+        }
+        .chapter-section {
+            background: var(--bg-card-3d);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 22px;
+            padding: 36px 40px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .chapter-section:hover {
+            border-color: rgba(56, 189, 248, 0.25);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .chapter-title {
+            font-family: 'Outfit', sans-serif !important;
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 60%, #818cf8 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        .chapter-number {
+            font-family: 'Fira Code', monospace !important;
+            background: rgba(56, 189, 248, 0.12) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            color: var(--cyan-glow) !important;
+            padding: 4px 10px !important;
+            border-radius: 8px !important;
+            font-size: 0.85rem !important;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.15) !important;
+        }
+
+        /* 3D Glass Diagram Cards */
+        .diagram-card {
+            background: rgba(11, 17, 32, 0.85) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+            border-radius: 20px !important;
+            padding: 26px !important;
+            margin: 32px 0 !important;
+            box-shadow: var(--shadow-3d) !important;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s !important;
+        }
+        .diagram-card:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.2) !important;
+            border-color: rgba(56, 189, 248, 0.45) !important;
+        }
+
+        /* Code Blocks & Tables 3D Glass Styling */
+        pre {
+            background: rgba(8, 12, 22, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 14px !important;
+            padding: 20px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        .chapter-body table {
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            border: 1px solid var(--border-glass) !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        }
+        .chapter-body th {
+            background: rgba(30, 41, 59, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.3) !important;
+        }
+        .chapter-body td {
+            background: rgba(15, 23, 42, 0.5) !important;
+        }
+
+        /* 3D Glass Watermark Hub Header (Preet Karwal) */
+        .author-watermark-card {
+            background: rgba(15, 23, 42, 0.72) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+            border-radius: 18px !important;
+            padding: 16px 22px !important;
+            margin-bottom: 40px !important;
+            box-shadow: var(--shadow-3d) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            flex-wrap: wrap !important;
+            gap: 16px !important;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s !important;
+        }
+        .author-watermark-card:hover {
+            transform: translateY(-2px) !important;
+            border-color: rgba(56, 189, 248, 0.4) !important;
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.25) !important;
+        }
+
     </style>
 <!-- Content Protection & Anti-Theft Scripts -->
     <style>
@@ -291,6 +526,12 @@
 
 </head>
 <body>
+
+    <!-- Ambient 3D Glowing Mesh Background Orbs -->
+    <div class="ambient-glow orb-1"></div>
+    <div class="ambient-glow orb-2"></div>
+    <div class="ambient-glow orb-3"></div>
+
 
 <nav class="sidebar">
   <div class="sidebar-logo">
