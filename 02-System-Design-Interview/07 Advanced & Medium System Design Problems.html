@@ -161,16 +161,16 @@
         /* Floating Sidebar Toggle Button */
         .floating-sidebar-toggle {
             position: fixed;
-            top: 16px;
-            left: 16px;
+            top: 14px;
+            left: 14px;
             z-index: 9998;
             background: var(--bg-surface);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--border-glass);
             color: var(--text-main);
-            padding: 10px;
-            border-radius: 12px;
+            padding: 9px;
+            border-radius: 10px;
             cursor: pointer;
             display: none;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
@@ -206,15 +206,15 @@
             margin-left: calc(-1 * var(--sidebar-width));
         }
         .sidebar-header {
-            padding: 22px 20px 14px 20px;
+            padding: 18px 18px 12px 18px;
             border-bottom: 1px solid var(--border-glass);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         .sidebar-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.18rem;
+            font-size: 1.12rem;
             font-weight: 800;
             line-height: 1.3;
             background: var(--heading-gradient);
@@ -228,12 +228,12 @@
         }
         .search-box {
             flex-grow: 1;
-            padding: 8px 12px;
-            border-radius: 10px;
+            padding: 7px 12px;
+            border-radius: 9px;
             border: 1px solid var(--border-glass);
             background: rgba(15, 23, 42, 0.5);
             color: var(--text-main);
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             outline: none;
             transition: all 0.25s;
         }
@@ -250,8 +250,8 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-glass);
             color: var(--text-main);
-            padding: 8px 10px;
-            border-radius: 10px;
+            padding: 7px 9px;
+            border-radius: 9px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -265,22 +265,22 @@
             transform: translateY(-1px);
         }
         .control-btn svg {
-            width: 17px;
-            height: 17px;
+            width: 16px;
+            height: 16px;
             fill: currentColor;
         }
         .sidebar-tabs {
             display: flex;
             border-bottom: 1px solid var(--border-glass);
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .tab-btn {
             flex: 1;
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 8px;
-            font-size: 0.82rem;
+            padding: 7px;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -297,20 +297,20 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            padding: 12px 10px;
+            padding: 10px 8px;
         }
         .sidebar-menu { list-style: none; }
         .sidebar-item a, .nav-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 12px;
+            padding: 8px 10px;
             color: var(--text-muted);
             text-decoration: none;
-            border-radius: 10px;
-            font-size: 0.85rem;
+            border-radius: 8px;
+            font-size: 0.83rem;
             font-weight: 500;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             line-height: 1.35;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
@@ -321,7 +321,7 @@
         .sidebar-item a:hover, .nav-item:hover {
             background: var(--bg-surface-hover);
             color: var(--text-main);
-            transform: translateX(4px);
+            transform: translateX(3px);
         }
         .sidebar-item.active a, .nav-item.active {
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(99, 102, 241, 0.12));
@@ -339,30 +339,30 @@
         }
         .chapter-num {
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             color: var(--cyan-glow);
             opacity: 0.85;
         }
         .no-bookmarks-msg {
-            padding: 24px 16px;
+            padding: 20px 14px;
             text-align: center;
             color: var(--text-dim);
-            font-size: 0.85rem;
+            font-size: 0.83rem;
             font-style: italic;
         }
 
-        /* Main Content Container */
+        /* Main Content Container with Balanced Spacing */
         .content, .main-content {
             flex-grow: 1;
             overflow-y: auto;
-            padding: 30px 50px 140px 50px;
+            padding: 24px 36px 80px 36px;
             position: relative;
             z-index: 1;
             scroll-behavior: smooth;
             background: transparent;
         }
         .content-inner, .content-container {
-            max-width: 940px;
+            max-width: 900px;
             margin: 0 auto;
         }
         body.layout-full .content-inner, body.layout-full .content-container {
@@ -376,31 +376,31 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-glass);
             border-top: 1px solid var(--border-shine);
-            border-radius: 18px;
-            padding: 16px 22px;
-            margin-bottom: 32px;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow-3d);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
         .author-watermark-card:hover {
             border-color: rgba(56, 189, 248, 0.35);
         }
 
-        /* Chapter Section Card */
+        /* Chapter Section Card with Clean Padding */
         .chapter-section {
             background: var(--bg-card-3d);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-glass);
             border-top: 1px solid var(--border-shine);
-            border-radius: 22px;
-            padding: 38px 42px;
-            margin-bottom: 48px;
+            border-radius: 18px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
             box-shadow: var(--shadow-card);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
             position: relative;
@@ -414,25 +414,25 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 28px;
-            padding-bottom: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border-glass);
-            gap: 16px;
+            gap: 12px;
         }
         .chapter-number, .section-num {
             font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: var(--cyan-glow);
             background: rgba(56, 189, 248, 0.12);
             border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 3px 9px;
+            border-radius: 7px;
             flex-shrink: 0;
         }
         .chapter-title, .chapter-title-main {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.85rem;
+            font-size: 1.7rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.25;
@@ -445,13 +445,13 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-glass);
             color: var(--text-muted);
-            padding: 7px 12px;
-            border-radius: 9px;
+            padding: 6px 11px;
+            border-radius: 8px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.82rem;
+            gap: 5px;
+            font-size: 0.8rem;
             font-weight: 600;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
@@ -463,16 +463,16 @@
             transform: translateY(-1px);
         }
         .bookmark-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             fill: currentColor;
         }
 
         /* Chapter Content Typography */
         .chapter-body p {
-            font-size: 1.02rem;
-            line-height: 1.75;
-            margin-bottom: 18px;
+            font-size: 1rem;
+            line-height: 1.72;
+            margin-bottom: 14px;
             color: var(--text-main);
         }
         [data-theme="dark"] .chapter-body p { color: #cbd5e1; }
@@ -482,28 +482,28 @@
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
             line-height: 1.35;
-            margin: 32px 0 14px 0;
+            margin: 26px 0 10px 0;
             color: var(--text-main);
         }
-        .chapter-body h2 { font-size: 1.45rem; color: var(--cyan-glow); }
-        .chapter-body h3 { font-size: 1.25rem; }
-        .chapter-body h4 { font-size: 1.05rem; }
+        .chapter-body h2 { font-size: 1.38rem; color: var(--cyan-glow); }
+        .chapter-body h3 { font-size: 1.2rem; }
+        .chapter-body h4 { font-size: 1.02rem; }
 
         .chapter-body ul, .chapter-body ol {
-            margin-bottom: 20px;
-            padding-left: 24px;
+            margin-bottom: 16px;
+            padding-left: 22px;
             color: var(--text-main);
         }
         [data-theme="dark"] .chapter-body ul, [data-theme="dark"] .chapter-body ol { color: #cbd5e1; }
         [data-theme="light"] .chapter-body ul, [data-theme="light"] .chapter-body ol { color: #334155; }
-        .chapter-body li { margin-bottom: 8px; line-height: 1.7; font-size: 1rem; }
+        .chapter-body li { margin-bottom: 6px; line-height: 1.65; font-size: 0.98rem; }
 
         .chapter-body strong, .chapter-body b {
             font-weight: 600;
             color: var(--amber-glow);
             background: rgba(245, 158, 11, 0.08);
             border: 1px solid rgba(245, 158, 11, 0.25);
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 4px;
         }
         [data-theme="light"] .chapter-body strong, [data-theme="light"] .chapter-body b {
@@ -515,11 +515,11 @@
         .chapter-body blockquote, .callout {
             border-left: 4px solid var(--cyan-glow);
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.04) 100%);
-            padding: 16px 20px;
-            margin: 24px 0;
-            border-radius: 0 14px 14px 0;
-            font-size: 0.96rem;
-            line-height: 1.65;
+            padding: 14px 18px;
+            margin: 18px 0;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.94rem;
+            line-height: 1.62;
             color: #cbd5e1;
             border: 1px solid var(--border-glass);
             border-left: 4px solid var(--cyan-glow);
@@ -535,19 +535,19 @@
         .chapter-body table {
             width: 100%;
             border-collapse: collapse;
-            margin: 24px 0;
-            border-radius: 12px;
+            margin: 18px 0;
+            border-radius: 10px;
             overflow: hidden;
             background: rgba(15, 23, 42, 0.4);
             border: 1px solid var(--border-glass);
-            font-size: 0.92rem;
+            font-size: 0.9rem;
         }
         [data-theme="light"] .chapter-body table {
             background: #ffffff;
             border: 1px solid #e2e8f0;
         }
         .chapter-body th, .chapter-body td {
-            padding: 12px 16px;
+            padding: 10px 14px;
             border: 1px solid var(--border-glass);
             text-align: left;
         }
@@ -569,12 +569,12 @@
         pre {
             background: var(--bg-code);
             border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin: 20px 0;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin: 16px 0;
             font-family: 'Fira Code', monospace;
-            font-size: 0.88rem;
-            line-height: 1.6;
+            font-size: 0.86rem;
+            line-height: 1.55;
             overflow-x: auto;
             color: #e2e8f0;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
@@ -593,15 +593,15 @@
             background: rgba(56, 189, 248, 0.1);
             border: 1px solid rgba(56, 189, 248, 0.25);
             color: var(--cyan-glow);
-            padding: 2px 6px;
-            border-radius: 5px;
+            padding: 2px 5px;
+            border-radius: 4px;
         }
 
         .chapter-body img {
             max-width: 100%;
             height: auto;
-            border-radius: 12px;
-            margin: 20px 0;
+            border-radius: 10px;
+            margin: 16px 0;
             border: 1px solid var(--border-glass);
         }
 
@@ -612,9 +612,9 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(56, 189, 248, 0.25);
             border-top: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 20px;
-            padding: 24px;
-            margin: 28px 0 32px 0;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0 24px 0;
             box-shadow: var(--shadow-3d);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
             position: relative;
@@ -626,38 +626,38 @@
             border-top: 1px solid rgba(255, 255, 255, 0.9);
         }
         .diagram-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.18);
         }
         .diagram-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border-glass);
-            gap: 12px;
+            gap: 10px;
         }
         .diagram-badge {
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
+            font-size: 0.73rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 3px 10px;
+            border-radius: 16px;
             background: rgba(56, 189, 248, 0.12);
             color: var(--cyan-glow);
             border: 1px solid rgba(56, 189, 248, 0.3);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
         .diagram-badge::before {
             content: '';
             display: inline-block;
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: #10b981;
             box-shadow: 0 0 8px #10b981;
@@ -665,17 +665,17 @@
         }
         .diagram-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-main);
         }
         .diagram-caption {
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             color: var(--text-muted);
-            margin-top: 14px;
-            line-height: 1.6;
-            padding: 10px 14px;
-            border-radius: 8px;
+            margin-top: 12px;
+            line-height: 1.55;
+            padding: 8px 12px;
+            border-radius: 7px;
             background: rgba(255, 255, 255, 0.03);
             border-left: 3px solid var(--cyan-glow);
         }
@@ -683,7 +683,7 @@
             width: 100%;
             height: auto;
             display: block;
-            filter: drop-shadow(0 4px 14px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
         }
         @keyframes flowDash { to { stroke-dashoffset: -32; } }
         @keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
@@ -715,33 +715,33 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(56, 189, 248, 0.3);
             border-top: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 22px;
-            padding: 26px 30px;
-            margin: 24px 0 36px 0;
-            box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 20px 24px;
+            margin: 18px 0 24px 0;
+            box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 16px;
             position: relative;
             overflow: hidden;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
         }
         .concept-hub-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 25px 55px -12px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             border-color: rgba(56, 189, 248, 0.5);
         }
         [data-theme="light"] .concept-hub-card {
             background: #ffffff;
             border: 1px solid rgba(2, 132, 199, 0.35);
             border-top: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 14px 35px -8px rgba(2, 132, 199, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            box-shadow: 0 12px 30px -8px rgba(2, 132, 199, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
         /* Hub Section Base */
         .hub-section {
-            padding: 16px 20px;
-            border-radius: 16px;
+            padding: 14px 18px;
+            border-radius: 12px;
             border: 1px solid var(--border-glass);
             background: rgba(15, 23, 42, 0.35);
         }
@@ -780,23 +780,23 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 8px;
+            margin-bottom: 10px;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border-glass);
         }
         .hub-badge {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 4px 11px;
+            border-radius: 16px;
             color: #ffffff !important;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
         .badge-eli5 {
             background: linear-gradient(135deg, #f59e0b, #ea580c);
@@ -812,40 +812,40 @@
         }
         .hub-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.12rem;
+            font-size: 1.08rem;
             font-weight: 800;
             color: var(--text-main);
             margin: 0 !important;
         }
         .hub-subtitle {
             font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: var(--cyan-glow);
         }
         .hub-tag {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 700;
             color: #f59e0b;
             background: rgba(245, 158, 11, 0.12);
             border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 2px 7px;
+            border-radius: 5px;
         }
 
         /* Hub Body Content */
         .hub-story {
-            font-size: 0.98rem;
-            line-height: 1.7;
+            font-size: 0.96rem;
+            line-height: 1.68;
             color: var(--text-main);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
-        .hub-story p { margin-bottom: 8px; }
+        .hub-story p { margin-bottom: 6px; }
         .hub-story strong {
             color: #f59e0b;
             background: rgba(245, 158, 11, 0.12);
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 4px;
         }
         [data-theme="light"] .hub-story strong {
@@ -853,11 +853,11 @@
             background: rgba(245, 158, 11, 0.15);
         }
         .hub-svg-container {
-            margin: 12px 0;
+            margin: 10px 0;
             background: rgba(11, 17, 32, 0.7);
             border: 1px solid rgba(245, 158, 11, 0.25);
-            border-radius: 12px;
-            padding: 14px;
+            border-radius: 10px;
+            padding: 12px;
         }
         [data-theme="light"] .hub-svg-container {
             background: #ffffff;
@@ -866,13 +866,13 @@
         .hub-takeaway {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
             background: rgba(245, 158, 11, 0.12);
-            border-left: 3.5px solid #f59e0b;
-            border-radius: 0 8px 8px 0;
-            padding: 10px 14px;
-            font-size: 0.92rem;
-            line-height: 1.55;
+            border-left: 3px solid #f59e0b;
+            border-radius: 0 7px 7px 0;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
             color: #fef3c7;
         }
         [data-theme="light"] .hub-takeaway {
@@ -881,7 +881,7 @@
             border-left-color: #d97706;
         }
         .hub-icon {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             line-height: 1;
             flex-shrink: 0;
         }
@@ -890,20 +890,20 @@
         .rw-cases-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
         .company-case {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            font-size: 0.94rem;
-            line-height: 1.65;
+            gap: 10px;
+            font-size: 0.92rem;
+            line-height: 1.6;
             color: var(--text-main);
             background: rgba(15, 23, 42, 0.4);
             border: 1px solid var(--border-glass);
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 9px 12px;
+            border-radius: 9px;
         }
         [data-theme="light"] .company-case {
             background: #ffffff;
@@ -911,20 +911,20 @@
             color: #1e293b;
         }
         .company-logo {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             line-height: 1.2;
             flex-shrink: 0;
         }
         .rw-metrics-banner {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
             background: rgba(16, 185, 129, 0.12);
-            border-left: 3.5px solid #10b981;
-            border-radius: 0 8px 8px 0;
-            padding: 9px 14px;
-            font-size: 0.91rem;
-            line-height: 1.55;
+            border-left: 3px solid #10b981;
+            border-radius: 0 7px 7px 0;
+            padding: 8px 12px;
+            font-size: 0.89rem;
+            line-height: 1.5;
             color: #d1fae5;
         }
         [data-theme="light"] .rw-metrics-banner {
@@ -937,9 +937,9 @@
         .tweak-content {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            font-size: 0.94rem;
-            line-height: 1.65;
+            gap: 6px;
+            font-size: 0.92rem;
+            line-height: 1.6;
         }
         .tweak-scenario-text {
             color: var(--text-muted);
@@ -954,15 +954,15 @@
         /* Code Copy Buttons Injector */
         .code-copy-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid var(--border-glass);
             color: var(--text-muted);
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 3px 9px;
+            border-radius: 5px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -983,11 +983,11 @@
         @media (max-width: 900px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; height: auto; max-height: 45vh; }
-            .content, .main-content { padding: 24px 16px; }
-            .chapter-section { padding: 24px 20px; }
+            .content, .main-content { padding: 20px 14px 60px 14px; }
+            .chapter-section { padding: 20px 16px; margin-bottom: 24px; }
             .author-watermark-card { flex-direction: column; align-items: flex-start; }
-            .concept-hub-card { padding: 18px 14px; gap: 16px; }
-            .hub-section { padding: 12px 14px; }
+            .concept-hub-card { padding: 16px 12px; gap: 12px; }
+            .hub-section { padding: 10px 12px; }
         }
 
     </style>
@@ -1140,170 +1140,6 @@
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Design a Recommendation System (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Design a Recommendation System (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Recommendation System: Two-Tower Vector Retrieval &amp; Heavy Ranking</div>
@@ -1362,7 +1198,6 @@
     💡 <strong>Key Architecture Takeaway:</strong> Reduces millions of catalog items to 1,000 candidates via two-tower neural embeddings and HNSW ANN search, before applying deep scoring and diversity re-ranking.
   </div>
 </div>
-
 
     <div><h2>Step 1. System Definition</h2>
 <p>The recommendation system is a core service for a large-scale streaming platform (e.g., Netflix, Amazon Prime, Hulu) that suggests personalized video content to users. Its purpose is to enhance user engagement by helping users discover movies and shows they are likely to enjoy, thereby increasing watch time and satisfaction. The system delivers two types of recommendations: <strong>real-time recommendations</strong> (dynamically generated as users browse, to reflect their immediate context or latest actions) and <strong>batch-processed recommendations</strong> (periodically computed in bulk, e.g,. daily or weekly, to capture long-term preferences and trends). It must serve hundreds of millions of users reliably with low latency.</p>
@@ -1676,7 +1511,6 @@ class ThompsonSamplingRecommender:
         else:
             self.beta[item_id] += 1</code></pre>
 
-
 <h2>Production JavaScript (Node.js / TypeScript) Implementation: Thompson Sampling</h2>
     <pre><code>// TypeScript Thompson Sampling Multi-Armed Bandit
 export class ThompsonSamplingRecommender {
@@ -1782,170 +1616,6 @@ export class ThompsonSamplingRecommender {
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Design Google Calendar (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Design Google Calendar (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Google Calendar: Interval Tree Conflict Engine &amp; Spanner 2PC</div>
@@ -2000,7 +1670,6 @@ export class ThompsonSamplingRecommender {
     💡 <strong>Key Architecture Takeaway:</strong> Detects meeting conflicts in O(log N) time using in-memory Interval Trees and enforces transaction consistency across multi-attendee calendars with Google Spanner.
   </div>
 </div>
-
 
     <div><p>Let&#x27;s design a calendar service similar to <strong>Google Calendar</strong> that lets millions of users schedule meetings and events. In essence, this service lets users create events, invite others, and reserve resources (like meeting rooms) just as one would write plans on a shared calendar. Key entities in the system include:</p>
 <ul>
@@ -2391,170 +2060,6 @@ class CalendarRecurrenceEngine:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Code Judging System (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Code Judging System (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Code Judging System (LeetCode): Sandboxed Runner &amp; Cgroups Isolation</div>
@@ -2609,7 +2114,6 @@ class CalendarRecurrenceEngine:
     💡 <strong>Key Architecture Takeaway:</strong> Executes untrusted user code inside hardened sandboxes (gVisor/Firecracker) with strict seccomp syscall filters and cgroup CPU/memory caps.
   </div>
 </div>
-
 
     <div><h2>Step 1: System Definition</h2>
 <p>An online coding judge platform (similar to LeetCode) is a web-based system where users solve programming problems by writing code and receiving automated feedback. The primary purpose is to evaluate user-submitted code against predefined test cases in a secure, controlled environment and return the results quickly. Key <strong>entities</strong> in this system include:</p>
@@ -2954,170 +2458,6 @@ class SecureCodeJudgeRunner:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Flash Sale System (hard)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Flash Sale System (hard)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Flash Sale System: Atomic Redis Stock Decrement &amp; Waiting Room</div>
@@ -3173,7 +2513,6 @@ class SecureCodeJudgeRunner:
     💡 <strong>Key Architecture Takeaway:</strong> Absorbs traffic surges with a virtual token queue and executes stock decrements atomically in Redis via Lua scripts, keeping database load at zero until payment.
   </div>
 </div>
-
 
     <div><h2>Step 1: System Definition</h2>
 <p>A <em><strong>flash sale system</strong></em> is an e-commerce component designed to handle short-term sales events where a limited inventory of products is sold to a massive number of buyers in a very short time frame. In such events, traffic spikes dramatically (e.g. hundreds of thousands of users hitting the site simultaneously), and the number of purchase requests far exceeds the available items (for example, millions of requests for only thousands of items). The system must rapidly serve many concurrent users, reliably track inventory, and fairly allocate the product items. This requires a highly scalable and robust architecture that can maintain <strong>consistency</strong> (no overselling of products), <strong>low latency</strong> for user actions, and <strong>high availability</strong> despite extreme load. The flash sale system typically integrates with the broader e-commerce platform (user accounts, product catalog, payment processing) but uses specialized strategies (caching, queuing, etc.) to withstand bursty traffic and ensure a smooth user experience during the sale.</p>
@@ -3559,7 +2898,6 @@ else
     return 0 -- Sold Out
 end</code></pre>
 
-
 <h2>Production JavaScript (Node.js / ioredis) Implementation: Flash Sale Stock Decrement</h2>
     <pre><code>// Node.js Atomic Flash Sale Inventory Decrement
 import Redis from "ioredis";
@@ -3658,170 +2996,6 @@ export class FlashSaleStockService {
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Gmail (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Gmail (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Distributed Email Service (Gmail) End-to-End Architecture</div>
@@ -3903,7 +3077,6 @@ export class FlashSaleStockService {
     💡 <strong>Key Architecture Takeaway:</strong> Email systems decouple high-throughput SMTP ingress from storage, indexing email metadata in wide-column databases while streaming heavy RFC822 payloads and attachments to distributed object storage.
   </div>
 </div>
-
 
     <div><p>Let’s design a distributed email service similar to <strong>Gmail</strong> that allows millions of users to send, receive, and organize messages asynchronously. In essence, this service acts as a massive digital post office: it accepts incoming mail, routes it to the correct recipient’s storage, and provides a user-friendly interface for reading, searching, and managing conversations. Key entities in the system include:</p>
 <ul>
@@ -4691,170 +3864,6 @@ class SpannerTwoPhaseCommit:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Google News (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Google News (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Google News: MinHash &amp; Locality-Sensitive Hashing (LSH) Clustering</div>
@@ -4909,7 +3918,6 @@ class SpannerTwoPhaseCommit:
     💡 <strong>Key Architecture Takeaway:</strong> Clusters 50,000+ incoming hourly news articles into single distinct topic threads using MinHash shingling and LSH, eliminating near-duplicate coverage.
   </div>
 </div>
-
 
     <div><p>Let&#x27;s design a news aggregator similar to Google News. This system will collect news articles from many external sources (newspapers, news channels, blogs, etc.) and present them to users in one consolidated feed. The goal is to deliver a <strong>personalized, near-real-time news feed</strong> based on each user’s preferences such as subscribed channels, categories (like politics, sports, tech), or particular entities (e.g. a celebrity, sports team, or artist). The system should support both <strong>pull</strong> (user refreshing a feed) and <strong>push</strong> (notifications for new articles) delivery modes, ensuring users quickly see breaking news or updates in their subscribed topics. We aim to achieve this at <strong>web-scale</strong>, meaning the design must accommodate hundreds of millions of users and very high data throughput, all while maintaining low latency and high availability.</p>
 <h3>Entities and Concepts</h3>
@@ -5580,170 +4588,6 @@ class NewsClusterVelocityTracker:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Notification Service (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Notification Service (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Distributed Notification Service: Rate Limiting &amp; Channel Fanout</div>
@@ -5804,7 +4648,6 @@ class NewsClusterVelocityTracker:
     💡 <strong>Key Architecture Takeaway:</strong> Applies user opt-out preferences and anti-fatigue rate limiters before fanning out notifications across APNs, FCM, SMS (Twilio), and Email (SendGrid).
   </div>
 </div>
-
 
     <div><p>Let&#x27;s design a notification system that works seamlessly for various applications, whether it&#x27;s a social media platform, an e-commerce site, or a productivity tool.</p></div><div><p>A <strong>notification system</strong> is a centralized platform that delivers alerts and messages (notifications) to users on behalf of multiple separate applications (tenants). It acts as a shared service that any application – be it a social network, an e-commerce site, or a productivity tool – can use to send notifications to its users. For example, think of a system like Amazon Simple Notification Service (SNS) or Firebase Cloud Messaging, which many different apps leverage to inform users about events (like a new message, an order shipped, or a calendar reminder).</p>
 <p><strong>Real-world analogy</strong>: Consider how Facebook notifies you of a friend’s post, Amazon notifies you about your package delivery, and Slack alerts you about a new mention. A multi-tenant notification service is a <strong>single system capable of handling all those scenarios</strong> for many companies at once, ensuring each tenant’s data and users stay isolated from each other.</p>
@@ -6167,170 +5010,6 @@ end</code></pre>
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Payment System (hard)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Payment System (hard)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Payment System: Double-Entry Ledger &amp; Idempotency Key Engine</div>
@@ -6385,7 +5064,6 @@ end</code></pre>
     💡 <strong>Key Architecture Takeaway:</strong> Guarantees exact financial balance through immutable double-entry ledger bookkeeping (Sum Debits == Sum Credits) and idempotency key locking.
   </div>
 </div>
-
 
     <div><h2>Step 1: System Definition</h2>
 <p>Design a payment processing platform (similar to Stripe) that enables merchants (businesses) to accept online payments from customers securely and reliably. The system will handle the entire lifecycle of a payment transaction – from capturing payment details to authorizing the transaction, transferring funds, and handling post-payment events (like refunds or chargebacks). Ultimately, this “Stripe-like” system serves as a <strong>payment service provider</strong> that combines the functionality of a payment gateway and a payment processor in one integrated platform.</p>
@@ -6804,170 +5482,6 @@ class IdempotentPaymentGateway:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Reddit (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Reddit (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Reddit: Materialized Path Nested Comment Trees &amp; Hot Ranking</div>
@@ -7021,7 +5535,6 @@ class IdempotentPaymentGateway:
     💡 <strong>Key Architecture Takeaway:</strong> Stores threaded discussions as materialized paths ('/1/4/19') for O(1) comment retrieval without recursive joins, ranking posts with the logarithmic Hot formula.
   </div>
 </div>
-
 
     <div><p>We are building an online social media platform <strong>similar to Reddit</strong>, where users can share content and discuss in community forums. In this system, users create <strong>posts</strong> (which can be text, images, links, or videos) and organize them into topic-based communities called <strong>subreddits</strong> (or communities). Other users can then engage by voting on posts (upvote or downvote) and adding <strong>comments</strong> to discuss the content. A real-world example is Reddit itself – often dubbed “the front page of the internet” – which hosts thousands of active communities for different interests. Each post has a score based on user votes, and posts are ranked within their community and on users’ personalized feeds.</p>
 <p><strong>Key Entities/Terms:</strong></p>
@@ -7745,170 +6258,6 @@ class MaterializedPathCommentTree:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Reminder Alert System (hard)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing Reminder Alert System (hard)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Reminder Alert System: Distributed Hierarchical Time-Wheel &amp; Redis ZSET</div>
@@ -7963,7 +6312,6 @@ class MaterializedPathCommentTree:
     💡 <strong>Key Architecture Takeaway:</strong> Schedules millions of future alerts using Redis Sorted Sets and hierarchical time-wheels, achieving O(1) tick expiration and sub-second execution accuracy.
   </div>
 </div>
-
 
     <div><p><strong>A Notification System for Reminders</strong> is a platform that allows users to schedule alerts and delivers them through various channels (email, SMS, push notifications, or in-app) when due. The system acts as a central hub to manage scheduled events and dispatch notifications to users via their preferred methods. A real-world analogy is the reminder feature in Slack or calendar applications; for instance, Slack relies on scheduled jobs to ensure messages reach users at the precise moment. Here, we generalize that concept to a web-scale service capable of handling millions of concurrent users.</p>
 <p><strong>Key Terminology</strong></p>
@@ -8402,170 +6750,6 @@ class HierarchicalTimeWheel:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing Unique ID Generator (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Twitter/X (Snowflake) • Discord (Snowflake IDs) • Instagram</span>
-            </div>
-            <div class="rw-cases-container">
-                
-                <div class="company-case">
-                    <span class="company-logo">🐦</span>
-                    <div><strong>Twitter Snowflake:</strong> Generates 64-bit IDs: 41 bits (Timestamp in ms) + 10 bits (Worker Node ID) + 12 bits (Sequence Counter). Every tweet ID is globally unique and naturally sortable by creation time.</div>
-                </div>
-            
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Generates over 10,000 unique IDs per millisecond per server node with zero database lock contention.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⏰ System Clock Skew / NTP Rollback</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> NTP server syncs and rewinds the server clock backward by 500ms, risking duplicate timestamp IDs.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Catch clock drift in code: if current timestamp &lt; last timestamp, pause generation until clock catches up or throw an alert to failover to backup worker.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">Twitter Snowflake: 64-Bit Globally Unique ID Bit Allocation</div>
@@ -8626,7 +6810,6 @@ class HierarchicalTimeWheel:
     💡 <strong>Key Architecture Takeaway:</strong> Generates roughly 4.09 million monotonic, k-sortable unique IDs per millisecond per node across 1,024 distributed worker machines without coordination locks.
   </div>
 </div>
-
 
     <div><p>A <strong>Globally Unique Identifier (GUID) Generation System</strong> is a service that produces unique identifiers at scale for use across distributed systems. Its purpose is to generate IDs that never collide (no duplicates) even when issued from multiple data centers or services concurrently. These IDs can serve as database primary keys, event/message IDs, object handles, or any context where a distinct identifier is needed for each entity. The system supports two ID formats: <strong>opaque IDs</strong> and <strong>ordered IDs</strong>. <strong>Opaque IDs</strong> are essentially random or pseudo-random identifiers (like UUIDs) with no intrinsic ordering or meaning, useful for security or purely unique labeling. <strong>Ordered IDs</strong> are time-based or monotonic IDs that encode time or sequence information so that newer IDs are numerically or lexicographically larger than older ones, which is useful for sorting and roughly reflects creation order. “Global uniqueness” means any ID generated on any node or at any time will be different from all others, and <strong>web-scale</strong> implies the system can handle very high request rates (hundreds of thousands per second) and operate across many regions and services. Here are a few Key terms:</p>
 <ul>
@@ -8965,170 +7148,6 @@ class SnowflakeIDGenerator:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing YouTube Likes Counter (medium)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing YouTube Likes Counter (medium)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
   <div class="diagram-header">
     <div class="diagram-title">YouTube Likes Counter: Write-Back In-Memory Buffer &amp; HyperLogLog</div>
@@ -9183,7 +7202,6 @@ class SnowflakeIDGenerator:
     💡 <strong>Key Architecture Takeaway:</strong> Buffers viral like bursts in Redis with atomic HINCRBY and HyperLogLog cardinality estimation, flushing batched counts to database storage every 5 seconds.
   </div>
 </div>
-
 
     <div><p><strong>Problem Statement:</strong>
 Design a backend system to manage <strong>likes and dislikes</strong> for YouTube videos and comments at scale. The system must handle recording user reactions, updating aggregate counts, and retrieving these counts with low latency. It must be architected to support <strong>millions of concurrent users</strong> and billions of historical data points.</p>
@@ -9530,170 +7548,6 @@ class LikesCounterAggregator:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
         <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
@@ -9864,170 +7718,6 @@ class LiveChunkManifestGenerator:
                 <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
             </div>
         </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing an AI Retrieval-Augmented Generation (RAG) &amp;amp;amp;amp; Vector Search Platform):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing an AI Retrieval-Augmented Generation (RAG) &amp;amp;amp;amp;amp; Vector Search Platform):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
     </div>
     
 
@@ -10232,170 +7922,6 @@ class HNSWVectorSearchReranker:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing a Global Distributed Object Storage Service (AWS S3 Architecture)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing a Global Distributed Object Storage Service (AWS S3 Architecture)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
         <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
@@ -10545,170 +8071,6 @@ class StorageNodeScrubber:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing a Real-Time Collaborative Canvas &amp; Document Editor (Figma / Google Docs)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing a Real-Time Collaborative Canvas &amp;amp; Document Editor (Figma / Google Docs)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
         <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
@@ -10854,160 +8216,6 @@ class CanvasShapeCRDT:
     </div>
     
 
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">💳</span>
-                <div>
-                    <strong>Stripe Financial Ledgers:</strong> Uses compound B+ Tree indexes on <code>(merchant_id, created_at DESC)</code> to query thousands of charges in sub-3ms for real-time dashboard analytics.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Reduces geospatial rider matching and financial query times from 5,000ms full-table scans to &lt; 3ms indexed lookups.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💾 Index Memory Bloat</span>
-                <span class="scenario-title">Database indexes consume 120GB RAM, exceeding available machine memory and causing slow disk paging.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Deploy <strong>Partial / Filtered Indexes</strong> (e.g. `CREATE INDEX ON orders(user_id) WHERE status = 'ACTIVE'`) and <strong>Prefix Indexing</strong> to reduce index RAM footprint by 70%.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">💳</span>
-                <div>
-                    <strong>Stripe Financial Ledgers:</strong> Uses compound B+ Tree indexes on <code>(merchant_id, created_at DESC)</code> to query thousands of charges in sub-3ms for real-time dashboard analytics.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Reduces geospatial rider matching and financial query times from 5,000ms full-table scans to &lt; 3ms indexed lookups.</div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
     <div class="diagram-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
         <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
@@ -11148,170 +8356,6 @@ class GorillaTimestampCompressor:
                 <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
             </div>
         </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Google • Stripe • Uber</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Production Standard (Designing an Event-Sourced Banking &amp; Financial Ledger Platform (Stripe)):</strong> Deployed across global multi-region clusters to ensure 99.999% SLA availability and sub-millisecond latency under millions of concurrent operations.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, processing billions of transactions daily with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Traffic spikes 10x or network latency degrades across cloud regions.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Enable queue-based load leveling, apply local memory micro-caching with jittered TTL, and trip circuit breakers to protect downstream storage.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <!-- =========================================================================
-         🌟 UNIFIED 3-IN-1 CONCEPT ARCHITECTURE HUB (ELI5 + REAL-WORLD + TWEAKS)
-         ========================================================================= -->
-    
-
-        <!-- Part 2: Real-World Production Blueprint -->
-        <div class="hub-section rw-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-rw">🏢 REAL-WORLD PRODUCTION BLUEPRINT</span>
-                <span class="hub-subtitle">Netflix • Uber • Google • Stripe</span>
-            </div>
-            <div class="rw-cases-container">
-                
-            <div class="company-case">
-                <span class="company-logo">🌐</span>
-                <div><strong>Enterprise Standard (Designing an Event-Sourced Banking &amp;amp; Financial Ledger Platform (Stripe)):</strong> Implemented across production clusters to maintain 99.999% uptime and sub-millisecond response times under peak enterprise traffic.</div>
-            </div>
-        
-            </div>
-            <div class="rw-metrics-banner"><span class="hub-icon">📊</span><div><strong>Scale Metric:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div></div>
-        </div>
-
-        <!-- Part 3: Situational Tweak / Requirement Shift -->
-        <div class="hub-section tweak-hub-section">
-            <div class="hub-header">
-                <span class="hub-badge badge-tweak">🎛️ SITUATIONAL TWEAK &amp; EDGE CASE</span>
-                <span class="hub-tag">⚡ Scale & Traffic Surge Pivot</span>
-            </div>
-            <div class="tweak-content">
-                <div class="tweak-scenario-text"><strong>Changing Condition:</strong> Workload spikes 10x or network latency degrades unexpectedly across regional links.</div>
-                <div class="tweak-action-text"><strong>Architectural Pivot:</strong> Deploy queue-based load leveling, enable aggressive caching with jittered TTL, and configure circuit breaker fallback responses.</div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-    <!-- =========================================================================
-         🎛️ SITUATIONAL TWEAKS & REQUIREMENT SHIFTS CARD
-         ========================================================================= -->
-    
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">🔥 Hot-Key / Data Skew</span>
-                <span class="scenario-title">A single VIP record receives 100,000 QPS, exhausting one node.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Implement Split-Key Salting (e.g. `key#1..key#10`) across Redis cache shards with randomized jittered TTLs to eliminate cache stampedes.
-            </div>
-        </div>
-        
-        <div class="tweak-item">
-            <div class="tweak-scenario">
-                <span class="scenario-tag">💥 Multi-Region Failover</span>
-                <span class="scenario-title">Primary cloud datacenter experiences an unrecoverable power/fiber outage.</span>
-            </div>
-            <div class="tweak-action">
-                <strong>Architectural Pivot:</strong> Trigger DNS Anycast / Route 53 health failover to secondary standby region with Active-Active Cross-Region CRDT replication and circuit breaker fast-fails.
-            </div>
-        </div>
-        
-        </div>
-    </div>
-    
-
-
-    
-    </div>
-    
-
-    <!-- =========================================================================
-         🏢 REAL-WORLD TECH GIANTS PRODUCTION CASE STUDY
-         ========================================================================= -->
-    
-            <div class="company-case">
-                <span class="company-logo">⚡</span>
-                <div>
-                    <strong>High-Availability SLA:</strong> Designed for 99.999% uptime with automated health checks, circuit breaking, and cross-region active-active failover.
-                </div>
-            </div>
-        
-        </div>
-        
-        
-        
-        
-        <div class="real-world-metrics">
-            <span class="metrics-icon">📊</span>
-            <div><strong>Production Scale Impact:</strong> Deployed across 10,000+ container nodes, handling billions of daily operations with zero downtime.</div>
-        </div>
-    </div>
-    
-
-
-    
     </div>
     
 
