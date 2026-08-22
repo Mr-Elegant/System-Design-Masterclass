@@ -19,10 +19,10 @@
 
         :root {
             --bg-base: #060913;
-            --bg-sidebar: rgba(10, 15, 29, 0.78);
-            --bg-surface: rgba(15, 23, 42, 0.72);
+            --bg-sidebar: rgba(10, 15, 29, 0.85);
+            --bg-surface: rgba(15, 23, 42, 0.75);
             --bg-surface-hover: rgba(30, 41, 59, 0.85);
-            --bg-card-3d: rgba(17, 24, 39, 0.78);
+            --bg-card-3d: rgba(17, 24, 39, 0.8);
             --bg-code: #080c16;
             
             --border-glass: rgba(255, 255, 255, 0.08);
@@ -41,7 +41,7 @@
             --rose-glow: #f43f5e;
             
             --heading-gradient: linear-gradient(135deg, #ffffff 0%, #38bdf8 60%, #818cf8 100%);
-            --sidebar-width: 340px;
+            --sidebar-width: 320px;
             
             --shadow-3d: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(56, 189, 248, 0.12);
             --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -49,8 +49,8 @@
 
         [data-theme="light"] {
             --bg-base: #f8fafc;
-            --bg-sidebar: rgba(255, 255, 255, 0.9);
-            --bg-surface: rgba(255, 255, 255, 0.88);
+            --bg-sidebar: rgba(255, 255, 255, 0.92);
+            --bg-surface: rgba(255, 255, 255, 0.9);
             --bg-surface-hover: rgba(241, 245, 249, 0.95);
             --bg-card-3d: rgba(255, 255, 255, 0.95);
             --bg-code: #f1f5f9;
@@ -75,7 +75,7 @@
             --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -83,6 +83,8 @@
 
         html {
             scroll-behavior: smooth;
+            width: 100%;
+            height: 100%;
         }
 
         body {
@@ -91,6 +93,8 @@
             color: var(--text-main);
             display: flex;
             height: 100vh;
+            width: 100vw;
+            max-width: 100vw;
             overflow: hidden;
             position: relative;
             transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s;
@@ -190,6 +194,8 @@
         /* Sidebar Styles */
         .sidebar {
             width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            max-width: var(--sidebar-width);
             background: var(--bg-sidebar);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
@@ -206,7 +212,7 @@
             margin-left: calc(-1 * var(--sidebar-width));
         }
         .sidebar-header {
-            padding: 18px 18px 12px 18px;
+            padding: 16px 16px 12px 16px;
             border-bottom: 1px solid var(--border-glass);
             display: flex;
             flex-direction: column;
@@ -214,7 +220,7 @@
         }
         .sidebar-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.12rem;
+            font-size: 1.1rem;
             font-weight: 800;
             line-height: 1.3;
             background: var(--heading-gradient);
@@ -351,22 +357,33 @@
             font-style: italic;
         }
 
-        /* Main Content Container */
+        /* Main Content Container with Strict Min-Width and Horizontal Overflow Prevention */
         .content, .main-content {
-            flex-grow: 1;
+            flex: 1 1 auto;
+            min-width: 0; /* CRITICAL: Enables flex child shrinking */
+            max-width: calc(100vw - var(--sidebar-width));
             overflow-y: auto;
-            padding: 24px 36px 80px 36px;
+            overflow-x: hidden;
+            padding: 24px 32px 80px 32px;
             position: relative;
             z-index: 1;
             scroll-behavior: smooth;
             background: transparent;
+            box-sizing: border-box;
         }
+        body.sidebar-collapsed .content,
+        body.sidebar-collapsed .main-content {
+            max-width: 100vw;
+        }
+
         .content-inner, .content-container {
-            max-width: 900px;
+            width: 100%;
+            max-width: 920px;
             margin: 0 auto;
+            box-sizing: border-box;
         }
         body.layout-full .content-inner, body.layout-full .content-container {
-            max-width: 96% !important;
+            max-width: 98% !important;
         }
 
         /* 3D Glass Watermark Hub Header */
@@ -385,6 +402,8 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
+            width: 100%;
+            box-sizing: border-box;
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
         .author-watermark-card:hover {
@@ -399,11 +418,17 @@
             border: 1px solid var(--border-glass);
             border-top: 1px solid var(--border-shine);
             border-radius: 18px;
-            padding: 28px 32px;
+            padding: 28px 30px;
             margin-bottom: 32px;
             box-shadow: var(--shadow-card);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
             position: relative;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .chapter-section:hover {
             box-shadow: var(--shadow-3d);
@@ -418,6 +443,9 @@
             padding-bottom: 12px;
             border-bottom: 1px solid var(--border-glass);
             gap: 12px;
+            flex-wrap: wrap;
+            width: 100%;
+            box-sizing: border-box;
         }
         .chapter-number, .section-num {
             font-family: 'Fira Code', monospace;
@@ -432,14 +460,17 @@
         }
         .chapter-title, .chapter-title-main {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.7rem;
+            font-size: 1.65rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.25;
             background: var(--heading-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            flex-grow: 1;
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .bookmark-btn {
             background: rgba(255, 255, 255, 0.05);
@@ -469,11 +500,20 @@
         }
 
         /* Chapter Content Typography */
+        .chapter-body {
+            width: 100%;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
         .chapter-body p {
-            font-size: 1rem;
+            font-size: 0.98rem;
             line-height: 1.72;
             margin-bottom: 14px;
             color: var(--text-main);
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         [data-theme="dark"] .chapter-body p { color: #cbd5e1; }
         [data-theme="light"] .chapter-body p { color: #334155; }
@@ -482,21 +522,24 @@
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
             line-height: 1.35;
-            margin: 26px 0 10px 0;
+            margin: 24px 0 10px 0;
             color: var(--text-main);
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
-        .chapter-body h2 { font-size: 1.38rem; color: var(--cyan-glow); }
-        .chapter-body h3 { font-size: 1.2rem; }
+        .chapter-body h2 { font-size: 1.35rem; color: var(--cyan-glow); }
+        .chapter-body h3 { font-size: 1.18rem; }
         .chapter-body h4 { font-size: 1.02rem; }
 
         .chapter-body ul, .chapter-body ol {
             margin-bottom: 16px;
-            padding-left: 22px;
+            padding-left: 20px;
             color: var(--text-main);
+            box-sizing: border-box;
         }
         [data-theme="dark"] .chapter-body ul, [data-theme="dark"] .chapter-body ol { color: #cbd5e1; }
         [data-theme="light"] .chapter-body ul, [data-theme="light"] .chapter-body ol { color: #334155; }
-        .chapter-body li { margin-bottom: 6px; line-height: 1.65; font-size: 0.98rem; }
+        .chapter-body li { margin-bottom: 6px; line-height: 1.65; font-size: 0.96rem; overflow-wrap: break-word; word-break: break-word; }
 
         .chapter-body strong, .chapter-body b {
             font-weight: 600;
@@ -523,6 +566,9 @@
             color: #cbd5e1;
             border: 1px solid var(--border-glass);
             border-left: 4px solid var(--cyan-glow);
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         [data-theme="light"] .chapter-body blockquote, [data-theme="light"] .callout {
             background: linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, rgba(99, 102, 241, 0.03) 100%);
@@ -531,25 +577,29 @@
             border-left: 4px solid #0284c7;
         }
 
-        /* Glass Tables */
+        /* Glass Tables with Responsive Scroll Container */
         .chapter-body table {
             width: 100%;
+            max-width: 100%;
             border-collapse: collapse;
             margin: 18px 0;
             border-radius: 10px;
             overflow: hidden;
             background: rgba(15, 23, 42, 0.4);
             border: 1px solid var(--border-glass);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
+            box-sizing: border-box;
         }
         [data-theme="light"] .chapter-body table {
             background: #ffffff;
             border: 1px solid #e2e8f0;
         }
         .chapter-body th, .chapter-body td {
-            padding: 10px 14px;
+            padding: 10px 12px;
             border: 1px solid var(--border-glass);
             text-align: left;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .chapter-body th {
             background: rgba(30, 41, 59, 0.6);
@@ -573,12 +623,14 @@
             padding: 16px 18px;
             margin: 16px 0;
             font-family: 'Fira Code', monospace;
-            font-size: 0.86rem;
+            font-size: 0.85rem;
             line-height: 1.55;
             overflow-x: auto;
+            max-width: 100%;
             color: #e2e8f0;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
             position: relative;
+            box-sizing: border-box;
         }
         [data-theme="light"] pre {
             background: #f8fafc;
@@ -595,6 +647,7 @@
             color: var(--cyan-glow);
             padding: 2px 5px;
             border-radius: 4px;
+            word-break: break-word;
         }
 
         .chapter-body img {
@@ -603,9 +656,10 @@
             border-radius: 10px;
             margin: 16px 0;
             border: 1px solid var(--border-glass);
+            box-sizing: border-box;
         }
 
-        /* 3D Animated Diagram Cards */
+        /* 3D Animated Vector SVG Diagram Cards */
         .diagram-card {
             background: rgba(11, 17, 32, 0.88);
             backdrop-filter: blur(25px);
@@ -613,12 +667,15 @@
             border: 1px solid rgba(56, 189, 248, 0.25);
             border-top: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 16px;
-            padding: 20px;
+            padding: 18px 20px;
             margin: 20px 0 24px 0;
             box-shadow: var(--shadow-3d);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         [data-theme="light"] .diagram-card {
             background: #ffffff;
@@ -633,14 +690,17 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border-glass);
             gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+            box-sizing: border-box;
         }
         .diagram-badge {
             font-family: 'Fira Code', monospace;
-            font-size: 0.73rem;
+            font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -652,6 +712,7 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            flex-shrink: 0;
         }
         .diagram-badge::before {
             content: '';
@@ -665,9 +726,13 @@
         }
         .diagram-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--text-main);
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .diagram-caption {
             font-size: 0.86rem;
@@ -678,9 +743,13 @@
             border-radius: 7px;
             background: rgba(255, 255, 255, 0.03);
             border-left: 3px solid var(--cyan-glow);
+            overflow-wrap: break-word;
+            word-break: break-word;
+            box-sizing: border-box;
         }
         .diagram-svg, .hub-svg {
             width: 100%;
+            max-width: 100%;
             height: auto;
             display: block;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
@@ -716,14 +785,17 @@
             border: 1px solid rgba(56, 189, 248, 0.3);
             border-top: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 18px;
-            padding: 20px 24px;
+            padding: 18px 20px;
             margin: 18px 0 24px 0;
             box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
         }
         .concept-hub-card:hover {
@@ -740,10 +812,13 @@
 
         /* Hub Section Base */
         .hub-section {
-            padding: 14px 18px;
+            padding: 14px 16px;
             border-radius: 12px;
             border: 1px solid var(--border-glass);
             background: rgba(15, 23, 42, 0.35);
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
         }
         [data-theme="light"] .hub-section {
             background: #f8fafc;
@@ -774,16 +849,18 @@
             border-color: rgba(147, 51, 234, 0.35);
         }
 
-        /* Hub Headers & Badges */
+        /* Hub Headers & Badges with Flex-Wrap & Word-Break */
         .hub-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 8px 12px;
             margin-bottom: 10px;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border-glass);
+            width: 100%;
+            box-sizing: border-box;
         }
         .hub-badge {
             font-family: 'Outfit', sans-serif;
@@ -791,12 +868,14 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            padding: 4px 11px;
+            padding: 4px 10px;
             border-radius: 16px;
             color: #ffffff !important;
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            flex-shrink: 0;
+            white-space: normal;
         }
         .badge-eli5 {
             background: linear-gradient(135deg, #f59e0b, #ea580c);
@@ -812,34 +891,42 @@
         }
         .hub-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.08rem;
+            font-size: 1.02rem;
             font-weight: 800;
             color: var(--text-main);
             margin: 0 !important;
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .hub-subtitle {
             font-family: 'Fira Code', monospace;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 700;
             color: var(--cyan-glow);
+            flex-shrink: 0;
         }
         .hub-tag {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 700;
             color: #f59e0b;
             background: rgba(245, 158, 11, 0.12);
             border: 1px solid rgba(245, 158, 11, 0.3);
             padding: 2px 7px;
             border-radius: 5px;
+            flex-shrink: 0;
         }
 
         /* Hub Body Content */
         .hub-story {
-            font-size: 0.96rem;
+            font-size: 0.94rem;
             line-height: 1.68;
             color: var(--text-main);
             margin-bottom: 10px;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .hub-story p { margin-bottom: 6px; }
         .hub-story strong {
@@ -860,9 +947,13 @@
             border-left: 3px solid #f59e0b;
             border-radius: 0 7px 7px 0;
             padding: 8px 12px;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.88rem;
+            line-height: 1.55;
             color: #fef3c7;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            width: 100%;
+            box-sizing: border-box;
         }
         [data-theme="light"] .hub-takeaway {
             background: rgba(245, 158, 11, 0.15);
@@ -870,7 +961,7 @@
             border-left-color: #d97706;
         }
         .hub-icon {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             line-height: 1;
             flex-shrink: 0;
         }
@@ -881,18 +972,24 @@
             flex-direction: column;
             gap: 8px;
             margin-bottom: 8px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .company-case {
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             color: var(--text-main);
             background: rgba(15, 23, 42, 0.4);
             border: 1px solid var(--border-glass);
             padding: 9px 12px;
             border-radius: 9px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            box-sizing: border-box;
+            width: 100%;
         }
         [data-theme="light"] .company-case {
             background: #ffffff;
@@ -900,7 +997,7 @@
             color: #1e293b;
         }
         .company-logo {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             line-height: 1.2;
             flex-shrink: 0;
         }
@@ -912,9 +1009,13 @@
             border-left: 3px solid #10b981;
             border-radius: 0 7px 7px 0;
             padding: 8px 12px;
-            font-size: 0.89rem;
-            line-height: 1.5;
+            font-size: 0.88rem;
+            line-height: 1.55;
             color: #d1fae5;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            width: 100%;
+            box-sizing: border-box;
         }
         [data-theme="light"] .rw-metrics-banner {
             background: rgba(16, 185, 129, 0.15);
@@ -927,96 +1028,25 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             line-height: 1.6;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            width: 100%;
+            box-sizing: border-box;
         }
         .tweak-scenario-text {
             color: var(--text-muted);
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .tweak-action-text {
             color: var(--text-main);
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .tweak-action-text strong {
             color: var(--cyan-glow);
-        }
-
-        /* ==========================================================================
-           🖼️ BYTEBYTEGO HIGH-RESOLUTION INFOGRAPHIC ARCHITECTURE CARDS
-           ========================================================================== */
-        .bytebytego-infographic-card {
-            background: rgba(11, 17, 32, 0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.22);
-            border-radius: 16px;
-            padding: 16px;
-            margin: 20px 0 24px 0;
-            box-shadow: var(--shadow-3d);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
-            overflow: hidden;
-        }
-        [data-theme="light"] .bytebytego-infographic-card {
-            background: #ffffff;
-            border: 1px solid rgba(2, 132, 199, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1);
-        }
-        .bytebytego-infographic-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.25);
-            border-color: rgba(56, 189, 248, 0.5);
-        }
-        .infographic-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-glass);
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .infographic-badge {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 3px 10px;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .infographic-badge::before {
-            content: '';
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #10b981;
-            box-shadow: 0 0 8px #10b981;
-        }
-        .infographic-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-        .infographic-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-            border: 1px solid var(--border-glass);
-            transition: transform 0.3s ease;
-        }
-        .infographic-img:hover {
-            transform: scale(1.01);
         }
 
         /* Code Copy Buttons Injector */
@@ -1050,13 +1080,12 @@
 
         @media (max-width: 900px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; max-height: 45vh; }
-            .content, .main-content { padding: 20px 14px 60px 14px; }
-            .chapter-section { padding: 20px 16px; margin-bottom: 24px; }
+            .sidebar { width: 100%; min-width: 100%; max-width: 100%; height: auto; max-height: 45vh; }
+            .content, .main-content { max-width: 100vw; padding: 18px 14px 60px 14px; }
+            .chapter-section { padding: 18px 14px; margin-bottom: 20px; }
             .author-watermark-card { flex-direction: column; align-items: flex-start; }
-            .concept-hub-card { padding: 16px 12px; gap: 12px; }
+            .concept-hub-card { padding: 14px 12px; gap: 10px; }
             .hub-section { padding: 10px 12px; }
-            .bytebytego-infographic-card { padding: 10px; }
         }
 
     </style>
