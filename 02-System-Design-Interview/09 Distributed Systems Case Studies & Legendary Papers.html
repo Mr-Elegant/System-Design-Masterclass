@@ -910,82 +910,44 @@
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
     </button>
 
-    <aside class="sidebar">
+                <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-title">08. AI System Design</div>
+            <div class="sidebar-title">Distributed Systems &amp; Papers</div>
 <div style="font-size: 0.75rem; color: #38bdf8; font-weight: 600; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
     <span style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8;"></span> By Preet Karwal
 </div>
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" class="search-input" placeholder="Search problems...">
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search papers...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
             </div>
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('topics')">Topics (12)</button>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (12)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
         </div>
-        <nav class="chapter-list">
-                <a href="#chapter-01" class="nav-item active" data-chapter="chapter-01">
-                    <span class="chapter-number">01</span>
-                    <span class="chapter-title">Amazon Dynamo: Highly Available Distributed Key-Value Store</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-02" class="nav-item" data-chapter="chapter-02">
-                    <span class="chapter-number">02</span>
-                    <span class="chapter-title">Apache Kafka: Distributed Streaming Commit Log Architecture</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-03" class="nav-item" data-chapter="chapter-03">
-                    <span class="chapter-number">03</span>
-                    <span class="chapter-title">Consistent Hashing &amp;amp; Virtual Node Mathematics</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-04" class="nav-item" data-chapter="chapter-04">
-                    <span class="chapter-number">04</span>
-                    <span class="chapter-title">Paxos &amp;amp; Raft Distributed Consensus Protocols</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-05" class="nav-item" data-chapter="chapter-05">
-                    <span class="chapter-number">05</span>
-                    <span class="chapter-title">Google Bigtable: Distributed Storage for Structured Data</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-06" class="nav-item" data-chapter="chapter-06">
-                    <span class="chapter-number">06</span>
-                    <span class="chapter-title">Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-07" class="nav-item" data-chapter="chapter-07">
-                    <span class="chapter-number">07</span>
-                    <span class="chapter-title">Google Chubby: Distributed Lock Service for Coarse-Grained Synchronization</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-08" class="nav-item" data-chapter="chapter-08">
-                    <span class="chapter-number">08</span>
-                    <span class="chapter-title">Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-09" class="nav-item" data-chapter="chapter-09">
-                    <span class="chapter-number">09</span>
-                    <span class="chapter-title">Google MapReduce: Large-Scale Distributed Data Processing</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-10" class="nav-item" data-chapter="chapter-10">
-                    <span class="chapter-number">10</span>
-                    <span class="chapter-title">Google File System (GFS) &amp;amp; Hadoop HDFS</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-11" class="nav-item" data-chapter="chapter-11">
-                    <span class="chapter-number">11</span>
-                    <span class="chapter-title">Apache Cassandra: Decentralized Masterless NoSQL Database</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-12" class="nav-item" data-chapter="chapter-12">
-                    <span class="chapter-number">12</span>
-                    <span class="chapter-title">Course Conclusion &amp;amp; Next Steps</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-            </nav>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item active" data-num="01" data-title="amazon dynamo: highly available distributed key-value store"><a href="#chapter-01"><span class="chapter-num">01</span> Amazon Dynamo: Highly Available Key-Value Store</a></li>
+<li class="sidebar-item" data-num="02" data-title="apache kafka: distributed streaming commit log architecture"><a href="#chapter-02"><span class="chapter-num">02</span> Apache Kafka: Streaming Commit Log Architecture</a></li>
+<li class="sidebar-item" data-num="03" data-title="consistent hashing &amp; virtual node mathematics"><a href="#chapter-03"><span class="chapter-num">03</span> Consistent Hashing &amp; Virtual Node Mathematics</a></li>
+<li class="sidebar-item" data-num="04" data-title="paxos &amp; raft distributed consensus protocols"><a href="#chapter-04"><span class="chapter-num">04</span> Paxos &amp; Raft Distributed Consensus Protocols</a></li>
+<li class="sidebar-item" data-num="05" data-title="google bigtable: distributed storage for structured data"><a href="#chapter-05"><span class="chapter-num">05</span> Google Bigtable: Distributed Storage for Structured Data</a></li>
+<li class="sidebar-item" data-num="06" data-title="gossip protocols &amp; swim cluster failure detection"><a href="#chapter-06"><span class="chapter-num">06</span> Gossip Protocols &amp; SWIM Cluster Failure Detection</a></li>
+<li class="sidebar-item" data-num="07" data-title="google chubby: distributed lock service for coarse-grained synchronization"><a href="#chapter-07"><span class="chapter-num">07</span> Google Chubby: Distributed Lock Service</a></li>
+<li class="sidebar-item" data-num="08" data-title="apache zookeeper &amp; the zab consensus protocol"><a href="#chapter-08"><span class="chapter-num">08</span> Apache ZooKeeper &amp; The ZAB Consensus Protocol</a></li>
+<li class="sidebar-item" data-num="09" data-title="google mapreduce: large-scale distributed data processing"><a href="#chapter-09"><span class="chapter-num">09</span> Google MapReduce: Large-Scale Distributed Data Processing</a></li>
+<li class="sidebar-item" data-num="10" data-title="google file system (gfs) &amp; hadoop hdfs"><a href="#chapter-10"><span class="chapter-num">10</span> Google File System (GFS) &amp; Hadoop HDFS</a></li>
+<li class="sidebar-item" data-num="11" data-title="apache cassandra: decentralized masterless nosql database"><a href="#chapter-11"><span class="chapter-num">11</span> Apache Cassandra: Masterless NoSQL Database</a></li>
+<li class="sidebar-item" data-num="12" data-title="course conclusion &amp; next steps"><a href="#chapter-12"><span class="chapter-num">12</span> Course Conclusion &amp; Next Steps</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
     </aside>
 
     <main class="content" id="main-content">
@@ -1029,6 +991,7 @@
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Amazon Dynamo: Highly Available Distributed Key-Value Store</h1>
+    <button class="bookmark-btn" data-chapter="01" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1266,6 +1229,7 @@ export class VectorClock {
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Apache Kafka: Distributed Streaming Commit Log Architecture</h1>
+    <button class="bookmark-btn" data-chapter="02" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1493,7 +1457,8 @@ export class KafkaPartitionSegment {
 <section id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
-    <h1 class="chapter-title">Consistent Hashing &amp;amp; Virtual Node Mathematics</h1>
+    <h1 class="chapter-title">Consistent Hashing &amp; Virtual Node Mathematics</h1>
+    <button class="bookmark-btn" data-chapter="03" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1547,9 +1512,9 @@ export class KafkaPartitionSegment {
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Consistent Hashing &amp;amp; Virtual Node Mathematics</div>
+            <div class="pillar-title">The Smart City Blueprint: Consistent Hashing &amp; Virtual Node Mathematics</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Consistent Hashing &amp;amp; Virtual Node Mathematics</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Consistent Hashing &amp; Virtual Node Mathematics</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -1563,7 +1528,7 @@ export class KafkaPartitionSegment {
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Consistent Hashing &amp;amp; Virtual Node Mathematics</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Consistent Hashing &amp; Virtual Node Mathematics</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -1676,7 +1641,8 @@ export class ConsistentHashRing {
 <section id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
-    <h1 class="chapter-title">Paxos &amp;amp; Raft Distributed Consensus Protocols</h1>
+    <h1 class="chapter-title">Paxos &amp; Raft Distributed Consensus Protocols</h1>
+    <button class="bookmark-btn" data-chapter="04" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1736,9 +1702,9 @@ export class ConsistentHashRing {
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Paxos &amp;amp; Raft Distributed Consensus Protocols</div>
+            <div class="pillar-title">The Smart City Blueprint: Paxos &amp; Raft Distributed Consensus Protocols</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Paxos &amp;amp; Raft Distributed Consensus Protocols</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Paxos &amp; Raft Distributed Consensus Protocols</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -1752,7 +1718,7 @@ export class ConsistentHashRing {
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Paxos &amp;amp; Raft Distributed Consensus Protocols</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Paxos &amp; Raft Distributed Consensus Protocols</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -1862,6 +1828,7 @@ export class RaftNode {
   <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Google Bigtable: Distributed Storage for Structured Data</h1>
+    <button class="bookmark-btn" data-chapter="05" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -2071,7 +2038,8 @@ export class MemTable {
 <section id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
-    <h1 class="chapter-title">Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</h1>
+    <h1 class="chapter-title">Gossip Protocols &amp; SWIM Cluster Failure Detection</h1>
+    <button class="bookmark-btn" data-chapter="06" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -2131,9 +2099,9 @@ export class MemTable {
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</div>
+            <div class="pillar-title">The Smart City Blueprint: Gossip Protocols &amp; SWIM Cluster Failure Detection</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Gossip Protocols &amp; SWIM Cluster Failure Detection</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -2147,7 +2115,7 @@ export class MemTable {
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Gossip Protocols &amp;amp; SWIM Cluster Failure Detection</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Gossip Protocols &amp; SWIM Cluster Failure Detection</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -2236,6 +2204,7 @@ export class SWIMNode {
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Google Chubby: Distributed Lock Service for Coarse-Grained Synchronization</h1>
+    <button class="bookmark-btn" data-chapter="07" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -2374,7 +2343,8 @@ export class ChubbyStorageFence {
 <section id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
-    <h1 class="chapter-title">Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</h1>
+    <h1 class="chapter-title">Apache ZooKeeper &amp; The ZAB Consensus Protocol</h1>
+    <button class="bookmark-btn" data-chapter="08" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -2434,9 +2404,9 @@ export class ChubbyStorageFence {
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</div>
+            <div class="pillar-title">The Smart City Blueprint: Apache ZooKeeper &amp; The ZAB Consensus Protocol</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Apache ZooKeeper &amp; The ZAB Consensus Protocol</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -2450,7 +2420,7 @@ export class ChubbyStorageFence {
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Apache ZooKeeper &amp;amp; The ZAB Consensus Protocol</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Apache ZooKeeper &amp; The ZAB Consensus Protocol</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -2526,6 +2496,7 @@ export class ZooKeeperLock {
   <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Google MapReduce: Large-Scale Distributed Data Processing</h1>
+    <button class="bookmark-btn" data-chapter="09" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -2751,7 +2722,8 @@ export class MapReduceEngine {
 <section id="chapter-10" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">10</span>
-    <h1 class="chapter-title">Google File System (GFS) &amp;amp; Hadoop HDFS</h1>
+    <h1 class="chapter-title">Google File System (GFS) &amp; Hadoop HDFS</h1>
+    <button class="bookmark-btn" data-chapter="10" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -2804,9 +2776,9 @@ export class MapReduceEngine {
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Google File System (GFS) &amp;amp; Hadoop HDFS</div>
+            <div class="pillar-title">The Smart City Blueprint: Google File System (GFS) &amp; Hadoop HDFS</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Google File System (GFS) &amp;amp; Hadoop HDFS</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Google File System (GFS) &amp; Hadoop HDFS</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -2820,7 +2792,7 @@ export class MapReduceEngine {
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Google File System (GFS) &amp;amp; Hadoop HDFS</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Google File System (GFS) &amp; Hadoop HDFS</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -2896,6 +2868,7 @@ export class RackAwarePlacementPolicy {
 <div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">Apache Cassandra: Decentralized Masterless NoSQL Database</h1>
+    <button class="bookmark-btn" data-chapter="11" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -3042,7 +3015,8 @@ export class CassandraConsistencyValidator {
 <section id="chapter-12" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">12</span>
-    <h1 class="chapter-title">Course Conclusion &amp;amp; Next Steps</h1>
+    <h1 class="chapter-title">Course Conclusion &amp; Next Steps</h1>
+    <button class="bookmark-btn" data-chapter="12" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -3102,9 +3076,9 @@ export class CassandraConsistencyValidator {
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Course Conclusion &amp;amp; Next Steps</div>
+            <div class="pillar-title">The Smart City Blueprint: Course Conclusion &amp; Next Steps</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Course Conclusion &amp;amp; Next Steps</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Course Conclusion &amp; Next Steps</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -3118,7 +3092,7 @@ export class CassandraConsistencyValidator {
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Course Conclusion &amp;amp; Next Steps</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Course Conclusion &amp; Next Steps</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.

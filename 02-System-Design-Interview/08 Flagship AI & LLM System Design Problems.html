@@ -910,52 +910,38 @@
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
     </button>
 
-    <aside class="sidebar">
+                <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-title">08. AI System Design</div>
+            <div class="sidebar-title">AI System Design</div>
 <div style="font-size: 0.75rem; color: #38bdf8; font-weight: 600; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
     <span style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8;"></span> By Preet Karwal
 </div>
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" class="search-input" placeholder="Search problems...">
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search problems...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
             </div>
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('topics')">Topics (6)</button>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
         </div>
-        <nav class="chapter-list">
-                <a href="#chapter-01" class="nav-item active" data-chapter="chapter-01">
-                    <span class="chapter-number">01</span>
-                    <span class="chapter-title">Designing ChatGPT / Claude Conversational AI Platform at Scale</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-02" class="nav-item" data-chapter="chapter-02">
-                    <span class="chapter-number">02</span>
-                    <span class="chapter-title">Designing an Enterprise Multimodal RAG Platform</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-03" class="nav-item" data-chapter="chapter-03">
-                    <span class="chapter-number">03</span>
-                    <span class="chapter-title">Designing AI Code Autocomplete (GitHub Copilot / Cursor)</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-04" class="nav-item" data-chapter="chapter-04">
-                    <span class="chapter-number">04</span>
-                    <span class="chapter-title">Designing a Real-Time Text-to-Image &amp;amp; Video Pipeline (Midjourney / Sora)</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-05" class="nav-item" data-chapter="chapter-05">
-                    <span class="chapter-number">05</span>
-                    <span class="chapter-title">Designing an Autonomous AI Coding Agent (Devin / SWE-Agent)</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-06" class="nav-item" data-chapter="chapter-06">
-                    <span class="chapter-number">06</span>
-                    <span class="chapter-title">Designing an Ultra-Low Latency Voice AI Assistant (Realtime API)</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-            </nav>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item active" data-num="01" data-title="designing chatgpt / claude conversational ai platform at scale"><a href="#chapter-01"><span class="chapter-num">01</span> Designing ChatGPT / Claude Conversational AI Platform at Scale</a></li>
+<li class="sidebar-item" data-num="02" data-title="designing an enterprise multimodal rag platform"><a href="#chapter-02"><span class="chapter-num">02</span> Designing an Enterprise Multimodal RAG Platform</a></li>
+<li class="sidebar-item" data-num="03" data-title="designing ai code autocomplete (github copilot / cursor)"><a href="#chapter-03"><span class="chapter-num">03</span> Designing AI Code Autocomplete (GitHub Copilot / Cursor)</a></li>
+<li class="sidebar-item" data-num="04" data-title="designing a real-time text-to-image &amp; video pipeline (midjourney / sora)"><a href="#chapter-04"><span class="chapter-num">04</span> Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)</a></li>
+<li class="sidebar-item" data-num="05" data-title="designing an autonomous ai coding agent (devin / swe-agent)"><a href="#chapter-05"><span class="chapter-num">05</span> Designing an Autonomous AI Coding Agent (Devin / SWE-Agent)</a></li>
+<li class="sidebar-item" data-num="06" data-title="designing an ultra-low latency voice ai assistant (realtime api)"><a href="#chapter-06"><span class="chapter-num">06</span> Designing an Ultra-Low Latency Voice AI Assistant (Realtime API)</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
     </aside>
 
     <main class="content" id="main-content">
@@ -999,6 +985,7 @@
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Designing ChatGPT / Claude Conversational AI Platform at Scale</h1>
+    <button class="bookmark-btn" data-chapter="01" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1181,6 +1168,7 @@
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Designing an Enterprise Multimodal RAG Platform</h1>
+    <button class="bookmark-btn" data-chapter="02" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1305,6 +1293,7 @@
   <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Designing AI Code Autocomplete (GitHub Copilot / Cursor)</h1>
+    <button class="bookmark-btn" data-chapter="03" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1478,7 +1467,8 @@
 <section id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
-    <h1 class="chapter-title">Designing a Real-Time Text-to-Image &amp;amp; Video Pipeline (Midjourney / Sora)</h1>
+    <h1 class="chapter-title">Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)</h1>
+    <button class="bookmark-btn" data-chapter="04" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1538,9 +1528,9 @@
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Designing a Real-Time Text-to-Image &amp;amp; Video Pipeline (Midjourney / Sora)</div>
+            <div class="pillar-title">The Smart City Blueprint: Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Designing a Real-Time Text-to-Image &amp;amp; Video Pipeline (Midjourney / Sora)</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -1554,7 +1544,7 @@
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Designing a Real-Time Text-to-Image &amp;amp; Video Pipeline (Midjourney / Sora)</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -1591,6 +1581,7 @@
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Designing an Autonomous AI Coding Agent (Devin / SWE-Agent)</h1>
+    <button class="bookmark-btn" data-chapter="05" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1709,6 +1700,7 @@
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Designing an Ultra-Low Latency Voice AI Assistant (Realtime API)</h1>
+    <button class="bookmark-btn" data-chapter="06" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 

@@ -910,47 +910,37 @@
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
     </button>
 
-    <aside class="sidebar">
+                <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-title">14. AI Microservices</div>
+            <div class="sidebar-title">AI &amp; Agentic Patterns</div>
 <div style="font-size: 0.75rem; color: #38bdf8; font-weight: 600; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
     <span style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8;"></span> By Preet Karwal
 </div>
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" class="search-input" placeholder="Search patterns...">
+            <div class="controls">
+                <input type="text" id="search-input" class="search-box" placeholder="Search patterns...">
+                <button id="sidebar-toggle" class="control-btn" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <button id="theme-toggle" class="control-btn" title="Toggle Dark/Light Mode">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg>
+                </button>
             </div>
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('topics')">Topics (5)</button>
+            <div class="sidebar-tabs">
+                <button id="tab-chapters" class="tab-btn active">Topics (5)</button>
+                <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
         </div>
-        <nav class="chapter-list">
-                <a href="#chapter-01" class="nav-item active" data-chapter="chapter-01">
-                    <span class="chapter-number">01</span>
-                    <span class="chapter-title">AI Gateway &amp;amp;amp;amp; Multi-Provider Routing Pattern</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-02" class="nav-item" data-chapter="chapter-02">
-                    <span class="chapter-number">02</span>
-                    <span class="chapter-title">Agentic Workflow &amp;amp;amp;amp; Multi-Agent Orchestrator Pattern</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-03" class="nav-item" data-chapter="chapter-03">
-                    <span class="chapter-number">03</span>
-                    <span class="chapter-title">AI Tool Calling &amp;amp;amp;amp; Sandboxed Execution Pattern</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-04" class="nav-item" data-chapter="chapter-04">
-                    <span class="chapter-number">04</span>
-                    <span class="chapter-title">Hierarchical Agent Memory Pattern (MemGPT &amp;amp;amp;amp; GraphRAG)</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-                <a href="#chapter-05" class="nav-item" data-chapter="chapter-05">
-                    <span class="chapter-number">05</span>
-                    <span class="chapter-title">Continuous Fine-Tuning &amp;amp;amp;amp; LLM Evaluation Pipeline</span>
-                    <span class="reading-time">10 min</span>
-                </a>
-            </nav>
+        <div class="sidebar-menu-container">
+            <ul id="sidebar-menu" class="sidebar-menu">
+<li class="sidebar-item active" data-num="01" data-title="ai gateway &amp; multi-provider routing pattern"><a href="#chapter-01"><span class="chapter-num">01</span> AI Gateway &amp; Multi-Provider Routing Pattern</a></li>
+<li class="sidebar-item" data-num="02" data-title="agentic workflow &amp; multi-agent orchestrator pattern"><a href="#chapter-02"><span class="chapter-num">02</span> Agentic Workflow &amp; Multi-Agent Orchestrator Pattern</a></li>
+<li class="sidebar-item" data-num="03" data-title="ai tool calling &amp; sandboxed execution pattern"><a href="#chapter-03"><span class="chapter-num">03</span> AI Tool Calling &amp; Sandboxed Execution Pattern</a></li>
+<li class="sidebar-item" data-num="04" data-title="hierarchical agent memory pattern (memgpt &amp; graphrag)"><a href="#chapter-04"><span class="chapter-num">04</span> Hierarchical Agent Memory Pattern (MemGPT &amp; GraphRAG)</a></li>
+<li class="sidebar-item" data-num="05" data-title="continuous fine-tuning &amp; llm evaluation pipeline"><a href="#chapter-05"><span class="chapter-num">05</span> Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</a></li>
+            </ul>
+            <ul id="bookmarks-menu" class="sidebar-menu" style="display: none;">
+            </ul>
+        </div>
     </aside>
 
     <main class="content" id="main-content">
@@ -991,7 +981,8 @@
 <section id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
-    <h1 class="chapter-title">AI Gateway &amp;amp;amp;amp; Multi-Provider Routing Pattern</h1>
+    <h1 class="chapter-title">AI Gateway &amp; Multi-Provider Routing Pattern</h1>
+    <button class="bookmark-btn" data-chapter="01" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -999,7 +990,7 @@
     <div class="diagram-card">
         <div class="diagram-header">
             <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
-            <span class="diagram-title">AI Gateway &amp;amp;amp; Multi-Provider Routing Pattern</span>
+            <span class="diagram-title">AI Gateway &amp; Multi-Provider Routing Pattern</span>
         </div>
         <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
@@ -1040,7 +1031,7 @@
         </g>
     </svg>
         <div class="diagram-caption">
-            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (AI Gateway &amp;amp;amp; Multi-Provider Routing Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (AI Gateway &amp; Multi-Provider Routing Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
     </div>
 
@@ -1051,9 +1042,9 @@
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: AI Gateway &amp;amp;amp;amp; Multi-Provider Routing Pattern</div>
+            <div class="pillar-title">The Smart City Blueprint: AI Gateway &amp; Multi-Provider Routing Pattern</div>
             <div class="pillar-body">
-                <p>Imagine <strong>AI Gateway &amp;amp;amp;amp; Multi-Provider Routing Pattern</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>AI Gateway &amp; Multi-Provider Routing Pattern</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -1067,7 +1058,7 @@
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>AI Gateway &amp;amp;amp;amp; Multi-Provider Routing Pattern</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>AI Gateway &amp; Multi-Provider Routing Pattern</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -1194,7 +1185,8 @@ return {1, "ALLOWED"}</code></pre>
 <section id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
-    <h1 class="chapter-title">Agentic Workflow &amp;amp;amp;amp; Multi-Agent Orchestrator Pattern</h1>
+    <h1 class="chapter-title">Agentic Workflow &amp; Multi-Agent Orchestrator Pattern</h1>
+    <button class="bookmark-btn" data-chapter="02" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1202,7 +1194,7 @@ return {1, "ALLOWED"}</code></pre>
     <div class="diagram-card">
         <div class="diagram-header">
             <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
-            <span class="diagram-title">Agentic Workflow &amp;amp;amp; Multi-Agent Orchestrator Pattern</span>
+            <span class="diagram-title">Agentic Workflow &amp; Multi-Agent Orchestrator Pattern</span>
         </div>
         <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
@@ -1400,7 +1392,8 @@ class ReActAgent:
 <section id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
-    <h1 class="chapter-title">AI Tool Calling &amp;amp;amp;amp; Sandboxed Execution Pattern</h1>
+    <h1 class="chapter-title">AI Tool Calling &amp; Sandboxed Execution Pattern</h1>
+    <button class="bookmark-btn" data-chapter="03" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1408,7 +1401,7 @@ class ReActAgent:
     <div class="diagram-card">
         <div class="diagram-header">
             <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
-            <span class="diagram-title">AI Tool Calling &amp;amp;amp; Sandboxed Execution Pattern</span>
+            <span class="diagram-title">AI Tool Calling &amp; Sandboxed Execution Pattern</span>
         </div>
         <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
@@ -1460,9 +1453,9 @@ class ReActAgent:
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: AI Tool Calling &amp;amp;amp;amp; Sandboxed Execution Pattern</div>
+            <div class="pillar-title">The Smart City Blueprint: AI Tool Calling &amp; Sandboxed Execution Pattern</div>
             <div class="pillar-body">
-                <p>Imagine <strong>AI Tool Calling &amp;amp;amp;amp; Sandboxed Execution Pattern</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>AI Tool Calling &amp; Sandboxed Execution Pattern</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -1476,7 +1469,7 @@ class ReActAgent:
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>AI Tool Calling &amp;amp;amp;amp; Sandboxed Execution Pattern</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>AI Tool Calling &amp; Sandboxed Execution Pattern</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
@@ -1547,7 +1540,8 @@ class ReActAgent:
 <section id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
-    <h1 class="chapter-title">Hierarchical Agent Memory Pattern (MemGPT &amp;amp;amp;amp; GraphRAG)</h1>
+    <h1 class="chapter-title">Hierarchical Agent Memory Pattern (MemGPT &amp; GraphRAG)</h1>
+    <button class="bookmark-btn" data-chapter="04" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1555,7 +1549,7 @@ class ReActAgent:
     <div class="diagram-card">
         <div class="diagram-header">
             <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
-            <span class="diagram-title">Hierarchical Agent Memory Pattern (MemGPT &amp;amp;amp; GraphRAG)</span>
+            <span class="diagram-title">Hierarchical Agent Memory Pattern (MemGPT &amp; GraphRAG)</span>
         </div>
         <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
@@ -1668,7 +1662,8 @@ class ReActAgent:
 <section id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
-    <h1 class="chapter-title">Continuous Fine-Tuning &amp;amp;amp;amp; LLM Evaluation Pipeline</h1>
+    <h1 class="chapter-title">Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</h1>
+    <button class="bookmark-btn" data-chapter="05" title="Bookmark this topic"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> <span>Bookmark</span></button>
   </div>
   <div class="chapter-body">
 
@@ -1676,7 +1671,7 @@ class ReActAgent:
     <div class="diagram-card">
         <div class="diagram-header">
             <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
-            <span class="diagram-title">Continuous Fine-Tuning &amp;amp;amp; LLM Evaluation Pipeline</span>
+            <span class="diagram-title">Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</span>
         </div>
         <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
@@ -1717,7 +1712,7 @@ class ReActAgent:
         </g>
     </svg>
         <div class="diagram-caption">
-            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Continuous Fine-Tuning &amp;amp;amp; LLM Evaluation Pipeline): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Continuous Fine-Tuning &amp; LLM Evaluation Pipeline): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
     </div>
 
@@ -1728,9 +1723,9 @@ class ReActAgent:
             <div class="pillar-header">
                 <span class="pillar-badge badge-eli5">🧒 ELI5 MENTAL MODEL</span>
             </div>
-            <div class="pillar-title">The Smart City Blueprint: Continuous Fine-Tuning &amp;amp;amp;amp; LLM Evaluation Pipeline</div>
+            <div class="pillar-title">The Smart City Blueprint: Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</div>
             <div class="pillar-body">
-                <p>Imagine <strong>Continuous Fine-Tuning &amp;amp;amp;amp; LLM Evaluation Pipeline</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
+                <p>Imagine <strong>Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</strong> as an essential department in a high-tech smart city that balances traffic, prevents bottlenecks, and ensures high availability.</p>
             </div>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
@@ -1744,7 +1739,7 @@ class ReActAgent:
             </div>
             <div class="pillar-title">Enterprise Production Blueprint</div>
             <div class="pillar-body">
-                <p>Leading tier-1 systems use <strong>Continuous Fine-Tuning &amp;amp;amp;amp; LLM Evaluation Pipeline</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
+                <p>Leading tier-1 systems use <strong>Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</strong> patterns to process millions of requests per second with sub-millisecond p99 latencies.</p>
             </div>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
