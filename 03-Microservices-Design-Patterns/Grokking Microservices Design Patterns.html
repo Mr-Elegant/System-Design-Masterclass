@@ -351,7 +351,7 @@
             font-style: italic;
         }
 
-        /* Main Content Container with Balanced Spacing */
+        /* Main Content Container */
         .content, .main-content {
             flex-grow: 1;
             overflow-y: auto;
@@ -391,7 +391,7 @@
             border-color: rgba(56, 189, 248, 0.35);
         }
 
-        /* Chapter Section Card with Clean Padding */
+        /* Chapter Section Card */
         .chapter-section {
             background: var(--bg-card-3d);
             backdrop-filter: blur(20px);
@@ -852,17 +852,6 @@
             color: #b45309;
             background: rgba(245, 158, 11, 0.15);
         }
-        .hub-svg-container {
-            margin: 10px 0;
-            background: rgba(11, 17, 32, 0.7);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            border-radius: 10px;
-            padding: 12px;
-        }
-        [data-theme="light"] .hub-svg-container {
-            background: #ffffff;
-            border-color: rgba(245, 158, 11, 0.3);
-        }
         .hub-takeaway {
             display: flex;
             align-items: flex-start;
@@ -951,6 +940,85 @@
             color: var(--cyan-glow);
         }
 
+        /* ==========================================================================
+           🖼️ BYTEBYTEGO HIGH-RESOLUTION INFOGRAPHIC ARCHITECTURE CARDS
+           ========================================================================== */
+        .bytebytego-infographic-card {
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px 0 24px 0;
+            box-shadow: var(--shadow-3d);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
+            overflow: hidden;
+        }
+        [data-theme="light"] .bytebytego-infographic-card {
+            background: #ffffff;
+            border: 1px solid rgba(2, 132, 199, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1);
+        }
+        .bytebytego-infographic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.25);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+        .infographic-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-glass);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .infographic-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .infographic-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+        .infographic-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .infographic-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-glass);
+            transition: transform 0.3s ease;
+        }
+        .infographic-img:hover {
+            transform: scale(1.01);
+        }
+
         /* Code Copy Buttons Injector */
         .code-copy-btn {
             position: absolute;
@@ -988,6 +1056,7 @@
             .author-watermark-card { flex-direction: column; align-items: flex-start; }
             .concept-hub-card { padding: 16px 12px; gap: 12px; }
             .hub-section { padding: 10px 12px; }
+            .bytebytego-infographic-card { padding: 10px; }
         }
 
     </style>
@@ -3321,6 +3390,15 @@
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Top 12 Tips for API Security (Page 65)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p065_top_12_tips_for_api_security.png" alt="Top 12 Tips for API Security" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>When implementing service discovery, it&#x27;s important not to overlook security. By its nature, a service registry is a critical piece of infrastructure – it knows where everything is and helps route traffic. If it is compromised, an attacker could potentially misroute traffic (service spoofing) or gain sensitive information about your system’s topology. Here are some key security considerations:</p>
 <ul>
@@ -6012,6 +6090,15 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>In this section, we&#x27;ll bring the Sidecar Pattern to life, showing you just how it operates in a real-world scenario.</p>
 <h2>Creating the Main Application</h2>
 <p>First things first, we need an application. Let&#x27;s create a simple Java web application. This application will expose a RESTful API and will serve as our main application.</p>
@@ -6233,6 +6320,15 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>You might be wondering, &quot;Where can I use this pattern?&quot; or &quot;How does it fit into my system&#x27;s design?&quot; Let&#x27;s explore this together through practical use cases and system design examples.</p>
 <h2>Use Cases: Where Does the Sidecar Pattern Shine?</h2>
@@ -6493,6 +6589,15 @@ Imagine we have an old system for user management and we want to replace the &qu
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A Cheatsheet on Database Performance (Page 46)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p046_a_cheatsheet_on_database_performance.png" alt="A Cheatsheet on Database Performance" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Diving deeper into the transactional labyrinth of distributed systems, we first need to look back and understand the roots of the problem. This journey takes us back to the traditional transaction models that were the norm in the era of monolithic applications.</p>
 <h2>A Trip Down Memory Lane: Traditional Transaction Models</h2>
@@ -7290,6 +7395,15 @@ Imagine we have an old system for user management and we want to replace the &qu
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>As the complexity of software applications grew over time, developers embraced distributed systems due to their inherent capabilities for scalability and resilience. But as with any technology shift, distributed systems brought with them a host of challenges. One major problem we encounter in the world of distributed systems is managing complex interactions.</p>
 <h2>When Simplicity is no longer the Norm</h2>
@@ -9258,6 +9372,15 @@ The separation of concerns also distinguishes between methods that change the st
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A picture is worth a thousand words: 9 best practices for developing microservices (Page 441)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p441_a_picture_is_worth_a_thousand_words_9_best_practic.png" alt="A picture is worth a thousand words: 9 best practices for developing microservices" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>Configuration management is a critical element in the design and maintenance of microservices. With an inadequate configuration management strategy, even the most well-designed microservices architecture can quickly become unmanageable. To truly understand why the Configuration Externalization Pattern is so crucial, we first need to fully comprehend the challenges we face in configuration management within a microservices architecture.</p>
 <h2>The Challenge of Volume and Diversity</h2>
 <p>Just picture your architecture as a bustling city, teeming with activity. Each microservice is a building within this city, each with its unique purpose and set of configurations - akin to blueprints. Now imagine each building is from a different era, built with diverse architectural styles and materials. This is what a microservices architecture often looks like. With a multitude of services, each possibly written in different languages and using different technology stacks, managing configurations can quickly become a nightmare.</p>
@@ -10148,6 +10271,15 @@ return {1, "ALLOWED"}</code></pre>
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">What is an AI Agent? (Page 42)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p042_what_is_an_ai_agent.png" alt="What is an AI Agent?" class="infographic-img" loading="lazy" />
+    </div>
+
     <div class="diagram-card">
       <div class="diagram-header">
         <div class="diagram-title">Multi-Agent Hierarchical Supervisor Workflow (LangGraph)</div>
@@ -10307,6 +10439,15 @@ class ReActAgent:
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Visualizing a SQL query (Page 155)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p155_visualizing_a_sql_query.png" alt="Visualizing a SQL query" class="infographic-img" loading="lazy" />
+    </div>
+
     <h2>1. Sandboxing Infrastructure: Firecracker vs gVisor</h2>
     <table class="comparison-table">
       <thead>
@@ -10407,6 +10548,15 @@ class ReActAgent:
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">What is an AI Agent? (Page 42)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p042_what_is_an_ai_agent.png" alt="What is an AI Agent?" class="infographic-img" loading="lazy" />
+    </div>
+
     <h2>1. Three-Tier Memory Architecture</h2>
     <ul>
       <li><strong>Working Memory:</strong> In-context system prompt scratchpad (e.g., user identity, immediate goal status).</li>
@@ -10475,6 +10625,15 @@ class ReActAgent:
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">CI/CD Pipeline Explained (Page 290)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p290_ci_cd_pipeline_explained.png" alt="CI/CD Pipeline Explained" class="infographic-img" loading="lazy" />
+    </div>
+
     <h2>1. LoRA Adapter Hot-Swapping Architecture</h2>
     <p>In low-rank adaptation, the weight update matrix is decomposed into two low-rank matrices: $W_{	ext{new}} = W_{	ext{base}} + rac{lpha}{r} (A \cdot B)$. In a production vLLM cluster, the base model is frozen in GPU memory, while dynamic LoRA weights (only 50MB-200MB each) are loaded on-the-fly per request based on tenant header: <code>X-LoRA-Adapter: legal-v3</code>.</p>
 
@@ -10507,7 +10666,7 @@ class ReActAgent:
             });
         }
 
-        // Sidebar Toggle Logic (Supports both button IDs)
+        // Sidebar Toggle Logic
         const sidebarToggle = document.getElementById('sidebar-toggle-btn') || document.getElementById('sidebar-toggle');
         const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
         
@@ -10524,7 +10683,7 @@ class ReActAgent:
             document.body.classList.add('sidebar-collapsed');
         }
 
-        // Theme Toggle Logic (Supports both button IDs)
+        // Theme Toggle Logic
         const themeToggle = document.getElementById('theme-btn') || document.getElementById('theme-toggle');
         const htmlEl = document.documentElement;
         

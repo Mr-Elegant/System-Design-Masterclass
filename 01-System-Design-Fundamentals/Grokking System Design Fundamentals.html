@@ -351,7 +351,7 @@
             font-style: italic;
         }
 
-        /* Main Content Container with Balanced Spacing */
+        /* Main Content Container */
         .content, .main-content {
             flex-grow: 1;
             overflow-y: auto;
@@ -391,7 +391,7 @@
             border-color: rgba(56, 189, 248, 0.35);
         }
 
-        /* Chapter Section Card with Clean Padding */
+        /* Chapter Section Card */
         .chapter-section {
             background: var(--bg-card-3d);
             backdrop-filter: blur(20px);
@@ -852,17 +852,6 @@
             color: #b45309;
             background: rgba(245, 158, 11, 0.15);
         }
-        .hub-svg-container {
-            margin: 10px 0;
-            background: rgba(11, 17, 32, 0.7);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            border-radius: 10px;
-            padding: 12px;
-        }
-        [data-theme="light"] .hub-svg-container {
-            background: #ffffff;
-            border-color: rgba(245, 158, 11, 0.3);
-        }
         .hub-takeaway {
             display: flex;
             align-items: flex-start;
@@ -951,6 +940,85 @@
             color: var(--cyan-glow);
         }
 
+        /* ==========================================================================
+           🖼️ BYTEBYTEGO HIGH-RESOLUTION INFOGRAPHIC ARCHITECTURE CARDS
+           ========================================================================== */
+        .bytebytego-infographic-card {
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px 0 24px 0;
+            box-shadow: var(--shadow-3d);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
+            overflow: hidden;
+        }
+        [data-theme="light"] .bytebytego-infographic-card {
+            background: #ffffff;
+            border: 1px solid rgba(2, 132, 199, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1);
+        }
+        .bytebytego-infographic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.25);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+        .infographic-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-glass);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .infographic-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .infographic-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+        .infographic-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .infographic-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-glass);
+            transition: transform 0.3s ease;
+        }
+        .infographic-img:hover {
+            transform: scale(1.01);
+        }
+
         /* Code Copy Buttons Injector */
         .code-copy-btn {
             position: absolute;
@@ -988,6 +1056,7 @@
             .author-watermark-card { flex-direction: column; align-items: flex-start; }
             .concept-hub-card { padding: 16px 12px; gap: 12px; }
             .hub-section { padding: 10px 12px; }
+            .bytebytego-infographic-card { padding: 10px; }
         }
 
     </style>
@@ -2118,6 +2187,15 @@
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A Crash Course on Architectural Scalability (Page 22)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p022_a_crash_course_on_architectural_scalability.png" alt="A Crash Course on Architectural Scalability" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><h2>Horizontal and vertical scaling of load balancers</h2>
 <p>As traffic to an application increases, it is essential to ensure that the load balancer can handle the increased demand. There are two primary methods for scaling load balancers:</p>
 <ul>
@@ -2613,6 +2691,15 @@
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A Crash Course on Architectural Scalability (Page 22)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p022_a_crash_course_on_architectural_scalability.png" alt="A Crash Course on Architectural Scalability" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Scalability is the ability of a system to handle an increasing workload, either by adding more resources (scaling out) or by upgrading the capacity of existing resources (scaling up). In distributed systems, scalability is essential to ensure that the system can effectively manage the growing demands of users, data, and processing power. Here&#x27;s an overview of the different aspects of scalability:</p>
 <h2>A. Horizontal Scaling</h2>
@@ -3276,6 +3363,15 @@
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">How does HTTPS work? (Page 176)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p176_how_does_https_work.png" alt="How does HTTPS work?" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>HTTP (Hypertext Transfer Protocol) and HTTPS (Hypertext Transfer Protocol Secure) are both protocols used for transmitting data over the internet, primarily used for loading webpages. While they are similar in many ways, the key difference lies in the security aspect provided by HTTPS. Let&#x27;s compare the two:</p>
 <h2>What is HTTP?</h2>
 <p><strong>HTTP</strong> stands for <strong>HyperText Transfer Protocol</strong>. It&#x27;s the foundational protocol used for transmitting data on the World Wide Web. When you enter a website address in your browser, HTTP is responsible for fetching and displaying that site.</p>
@@ -3539,6 +3635,15 @@
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">HTTP/1 -> HTTP/2 -> HTTP/3 (Page 79)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p079_http_1_http_2_http_3.png" alt="HTTP/1 -> HTTP/2 -> HTTP/3" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>The <strong>HyperText Transfer Protocol (HTTP)</strong> is the backbone of data communication on the World Wide Web. Over the years, HTTP has evolved through various versions—<strong>1.0</strong>, <strong>1.1</strong>, <strong>2.0</strong>, and <strong>3.0</strong>—each introducing enhancements to improve performance, security, and efficiency. Understanding these versions is essential for software engineers to design and optimize web applications effectively.</p>
 <h2>Overview of HTTP Versions</h2>
@@ -3827,6 +3932,15 @@
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">How DNS Works (Page 423)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p423_how_dns_works.png" alt="How DNS Works" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><h2>What is DNS (Domain Name System)?</h2>
 <p>DNS, or Domain Name System, is a system used to translate human-readable domain names (e.g., <a href="http://www.designgurus.com/" target="_blank">www.designgurus.com</a>) into IP addresses (e.g., 198.47.25.1) that computers can understand. This translation process is crucial because computers and networking devices rely on IP addresses to identify and communicate with each other on the internet. In simple terms, DNS acts like a phonebook for the internet, allowing users to access websites using easy-to-remember domain names instead of having to memorize numeric IP addresses.</p>
 <h2>Purpose and Importance of DNS</h2>
@@ -4079,6 +4193,15 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">How DNS Works (Page 423)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p423_how_dns_works.png" alt="How DNS Works" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>The DNS resolution process involves a series of recursive and iterative queries, utilizing a distributed and hierarchical infrastructure of DNS servers, resolvers, and caching mechanisms.</p>
 <h2>1. Recursive and Iterative DNS queries</h2>
 <p>DNS resolution is the process of converting a domain name into its corresponding IP address. There are two types of DNS queries involved in this process: recursive and iterative queries.</p>
@@ -4159,6 +4282,15 @@ Recursive Resolver (Often ISP/ Public)
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">How DNS Works (Page 423)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p423_how_dns_works.png" alt="How DNS Works" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>The Domain Name System (DNS) plays a critical role in the smooth functioning of the internet, translating human-readable domain names into IP addresses that computers can understand. As the number of users and services on the internet continues to grow, ensuring the performance, reliability, and availability of DNS becomes increasingly important. DNS load balancing and high availability techniques, such as round-robin DNS, geographically distributed servers, anycast routing, and Content Delivery Networks (CDNs), help distribute the load among multiple servers, reduce latency for end-users, and maintain uninterrupted service, even in the face of server failures or network outages. This chapter provides an overview of these techniques, explaining how they contribute to a more efficient and resilient DNS infrastructure.</p>
 <h2>1. Round-robin DNS</h2>
@@ -4316,6 +4448,15 @@ Recursive Resolver (Often ISP/ Public)
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">18 Common Ports Worth Knowing (Page 48)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p048_18_common_ports_worth_knowing.png" alt="18 Common Ports Worth Knowing" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Caching plays a critical role in improving system performance and user experience in software engineering. By storing frequently accessed data in a cache, applications can reduce the response time and latency of operations, resulting in faster and more efficient processing. Here are some reasons why caching is important:</p>
 <h2>1. Reduced latency</h2>
@@ -5061,6 +5202,15 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>Origin servers and edge servers are key components in the delivery of web content, especially in content delivery networks (CDNs). They serve different roles in ensuring that users access web content quickly and efficiently. Understanding the distinction between the two is crucial in the context of web architecture and CDN functionality.</p>
 <h2>Origin Server</h2>
 <p>The origin server is the primary source of the original, unmodified content. It hosts the website&#x27;s content, including HTML files, images, stylesheets, JavaScript, videos, and other digital assets. When a user requests a web resource (like a webpage), the request is directed to the origin server if the content is not cached elsewhere.</p>
@@ -5681,6 +5831,15 @@ Recursive Resolver (Often ISP/ Public)
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Session, Cookie, JWT, Token, SSO, and OAuth 2.0 Explained in One Diagram (Page 36)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p036_session_cookie_jwt_token_sso_and_oauth_2_0_explain.png" alt="Session, Cookie, JWT, Token, SSO, and OAuth 2.0 Explained in One Diagram" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>While data partitioning offers numerous benefits, it also comes with some disadvantages and challenges that organizations must consider when implementing partitioning strategies. Some of these drawbacks include:</p>
 <h2>1. Complexity</h2>
@@ -6691,6 +6850,15 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">10 Essential Components of a Production Web Application (Page 34)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p034_10_essential_components_of_a_production_web_applic.png" alt="10 Essential Components of a Production Web Application" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>Now that we have defined Consistency, Availability, and Partition Tolerance, let&#x27;s dive deeper into what each of these means in practice for distributed systems, and why they matter.</p>
 <h2>Consistency in Distributed Systems</h2>
 <p>Under CAP, <strong>consistency means <em>strong consistency</em></strong> across the distributed system. Whenever data is written to one node, that data is immediately (and synchronously) replicated to <em>all</em> nodes before the write is considered successful. This guarantees that any client, reading from any replica, will get the latest data. For example, if you update your profile picture on a social network, a strongly consistent system would ensure that anyone who views your profile (from any server location) sees the new picture immediately after you saved it.</p>
@@ -7587,6 +7755,15 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A Cheatsheet on Database Performance (Page 46)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p046_a_cheatsheet_on_database_performance.png" alt="A Cheatsheet on Database Performance" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>When we use an application – whether it&#x27;s online banking or a shopping site – we expect the data to be correct and the system to work reliably. If you transfer money and a glitch happens, you wouldn’t want the bank to deduct money from your account without adding it to the recipient’s account. This is why database consistency and reliability matter so much. A reliable database ensures that even if something goes wrong (like a crash or network issue), your data isn’t lost or corrupted.</p>
 <p>In the world of databases, there are two common models for handling consistency and reliability: <strong>ACID</strong> and <strong>BASE</strong>. These acronyms stand for different approaches in database design. In simple terms, <strong>ACID</strong> is about keeping transactions <em>strictly correct and reliable</em>, while <strong>BASE</strong> is about keeping the system <em>basically available and scalable</em> (even if data might be briefly inconsistent). They’re often seen as opposites, but each has its own use cases and trade-offs. In this post, we’ll explain what each term means, give easy examples, compare their differences, and help you decide which approach fits which situation.</p>
 <h2>What is ACID?</h2>
@@ -8402,6 +8579,15 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>Indexes are well known when it comes to databases. Sooner or later there comes a time when database performance is no longer satisfactory. One of the very first things you should turn to when that happens is database indexing.</p>
 <p>The goal of creating an index on a particular table in a database is to make it faster to search through the table and find the row or rows that we want. Indexes can be created using one or more columns of a database table, providing the basis for both rapid random lookups and efficient access of ordered records.</p>
 <h2>Example: A library catalog</h2>
@@ -8481,6 +8667,15 @@ Recursive Resolver (Often ISP/ Public)
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Database indexes are designed to improve the speed and efficiency of data retrieval operations. They function by maintaining a separate structure that points to the rows in a table, allowing the database to look up data more quickly without scanning the entire table.</p>
 <p>There are various types of database indexes, each with its unique characteristics and use cases. Understanding these different index types is crucial for optimizing the performance of database systems and ensuring efficient data retrieval.</p>
@@ -9484,6 +9679,15 @@ The WebSocket protocol enables communication between a client and a server with 
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Top 12 Tips for API Security (Page 65)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p065_top_12_tips_for_api_security.png" alt="Top 12 Tips for API Security" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>Ensuring security and privacy in distributed systems is essential to protect sensitive data, user information, and system integrity. Distributed systems face unique challenges related to security and privacy due to their distributed nature, which makes them more vulnerable to attacks and data breaches. Here&#x27;s an overview of various aspects of security and privacy in distributed systems:</p>
 <h2>A. Authentication and Authorization</h2>
 <p>Authentication and authorization are critical components of security in distributed systems. Authentication is the process of verifying the identity of users, services, or nodes before allowing them access to the system. Authorization, on the other hand, determines what actions or resources the authenticated entity is allowed to access. Implementing strong authentication and authorization mechanisms, such as OAuth, JWT, or Kerberos, can help protect your distributed system from unauthorized access and malicious activities.</p>
@@ -9813,6 +10017,15 @@ The WebSocket protocol enables communication between a client and a server with 
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Cookies Vs Sessions Vs JWT Vs PASETO (Page 26)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p026_cookies_vs_sessions_vs_jwt_vs_paseto.png" alt="Cookies Vs Sessions Vs JWT Vs PASETO" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>OAuth and JWT (JSON Web Tokens) are both widely used in the field of web security, but they serve different purposes and are often used in conjunction with each other rather than in opposition. Understanding their distinct roles is key to implementing effective authentication and authorization strategies in web applications.</p>
 <h2>OAuth</h2>
 <h3>Definition</h3>
@@ -10137,6 +10350,15 @@ The WebSocket protocol enables communication between a client and a server with 
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><h2>Background</h2>
 <p>One of the common challenges among distributed systems is handling a continuous influx of data from multiple sources. Imagine a log aggregation service that is receiving hundreds of log entries per second from different sources. The function of this log aggregation service is to store these logs on disk at a shared server and also build an index so that the logs can be searched later. A few challenges of this service are:</p>
 <ol>
@@ -10248,6 +10470,15 @@ The WebSocket protocol enables communication between a client and a server with 
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">How Apache Kafka Works? (Page 310)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p310_how_apache_kafka_works.png" alt="How Apache Kafka Works?" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><h2>What is Kafka?</h2>
 <p>Apache Kafka is an open-source <strong>publish-subscribe</strong>-based messaging system. It is <strong>distributed</strong>, <strong>durable</strong>, <strong>fault-tolerant</strong>, and <strong>highly scalable</strong> by design. Fundamentally, it is a system that takes streams of messages from applications known as producers, stores them reliably on a central cluster (containing a set of brokers), and allows those messages to be received by applications (known as consumers) that process the messages.</p></div><div><h2>Background</h2>
 <p>Kafka was created at LinkedIn around 2010 to track various events, such as page views, messages from the messaging system, and logs from various services. Later, it was made open-source and developed into a comprehensive system which is used for:</p>
@@ -10355,6 +10586,15 @@ The WebSocket protocol enables communication between a client and a server with 
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>In distributed systems, <strong>messaging patterns</strong> define how components communicate via asynchronous messages. Understanding these patterns is crucial for designing scalable and reliable systems. Below, we cover five key messaging patterns, each with its core idea, characteristics, and practical examples.</p>
 <h2>1. Point-to-Point (Direct Messaging)</h2>
 <p>In a point-to-point pattern, each message is delivered to <strong>exactly one</strong> consumer. A producer sends messages into a queue (or similar channel), and one of the consumers reading from that queue will receive each message. This ensures no two consumers process the same message.</p>
@@ -10461,6 +10701,15 @@ The WebSocket protocol enables communication between a client and a server with 
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <div><p>In this section, we will discuss some popular messaging queue systems and provide a brief overview of their key features and use cases. The following messaging queue systems have gained popularity due to their robustness, scalability, and performance:</p>
 <h2>a. RabbitMQ</h2>
 <p>RabbitMQ is an open-source message broker that provides support for various messaging patterns, including publish-subscribe, request-reply, and point-to-point communication. Key features of RabbitMQ include:</p>
@@ -10556,6 +10805,15 @@ The WebSocket protocol enables communication between a client and a server with 
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">How RabbitMQ Works? (Page 206)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p206_how_rabbitmq_works.png" alt="How RabbitMQ Works?" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Here are the top differences between RabbitMQ, Kafka, and ActiveMQ:</p>
 <ol>
@@ -10654,6 +10912,15 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A Crash Course on Architectural Scalability (Page 22)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p022_a_crash_course_on_architectural_scalability.png" alt="A Crash Course on Architectural Scalability" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Scalability and performance are critical aspects of designing messaging systems in distributed environments. Ensuring that a messaging system can handle a growing number of messages and maintain an acceptable level of performance is crucial for its success. In this section, we will explore different concepts related to scalability and performance for messaging systems, along with examples to illustrate their practical application.</p>
 <h2>a. Partitioning</h2>
@@ -10975,6 +11242,15 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">10 Essential Components of a Production Web Application (Page 34)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p034_10_essential_components_of_a_production_web_applic.png" alt="10 Essential Components of a Production Web Application" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>In a Distributed File System (DFS), replication, scalability, and consistency are key components that ensure the system&#x27;s reliability, performance, and integrity. Let&#x27;s delve into how each of these aspects is typically handled:</p>
 <h2>1. Replication</h2>
@@ -11693,6 +11969,15 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
         </div>
     </div>
     
+
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">A picture is worth a thousand words: 9 best practices for developing microservices (Page 441)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p441_a_picture_is_worth_a_thousand_words_9_best_practic.png" alt="A picture is worth a thousand words: 9 best practices for developing microservices" class="infographic-img" loading="lazy" />
+    </div>
 
     <div><p>Microservices and Serverless Architecture are two popular approaches in designing scalable, modern applications. They share some principles but differ significantly in how they are structured and managed.</p>
 <h2>Microservices</h2>
@@ -12770,6 +13055,15 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
     </div>
     
 
+    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
+    <div class="bytebytego-infographic-card">
+        <div class="infographic-header">
+            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
+            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+        </div>
+        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+    </div>
+
     <h2>1. Enterprise Semantic Caching Architecture (Redis Vector Cache)</h2>
     <p>Semantic caching saves over 40% of LLM compute costs by returning cached responses for semantically identical queries.</p>
 
@@ -12811,7 +13105,7 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
             });
         }
 
-        // Sidebar Toggle Logic (Supports both button IDs)
+        // Sidebar Toggle Logic
         const sidebarToggle = document.getElementById('sidebar-toggle-btn') || document.getElementById('sidebar-toggle');
         const floatingSidebarToggle = document.getElementById('floating-sidebar-toggle');
         
@@ -12828,7 +13122,7 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
             document.body.classList.add('sidebar-collapsed');
         }
 
-        // Theme Toggle Logic (Supports both button IDs)
+        // Theme Toggle Logic
         const themeToggle = document.getElementById('theme-btn') || document.getElementById('theme-toggle');
         const htmlEl = document.documentElement;
         
