@@ -1201,62 +1201,56 @@
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">How DNS Works (Page 423)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p423_how_dns_works.png" alt="How DNS Works" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> ARCHITECTURE TOPOLOGY
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">DNS Hierarchy &amp; Anycast Resolution</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Introduction to DNS</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-a1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-dns1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-dns2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-dns3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-dns4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 130 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 600 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
         <g transform="translate(20, 60)">
-            <rect width="110" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT</text>
-            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">Browser / OS Cache</text>
-            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">gethostbyname()</text>
+            <rect width="140" height="100" rx="12" fill="url(#g-dns1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">BROWSER CLIENT</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">https://google.com</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">GET /search?q=...</text>
         </g>
-        <g transform="translate(230, 60)">
-            <rect width="140" height="100" rx="12" fill="url(#g-s1)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">RECURSIVE DNS</text>
-            <text x="70" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">ISP / Cloudflare 1.1.1.1</text>
-            <text x="70" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">TTL Cache Check</text>
+        <g transform="translate(230, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-dns2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">RECURSIVE DNS</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Root ➔ TLD ➔ Auth</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">GeoDNS Anycast IP</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">TTL 300s Cached</text>
         </g>
-        <g transform="translate(460, 60)">
-            <rect width="140" height="100" rx="12" fill="url(#g-a1)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ROOT / TLD DNS</text>
-            <text x="70" y="60" fill="#a7f3d0" font-size="9" text-anchor="middle">13 Anycast Root Clusters</text>
-            <text x="70" y="78" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">.com / .net NS Record</text>
+        <g transform="translate(460, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-dns3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">EDGE LOAD BALANCER</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">L4 Maglev / NLB</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">TLS 1.3 Termination</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">0-RTT Session Resumption</text>
         </g>
-        <g transform="translate(680, 60)">
-            <rect width="120" height="100" rx="12" fill="url(#g-t1)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">AUTH DNS</text>
-            <text x="60" y="60" fill="#fef3c7" font-size="9" text-anchor="middle">AWS Route53 / NS1</text>
-            <text x="60" y="78" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Returns A/AAAA IP</text>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-dns4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">APP CLUSTER</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Borg / Kubernetes</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTML/DOM Stream</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
-        <strong>Resolution Flow:</strong> Client checks local cache &rarr; queries Anycast Recursive Resolver &rarr; traverses Root, TLD, and Authoritative Nameservers &rarr; caches A/AAAA Record with TTL for sub-millisecond future lookups.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> End-to-End Ingress Pipeline: Recursive DNS lookup ➔ TLS 1.3 0-RTT handshake ➔ BGP Anycast L4 Load Balancer ➔ L7 Envoy Reverse Proxy ➔ Application Cluster.
+        </div>
     </div>
-</div>
+
+    
 
     <div><h2>What is DNS (Domain Name System)?</h2>
 <p>DNS, or Domain Name System, is a system used to translate human-readable domain names (e.g., <a href="http://www.designgurus.com/" target="_blank">www.designgurus.com</a>) into IP addresses (e.g., 198.47.25.1) that computers can understand. This translation process is crucial because computers and networking devices rely on IP addresses to identify and communicate with each other on the internet. In simple terms, DNS acts like a phonebook for the internet, allowing users to access websites using easy-to-remember domain names instead of having to memorize numeric IP addresses.</p>
@@ -1506,20 +1500,56 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">How DNS Works (Page 423)</span>
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
+    <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">DNS Resolution Process</span>
         </div>
-        <img src="../assets/bytebytego_images/bbg_p423_how_dns_works.png" alt="How DNS Works" class="infographic-img" loading="lazy" />
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-dns1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-dns2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-dns3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-dns4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-dns1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">BROWSER CLIENT</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">https://google.com</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">GET /search?q=...</text>
+        </g>
+        <g transform="translate(230, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-dns2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">RECURSIVE DNS</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Root ➔ TLD ➔ Auth</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">GeoDNS Anycast IP</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">TTL 300s Cached</text>
+        </g>
+        <g transform="translate(460, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-dns3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">EDGE LOAD BALANCER</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">L4 Maglev / NLB</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">TLS 1.3 Termination</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">0-RTT Session Resumption</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-dns4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">APP CLUSTER</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Borg / Kubernetes</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTML/DOM Stream</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> End-to-End Ingress Pipeline: Recursive DNS lookup ➔ TLS 1.3 0-RTT handshake ➔ BGP Anycast L4 Load Balancer ➔ L7 Envoy Reverse Proxy ➔ Application Cluster.
+        </div>
     </div>
 
-    <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Hierarchical Recursive DNS Resolution Flow</div>
-    <div class="diagram-badge">DNS Resolution</div>
-  </div>
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -1672,62 +1702,56 @@ Recursive Resolver (Often ISP/ Public)
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">How DNS Works (Page 423)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p423_how_dns_works.png" alt="How DNS Works" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span> ARCHITECTURE TOPOLOGY
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">DNS Hierarchy &amp; Anycast Resolution</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">DNS Load Balancing and High Availability</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-a1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-dns1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-dns2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-dns3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-dns4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 130 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 600 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
         <g transform="translate(20, 60)">
-            <rect width="110" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="55" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT</text>
-            <text x="55" y="65" fill="#bae6fd" font-size="9" text-anchor="middle">Browser / OS Cache</text>
-            <text x="55" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">gethostbyname()</text>
+            <rect width="140" height="100" rx="12" fill="url(#g-dns1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">BROWSER CLIENT</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">https://google.com</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">GET /search?q=...</text>
         </g>
-        <g transform="translate(230, 60)">
-            <rect width="140" height="100" rx="12" fill="url(#g-s1)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">RECURSIVE DNS</text>
-            <text x="70" y="60" fill="#e9d5ff" font-size="9" text-anchor="middle">ISP / Cloudflare 1.1.1.1</text>
-            <text x="70" y="78" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">TTL Cache Check</text>
+        <g transform="translate(230, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-dns2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">RECURSIVE DNS</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Root ➔ TLD ➔ Auth</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">GeoDNS Anycast IP</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">TTL 300s Cached</text>
         </g>
-        <g transform="translate(460, 60)">
-            <rect width="140" height="100" rx="12" fill="url(#g-a1)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">ROOT / TLD DNS</text>
-            <text x="70" y="60" fill="#a7f3d0" font-size="9" text-anchor="middle">13 Anycast Root Clusters</text>
-            <text x="70" y="78" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">.com / .net NS Record</text>
+        <g transform="translate(460, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-dns3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">EDGE LOAD BALANCER</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">L4 Maglev / NLB</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">TLS 1.3 Termination</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">0-RTT Session Resumption</text>
         </g>
-        <g transform="translate(680, 60)">
-            <rect width="120" height="100" rx="12" fill="url(#g-t1)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="40" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">AUTH DNS</text>
-            <text x="60" y="60" fill="#fef3c7" font-size="9" text-anchor="middle">AWS Route53 / NS1</text>
-            <text x="60" y="78" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Returns A/AAAA IP</text>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-dns4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">APP CLUSTER</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Borg / Kubernetes</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTML/DOM Stream</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
-        <strong>Resolution Flow:</strong> Client checks local cache &rarr; queries Anycast Recursive Resolver &rarr; traverses Root, TLD, and Authoritative Nameservers &rarr; caches A/AAAA Record with TTL for sub-millisecond future lookups.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> End-to-End Ingress Pipeline: Recursive DNS lookup ➔ TLS 1.3 0-RTT handshake ➔ BGP Anycast L4 Load Balancer ➔ L7 Envoy Reverse Proxy ➔ Application Cluster.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>The Domain Name System (DNS) plays a critical role in the smooth functioning of the internet, translating human-readable domain names into IP addresses that computers can understand. As the number of users and services on the internet continues to grow, ensuring the performance, reliability, and availability of DNS becomes increasingly important. DNS load balancing and high availability techniques, such as round-robin DNS, geographically distributed servers, anycast routing, and Content Delivery Networks (CDNs), help distribute the load among multiple servers, reduce latency for end-users, and maintain uninterrupted service, even in the face of server failures or network outages. This chapter provides an overview of these techniques, explaining how they contribute to a more efficient and resilient DNS infrastructure.</p>
 <h2>1. Round-robin DNS</h2>

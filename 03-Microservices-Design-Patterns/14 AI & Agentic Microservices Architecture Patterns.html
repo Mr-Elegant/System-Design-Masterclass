@@ -1211,11 +1211,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-      <div class="diagram-header">
-        <div class="diagram-title">AI Gateway Multi-Cloud Streaming Router</div>
-        <div class="diagram-badge">AI MICROSERVICES</div>
-      </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">AI Gateway &amp;amp;amp; Multi-Provider Routing Pattern</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (AI Gateway &amp;amp;amp; Multi-Provider Routing Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
       <div class="diagram-body">
         <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -1373,20 +1418,62 @@ return {1, "ALLOWED"}</code></pre>
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">What is an AI Agent? (Page 42)</span>
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
+    <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Agentic Workflow &amp;amp;amp; Multi-Agent Orchestrator Pattern</span>
         </div>
-        <img src="../assets/bytebytego_images/bbg_p042_what_is_an_ai_agent.png" alt="What is an AI Agent?" class="infographic-img" loading="lazy" />
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-user" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-brain" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mcp" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-tools" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 150 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 470 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 640 110 L 700 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-user)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">USER GOAL</text>
+            <text x="65" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">Complex Task</text>
+            <text x="65" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Prompt Payload</text>
+        </g>
+        <g transform="translate(230, 45)">
+            <rect width="170" height="130" rx="14" fill="url(#g-brain)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">AGENT BRAIN (LLM)</text>
+            <text x="85" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">ReAct Planning Loop</text>
+            <text x="85" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Short / Long Memory</text>
+            <text x="85" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Self-Reflection</text>
+        </g>
+        <g transform="translate(470, 50)">
+            <rect width="170" height="120" rx="14" fill="url(#g-mcp)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MCP CLIENT / SERVER</text>
+            <text x="85" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Model Context Protocol</text>
+            <text x="85" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">JSON-RPC Protocol</text>
+            <text x="85" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Schema Validation</text>
+        </g>
+        <g transform="translate(700, 40)">
+            <rect width="120" height="42" rx="8" fill="url(#g-tools)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="60" y="26" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Database SQL</text>
+        </g>
+        <g transform="translate(700, 90)">
+            <rect width="120" height="42" rx="8" fill="url(#g-tools)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="60" y="26" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Code Sandbox</text>
+        </g>
+        <g transform="translate(700, 140)">
+            <rect width="120" height="42" rx="8" fill="url(#g-tools)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="60" y="26" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Web Search API</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Autonomous AI Agent Architecture: ReAct reasoning loop connecting Short/Long-Term Memory and Vector Databases to standardized Model Context Protocol (MCP) tool execution.
+        </div>
     </div>
 
-    <div class="diagram-card">
-      <div class="diagram-header">
-        <div class="diagram-title">Multi-Agent Hierarchical Supervisor Workflow (LangGraph)</div>
-        <div class="diagram-badge">AGENT PATTERN</div>
-      </div>
+    
       <div class="diagram-body">
         <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -1541,55 +1628,56 @@ class ReActAgent:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">Visualizing a SQL query (Page 155)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p155_visualizing_a_sql_query.png" alt="Visualizing a SQL query" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">AI Tool Calling &amp;amp;amp;amp; Sandboxed Execution Pattern</span>
-    </div>
-    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">AI Tool Calling &amp;amp;amp; Sandboxed Execution Pattern</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sql1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-sql2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-sql3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-sql4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(30, 50)">
-            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
-            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
-            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-sql1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">SQL PARSER</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">Syntax Validation</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">AST Parse Tree</text>
         </g>
-        <g transform="translate(290, 40)">
-            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">AI Tool Calling &amp;amp</text>
-            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
-            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
-            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-sql2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">QUERY OPTIMIZER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Cost-Based Optimizer</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Index Scan vs Seq Scan</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Hash / Merge Join</text>
         </g>
-        <g transform="translate(610, 50)">
-            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
-            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
-            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-sql3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">EXECUTION ENGINE</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Buffer Pool in RAM</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">8KB Memory Pages</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Volcano Iterator</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-sql4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DISK &amp; WAL</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Write-Ahead Log</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">ACID Durability</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
-        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> SQL Query Execution Pipeline: Parser AST ➔ Cost-Based Query Optimizer ➔ Hash/Merge Join Engine ➔ 8KB Buffer Pool Manager ➔ Write-Ahead Log (WAL).
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. Sandboxing Infrastructure: Firecracker vs gVisor</h2>
     <table class="comparison-table">
@@ -1691,55 +1779,62 @@ class ReActAgent:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">What is an AI Agent? (Page 42)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p042_what_is_an_ai_agent.png" alt="What is an AI Agent?" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Hierarchical Agent Memory Pattern (MemGPT &amp;amp;amp;amp; GraphRAG)</span>
-    </div>
-    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Hierarchical Agent Memory Pattern (MemGPT &amp;amp;amp; GraphRAG)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-user" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-brain" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-mcp" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-tools" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(30, 50)">
-            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
-            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
-            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        <path d="M 150 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 470 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 640 110 L 700 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-user)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">USER GOAL</text>
+            <text x="65" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">Complex Task</text>
+            <text x="65" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Prompt Payload</text>
         </g>
-        <g transform="translate(290, 40)">
-            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Hierarchical Agent Memor</text>
-            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
-            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
-            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        <g transform="translate(230, 45)">
+            <rect width="170" height="130" rx="14" fill="url(#g-brain)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">AGENT BRAIN (LLM)</text>
+            <text x="85" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">ReAct Planning Loop</text>
+            <text x="85" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Short / Long Memory</text>
+            <text x="85" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Self-Reflection</text>
         </g>
-        <g transform="translate(610, 50)">
-            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
-            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
-            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        <g transform="translate(470, 50)">
+            <rect width="170" height="120" rx="14" fill="url(#g-mcp)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MCP CLIENT / SERVER</text>
+            <text x="85" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Model Context Protocol</text>
+            <text x="85" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">JSON-RPC Protocol</text>
+            <text x="85" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Schema Validation</text>
+        </g>
+        <g transform="translate(700, 40)">
+            <rect width="120" height="42" rx="8" fill="url(#g-tools)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="60" y="26" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Database SQL</text>
+        </g>
+        <g transform="translate(700, 90)">
+            <rect width="120" height="42" rx="8" fill="url(#g-tools)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="60" y="26" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Code Sandbox</text>
+        </g>
+        <g transform="translate(700, 140)">
+            <rect width="120" height="42" rx="8" fill="url(#g-tools)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="60" y="26" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Web Search API</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
-        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Autonomous AI Agent Architecture: ReAct reasoning loop connecting Short/Long-Term Memory and Vector Databases to standardized Model Context Protocol (MCP) tool execution.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. Three-Tier Memory Architecture</h2>
     <ul>
@@ -1809,55 +1904,56 @@ class ReActAgent:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">CI/CD Pipeline Explained (Page 290)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p290_ci_cd_pipeline_explained.png" alt="CI/CD Pipeline Explained" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> MICROSERVICE PATTERN EXECUTION
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Continuous Fine-Tuning &amp;amp;amp;amp; LLM Evaluation Pipeline</span>
-    </div>
-    <svg viewBox="0 0 820 200" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Continuous Fine-Tuning &amp;amp;amp; LLM Evaluation Pipeline</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-ms1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-ms2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-ms3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 180 100 L 290 100" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 510 100 L 610 100" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(30, 50)">
-            <rect width="150" height="100" rx="12" fill="url(#g-ms1)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="75" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT CALLER</text>
-            <text x="75" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">gRPC / REST Invocation</text>
-            <text x="75" y="85" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Correlation ID Trace</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        <g transform="translate(290, 40)">
-            <rect width="220" height="120" rx="12" fill="url(#g-ms2)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="110" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Continuous Fine-Tuning &</text>
-            <text x="110" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Service Mesh &amp; Policy Mesh</text>
-            <text x="110" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">mTLS / Circuit Protection</text>
-            <text x="110" y="102" fill="#a7f3d0" font-size="8" text-anchor="middle">Distributed Observability</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        <g transform="translate(610, 50)">
-            <rect width="180" height="100" rx="12" fill="url(#g-ms3)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="90" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">DOWNSTREAM SERVICE</text>
-            <text x="90" y="68" fill="#a7f3d0" font-size="9" text-anchor="middle">Independent Database Shard</text>
-            <text x="90" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Bounded Context</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #38bdf8;">
-        <strong>Pattern Highlights:</strong> Isolates domain responsibilities into bounded microservice contexts, preventing cross-service coupling while ensuring high availability and fault isolation.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Continuous Fine-Tuning &amp;amp;amp; LLM Evaluation Pipeline): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. LoRA Adapter Hot-Swapping Architecture</h2>
     <p>In low-rank adaptation, the weight update matrix is decomposed into two low-rank matrices: $W_{	ext{new}} = W_{	ext{base}} + rac{lpha}{r} (A \cdot B)$. In a production vLLM cluster, the base model is frozen in GPU memory, while dynamic LoRA weights (only 50MB-200MB each) are loaded on-the-fly per request based on tenant header: <code>X-LoRA-Adapter: legal-v3</code>.</p>

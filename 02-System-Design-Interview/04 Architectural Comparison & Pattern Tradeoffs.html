@@ -1212,51 +1212,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Load Balancer vs API Gateway</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Load Balancer vs API Gateway</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Load Balancer</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">API Gateway</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Load Balancer vs API Gateway): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Load Balancer and API Gateway are two crucial components in modern web architectures, often used to manage incoming traffic and requests to web applications. While they have some overlapping functionalities, their primary purposes and use cases are distinct.</p>
 <h2>Load Balancer</h2>
@@ -1372,51 +1377,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">API Gateway vs Direct Service Exposure</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">API Gateway vs Direct Service Exposure</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">API Gateway</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Direct Service Exposure</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (API Gateway vs Direct Service Exposure): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>API Gateway and Direct Service Exposure are two approaches to exposing services and APIs in a microservices architecture or a distributed system. Each approach has its own benefits and is suitable for different scenarios.</p>
 <h2>API Gateway</h2>
@@ -1534,51 +1544,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Proxy vs Reverse Proxy</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Proxy vs Reverse Proxy</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Proxy</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Reverse Proxy</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Proxy vs Reverse Proxy): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Proxy and Reverse Proxy are both intermediary entities in a network that manage and redirect traffic, but they differ in terms of their operational setup and the direction in which they handle traffic.</p>
 <h2>Proxy (Forward Proxy)</h2>
@@ -1682,51 +1697,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">API Gateway vs Reverse Proxy</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">API Gateway vs Reverse Proxy</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">API Gateway</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Reverse Proxy</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (API Gateway vs Reverse Proxy): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>API Gateway and Reverse Proxy are both architectural components that manage incoming requests, but they serve different purposes and operate in somewhat different contexts.</p>
 <h3>API Gateway</h3>
@@ -1834,51 +1854,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">SQL vs NoSQL (2)</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">SQL vs NoSQL (2)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">SQL</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">NoSQL (2)</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (SQL vs NoSQL (2)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Let&#x27;s explore the differences between SQL and NoSQL. Think of them like two different storage cabinets, each with its unique way of organizing and accessing the stuff you put inside.</p>
 <h2>SQL (Structured Query Language) Databases:</h2>
@@ -2004,51 +2029,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">PrimaryReplica vs PeertoPeer Replication</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">PrimaryReplica vs PeertoPeer Replication</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PrimaryReplica</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">PeertoPeer Replication</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (PrimaryReplica vs PeertoPeer Replication): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Primary-Replica and Peer-to-Peer Replication are two distinct approaches to data replication in distributed systems, each with its own use cases, benefits, and challenges.</p>
 <h2>Primary-Replica Replication</h2></div><div><ul>
@@ -2163,51 +2193,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Data Compression vs Data Deduplication</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Data Compression vs Data Deduplication</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Data Compression</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Data Deduplication</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Data Compression vs Data Deduplication): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Data compression and data deduplication are two techniques used to optimize data storage, but they function in different ways and are suited for different scenarios.</p>
 <h2>Data Compression</h2>
@@ -2324,51 +2359,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">ServerSide Caching vs ClientSide Caching</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">ServerSide Caching vs ClientSide Caching</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-c4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ServerSide Caching</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-c1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">50,000 QPS READS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">Hot Key Expiration</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Stampede Risk</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-c2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">BLOOM FILTER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">0.1ms Bitset Check</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Stops Non-Existent IDs</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Penetration Defense</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">ClientSide Caching</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-c3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">SINGLEFLIGHT MUTEX</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Only 1 Worker Fetches</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">49,999 Wait &amp; Share</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis / Go Mutex</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-c4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">PROTECTED DB</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Exactly 1 Query</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero CPU Spike</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Server-side caching and client-side caching are two strategies used to store data temporarily to improve the performance and efficiency of applications. Both serve the purpose of reducing load times and bandwidth usage but operate at different points in the data retrieval and rendering process.</p>
 <h2>Server-Side Caching</h2>
@@ -2497,60 +2537,49 @@
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">A Cheatsheet on REST API Design Best Practices (Page 143)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p143_a_cheatsheet_on_rest_api_design_best_practices.png" alt="A Cheatsheet on REST API Design Best Practices" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">REST vs RPC</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">REST vs RPC</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">REST</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 210 110 L 310 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 530 110 L 630 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(30, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-g1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">SERVICE A (CALLER)</text>
+            <text x="90" y="60" fill="#bae6fd" font-size="9.5" text-anchor="middle">Generated gRPC Client Stub</text>
+            <text x="90" y="80" fill="#e0f2fe" font-size="9" text-anchor="middle"><code>client.GetOrder(req)</code></text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Type-Safe Interface</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(310, 45)">
+            <rect width="220" height="130" rx="14" fill="url(#g-g2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="110" y="38" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle">PROTOBUF &amp; HTTP/2</text>
+            <text x="110" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Binary Protocol Buffers</text>
+            <text x="110" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">60% Smaller Payload vs JSON</text>
+            <text x="110" y="105" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multiplexed Binary Streams</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">RPC</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(630, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-g3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">SERVICE B (RECEIVER)</text>
+            <text x="90" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">gRPC Server Implementation</text>
+            <text x="90" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Zero Unmarshalling Lag</text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">10x Faster QPS vs REST</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> gRPC High-Performance RPC Architecture: Protocol Buffers binary serialization over HTTP/2 multiplexed bi-directional streaming.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>REST (Representational State Transfer) and RPC (Remote Procedure Call) are two architectural approaches used for designing networked applications, particularly for web services and APIs. Each has its distinct style and is suited for different use cases.</p>
 <h2>REST (Representational State Transfer)</h2>
@@ -2654,51 +2683,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Polling vs LongPolling vs WebSockets vs Webhooks</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Polling vs LongPolling vs WebSockets vs Webhooks</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Polling</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">LongPolling</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Polling vs LongPolling vs WebSockets vs Webhooks): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>In modern web applications, <strong>real-time communication</strong> between clients and servers is crucial for delivering dynamic, responsive user experiences. Users expect to see new chat messages, notifications, or live data <strong>instantly</strong> without needing to refresh the page. To achieve this, developers can choose from several techniques: <strong>Polling</strong>, <strong>Long-Polling</strong>, <strong>WebSockets</strong>, and <strong>Webhooks</strong>. Each approach has its own mechanism, advantages, and trade-offs.</p>
 <h2>Polling</h2>
@@ -2849,51 +2883,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">CDN Usage vs Direct Server Serving</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">CDN Usage vs Direct Server Serving</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CDN Usage</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Direct Server Serving</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (CDN Usage vs Direct Server Serving): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>CDN (Content Delivery Network) usage and direct server serving are two different approaches to delivering content to end-users over the internet. Understanding their differences is crucial for optimizing website performance, especially for content-heavy and globally accessed websites.</p>
 <h2>CDN Usage</h2>
@@ -3011,51 +3050,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Serverless Architecture vs Traditional Serverbased</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Serverless Architecture vs Traditional Serverbased</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Serverless Architecture</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Traditional Serverbased</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Serverless Architecture vs Traditional Serverbased): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Serverless architecture and traditional server-based architecture represent two different approaches to deploying and managing applications and services, especially in cloud computing.</p>
 <h2>Serverless Architecture</h2>
@@ -3175,51 +3219,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Stateful vs Stateless Architecture</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Stateful vs Stateless Architecture</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Stateful</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Stateless Architecture</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Stateful vs Stateless Architecture): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Stateful and Stateless architectures are two approaches to managing user information and data processing in software applications, particularly in web services and APIs.</p>
 <h2>Stateful Architecture</h2>
@@ -3336,60 +3385,56 @@
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">What is Retrieval-Augmented Generation (RAG)? (Page 102)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p102_what_is_retrieval_augmented_generation_rag.png" alt="What is Retrieval-Augmented Generation (RAG)?" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Hybrid Cloud Storage vs AllCloud Storage</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Hybrid Cloud Storage vs AllCloud Storage</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-rag1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-rag2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-rag3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-rag4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Hybrid Cloud Storage</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 240 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 470 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 640 110 L 700 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-rag1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">RAW DOCUMENTS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">PDFs, Docs, DBs</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Chunking 512t</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(240, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-rag2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">HYBRID SEARCH</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Dense HNSW Vectors</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">+ Sparse BM25 Keywords</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cosine Distance</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">AllCloud Storage</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(470, 50)">
+            <rect width="170" height="120" rx="14" fill="url(#g-rag3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">CROSS-ENCODER</text>
+            <text x="85" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Reranker Model</text>
+            <text x="85" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Top-K Context Filter</text>
+            <text x="85" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Relevance Scoring</text>
+        </g>
+        <g transform="translate(700, 60)">
+            <rect width="120" height="100" rx="12" fill="url(#g-rag4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="60" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">LLM RESPONSE</text>
+            <text x="60" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Grounded Answer</text>
+            <text x="60" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">0% Hallucination</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Hybrid cloud storage and all-cloud (or fully cloud) storage are two cloud computing models that businesses use for storing data, each with its own architecture and use cases.</p>
 <h2>Hybrid Cloud Storage</h2>
@@ -3517,51 +3562,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Token Bucket vs Leaky Bucket</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Token Bucket vs Leaky Bucket</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Token Bucket</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Leaky Bucket</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Token Bucket vs Leaky Bucket): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Token Bucket and Leaky Bucket are two algorithms used for network traffic shaping and rate limiting. They help manage the rate of traffic flow in a network, but they do so in slightly different ways.</p></div><div><h2>Token Bucket Algorithm</h2>
 <ul>
@@ -3675,51 +3725,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#a855f7; box-shadow:0 0 8px #a855f7;"></span> ARCHITECTURAL COMPARISON &amp; TRADEOFF MATRIX
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Read Heavy vs Write Heavy System</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Read Heavy vs Write Heavy System</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-left" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-vs" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-right" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 330 110 L 490 110" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 4"/>
-        
-        <!-- Left Option -->
-        <g transform="translate(30, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-left)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Read Heavy</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#bae6fd" font-size="9.5">⚡ Optimized for: Low Latency / Transport Layer</text>
-            <text x="30" y="98" fill="#e0f2fe" font-size="9.5">🛡️ Scalability: Horizontal High-Throughput (L4)</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Packet forwarding &amp; Connection Balancing</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        
-        <!-- VS Circle Indicator -->
-        <g transform="translate(385, 85)">
-            <circle cx="25" cy="25" r="24" fill="url(#g-vs)" stroke="#c084fc" stroke-width="2"/>
-            <text x="25" y="30" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="Outfit">VS</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        
-        <!-- Right Option -->
-        <g transform="translate(470, 35)">
-            <rect width="320" height="150" rx="14" fill="url(#g-right)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="160" y="35" fill="#ffffff" font-size="13.5" font-weight="bold" text-anchor="middle" font-family="Outfit">Write Heavy System</text>
-            <line x1="20" y1="50" x2="300" y2="50" stroke="rgba(255,255,255,0.2)"/>
-            <text x="30" y="75" fill="#a7f3d0" font-size="9.5">⚡ Optimized for: Application Routing &amp; Policies</text>
-            <text x="30" y="98" fill="#d1fae5" font-size="9.5">🛡️ Scalability: Layer 7 Header Inspection &amp; Auth</text>
-            <text x="30" y="120" fill="#f8fafc" font-size="9">💡 Best for: Protocol Transformation &amp; Rate Limiting</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #a855f7;">
-        <strong>Decision Framework:</strong> Evaluate concurrency volume, latency budget, data consistency requirements (ACID vs BASE), and operational complexity before choosing between these complementary architectural paradigms.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Read Heavy vs Write Heavy System): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <div><p>Designing systems for read-heavy versus write-heavy workloads involves different strategies, as each type of system has unique demands and challenges.</p>
 <h2>Designing for Read-Heavy Systems</h2>

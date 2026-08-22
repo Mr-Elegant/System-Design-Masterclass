@@ -1208,11 +1208,56 @@
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Recommendation System: Two-Tower Vector Retrieval &amp; Heavy Ranking</div>
-    <div class="diagram-badge">AI &amp; Ranking</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Design a Recommendation System (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Design a Recommendation System (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -1683,11 +1728,56 @@ export class ThompsonSamplingRecommender {
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Google Calendar: Interval Tree Conflict Engine &amp; Spanner 2PC</div>
-    <div class="diagram-badge">Calendar Scheduling</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Design Google Calendar (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Design Google Calendar (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -2126,20 +2216,49 @@ class CalendarRecurrenceEngine:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">Database Index Types Every Developer Should Know (Page 226)</span>
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
+    <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Code Judging System (medium)</span>
         </div>
-        <img src="../assets/bytebytego_images/bbg_p226_database_index_types_every_developer_should_know.png" alt="Database Index Types Every Developer Should Know" class="infographic-img" loading="lazy" />
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-idx1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-idx2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-idx3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 220 110 L 310 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 530 110 L 620 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(30, 50)">
+            <rect width="190" height="120" rx="12" fill="url(#g-idx1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="95" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">B+ TREE (RELATIONAL)</text>
+            <text x="95" y="60" fill="#bae6fd" font-size="9.5" text-anchor="middle">Balanced Hierarchy (Depth 3..4)</text>
+            <text x="95" y="80" fill="#e0f2fe" font-size="9" text-anchor="middle">Leaf Node Linked List</text>
+            <text x="95" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">O(log N) Range Scans</text>
+        </g>
+        <g transform="translate(310, 45)">
+            <rect width="220" height="130" rx="14" fill="url(#g-idx2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="110" y="38" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle">GIN INDEX (JSONB &amp; FTS)</text>
+            <text x="110" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Generalized Inverted Index</text>
+            <text x="110" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Maps Sub-Keys to Row IDs</text>
+            <text x="110" y="105" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Instant Document Search</text>
+        </g>
+        <g transform="translate(620, 50)">
+            <rect width="190" height="120" rx="12" fill="url(#g-idx3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="95" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">BRIN (TIME-SERIES)</text>
+            <text x="95" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Block Range Index Summary</text>
+            <text x="95" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Min/Max per 128 Pages</text>
+            <text x="95" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">95% Smaller RAM Size</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
+        </div>
     </div>
 
-    <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Code Judging System (LeetCode): Sandboxed Runner &amp; Cgroups Isolation</div>
-    <div class="diagram-badge">Sandboxed Execution</div>
-  </div>
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -2532,11 +2651,56 @@ class SecureCodeJudgeRunner:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Flash Sale System: Atomic Redis Stock Decrement &amp; Waiting Room</div>
-    <div class="diagram-badge">High-Throughput E-Commerce</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Flash Sale System (hard)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Flash Sale System (hard)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -3069,11 +3233,56 @@ export class FlashSaleStockService {
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Distributed Email Service (Gmail) End-to-End Architecture</div>
-    <div class="diagram-badge">Architecture Blueprint</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Gmail (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Gmail (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -3936,11 +4145,56 @@ class SpannerTwoPhaseCommit:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Google News: MinHash &amp; Locality-Sensitive Hashing (LSH) Clustering</div>
-    <div class="diagram-badge">News Aggregator</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Google News (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Google News (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -4659,11 +4913,56 @@ class NewsClusterVelocityTracker:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Distributed Notification Service: Rate Limiting &amp; Channel Fanout</div>
-    <div class="diagram-badge">Multi-Channel Messaging</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Notification Service (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Notification Service (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -5080,11 +5379,49 @@ end</code></pre>
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Payment System: Double-Entry Ledger &amp; Idempotency Key Engine</div>
-    <div class="diagram-badge">Financial Systems</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Payment System (hard)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-st1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-st2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-st3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 210 110 L 310 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 530 110 L 630 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(30, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-st1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">PAYMENT REQUEST</text>
+            <text x="90" y="60" fill="#bae6fd" font-size="9.5" text-anchor="middle">Idempotency-Key: uuid-v4</text>
+            <text x="90" y="80" fill="#e0f2fe" font-size="9" text-anchor="middle"><code>POST /v1/charges</code></text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Guarantees Exactly-Once</text>
+        </g>
+        <g transform="translate(310, 45)">
+            <rect width="220" height="130" rx="14" fill="url(#g-st2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="110" y="38" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle">REDIS IDEMPOTENCY LOCK</text>
+            <text x="110" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Atomic Redis Check-and-Set</text>
+            <text x="110" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">If Duplicate: Return Cached Resp</text>
+            <text x="110" y="105" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">24-Hour TTL Expiration</text>
+        </g>
+        <g transform="translate(630, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-st3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">DOUBLE-ENTRY LEDGER</text>
+            <text x="90" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Debit Buyer / Credit Seller</text>
+            <text x="90" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Card Network Settlement</text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero Mathematical Drift</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Stripe Idempotent Payment Flow: Client Idempotency Key ➔ Redis Lock & Cache Verification ➔ Double-Entry Ledger Commit ➔ Bank Gateway Settlement.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -5551,11 +5888,56 @@ class IdempotentPaymentGateway:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Reddit: Materialized Path Nested Comment Trees &amp; Hot Ranking</div>
-    <div class="diagram-badge">Community &amp; Discussion</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Reddit (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Reddit (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -6326,11 +6708,56 @@ class MaterializedPathCommentTree:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Reminder Alert System: Distributed Hierarchical Time-Wheel &amp; Redis ZSET</div>
-    <div class="diagram-badge">Distributed Scheduler</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Reminder Alert System (hard)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Reminder Alert System (hard)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -6817,11 +7244,56 @@ class HierarchicalTimeWheel:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Twitter Snowflake: 64-Bit Globally Unique ID Bit Allocation</div>
-    <div class="diagram-badge">Distributed ID</div>
-  </div>
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing Unique ID Generator (medium)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
+        </g>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
+        </g>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
+        </g>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Unique ID Generator (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
+    </div>
+
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -7214,20 +7686,49 @@ class SnowflakeIDGenerator:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">How Netflix Built a Distributed Counter? (Page 114)</span>
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
+    <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing YouTube Likes Counter (medium)</span>
         </div>
-        <img src="../assets/bytebytego_images/bbg_p114_how_netflix_built_a_distributed_counter.png" alt="How Netflix Built a Distributed Counter?" class="infographic-img" loading="lazy" />
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-nc1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-nc2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-nc3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+        </defs>
+        <path d="M 210 110 L 310 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 530 110 L 630 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(30, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-nc1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">100M VIEW EVENTS</text>
+            <text x="90" y="60" fill="#bae6fd" font-size="9.5" text-anchor="middle">Stranger Things Live Stream</text>
+            <text x="90" y="80" fill="#e0f2fe" font-size="9" text-anchor="middle">Massive Concurrent Ingestion</text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">No Row Locks Allowed</text>
+        </g>
+        <g transform="translate(310, 45)">
+            <rect width="220" height="130" rx="14" fill="url(#g-nc2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="110" y="38" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle">IN-MEMORY DELTA BATCH</text>
+            <text x="110" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Aggregates in RAM for 1 Second</text>
+            <text x="110" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">Emits Single Delta (+5,000)</text>
+            <text x="110" y="105" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">99.8% Write Reduction</text>
+        </g>
+        <g transform="translate(630, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-nc3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">CASSANDRA COUNTER</text>
+            <text x="90" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Atomic Increment Cells</text>
+            <text x="90" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Multi-Region Replication</text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Eventual Consistency</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Netflix Distributed Counter Architecture: In-memory worker delta buffering with asynchronous flushes to Cassandra atomic increment columns.
+        </div>
     </div>
 
-    <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">YouTube Likes Counter: Write-Back In-Memory Buffer &amp; HyperLogLog</div>
-    <div class="diagram-badge">High-Volume Counters</div>
-  </div>
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -7622,64 +8123,56 @@ class LikesCounterAggregator:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">Top YouTube Channels and Blogs for AI Learning in 2025 (Page 132)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p132_top_youtube_channels_and_blogs_for_ai_learning_in_.png" alt="Top YouTube Channels and Blogs for AI Learning in 2025" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(20, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
-            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
-            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        <g transform="translate(230, 45)">
-            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
-            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
-            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
-            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        <g transform="translate(460, 45)">
-            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
-            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
-            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
-            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
         </g>
-        <g transform="translate(680, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
-            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
-            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
-        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. What is a Live Video Streaming Platform?</h2>
     <p>A distributed live video streaming platform (e.g., Twitch, YouTube Live, TikTok Live) ingests high-bitrate live video feeds from hundreds of thousands of broadcasters over RTMP/WebRTC, transcodes streams in real time into multiple Adaptive Bitrate (ABR) renditions, and distributes low-latency video chunks (HLS/DASH/CMAF) to millions of concurrent viewers globally with sub-3-second glass-to-glass latency.</p>
@@ -7803,20 +8296,56 @@ class LiveChunkManifestGenerator:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">What is Retrieval-Augmented Generation (RAG)? (Page 102)</span>
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
+    <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing an AI Retrieval-Augmented Generation (RAG) &amp;amp;amp;amp;amp; Vector Search Platform</span>
         </div>
-        <img src="../assets/bytebytego_images/bbg_p102_what_is_retrieval_augmented_generation_rag.png" alt="What is Retrieval-Augmented Generation (RAG)?" class="infographic-img" loading="lazy" />
+        <svg viewBox="0 0 840 220" class="diagram-svg">
+        <defs>
+            <linearGradient id="g-rag1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-rag2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-rag3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-rag4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+        </defs>
+        <path d="M 160 110 L 240 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 470 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 640 110 L 700 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-rag1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">RAW DOCUMENTS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">PDFs, Docs, DBs</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Chunking 512t</text>
+        </g>
+        <g transform="translate(240, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-rag2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">HYBRID SEARCH</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Dense HNSW Vectors</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">+ Sparse BM25 Keywords</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cosine Distance</text>
+        </g>
+        <g transform="translate(470, 50)">
+            <rect width="170" height="120" rx="14" fill="url(#g-rag3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">CROSS-ENCODER</text>
+            <text x="85" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Reranker Model</text>
+            <text x="85" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Top-K Context Filter</text>
+            <text x="85" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Relevance Scoring</text>
+        </g>
+        <g transform="translate(700, 60)">
+            <rect width="120" height="100" rx="12" fill="url(#g-rag4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="60" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">LLM RESPONSE</text>
+            <text x="60" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Grounded Answer</text>
+            <text x="60" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">0% Hallucination</text>
+        </g>
+    </svg>
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
+        </div>
     </div>
 
-    <div class="diagram-card">
-  <div class="diagram-header">
-    <div class="diagram-title">Real-Time RAG &amp; Vector Search Engine (ChatGPT / Perplexity / Pinecone)</div>
-    <div class="diagram-badge">AI &amp; Vector Embeddings</div>
-  </div>
+    
   <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -8012,64 +8541,56 @@ class HNSWVectorSearchReranker:
     </div>
     
 
-    <!-- ByteByteGo 2025 High-Resolution Architecture Infographic -->
-    <div class="bytebytego-infographic-card">
-        <div class="infographic-header">
-            <span class="infographic-badge">BYTEBYTEGO ARCHITECTURE INFOGRAPHIC</span>
-            <span class="infographic-title">What is Retrieval-Augmented Generation (RAG)? (Page 102)</span>
-        </div>
-        <img src="../assets/bytebytego_images/bbg_p102_what_is_retrieval_augmented_generation_rag.png" alt="What is Retrieval-Augmented Generation (RAG)?" class="infographic-img" loading="lazy" />
-    </div>
-
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Global Distributed Object Storage Service (AWS S3 Architecture)</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing a Global Distributed Object Storage Service (AWS S3 Architecture)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-rag1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-rag2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-rag3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-rag4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(20, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
-            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
-            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        <path d="M 160 110 L 240 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 400 110 L 470 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 640 110 L 700 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-rag1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">RAW DOCUMENTS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">PDFs, Docs, DBs</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Chunking 512t</text>
         </g>
-        <g transform="translate(230, 45)">
-            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
-            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
-            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
-            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        <g transform="translate(240, 50)">
+            <rect width="160" height="120" rx="14" fill="url(#g-rag2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">HYBRID SEARCH</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Dense HNSW Vectors</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">+ Sparse BM25 Keywords</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Cosine Distance</text>
         </g>
-        <g transform="translate(460, 45)">
-            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
-            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
-            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
-            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        <g transform="translate(470, 50)">
+            <rect width="170" height="120" rx="14" fill="url(#g-rag3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">CROSS-ENCODER</text>
+            <text x="85" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Reranker Model</text>
+            <text x="85" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Top-K Context Filter</text>
+            <text x="85" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Relevance Scoring</text>
         </g>
-        <g transform="translate(680, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
-            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
-            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        <g transform="translate(700, 60)">
+            <rect width="120" height="100" rx="12" fill="url(#g-rag4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="60" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">LLM RESPONSE</text>
+            <text x="60" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Grounded Answer</text>
+            <text x="60" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">0% Hallucination</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
-        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. What is a Distributed Object Storage System?</h2>
     <p>A distributed object storage system (e.g., AWS S3, Google Cloud Storage, MinIO) stores trillions of immutable binary blobs (images, backups, datasets) with 99.999999999% (11 9's) durability. The architecture decouples high-speed metadata indexing (LSM-trees / Spanner) from raw chunk storage nodes utilizing Reed-Solomon Erasure Coding.</p>
@@ -8169,55 +8690,56 @@ class StorageNodeScrubber:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Real-Time Collaborative Canvas &amp;amp;amp; Document Editor (Figma / Google Docs)</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing a Real-Time Collaborative Canvas &amp;amp; Document Editor (Figma / Google Docs)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(20, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
-            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
-            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        <g transform="translate(230, 45)">
-            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
-            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
-            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
-            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        <g transform="translate(460, 45)">
-            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
-            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
-            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
-            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
         </g>
-        <g transform="translate(680, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
-            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
-            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
-        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Real-Time Collaborative Canvas &amp;amp; Document Editor (Figma / Google Docs)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. What is a Real-Time Collaborative Canvas?</h2>
     <p>A real-time collaborative canvas (e.g., Figma, Miro, Google Docs) allows dozens of concurrent designers to edit vector shapes, move layout layers, and manipulate text frames simultaneously with sub-30ms local feedback and zero conflict merge collisions.</p>
@@ -8313,55 +8835,56 @@ class CanvasShapeCRDT:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-u1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-u2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-u3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
+            <linearGradient id="g-u4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
         </defs>
-        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(20, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
-            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
-            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        <path d="M 160 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 390 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 620 110 L 690 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(20, 60)">
+            <rect width="140" height="100" rx="12" fill="url(#g-u1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="70" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">CLIENT / INGRESS</text>
+            <text x="70" y="65" fill="#bae6fd" font-size="9.5" text-anchor="middle">API Request Stream</text>
+            <text x="70" y="82" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero-Trust Auth</text>
         </g>
-        <g transform="translate(230, 45)">
-            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
-            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
-            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
-            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        <g transform="translate(230, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">LOAD BALANCER</text>
+            <text x="80" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">L4 / L7 Traffic Routing</text>
+            <text x="80" y="80" fill="#e9d5ff" font-size="9" text-anchor="middle">Rate Limiting &amp; WAF</text>
+            <text x="80" y="100" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">Active-Active HA</text>
         </g>
-        <g transform="translate(460, 45)">
-            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
-            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
-            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
-            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
+        <g transform="translate(460, 48)">
+            <rect width="160" height="124" rx="14" fill="url(#g-u3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="80" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">MICROSERVICES</text>
+            <text x="80" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Stateless Compute Tier</text>
+            <text x="80" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Circuit Breaker &amp; Sagas</text>
+            <text x="80" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Autoscaling (K8s HPA)</text>
         </g>
-        <g transform="translate(680, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
-            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
-            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        <g transform="translate(690, 60)">
+            <rect width="130" height="100" rx="12" fill="url(#g-u4)" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="65" y="42" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">DATA STORAGE</text>
+            <text x="65" y="65" fill="#fef3c7" font-size="9.5" text-anchor="middle">Redis Cache + DB</text>
+            <text x="65" y="82" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Sharded &amp; Replicated</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
-        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. What is a Distributed Time-Series Database?</h2>
     <p>A distributed Time-Series Database (TSDB) ingests billions of timestamped floating-point metric points per second (CPU usage, memory, request latencies) from millions of servers, compacting historical data using Facebook Gorilla Float XOR compression.</p>
@@ -8455,55 +8978,49 @@ class GorillaTimestampCompressor:
     </div>
     
 
+    <!-- Interactive Enterprise Architecture Diagram (100% Native Vector SVG) -->
     <div class="diagram-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
-        <span style="font-family:'Fira Code', monospace; font-size:0.75rem; color:#38bdf8; font-weight:700; display:flex; align-items:center; gap:6px;">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span> END-TO-END ARCHITECTURE BLUEPRINT
-        </span>
-        <span style="font-size:0.75rem; color:#94a3b8;">Designing an Event-Sourced Banking &amp;amp;amp; Financial Ledger Platform (Stripe)</span>
-    </div>
-    <svg viewBox="0 0 820 220" style="width:100%; height:auto; display:block; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURAL FLOW</span>
+            <span class="diagram-title">Designing an Event-Sourced Banking &amp;amp; Financial Ledger Platform (Stripe)</span>
+        </div>
+        <svg viewBox="0 0 840 220" class="diagram-svg">
         <defs>
-            <linearGradient id="g-cli" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
-            <linearGradient id="g-gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="g-wrk" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
-            <linearGradient id="g-sto" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+            <linearGradient id="g-st1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="g-st2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="g-st3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient>
         </defs>
-        <path d="M 140 110 L 230 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 370 110 L 460 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        <path d="M 610 110 L 680 110" stroke="#10b981" stroke-width="2.5" fill="none" class="flow-line-fast"/>
-        
-        <g transform="translate(20, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-cli)" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">CLIENT TIER</text>
-            <text x="60" y="68" fill="#bae6fd" font-size="9" text-anchor="middle">Web &amp; Mobile Clients</text>
-            <text x="60" y="88" fill="#e0f2fe" font-size="8.5" text-anchor="middle" font-family="Fira Code">HTTP/3 · gRPC</text>
+        <path d="M 210 110 L 310 110" stroke="#38bdf8" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+        <path d="M 530 110 L 630 110" stroke="#a855f7" stroke-width="2.5" fill="none" class="flow-line-fast"/>
+
+        <g transform="translate(30, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-st1)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">PAYMENT REQUEST</text>
+            <text x="90" y="60" fill="#bae6fd" font-size="9.5" text-anchor="middle">Idempotency-Key: uuid-v4</text>
+            <text x="90" y="80" fill="#e0f2fe" font-size="9" text-anchor="middle"><code>POST /v1/charges</code></text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Guarantees Exactly-Once</text>
         </g>
-        <g transform="translate(230, 45)">
-            <rect width="140" height="130" rx="12" fill="url(#g-gw)" stroke="#c084fc" stroke-width="1.5"/>
-            <text x="70" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">GATEWAY &amp; LB</text>
-            <text x="70" y="65" fill="#e9d5ff" font-size="9" text-anchor="middle">Envoy Proxy Fleet</text>
-            <text x="70" y="85" fill="#f3e8ff" font-size="8.5" text-anchor="middle" font-family="Fira Code">JWT Auth / Throttling</text>
-            <text x="70" y="105" fill="#a7f3d0" font-size="8" text-anchor="middle">TLS Termination</text>
+        <g transform="translate(310, 45)">
+            <rect width="220" height="130" rx="14" fill="url(#g-st2)" stroke="#c084fc" stroke-width="1.5" class="glow-effect"/>
+            <text x="110" y="38" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle">REDIS IDEMPOTENCY LOCK</text>
+            <text x="110" y="60" fill="#f3e8ff" font-size="9.5" text-anchor="middle">Atomic Redis Check-and-Set</text>
+            <text x="110" y="80" fill="#e9d5ff" font-size="9.5" text-anchor="middle">If Duplicate: Return Cached Resp</text>
+            <text x="110" y="105" fill="#cbd5e1" font-size="8.5" text-anchor="middle" font-family="Fira Code">24-Hour TTL Expiration</text>
         </g>
-        <g transform="translate(460, 45)">
-            <rect width="150" height="130" rx="12" fill="url(#g-wrk)" stroke="#34d399" stroke-width="1.5"/>
-            <text x="75" y="40" fill="#ffffff" font-size="12.5" font-weight="bold" text-anchor="middle" font-family="Outfit">CORE SERVICES</text>
-            <text x="75" y="65" fill="#a7f3d0" font-size="9" text-anchor="middle">Business Logic Cluster</text>
-            <text x="75" y="85" fill="#d1fae5" font-size="8.5" text-anchor="middle" font-family="Fira Code">Redis Cache-Aside</text>
-            <text x="75" y="105" fill="#fef08a" font-size="8" text-anchor="middle">Async Task Dispatch</text>
-        </g>
-        <g transform="translate(680, 55)">
-            <rect width="120" height="110" rx="12" fill="url(#g-sto)" stroke="#fbbf24" stroke-width="1.5"/>
-            <text x="60" y="45" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Outfit">STORAGE TIER</text>
-            <text x="60" y="68" fill="#fef3c7" font-size="9" text-anchor="middle">Sharded DB + S3 Blob</text>
-            <text x="60" y="88" fill="#fffbeb" font-size="8.5" text-anchor="middle" font-family="Fira Code">Multi-AZ Sync</text>
+        <g transform="translate(630, 50)">
+            <rect width="180" height="120" rx="12" fill="url(#g-st3)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="90" y="38" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">DOUBLE-ENTRY LEDGER</text>
+            <text x="90" y="60" fill="#d1fae5" font-size="9.5" text-anchor="middle">Debit Buyer / Credit Seller</text>
+            <text x="90" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Card Network Settlement</text>
+            <text x="90" y="100" fill="#ffffff" font-size="8.5" text-anchor="middle" font-family="Fira Code">Zero Mathematical Drift</text>
         </g>
     </svg>
-    <div style="font-size:0.84rem; color:#94a3b8; margin-top:10px; line-height:1.5; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border-left:3px solid #10b981;">
-        <strong>Architectural Flow:</strong> Requests ingress through the global gateway, traverse the stateless microservice layer with sub-millisecond cache lookups, and persist to distributed sharded storage with multi-region replication.
+        <div class="diagram-caption">
+            <strong>Architecture Deep Dive:</strong> Stripe Idempotent Payment Flow: Client Idempotency Key ➔ Redis Lock & Cache Verification ➔ Double-Entry Ledger Commit ➔ Bank Gateway Settlement.
+        </div>
     </div>
-</div>
+
+    
 
     <h2>1. What is an Event-Sourced Banking Ledger?</h2>
     <p>A financial banking ledger (e.g., Stripe Ledger, Modern Treasury) records immutable money movements across millions of accounts using <strong>Double-Entry Bookkeeping</strong>. In double-entry accounting, money is never created or destroyed: every financial transaction must contain equal and balancing Debits and Credits ($\sum 	ext{Debits} = \sum 	ext{Credits}$).</p>
