@@ -81,20 +81,15 @@ def draw_insight_banner(ax, tag, text, is_success=True):
     ax.text(42, 6.2, text, color="#e2e8f0", fontsize=7.8, fontfamily='sans-serif')
 
 def save_flow_pack(frames, fname, sfolder, subfolder):
-    # Save High-Res PNG (First frame or last summary frame)
-    png_path = os.path.join(assets_dir, f"{fname}.png")
-    frames[-1].save(png_path)
-    
-    # Save Animated GIF
+    # Save Animated GIF only
     gif_path = os.path.join(assets_dir, f"{fname}.gif")
     frames[0].save(gif_path, save_all=True, append_images=frames[1:], duration=1800, loop=0)
     
-    # Copy to Vault
+    # Copy to Vault (GIF only)
     if sfolder and subfolder:
         vdir = os.path.join(vault_dir, sfolder, subfolder)
         os.makedirs(vdir, exist_ok=True)
-        frames[-1].save(os.path.join(vdir, "high_res_diagram.png"))
         frames[0].save(os.path.join(vdir, "animated_diagram.gif"), save_all=True, append_images=frames[1:], duration=1800, loop=0)
-    print(f"✅ Generated Physical Diagram & GIF: {fname}")
+    print(f"✅ Master Generated (GIF Only): {fname}")
 
 print("Physical Architecture Core Engine initialized.")
