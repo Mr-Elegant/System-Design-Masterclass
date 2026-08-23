@@ -47,9 +47,15 @@ def draw_node(ax, x, y, w, h, icon, title, subtitle, badge="", bg="#0f172a", bor
         ax.add_patch(b_box)
         ax.text(x + 3.5, y + h - 2.8, badge.upper(), color="#ffffff", fontsize=6.8, fontweight='bold', fontfamily='sans-serif')
 
-    ax.text(x + w/2, y + h/2 + 2.5, f"{icon}  {title}", color="#ffffff", fontsize=10, fontweight='bold', ha='center', va='center', fontfamily='sans-serif')
+    # Node Title & Subtitle with auto font-scaling to prevent box overflow
+    full_title = f"{icon}  {title}" if icon else title
+    calc_fs = min(9.5, max(6.8, (w * 2.1) / max(1, len(full_title))))
+    title_y = y + h - 9.5 if badge else y + h/2 + 2.5
+    ax.text(x + w/2, title_y, full_title, color="#ffffff", fontsize=calc_fs, fontweight='bold', ha='center', va='center', fontfamily='sans-serif')
+    
     if subtitle:
-        ax.text(x + w/2, y + h/2 - 4.5, subtitle, color="#38bdf8" if is_active else "#94a3b8", fontsize=7.8, ha='center', va='center', fontfamily='sans-serif')
+        sub_y = y + (h - 14)/2 if badge else y + h/2 - 4.5
+        ax.text(x + w/2, sub_y, subtitle, color="#38bdf8" if is_active else "#94a3b8", fontsize=7.4, ha='center', va='center', fontfamily='sans-serif')
 
 def draw_db_cylinder(ax, x, y, w, h, name, subtitle, status_text="", is_active=False):
     edge_col = "#10b981" if is_active else "#475569"
