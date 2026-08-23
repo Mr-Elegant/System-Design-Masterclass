@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (12)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item active" data-num="01" data-title="amazon dynamo: highly available distributed key-value store"><a href="#chapter-01"><span class="chapter-num">01</span> Amazon Dynamo: Highly Available Key-Value Store</a></li>
@@ -952,7 +951,7 @@
 
     <main class="content" id="main-content">
 
-        <div class="content-container">
+        <div class="content-inner">
 <!-- Preet Karwal Author Watermark & Navigation Bar -->
         <div class="author-watermark-card">
             <div style="display: flex; align-items: center; gap: 14px;">
@@ -985,9 +984,11 @@
             </div>
         </div>
 
+
+
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Amazon Dynamo: Highly Available Distributed Key-Value Store</h1>
@@ -1042,7 +1043,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Amazon Dynamo: Highly Available Distributed Key-Value Store): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1058,7 +1058,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1072,7 +1071,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1087,12 +1085,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradDynamo" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1140,7 +1141,6 @@
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Prioritizes 100% write availability (AP under CAP theorem) for shopping carts by employing Consistent Hashing with virtual nodes, Sloppy Quorums ($R+W &gt; N$) with Hinted Handoff, and client-reconciled Vector Clocks.
       </div>
-    </div>
 
     <h2>1. The Problem &amp; Business Motivation</h2>
     <p>In 2007, Amazon published the landmark paper <em>"Dynamo: Amazon's Highly Available Key-value Store"</em>. Amazon observed that rigid ACID transactions and relational database master-slave setups caused checkout delays and downtime during holiday traffic spikes. For e-commerce shopping carts, <strong>a write operation should never be rejected</strong>: a customer must always be able to add an item to their cart even during data center network partitions.</p>
@@ -1221,11 +1221,18 @@ export class VectorClock {
         <h3>Staff Follow-Up: "What happens if Vector Clocks grow unbounded over years of shopping cart edits?"</h3>
         <p><strong>Mitigation: Clock Truncation Threshold:</strong> Dynamo sets a truncation threshold (e.g. 10 node entries). When a vector clock exceeds 10 entries, the oldest <code>(node, timestamp)</code> pair is garbage-collected. While this introduces a tiny risk of false-concurrent branches, client-side cart reconciliation handles it cleanly without losing customer items.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Apache Kafka: Distributed Streaming Commit Log Architecture</h1>
@@ -1274,7 +1281,6 @@ export class VectorClock {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Apache Kafka Partitioned Commit Log: Producer write batching ➔ Append-Only Partition Logs with zero-copy OS sendfile ➔ Consumer Group offset tracking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1290,7 +1296,6 @@ export class VectorClock {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1304,7 +1309,6 @@ export class VectorClock {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1319,12 +1323,15 @@ export class VectorClock {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradKafka" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1367,7 +1374,6 @@ export class VectorClock {
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Achieves millions of messages/sec by treating disk as sequential storage, relying on the Linux OS Page Cache, and utilizing the kernel <code>sendfile</code> system call to transfer disk buffers directly to network sockets without user-space copying.
       </div>
-    </div>
 
     <h2>1. The Problem &amp; Business Motivation</h2>
     <p>Originally designed at LinkedIn in 2011 by Jay Kreps, Neha Narkhede, and Jun Rao, Apache Kafka solved the challenge of high-throughput real-time activity stream ingestion (page views, search queries, metrics) that overwhelmed traditional message brokers like RabbitMQ and ActiveMQ.</p>
@@ -1450,11 +1456,18 @@ export class KafkaPartitionSegment {
         <h3>Staff Follow-Up: "What happens if a broker experiences an unclean leader election when all ISR nodes crash?"</h3>
         <p><strong>Mitigation: <code>unclean.leader.election.enable=false</code>:</strong> If the leader dies and no ISR nodes are alive, Kafka defaults to refusing elections, sacrificing availability to guarantee zero message loss. If set to <code>true</code>, an out-of-sync replica is elected, leading to silent data truncation and data loss.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Consistent Hashing &amp; Virtual Node Mathematics</h1>
@@ -1503,7 +1516,6 @@ export class KafkaPartitionSegment {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Consistent Hashing Ring with Virtual Nodes (V-Nodes): Distributes key hashes evenly across physical database shard nodes with minimal rebalancing churn.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1519,7 +1531,6 @@ export class KafkaPartitionSegment {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1533,7 +1544,6 @@ export class KafkaPartitionSegment {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1548,8 +1558,6 @@ export class KafkaPartitionSegment {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1636,9 +1644,15 @@ export class ConsistentHashRing {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Paxos &amp; Raft Distributed Consensus Protocols</h1>
@@ -1693,7 +1707,6 @@ export class ConsistentHashRing {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Paxos &amp; Raft Distributed Consensus Protocols): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1709,7 +1722,6 @@ export class ConsistentHashRing {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1723,7 +1735,6 @@ export class ConsistentHashRing {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1738,8 +1749,6 @@ export class ConsistentHashRing {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1822,9 +1831,15 @@ export class RaftNode {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Google Bigtable: Distributed Storage for Structured Data</h1>
@@ -1879,7 +1894,6 @@ export class RaftNode {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1895,7 +1909,6 @@ export class RaftNode {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1909,7 +1922,6 @@ export class RaftNode {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1924,12 +1936,15 @@ export class RaftNode {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradBT" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1972,7 +1987,6 @@ export class RaftNode {
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Structures data as a sparse, distributed, persistent multi-dimensional sorted map. Writes are absorbed in memory (MemTable SkipList) after WAL logging and periodically flushed to immutable SSTables on GFS with Bloom Filters.
       </div>
-    </div>
 
     <h2>1. The Problem &amp; Data Model</h2>
     <p>In 2006, Google published <em>"Bigtable: A Distributed Storage System for Structured Data"</em> (Chang et al.). Bigtable was built to store petabytes of structured data across web indexing, Google Earth, and Google Analytics. It defines data as:</p>
@@ -2033,9 +2047,16 @@ export class MemTable {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Gossip Protocols &amp; SWIM Cluster Failure Detection</h1>
@@ -2090,7 +2111,6 @@ export class MemTable {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Gossip Protocols &amp; SWIM Cluster Failure Detection): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2106,7 +2126,6 @@ export class MemTable {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2120,7 +2139,6 @@ export class MemTable {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2135,8 +2153,6 @@ export class MemTable {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2198,9 +2214,15 @@ export class SWIMNode {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Google Chubby: Distributed Lock Service for Coarse-Grained Synchronization</h1>
@@ -2255,7 +2277,6 @@ export class SWIMNode {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Google Chubby: Distributed Lock Service for Coarse-Grained Synchronization): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2271,7 +2292,6 @@ export class SWIMNode {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2285,7 +2305,6 @@ export class SWIMNode {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2300,8 +2319,6 @@ export class SWIMNode {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2338,9 +2355,15 @@ export class ChubbyStorageFence {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Apache ZooKeeper &amp; The ZAB Consensus Protocol</h1>
@@ -2395,7 +2418,6 @@ export class ChubbyStorageFence {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Apache ZooKeeper &amp; The ZAB Consensus Protocol): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2411,7 +2433,6 @@ export class ChubbyStorageFence {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2425,7 +2446,6 @@ export class ChubbyStorageFence {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2440,8 +2460,6 @@ export class ChubbyStorageFence {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2490,9 +2508,15 @@ export class ZooKeeperLock {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Google MapReduce: Large-Scale Distributed Data Processing</h1>
@@ -2547,7 +2571,6 @@ export class ZooKeeperLock {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Google MapReduce: Large-Scale Distributed Data Processing): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2563,7 +2586,6 @@ export class ZooKeeperLock {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2577,7 +2599,6 @@ export class ZooKeeperLock {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2592,12 +2613,15 @@ export class ZooKeeperLock {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradMR" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -2645,7 +2669,6 @@ export class ZooKeeperLock {
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Hides complex distributed failure recovery, data partitioning, and inter-node network shuffling behind a simple functional abstraction: <code>Map</code> and <code>Reduce</code>.
       </div>
-    </div>
 
     <h2>1. The Problem &amp; Business Motivation</h2>
     <p>Published in 2004 by Jeffrey Dean and Sanjay Ghemawat (<em>"MapReduce: Simplified Data Processing on Large Clusters"</em>), MapReduce allowed Google software engineers with no distributed systems background to process multi-terabyte datasets across thousands of commodity Linux servers with automated fault tolerance.</p>
@@ -2717,9 +2740,16 @@ export class MapReduceEngine {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-10" class="chapter-section">
+<section  id="chapter-10" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">Google File System (GFS) &amp; Hadoop HDFS</h1>
@@ -2767,7 +2797,6 @@ export class MapReduceEngine {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Amazon S3 Erasure Coding (Reed-Solomon 8+4): Chunks object into 8 data blocks + 4 parity blocks across 12 failure domains, surviving 4 disk losses.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2783,7 +2812,6 @@ export class MapReduceEngine {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2797,7 +2825,6 @@ export class MapReduceEngine {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2812,8 +2839,6 @@ export class MapReduceEngine {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2862,9 +2887,15 @@ export class RackAwarePlacementPolicy {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-11" class="chapter-section">
+<section  id="chapter-11" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">Apache Cassandra: Decentralized Masterless NoSQL Database</h1>
@@ -2919,7 +2950,6 @@ export class RackAwarePlacementPolicy {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Apache Cassandra: Decentralized Masterless NoSQL Database): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2935,7 +2965,6 @@ export class RackAwarePlacementPolicy {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2949,7 +2978,6 @@ export class RackAwarePlacementPolicy {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2964,8 +2992,6 @@ export class RackAwarePlacementPolicy {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3010,9 +3036,15 @@ export class CassandraConsistencyValidator {
     }
 }</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-12" class="chapter-section">
+<section  id="chapter-12" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">Course Conclusion &amp; Next Steps</h1>
@@ -3067,7 +3099,6 @@ export class CassandraConsistencyValidator {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Course Conclusion &amp; Next Steps): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3083,7 +3114,6 @@ export class CassandraConsistencyValidator {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3097,7 +3127,6 @@ export class CassandraConsistencyValidator {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3112,8 +3141,6 @@ export class CassandraConsistencyValidator {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3121,10 +3148,20 @@ export class CassandraConsistencyValidator {
     <p>You have mastered the entire spectrum of system design: from foundational distributed building blocks and classic FAANG interview flagships, to bleeding-edge multimodal AI/LLM architectures and the 11 legendary distributed systems papers that power modern computing infrastructure.</p>
     <p>For feedback, comments, and suggestions, please contact us at <a href="mailto:hello@designgurus.org">hello@designgurus.org</a>.</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
         </div>
     
+</div>
+
+
+
 </main>
 
 

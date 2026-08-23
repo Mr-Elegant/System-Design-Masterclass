@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (13)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to databases"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Databases</a></li>
@@ -964,8 +963,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -984,11 +981,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Databases</h1>
@@ -1043,7 +1039,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction to Databases): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1059,7 +1054,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1073,7 +1067,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1088,8 +1081,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1118,10 +1109,16 @@
 <p>On the other hand, NoSQL databases are horizontally scalable, meaning we can add more servers easily in our NoSQL database infrastructure to handle a lot of traffic. Any cheap commodity hardware or cloud instances can host NoSQL databases, thus making it a lot more cost-effective than vertical scaling. A lot of NoSQL technologies also distribute data across servers automatically.</p>
 <p><strong>5. Reliability or ACID Compliancy (Atomicity, Consistency, Isolation, Durability):</strong> The vast majority of relational databases are ACID compliant. So, when it comes to data reliability and safe guarantee of performing transactions, SQL databases are still the better bet.</p>
 <p>Most of the NoSQL solutions sacrifice ACID compliance for availability, performance, and scalability.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">SQL Databases</h1>
@@ -1176,7 +1173,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (SQL Databases): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1192,7 +1188,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1206,7 +1201,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1221,8 +1215,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1284,10 +1276,16 @@
 <li><strong>Query language and optimization:</strong> SQL is a powerful and expressive query language that allows developers to perform complex operations on the data, such as filtering, sorting, grouping, and joining multiple tables based on specified conditions. SQL databases also include query optimizers, which analyze and optimize queries for improved performance.</li>
 <li><strong>Scalability and performance:</strong> SQL databases can be scaled vertically by adding more resources (such as CPU, memory, and storage) to a single server. However, horizontal scaling, or distributing the data across multiple servers, <a href="https://systemdesign.example.com/blog/Scaling-SQL-Databases" target="_blank">can be more challenging</a> due to the relational nature of the data and the constraints imposed by the ACID properties. This can lead to performance bottlenecks and difficulties in scaling for large-scale applications with high write loads or massive amounts of data.</li>
 </ol></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">NoSQL Databases</h1>
@@ -1342,7 +1340,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (NoSQL Databases): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1358,7 +1355,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1372,7 +1368,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1387,8 +1382,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1508,10 +1501,16 @@
 </li>
 </ul>
 <p>In summary, avoid or rethink NoSQL when <strong>your problem can be handled elegantly by a relational database and you gain no strong upside from NoSQL</strong>. Don’t use NoSQL just because it’s trendy – use it because it’s necessary. A common sensible approach is to start with relational (if it fits initially) and only move to NoSQL if and when you identify concrete needs that relational can’t meet (scale, flexibility, etc.). There’s also the approach of <strong>polyglot persistence</strong>: using multiple databases for different purposes in the same application. For instance, using a SQL database for core transactional data, but a NoSQL database for a caching layer or for logging or for a recommendation engine. That way you get each technology for what it’s best at.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">SQL vs NoSQL</h1>
@@ -1566,7 +1565,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (SQL vs NoSQL): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1582,7 +1580,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1596,7 +1593,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1611,8 +1607,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1647,10 +1641,16 @@
 <li><strong>Community and support:</strong> Consider the community and support ecosystem surrounding the database. A vibrant community can provide valuable resources, such as documentation, tutorials, and forums, while a strong support ecosystem can offer professional assistance and guidance when needed.</li>
 <li><strong>Cost:</strong> Finally, take into account the cost of using the chosen database, including licensing, hardware, and operational expenses. Depending on your budget and requirements, you may need to weigh the benefits of various databases against their associated costs to make an informed decision.</li>
 </ul></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">ACID vs BASE Properties</h1>
@@ -1705,7 +1705,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (ACID vs BASE Properties): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1721,7 +1720,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1735,7 +1733,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1750,8 +1747,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1793,10 +1788,16 @@
 <p>Both ACID and BASE have their strengths and weaknesses, and neither is “better” in all cases – it truly depends on your application’s needs. <strong>ACID</strong> guarantees a high level of data integrity and reliability (no half-finished transactions, no dirty reads, no lost updates), which is essential for scenarios like finance, healthcare, inventory management, or any system that can’t afford even minor inconsistencies. If your application demands <em>strict accuracy and safety</em> – for example, a banking app or an online order system – an ACID-compliant database (such as MySQL or PostgreSQL) is likely the right choice. The trade-off is that you might sacrifice some performance or flexibility in scaling, but you gain peace of mind that your data is always correct.</p>
 <p>On the other hand, <strong>BASE</strong> is often the right choice for distributed systems and applications where <em>availability and scaling are paramount</em>, and where the business can tolerate slight delays in data consistency. If you’re building the next social media platform, a global online game, or a large content service, you might choose a BASE-oriented database (like Cassandra or DynamoDB) to ensure the system stays responsive and can handle partitions or server failures gracefully. You accept that users might not see the latest update instantly in exchange for the system being highly scalable and fault-tolerant.</p>
 <p>In short, <strong>choose ACID</strong> when you need <em>guaranteed consistency and integrity</em> (and your data is structured in a way that fits a traditional database). <strong>Choose BASE</strong> when you need <em>scalability and availability</em> above all, and your use case can handle being “eventually” consistent. Many modern systems even blend the two approaches – for example, by using an ACID database for critical transactions and a BASE/NoSQL database for analytics or caching, finding a balance between consistency and performance. Understanding the differences between ACID and BASE helps you make an informed decision and design your data architecture with the right expectations. For a beginner, just remember: <strong>ACID = strong, immediate consistency (think banks)</strong>, <strong>BASE = flexibility and availability with eventual consistency (think big web apps)</strong>. By evaluating the needs of your project (do you need absolute accuracy, or can you afford some delay?), you can confidently choose the model that will keep your data safe <em>and</em> your users happy.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">RealWorld Examples and Case Studies</h1>
@@ -1851,7 +1852,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (RealWorld Examples and Case Studies): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1867,7 +1867,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1881,7 +1880,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1896,8 +1894,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1919,10 +1915,16 @@
 <li><strong>Gaming industry:</strong> In the gaming industry, developers often use a combination of SQL and NoSQL databases to support different aspects of their applications. For instance, an SQL database may be employed to manage user accounts, in-game purchases, and other transactional data, while a NoSQL database like Redis can be used to store real-time game state information and leaderboards.</li>
 <li><strong>E-commerce with personalized recommendations:</strong> Some e-commerce platforms combine SQL databases for transactional data and inventory management with NoSQL databases for personalized recommendations. This hybrid approach allows the platform to leverage the strengths of both database types, ensuring efficient data storage, querying, and analysis for various aspects of the application.</li>
 </ol></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">SQL Normalization and Denormalization</h1>
@@ -1977,7 +1979,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (SQL Normalization and Denormalization): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1993,7 +1994,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2007,7 +2007,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2022,8 +2021,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2119,10 +2116,16 @@
 <li><strong>Denormalization</strong> simplifies queries but at the cost of increased data redundancy and potential maintenance challenges.</li>
 </ul>
 <p>The choice between the two depends on the specific requirements of your database system, considering factors like the frequency of read vs. write operations, and the importance of query performance vs. data integrity.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">InMemory Database vs OnDisk Database</h1>
@@ -2177,7 +2180,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (InMemory Database vs OnDisk Database): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2193,7 +2195,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2207,7 +2208,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2222,8 +2222,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2384,10 +2382,16 @@
 </li>
 </ol>
 <p>Each type of database serves different needs: in-memory databases are optimal for scenarios requiring rapid data access and processing, while on-disk databases are better suited for applications needing reliable data persistence and management of large data volumes. The choice depends on specific application requirements, including performance needs, data size, and persistence considerations.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Data Replication vs Data Mirroring</h1>
@@ -2442,7 +2446,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Data Replication vs Data Mirroring): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2458,7 +2461,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2472,7 +2474,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2487,8 +2488,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2564,10 +2563,16 @@
 </li>
 </ol>
 <p>Choosing between data replication and data mirroring depends on the specific requirements of the system in terms of availability, performance, and the nature of the data being managed. In many systems, both techniques are used in conjunction to achieve both scalability and high availability.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-10" class="chapter-section">
+<section  id="chapter-10" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">Database Federation</h1>
@@ -2622,7 +2627,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Database Federation): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2638,7 +2642,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2652,7 +2655,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2667,8 +2669,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2726,10 +2726,16 @@
 <li><strong>Microservices with Separate Databases:</strong> Provides a single interface for data scattered across services.</li>
 </ul>
 <p>In essence, database federation offers a <strong>single, integrated view</strong> across multiple autonomous databases, enabling real-time queries without forcing a centralized repository. While it simplifies data access, designers must weigh the performance, complexity, and consistency trade-offs to determine if federation fits their particular use case.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-11" class="chapter-section">
+<section  id="chapter-11" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">What are Indexes</h1>
@@ -2777,7 +2783,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2793,7 +2798,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2807,7 +2811,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2822,11 +2825,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradIdx" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2901,7 +2907,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> B-Trees organize pages hierarchically on disk for fast O(log N) point and range queries, whereas LSM-Trees append writes rapidly to in-memory MemTables and flush immutable SSTables with background compaction for high-throughput write workloads.
   </div>
-</div>
 
     <div><p>Indexes are well known when it comes to databases. Sooner or later there comes a time when database performance is no longer satisfactory. One of the very first things you should turn to when that happens is database indexing.</p>
 <p>The goal of creating an index on a particular table in a database is to make it faster to search through the table and find the row or rows that we want. Indexes can be created using one or more columns of a database table, providing the basis for both rapid random lookups and efficient access of ordered records.</p>
@@ -2919,10 +2924,17 @@
 <p>It&#x27;s important to note that while indexes can significantly improve query performance, they also come with some overhead. Indexes require additional storage space and can slow down write operations, such as INSERT, UPDATE, and DELETE, since the indexes must be updated along with the table data. Therefore, it&#x27;s essential to strike a balance between the number of indexes and their impact on query performance and storage requirements.</p>
 <p>When adding rows or making updates to existing rows for a table with an active index, we not only have to write the data but also have to update the index. This will decrease the write performance. This performance degradation applies to all insert, update, and delete operations for the table. For this reason, adding unnecessary indexes on tables should be avoided and indexes that are no longer used should be removed.</p>
 <p>To summarize, adding indexes is about improving the performance of search queries. If the goal of the database is to provide a data store that is often written to and rarely read from, in that case, decreasing the performance of the more common operation, which is writing, is probably not worth the increase in performance we get from reading.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-12" class="chapter-section">
+<section  id="chapter-12" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">Types of Indexes</h1>
@@ -2970,7 +2982,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2986,7 +2997,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3000,7 +3010,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3015,8 +3024,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3027,19 +3034,19 @@
 <p><strong>Performance considerations:</strong> A primary index provides very efficient access to records by the primary key. Lookups and joins based on the primary key are fast because the index is typically a B-tree optimized for finding the exact key. Since the primary index is unique by definition, the database can stop searching as soon as it finds the one matching row. Maintaining a primary index has minimal overhead beyond any other index – inserts and updates to primary-key values (which are rare, since primary keys seldom change) will update the index. The primary index also helps enforce referential integrity (foreign keys often reference a primary key index for fast checks). In summary, the primary index <strong>improves read performance for identifying specific rows</strong>, with very little downside since every table usually needs a primary key.</p>
 <p><strong>Use cases:</strong> Use a primary index on the main identifier of the table. This is usually done automatically by declaring a PRIMARY KEY. For example, an <code>Employees</code> table might use an <code>EmployeeID</code> as the primary key; the database will create a primary index on <code>EmployeeID</code> so that queries like <code>SELECT * FROM Employees WHERE EmployeeID = 123</code> are very fast. Essentially <strong>every relational table</strong> that has a primary key will have a primary index – it’s the foundational index for uniquely identifying rows.</p>
 <p><strong>Example:</strong> Creating a table with a primary key will automatically create a primary index on that key. For instance, in SQL:</p>
-<pre><div><div><code><span>CREATE</span><span> </span><span>TABLE</span><span> Customers </span><span>(</span><span>
+<pre><div class="topic-content"><code><span>CREATE</span><span> </span><span>TABLE</span><span> Customers </span><span>(</span><span>
 </span><span>  CustomerID </span><span>INT</span><span> </span><span>PRIMARY</span><span> </span><span>KEY</span><span>,</span><span>
 </span><span>  Name       </span><span>VARCHAR</span><span>(</span><span>100</span><span>)</span><span>,</span><span>
 </span><span>  Address    </span><span>VARCHAR</span><span>(</span><span>200</span><span>)</span><span>
-</span><span></span><span>)</span><span>;</span></code></div></div></pre>
+</span><span></span><span>)</span><span>;</span></code></div></pre>
 <p>Here, <code>CustomerID</code> is the primary key, and the database builds a primary index on it so that any lookup by a specific <code>CustomerID</code> is efficient.</p>
 <h2>Unique Index</h2>
 <p>A <strong>Unique Index</strong> ensures that all values in the indexed column (or combination of columns) are distinct. In other words, it enforces a uniqueness constraint – no two rows can have the same key value. Database systems often automatically create a unique index when you define a UNIQUE constraint or a primary key (primary keys are by nature unique). You can also create additional unique indexes on other columns that must be unique (for example, a username or email address in a users table). A unique index functions like a regular index for lookup performance, but with the added rule that duplicate values are not allowed.</p>
 <p><strong>Performance considerations:</strong> Unique indexes speed up read queries just as non-unique indexes do, and in addition they guarantee data integrity by preventing duplicates. Reads (SELECTs) using a unique index are very efficient – and the database also knows that at most one row will match, which can slightly optimize certain plans. The trade-off is on writes: whenever a new row is inserted or an indexed column is updated, the database must check the unique index to ensure no duplicate value exists, which adds a small overhead. This means inserts/updates can be a bit slower due to the uniqueness check. However, this cost is usually worth it to maintain data correctness. Storage overhead for a unique index is similar to a normal index.</p>
 <p><strong>Use cases:</strong> Use unique indexes for any column that requires unique values. Besides primary keys, this includes candidate keys or business rules – e.g. an email address in a users table (to ensure no two users share the same email), or a social security number field that must be unique per person. Unique indexes are optimal when you frequently query by that column as well, because they both enforce integrity and accelerate lookups. Keep in mind that you can have multiple unique indexes per table (unlike primary index which is one).</p>
 <p><strong>Example:</strong> Creating a unique index (or constraint) on a column. Suppose we have a <code>Users</code> table and want <code>Email</code> to be unique:</p>
-<pre><div><div><code><span>-- Create a unique index on the Email column to prevent duplicates</span><span>
-</span><span></span><span>CREATE</span><span> </span><span>UNIQUE</span><span> </span><span>INDEX</span><span> idx_users_email </span><span>ON</span><span> Users</span><span>(</span><span>Email</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>-- Create a unique index on the Email column to prevent duplicates</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>UNIQUE</span><span> </span><span>INDEX</span><span> idx_users_email </span><span>ON</span><span> Users</span><span>(</span><span>Email</span><span>)</span><span>;</span></code></div></pre>
 <p>After this, any <code>SELECT</code> or join by <code>Email</code> can use the index, and any attempt to insert a duplicate email will be blocked by the index. Thus, queries like <code>SELECT * FROM Users WHERE Email = &#x27;alice@example.com&#x27;</code> are fast, and the index ensures there’s at most one <code>&#x27;alice@example.com&#x27;</code> in the table.</p>
 <h2>Clustered Index</h2>
 <p>A <strong>Clustered Index</strong> determines the physical order of data in the table. In a clustered index, the table’s rows are stored on disk in the same order as the index key (essentially the index <em>is</em> the table). This means that there is no separate structure holding pointers to data – the index’s leaf nodes contain the actual data rows. Because of this, a table can have only one clustered index (the data can only be sorted one way on disk). Often, the primary key serves as the clustered index by default (e.g. in SQL Server or InnoDB), but it can be a different column if chosen. If a table has a clustered index, other indexes on that table are called <strong>non-clustered</strong> (or secondary) indexes.</p>
@@ -3047,8 +3054,8 @@
 <p>However, clustered indexes have some trade-offs. Writing data can be slower if new rows need to be inserted in sorted order; inserting a row in the middle of existing data may require shifting rows or splitting data pages to maintain the order. Updates to the cluster key (if they occur) are expensive for the same reason (the row might move). Also, since there can be only one clustered index, you must choose it wisely based on query patterns. If you frequently need data sorted or ranged by a particular column, that’s a good candidate. If not, many systems default to clustering on the primary key. Additionally, non-clustered indexes on a clustered table use the clustered key as a pointer to locate data (instead of a direct physical pointer), which adds a bit of size to those indexes.</p>
 <p><strong>Use cases:</strong> Use a clustered index for columns on which you often retrieve ordered data or ranges of data. A classic use case is a date/timestamp column for a log or history table – clustering on the date makes it efficient to fetch a time range or the latest records. Similarly, if you always query a customer table sorted by <code>LastName</code>, a clustered index on <code>LastName</code> makes sense (as long as insert patterns are manageable). Many OLTP databases cluster on an auto-incrementing ID (primary key) because new inserts then append to the end (minimizing reorganization), and joins by ID are fast. In data warehouses, clustering on a date or other sequential key can benefit range queries. If a table is small, clustering is less critical, but on large tables the choice of clustered index can significantly impact performance for certain queries.</p>
 <p><strong>Example:</strong> In SQL Server (or other systems that support explicit clustered indexes), you can create one like so:</p>
-<pre><div><div><code><span>-- Cluster the Customer table by last name, then first name (alphabetical order)</span><span>
-</span><span></span><span>CREATE</span><span> </span><span>CLUSTERED</span><span> </span><span>INDEX</span><span> idx_cust_name </span><span>ON</span><span> Customers</span><span>(</span><span>LastName </span><span>ASC</span><span>,</span><span> FirstName </span><span>ASC</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>-- Cluster the Customer table by last name, then first name (alphabetical order)</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>CLUSTERED</span><span> </span><span>INDEX</span><span> idx_cust_name </span><span>ON</span><span> Customers</span><span>(</span><span>LastName </span><span>ASC</span><span>,</span><span> FirstName </span><span>ASC</span><span>)</span><span>;</span></code></div></pre>
 <p>This physically sorts the <code>Customers</code> table by last name and first name. Queries such as <code>SELECT * FROM Customers ORDER BY LastName, FirstName</code> or range queries like “LastName BETWEEN &#x27;A&#x27; and &#x27;C&#x27;” will be very efficient because the data is stored in sorted order. Keep in mind that only one clustered index (here on LastName+FirstName) can exist – if the primary key is different, that primary key would be supported by a non-clustered unique index instead.</p>
 <h2>Non-Clustered Index</h2>
 <p>A <strong>Non-Clustered Index</strong> (also called a secondary index) is a standard index separate from the actual data storage. In a non-clustered index, the index structure (typically a B-tree) stores the indexed column values and pointers (references) to the actual table rows that contain the rest of the data. The table’s data is not sorted by this index; instead, the index is like a lookup table that can quickly find the locations of rows matching a given key. Non-clustered indexes are analogous to an index in a book – the book’s content is in its original order, and the separate index lists keywords with pointers (page numbers) to where those topics are found. A table can have multiple non-clustered indexes on different columns, since they don’t dictate physical order.</p>
@@ -3056,8 +3063,8 @@
 <p>Compared to clustered indexes, non-clustered indexes do <strong>not</strong> guarantee physical locality of data – the rows may be scattered – so range scans will fetch each matching row via pointers. If many rows qualify, a table scan might even be cheaper, which the optimizer will consider. Thus, non-clustered indexes are best for selective queries (that return a small percentage of the table). They are not helpful for queries that return a very large fraction of the table (in such cases, a full table scan is usually more efficient than hopping through the index).</p>
 <p><strong>Use cases:</strong> Virtually any column that is frequently used in <code>WHERE</code> clauses, join conditions (<code>ON</code> clauses), or used for sorting (<code>ORDER BY</code>) is a candidate for a non-clustered index if it isn’t already the clustered (or primary) index. For example, if you often query an <code>Orders</code> table by <code>CustomerID</code>, and the table is not clustered by customer, you would create a non-clustered index on <code>CustomerID</code> to speed up those lookups. Similarly, an index on <code>LastName</code> in an <code>Employees</code> table helps searches by last name, and an index on <code>ProductCategory</code> in a <code>Products</code> table accelerates filtering by category. You can have multiple non-clustered indexes per table, so you tailor them to your query patterns. Just be cautious with creating too many; each index will need maintenance on writes and consumes disk/RAM.</p>
 <p><strong>Example:</strong> Creating a non-clustered index on a single column is straightforward:</p>
-<pre><div><div><code><span>-- Create a non-clustered index on the LastName column of Employees</span><span>
-</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_emp_lastname </span><span>ON</span><span> Employees</span><span>(</span><span>LastName</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>-- Create a non-clustered index on the LastName column of Employees</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_emp_lastname </span><span>ON</span><span> Employees</span><span>(</span><span>LastName</span><span>)</span><span>;</span></code></div></pre>
 <p>This index allows fast searches by last name. For instance, <code>SELECT * FROM Employees WHERE LastName = &#x27;Doe&#x27;</code> will use the index to find pointers to all &quot;Doe&quot; records and then retrieve them. The <code>Employees</code> data itself remains in its original order (perhaps clustered by another key or as inserted), but this index serves as a quick lookup structure for the LastName field.</p>
 <h2>Composite Index</h2>
 <p>A <strong>Composite Index</strong> (also called a multi-column index or concatenated index) is an index on two or more columns combined. The index treats the combined set of columns as a single search key. For example, an index on <code>(LastName, FirstName)</code> in a table effectively sorts by LastName then FirstName together. Composite indexes can speed up queries that involve conditions on multiple columns because the query can use one index lookup instead of having to combine results from separate single-column indexes.</p>
@@ -3065,8 +3072,8 @@
 <p>However, the order of columns in a composite index is crucial. Most databases use a <strong>leftmost prefix</strong> rule: the index can be used for a query that filters on the first column, or on the first and second, etc., but not solely on a later column without the earlier one. For example, an index on (A, B) can be used for a query on A alone, or A and B together, but <em>typically</em> not for a query on B alone (if A is not specified). (Some databases have optimizations like index skip scans, but those are exceptions.) This means if you create a composite index, you should list the columns in the order that matches your common query patterns. Composite indexes tend to be larger (since they store multiple values per entry) and will incur overhead on any operation that changes any of the indexed columns.</p>
 <p><strong>Use cases:</strong> Use composite indexes for queries that consistently involve multiple columns. A classic example is a table of addresses with columns (City, State); queries often filter by State and City together, so an index on (State, City) makes sense. Another example is an <code>Orders</code> table where queries ask for orders by Customer within a certain Date – an index on (CustomerID, OrderDate) would efficiently support <code>WHERE CustomerID = ? AND OrderDate BETWEEN ...</code>. Composite indexes are also useful for enforcing uniqueness across a combination of fields (e.g. an index on (FirstName, LastName) if you wanted to ensure no two people share the same full name in a table – though that’s a business requirement not commonly enforced, it illustrates the point). Always consider how the columns are used: if a composite index’s first column isn’t used alone in queries, it may not be helpful to have a separate single-column index on it, whereas if the second column is also frequently queried by itself, you might need an additional index just on that second column.</p>
 <p><strong>Example:</strong> Suppose we have an <code>Orders</code> table frequently queried by Customer and Date. We can create a composite index:</p>
-<pre><div><div><code><span>-- Composite index on CustomerID and OrderDate</span><span>
-</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_orders_cust_date </span><span>ON</span><span> Orders</span><span>(</span><span>CustomerID</span><span>,</span><span> OrderDate</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>-- Composite index on CustomerID and OrderDate</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_orders_cust_date </span><span>ON</span><span> Orders</span><span>(</span><span>CustomerID</span><span>,</span><span> OrderDate</span><span>)</span><span>;</span></code></div></pre>
 <p>This single index can accelerate queries like <code>SELECT * FROM Orders WHERE CustomerID = 42 AND OrderDate &gt;= &#x27;2024-01-01&#x27; AND OrderDate &lt; &#x27;2024-02-01&#x27;;</code> because it will find the customer 42’s orders and then filter by the date range in one index traversal. It will also help a query <code>WHERE CustomerID = 42</code> alone (using the leftmost <code>CustomerID</code> part). However, a query filtering only by <code>OrderDate</code> (without CustomerID) cannot use this index efficiently because <code>OrderDate</code> is the second component. In summary, this composite index targets queries that specify a customer <em>and</em> a date or date range.</p>
 <h2>Full-Text Index</h2>
 <p>A <strong>Full-Text Index</strong> is a specialized index for text search. Unlike a normal index which treats an entire column value as a single entry, a full-text index breaks text data into <strong>words or tokens</strong> and indexes those for rapid substring and keyword searches. Full-text indexes are typically implemented as an <em>inverted index</em>: it maps each word (term) to a list of documents or rows that contain that word. This allows efficient search for documents containing one or more words, supporting features like phrase searches, boolean text searches, and relevancy ranking. Full-text indexing is essential for searching large text fields such as articles, product descriptions, documents, or comments, where queries might ask for &quot;rows that contain the word X&quot;.</p>
@@ -3074,8 +3081,8 @@
 <p>Despite the overhead, for applications that need to search text, full-text indexes are the only practical way to achieve good performance. They often support advanced features: ranking results by relevance, ignoring common “noise” words, support for inflection or stemming (searching “run” also finds “running”), etc., which go beyond what a basic index does.</p>
 <p><strong>Use cases:</strong> Use a full-text index for columns containing large unstructured text that users need to search through. Typical use cases are: article or blog content, product descriptions (for e-commerce search), document repositories, comment or message text, etc. For example, a support knowledge base might have a full-text index on the article text so that a query for certain error keywords returns relevant articles quickly. Full-text search is also used in implementing search boxes on websites or applications – e.g., searching all fields of a customer profile for a keyword. If your queries are only looking for exact matches or simple prefixes, a regular index might suffice, but for sophisticated text queries (multiple keywords, any position in text, relevance scoring), full-text is ideal.</p>
 <p><strong>Example:</strong> In MySQL, you can create a full-text index on a text column like this:</p>
-<pre><div><div><code><span>-- Full-text index on the Content column of an Articles table (MySQL example)</span><span>
-</span><span></span><span>CREATE</span><span> FULLTEXT </span><span>INDEX</span><span> idx_articles_content </span><span>ON</span><span> Articles</span><span>(</span><span>Content</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>-- Full-text index on the Content column of an Articles table (MySQL example)</span><span>
+</span><span></span><span>CREATE</span><span> FULLTEXT </span><span>INDEX</span><span> idx_articles_content </span><span>ON</span><span> Articles</span><span>(</span><span>Content</span><span>)</span><span>;</span></code></div></pre>
 <p>Once created, queries can use <code>MATCH(Content) AGAINST(&#x27;database&#x27;)</code> to efficiently find articles that mention “database”. In SQL Server, full-text indexing involves creating a full-text catalog and index, and then using the <code>CONTAINS</code> or <code>FREETEXT</code> predicates for querying. The idea in all cases is the same: the text is tokenized and indexed by terms, enabling fast searches for those terms in the text data (far faster than wildcard LIKE queries on large text).</p>
 <h2>Hash Index</h2>
 <p>A <strong>Hash Index</strong> uses a hash table internally for indexing, rather than a tree structure. In a hash index, the index key (e.g., a value from a column) is run through a hash function which determines which &quot;bucket&quot; or slot the pointer to the row will be stored in. Hash indexes are excellent for <strong>equality lookups</strong> – i.e., queries that ask for records matching a specific value (using <code>=</code> or <code>IN</code> comparisons). The hash function computation leads directly to the location of the matching entries, giving average <em>O(1)</em> lookup time, which can be faster than traversing a B-tree (O(log N)) for very large datasets. However, hash indexes do not maintain any order among the keys, so they cannot be used for range scans (<code>&lt;</code>, <code>&gt;</code>, BETWEEN queries) or for sorting.</p>
@@ -3084,13 +3091,19 @@
 <p>In terms of maintenance, updating a hash index on inserts and deletes is generally fast (compute a hash and insert or remove an entry). If the hash table grows too full, it might need resizing (rehashing), which can be an expensive operation, but that’s not frequent if sized well. Hash indexes also typically don’t provide any statistical information about data distribution (which query optimizers use for planning) beyond perhaps the number of entries, whereas B-trees inherently have some ordering structure that can be exploited.</p>
 <p><strong>Use cases:</strong> Use a hash index when you have a very large table and frequently need to retrieve or check existence of records by a specific key value, and you <strong>never</strong> need to do range queries on that key. This is common in key-value stores or certain NoSQL systems, but in SQL/RDBMS it’s less common since B-tree indexes handle most use cases well. That said, a hash index might be beneficial for something like an in-memory lookup table, or a table that serves as a cache of key-to-value mappings where each query is an exact key lookup. Another scenario is indexing cryptographic hashes or uniformly distributed identifiers – if you frequently look up by a long hash value, a hash index would directly target that value. In PostgreSQL, if you have a table where only equality searches are used on a particular column and performance is critical, you could consider a hash index for that column (after ensuring it’s supported and advantageous).</p>
 <p><strong>Example:</strong> In PostgreSQL, creating a hash index explicitly looks like:</p>
-<pre><div><div><code><span>-- PostgreSQL: Create a hash index on the CustomerCode column</span><span>
-</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_customer_code_hash </span><span>ON</span><span> Customers </span><span>USING</span><span> </span><span>HASH</span><span>(</span><span>CustomerCode</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>-- PostgreSQL: Create a hash index on the CustomerCode column</span><span>
+</span><span></span><span>CREATE</span><span> </span><span>INDEX</span><span> idx_customer_code_hash </span><span>ON</span><span> Customers </span><span>USING</span><span> </span><span>HASH</span><span>(</span><span>CustomerCode</span><span>)</span><span>;</span></code></div></pre>
 <p>This creates a hash-based index on <code>CustomerCode</code>. Now a query <code>SELECT * FROM Customers WHERE CustomerCode = &#x27;ABC123&#x27;</code> will use the hash index to directly hash <code>&#x27;ABC123&#x27;</code> and find the matching row(s) very quickly. But a query with a range or inequality on <code>CustomerCode</code> (e.g. <code>CustomerCode &lt; &#x27;ABC999&#x27;</code>) cannot use this index. In MySQL (Memory engine), if you create a table <code>ENGINE=MEMORY</code>, any index you create on it is a hash index by default, optimized for fast lookups in RAM. For disk-based tables, MySQL doesn’t allow specifying <code>USING HASH</code> (as of current versions) – it sticks to B-trees. Always consider whether your queries are exclusively equality lookups; if so, and your DB supports it, a hash index can be a powerful tool for performance.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-13" class="chapter-section">
+<section  id="chapter-13" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">13</span>
     <h1 class="chapter-title">Vector Databases, Embeddings &amp; Modern Storage Engines</h1>
@@ -3145,7 +3158,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3161,7 +3173,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3175,7 +3186,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3190,8 +3200,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     <div class="chapter-body-content">
   <p>With the rise of Generative AI, Large Language Models (LLMs), and Retrieval-Augmented Generation (RAG), <strong>Vector Databases</strong> have emerged as a critical database category designed for high-dimensional geometric search.</p>
@@ -3201,7 +3209,12 @@
 
   
 
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradVec" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3266,7 +3279,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Vector databases use Approximate Nearest Neighbor (ANN) graphs like HNSW (Hierarchical Navigable Small World) to navigate 1536-dimensional space in sub-10ms logarithmic time.
   </div>
-</div>
 
   <h2>2. Vector Indexing: HNSW vs. IVFFlat</h2>
   <ul>
@@ -3280,10 +3292,21 @@
     <li><strong>Vector Extensions on Classic DBs:</strong> <code>pgvector</code> (PostgreSQL extension for unified relational + vector queries), Redis VSS (Vector Similarity Search in RAM).</li>
   </ul>
 </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

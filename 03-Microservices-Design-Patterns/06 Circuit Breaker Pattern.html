@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (8)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -959,8 +958,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -979,9 +976,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1036,7 +1032,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1052,7 +1047,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1066,7 +1060,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1081,12 +1074,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In modern software systems – especially those built with microservices or distributed architectures – applications often need to call external services (like other microservices, databases, or APIs). These remote calls come with the risk of failures or slow responses. If a service becomes unresponsive and the application keeps calling it, the results can be disastrous: requests pile up, threads hang, and eventually the failure cascades into a wider outage. The <strong>Circuit Breaker Pattern</strong> is a design pattern that addresses this problem by <strong>improving system resilience and fault tolerance</strong>. Just like an electrical circuit breaker trips to prevent damage when there’s an overload, a software circuit breaker “trips” to stop calls to a failing service. This allows the system to fail fast and recover gracefully instead of grinding to a halt. Popularized by Michael Nygard in his book <em>Release It!</em>, the Circuit Breaker Pattern has become an essential tool in modern software engineering to build robust, reliable applications.</p>
+    <div class="topic-content"><p>In modern software systems – especially those built with microservices or distributed architectures – applications often need to call external services (like other microservices, databases, or APIs). These remote calls come with the risk of failures or slow responses. If a service becomes unresponsive and the application keeps calling it, the results can be disastrous: requests pile up, threads hang, and eventually the failure cascades into a wider outage. The <strong>Circuit Breaker Pattern</strong> is a design pattern that addresses this problem by <strong>improving system resilience and fault tolerance</strong>. Just like an electrical circuit breaker trips to prevent damage when there’s an overload, a software circuit breaker “trips” to stop calls to a failing service. This allows the system to fail fast and recover gracefully instead of grinding to a halt. Popularized by Michael Nygard in his book <em>Release It!</em>, the Circuit Breaker Pattern has become an essential tool in modern software engineering to build robust, reliable applications.</p>
 <h2>Example in Microservices</h2>
 <p>Imagine a microservice for processing customer orders. This service (Order Service) communicates with a Payment Service to process payments. If the Payment Service starts to fail or become slow, the Order Service will continue to make calls, waiting and potentially failing itself.</p>
 <p>With a circuit breaker implemented:</p>
@@ -1094,11 +1085,17 @@
 <li>After noticing a set number of failed attempts to the Payment Service, the circuit breaker trips.</li>
 <li>The Order Service stops calling the Payment Service, returning a default response like &quot;Payment processing is delayed&quot; or it might queue the order for later processing.</li>
 <li>After a cooldown period, the circuit breaker allows a few requests to check if the Payment Service is back to normal.</li>
-</ul></div></div></div></div></div></div></div>
-  </div>
+</ul></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem The Struggles of Distributed Systems and Service Failures</h1>
@@ -1153,7 +1150,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem The Struggles of Distributed Systems and Service Failures): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1169,7 +1165,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1183,7 +1178,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1198,20 +1192,24 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>To truly understand the value the Circuit Breaker pattern brings to the table, we first need to get a clear grasp of the problems it seeks to solve.</p>
+    <div class="topic-content"><p>To truly understand the value the Circuit Breaker pattern brings to the table, we first need to get a clear grasp of the problems it seeks to solve.</p>
 <h2>Cascading Failures</h2>
 <p>In a distributed environment, a failure in one service can ripple through the system. Imagine Service A depends on Service B. If B is down or extremely slow, calls from A to B will hang until a timeout occurs. During that wait, A’s resources (threads, memory, etc.) are tied up. If this happens frequently or to many threads, Service A itself may become overwhelmed – it might run out of threads or memory, causing failures in A even though A is not broken itself. This scenario is called a <em>cascading failure</em>, where a single point of failure cascades into a system-wide issue.</p>
 <h2>Unresponsive Services and Wasted Work</h2>
-<p>Often, when a service is unresponsive, applications will <strong>retry or wait</strong> for the service to respond. Simply waiting on a slow service (with long timeouts) means users experience delays and threads stay blocked. Likewise, blindly retrying a known failing operation wastes CPU cycles and can overload the failing service even more. For example, if dozens of components keep retrying requests to a database that&#x27;s already struggling, it just makes things worse. In cases where a fault is unlikely to resolve quickly (e.g. a network outage or a service crash), it’s pointless for an application to continuously attempt the operation. This not only fails to solve the problem but also prevents the application from handling the failure gracefully. Clearly, <strong>what’s needed is a way to detect failure quickly and stop sending traffic to the failing component</strong> before it drags down the entire system.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Often, when a service is unresponsive, applications will <strong>retry or wait</strong> for the service to respond. Simply waiting on a slow service (with long timeouts) means users experience delays and threads stay blocked. Likewise, blindly retrying a known failing operation wastes CPU cycles and can overload the failing service even more. For example, if dozens of components keep retrying requests to a database that&#x27;s already struggling, it just makes things worse. In cases where a fault is unlikely to resolve quickly (e.g. a network outage or a service crash), it’s pointless for an application to continuously attempt the operation. This not only fails to solve the problem but also prevents the application from handling the failure gracefully. Clearly, <strong>what’s needed is a way to detect failure quickly and stop sending traffic to the failing component</strong> before it drags down the entire system.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Circuit Breaker Pattern An Effective Shield Against Cascading Failures</h1>
@@ -1259,7 +1257,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Resilience4j Circuit Breaker State Machine: Closed (Normal) ➔ Failure Threshold Tripped ➔ Open (Fail-Fast) ➔ Half-Open (Canary Probes).
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1275,7 +1272,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1289,7 +1285,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1304,12 +1299,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Circuit Breaker Pattern solves the above problems by <strong>failing fast</strong> and <strong>preventing repeated futile attempts</strong> once a service is known to be faulty. In practice, you wrap calls to an external service in a <em>Circuit Breaker</em> component that monitors the outcomes of those calls. Initially, the circuit breaker is in a <strong>Closed</strong> state, allowing calls to flow normally. It counts failures (such as exceptions or timeouts). When the number of failures reaches a certain threshold, the breaker &quot;trips&quot; to an <strong>Open</strong> state. In the Open state, <strong>calls are immediately rejected</strong> – for example, your code might instantly throw an exception or return a fallback value without even attempting the remote call. By doing this, the application avoids waiting on a likely unresponsive service, thus preserving its own responsiveness and resources.</p>
+    <div class="topic-content"><p>The Circuit Breaker Pattern solves the above problems by <strong>failing fast</strong> and <strong>preventing repeated futile attempts</strong> once a service is known to be faulty. In practice, you wrap calls to an external service in a <em>Circuit Breaker</em> component that monitors the outcomes of those calls. Initially, the circuit breaker is in a <strong>Closed</strong> state, allowing calls to flow normally. It counts failures (such as exceptions or timeouts). When the number of failures reaches a certain threshold, the breaker &quot;trips&quot; to an <strong>Open</strong> state. In the Open state, <strong>calls are immediately rejected</strong> – for example, your code might instantly throw an exception or return a fallback value without even attempting the remote call. By doing this, the application avoids waiting on a likely unresponsive service, thus preserving its own responsiveness and resources.</p>
 <p>Crucially, an open circuit also <strong>stops adding load on the failing service</strong>, which gives that service a chance to recover. After a predefined timeout period, the circuit breaker will enter a <strong>Half-Open</strong> state, where it allows a limited number of test calls to see if the external service is healthy again. If a test call succeeds, the breaker is reset back to Closed (meaning the service is back up, so resume normal operations). If the test call fails (e.g., the service is still down), the breaker returns to Open state immediately and the cycle repeats (the system will wait again before trying next time). In this way, the Circuit Breaker Pattern <strong>isolates failures</strong> and prevents them from cascading through the system by controlling the flow of calls based on service health. It prefers fast failure and graceful degradation over long waits and resource exhaustion, significantly enhancing overall system resilience.</p>
 <h2>Architecture &amp; Inner Workings</h2>
 <p>Under the hood, a circuit breaker maintains some <strong>state and counters</strong> to decide whether to allow calls. There are typically three states in the Circuit Breaker finite-state machine:</p>
@@ -1317,7 +1310,7 @@
 <li><strong>Closed</strong> – <em>Normal operations.</em> The circuit is closed, so traffic flows to the service as usual. The breaker monitors the number of recent failures. If the number of failures exceeds a configured <strong>failure threshold</strong> (within a certain time window), the breaker transitions to Open state. While closed, successful calls generally reset the failure counter (so the occasional transient error won’t trip the breaker immediately).</li>
 <li><strong>Open</strong> – <em>Circuit is “tripped.”</em> The breaker has detected too many failures and opens the circuit. In this state, <strong>calls are blocked immediately</strong> – the application will typically get an error or fallback response without trying the real operation. Open state endures for a certain <strong>timeout period</strong> (the <em>open interval</em>). The idea is to prevent any calls to the troubled service for a little while, to avoid useless load and give it time to recover.</li>
 <li><strong>Half-Open</strong> – <em>Trial mode.</em> After the open timeout expires, the circuit breaker <strong>half-closes</strong> (goes to Half-Open). In this state, it will allow a <strong>limited number of test requests</strong> to pass through to the actual service. Think of this as cautiously probing the service: “Are you OK now?” If a test request succeeds, it’s a signal that the service is likely back up; the breaker resets to Closed state (often resetting failure counters). If a test request fails, the breaker immediately flips back to Open and the timeout period starts over. Only a few requests are let through in half-open to avoid blasting a recovering service with traffic. Often, one successful call is enough to close the circuit, but some implementations might require a few successes to be sure.</li>
-</ul></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Circuit Breaker Pattern</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p><strong>State Transitions:</strong> The transitions can be summarized as: Closed → Open when failures exceed the threshold; Open → Half-Open after the timeout elapses; Half-Open → Closed if the next call succeeds (or after a certain number of consecutive successes), or Half-Open → Open if the test call fails. The diagram below (if we had one) would show a loop: Closed → Open → (wait) → Half-Open → Closed (or back to Open). These states and transitions implement the logic of <em>“stop calling when it’s likely down, and periodically check if it’s back up.”</em></p>
+</ul></div><div class="topic-content"></img><div><figcaption>Circuit Breaker Pattern</figcaption></div><div class="topic-content"><p><strong>State Transitions:</strong> The transitions can be summarized as: Closed → Open when failures exceed the threshold; Open → Half-Open after the timeout elapses; Half-Open → Closed if the next call succeeds (or after a certain number of consecutive successes), or Half-Open → Open if the test call fails. The diagram below (if we had one) would show a loop: Closed → Open → (wait) → Half-Open → Closed (or back to Open). These states and transitions implement the logic of <em>“stop calling when it’s likely down, and periodically check if it’s back up.”</em></p>
 <p>Every call through the circuit breaker will perform a quick check of the state:</p>
 <ul>
 <li>If <strong>Closed</strong>, just attempt the call and record the outcome.</li>
@@ -1347,11 +1340,18 @@
 <li>Increasing the failure threshold, allowing the service to endure more failed requests before the Circuit Breaker activates.</li>
 <li>Reducing the timeout period, enabling quicker recovery attempts, thus allowing the service to handle more requests during peak times.</li>
 </ul>
-<p>These dynamic adjustments help in maintaining optimal service availability and performance, even under varying system conditions.</p></div></div></div></div></div></div></div></div>
-  </div>
+<p>These dynamic adjustments help in maintaining optimal service availability and performance, even under varying system conditions.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Circuit Breaker Pattern An Example</h1>
@@ -1399,7 +1399,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Resilience4j Circuit Breaker State Machine: Closed (Normal) ➔ Failure Threshold Tripped ➔ Open (Fail-Fast) ➔ Half-Open (Canary Probes).
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1415,7 +1414,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1429,7 +1427,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1444,13 +1441,11 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let’s implement a basic Circuit Breaker in Java to illustrate the core algorithm. We won’t use any external libraries – just a simple class to demonstrate the state logic:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>CircuitBreaker</span><span> </span><span>{</span><span>
+    <div class="topic-content"><p>Let’s implement a basic Circuit Breaker in Java to illustrate the core algorithm. We won’t use any external libraries – just a simple class to demonstrate the state logic:</p>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>CircuitBreaker</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>enum</span><span> </span><span>State</span><span> </span><span>{</span><span> CLOSED</span><span>,</span><span> OPEN</span><span>,</span><span> HALF_OPEN </span><span>}</span><span>
 </span><span>    </span><span>private</span><span> </span><span>State</span><span> state </span><span>=</span><span> </span><span>State</span><span>.</span><span>CLOSED</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>int</span><span> failureCount </span><span>=</span><span> </span><span>0</span><span>;</span><span>
@@ -1494,7 +1489,7 @@
 </span><span>            </span><span>throw</span><span> e</span><span>;</span><span>  </span><span>// Propagate the exception (or could return a fallback here)</span><span>
 </span><span>        </span><span>}</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In the code above, <code>CircuitBreaker</code> tracks the number of failures and the current state. The <code>call</code> method wraps the execution of a remote operation (passed as a <code>Callable&lt;T&gt;</code>). Here’s how it works:</p>
 <ol>
 <li>
@@ -1508,20 +1503,26 @@
 </li>
 </ol>
 <p>Using this <code>CircuitBreaker</code> is straightforward. For example:</p>
-<pre><div><div><code><span>CircuitBreaker</span><span> cb </span><span>=</span><span> </span><span>new</span><span> </span><span>CircuitBreaker</span><span>(</span><span>3</span><span>,</span><span> </span><span>10000</span><span>)</span><span>;</span><span> </span><span>// trip after 3 failures, 10s timeout</span><span>
+<pre><div class="topic-content"><code><span>CircuitBreaker</span><span> cb </span><span>=</span><span> </span><span>new</span><span> </span><span>CircuitBreaker</span><span>(</span><span>3</span><span>,</span><span> </span><span>10000</span><span>)</span><span>;</span><span> </span><span>// trip after 3 failures, 10s timeout</span><span>
 </span><span></span><span>try</span><span> </span><span>{</span><span>
 </span><span>    </span><span>String</span><span> data </span><span>=</span><span> cb</span><span>.</span><span>call</span><span>(</span><span>(</span><span>)</span><span> </span><span>-&gt;</span><span> unreliableService</span><span>.</span><span>getData</span><span>(</span><span>)</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>// use data...</span><span>
 </span><span></span><span>}</span><span> </span><span>catch</span><span> </span><span>(</span><span>Exception</span><span> e</span><span>)</span><span> </span><span>{</span><span>
 </span><span>    </span><span>// Handle fallback logic because service call failed or circuit is open</span><span>
 </span><span>    </span><span>useCachedData</span><span>(</span><span>)</span><span>;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In this example, if <code>unreliableService.getData()</code> fails 3 times in a row, the circuit breaker will open. Further attempts within 10 seconds will immediately throw an exception without calling <code>getData()</code> at all – the circuit breaker is preventing more failures. After 10 seconds, the next call will be allowed to try the service again (half-open). If that next call succeeds, the circuit closes and things go back to normal. If it fails, the circuit re-opens and will block calls for another 10 seconds.</p>
-<p>This is a simplistic implementation to demonstrate the concept. In production, a circuit breaker might be more sophisticated – handling thread-safety, using a rolling window of failure metrics, or integrating with monitoring systems – but the core idea is the same.</p></div></div></div></div></div></div></div>
-  </div>
+<p>This is a simplistic implementation to demonstrate the concept. In production, a circuit breaker might be more sophisticated – handling thread-safety, using a rolling window of failure metrics, or integrating with monitoring systems – but the core idea is the same.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Performance Implications and Special Considerations</h1>
@@ -1576,7 +1577,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications and Special Considerations): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1592,7 +1592,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1606,7 +1605,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1621,12 +1619,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Introducing a circuit breaker adds a small overhead to each call, since the program has to check the breaker’s state and update counters. However, this overhead is usually <em>minimal</em>. In fact, it’s a negligible cost compared to the potential performance degradation of not having a circuit breaker. Without a breaker, a failing service call might tie up a thread for several seconds until a timeout, whereas with a breaker the failure is handled in milliseconds. In other words, a tiny check is a small price to pay for avoiding a meltdown. For extremely performance-sensitive scenarios, there are options like using asynchronous calls or optimizing the breaker logic, but generally the benefits far outweigh the overhead.</p>
+    <div class="topic-content"><p>Introducing a circuit breaker adds a small overhead to each call, since the program has to check the breaker’s state and update counters. However, this overhead is usually <em>minimal</em>. In fact, it’s a negligible cost compared to the potential performance degradation of not having a circuit breaker. Without a breaker, a failing service call might tie up a thread for several seconds until a timeout, whereas with a breaker the failure is handled in milliseconds. In other words, a tiny check is a small price to pay for avoiding a meltdown. For extremely performance-sensitive scenarios, there are options like using asynchronous calls or optimizing the breaker logic, but generally the benefits far outweigh the overhead.</p>
 <h2>Tuning Thresholds and Timeouts</h2>
 <p>A circuit breaker must be configured with a failure threshold (number of failures or error rate %) and an open timeout duration. Choosing these values requires care and understanding of your system’s behavior:</p>
 <ul>
@@ -1642,11 +1638,17 @@
 <li><strong>Thread-Safety &amp; Concurrency:</strong> In a real implementation, if your application is multi-threaded (as most server apps are), the circuit breaker’s internal counters and state transitions should be thread-safe. You wouldn’t want two threads concurrently calling a service to both think they are the “first” to open the circuit. Using atomic counters or synchronized sections (as in our example) or leveraging library implementations will handle this. High-performance libraries use non-blocking synchronization and atomic operations to minimize overhead.</li>
 <li><strong>Avoiding Misuse:</strong> Apply circuit breakers on calls that are potentially unreliable or high-latency (like network calls). There’s no benefit to using it on operations that are in-memory or very unlikely to fail. Also, be cautious in systems where failures are very localized or quickly self-correcting – an aggressive circuit breaker might do more harm than good if it’s constantly tripping for ephemeral errors. The pattern needs to be tuned to the context of your system’s reliability needs.</li>
 </ul>
-<p>In summary, the Circuit Breaker pattern introduces a slight overhead and some complexity in exchange for significant protection against cascading failures. When configured correctly, it <strong>improves overall throughput and reliability</strong> under failure conditions, by cutting off failing interactions quickly and preserving system resources. The key is to balance sensitivity (trip promptly on real issues) versus noise (don’t trip on every minor blip) to suit your system’s tolerance for failures.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In summary, the Circuit Breaker pattern introduces a slight overhead and some complexity in exchange for significant protection against cascading failures. When configured correctly, it <strong>improves overall throughput and reliability</strong> under failure conditions, by cutting off failing interactions quickly and preserving system resources. The key is to balance sensitivity (trip promptly on real issues) versus noise (don’t trip on every minor blip) to suit your system’s tolerance for failures.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">System Design Examples</h1>
@@ -1701,7 +1703,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1717,7 +1718,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1731,7 +1731,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1746,12 +1745,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>Use Cases and System Design Examples</h2>
+    <div class="topic-content"><h2>Use Cases and System Design Examples</h2>
 <p>As we&#x27;ve seen so far, the Circuit Breaker pattern can be a powerful strategy for building resilient systems. But where and how can it be used effectively? In this section, we&#x27;ll explore some common use cases for the Circuit Breaker pattern and provide some system design examples that illustrate the pattern in action.</p>
 <h3>Use Case 1: Microservices Architecture</h3>
 <p>Microservices architectures have gained popularity due to their ability to create loosely coupled, independently deployable components. But they also introduce more points of communication, and consequently, more points of failure.</p>
@@ -1791,11 +1788,17 @@
 <p>Even external services, like an email service used for notifications, could have a Circuit Breaker. If the email service starts failing, the Circuit Breaker would prevent the notification feature from impacting the rest of the system.</p>
 <p>In a distributed setting like this, we could also consider using a shared Circuit Breaker for each service, stored in a distributed cache. This would help maintain consistency across all nodes, ensuring that if a Circuit Breaker trips on one node, it trips on all nodes. However, this would need to be balanced against the additional complexity and potential performance impact.</p>
 <p>To complement the Circuit Breakers, the system should also have a comprehensive monitoring and alerting setup. It should monitor the state of all Circuit Breakers and alert developers or system administrators when a Circuit Breaker trips. This would ensure quick detection and remediation of issues.</p>
-<p>Remember, the goal is not to eliminate failures - they are inevitable in any system. Instead, the objective is to manage failures effectively, preventing them from cascading and causing system-wide outages. The Circuit Breaker pattern, when used judiciously and in conjunction with other resiliency patterns, can play a key role in achieving this goal.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Remember, the goal is not to eliminate failures - they are inevitable in any system. Instead, the objective is to manage failures effectively, preventing them from cascading and causing system-wide outages. The Circuit Breaker pattern, when used judiciously and in conjunction with other resiliency patterns, can play a key role in achieving this goal.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Summary</h1>
@@ -1850,7 +1853,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Summary): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1866,7 +1868,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1880,7 +1881,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1895,12 +1895,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In summary, the Circuit Breaker Pattern is a powerful technique for building <strong>resilient, fault-tolerant software</strong>. It addresses the very real problem of cascading failures in modern applications by <strong>failing fast</strong> and <strong>gracefully degrading</strong> functionality when a dependent service is having issues. By halting calls to an unresponsive service, it prevents your application from getting stuck waiting or wasting resources, and it gives both your system and the failing service time to recover. We discussed how the pattern works through its Closed, Open, and Half-Open states, and even walked through a Java example of how to implement it.</p>
+    <div class="topic-content"><p>In summary, the Circuit Breaker Pattern is a powerful technique for building <strong>resilient, fault-tolerant software</strong>. It addresses the very real problem of cascading failures in modern applications by <strong>failing fast</strong> and <strong>gracefully degrading</strong> functionality when a dependent service is having issues. By halting calls to an unresponsive service, it prevents your application from getting stuck waiting or wasting resources, and it gives both your system and the failing service time to recover. We discussed how the pattern works through its Closed, Open, and Half-Open states, and even walked through a Java example of how to implement it.</p>
 <p>For junior and mid-level engineers, it’s important to understand not just how to use a circuit breaker, but why. When you see this pattern in the wild (or implement it yourself), remember the key takeaways:</p>
 <ul>
 <li><strong>Prevent cascading failures:</strong> Don’t let one failing component crash your entire app – isolate it.</li>
@@ -1908,11 +1906,17 @@
 <li><strong>Tune and monitor:</strong> Set the failure thresholds and timeouts to appropriate values for your system, and keep an eye on how often the circuit trips. Adjust as needed to find the right balance.</li>
 <li><strong>Use in combination:</strong> Circuit Breaker is not a silver bullet. Combine it with retries, timeouts, fallbacks, and other stability patterns for a comprehensive resilience strategy.</li>
 </ul>
-<p>By implementing the Circuit Breaker Pattern correctly, you can make your applications more robust and <strong>responsive under failure conditions</strong>. In the world of microservices and distributed systems, this pattern is not just an option – it’s often a necessity to keep systems healthy. As you grow in your software engineering journey, you’ll find that building resilient systems is just as important as building functional ones. The Circuit Breaker is a prime example of a design pattern that helps achieve that resilience, ensuring that when things go wrong (and they eventually will), your software can bend without breaking.</p></div></div></div></div></div></div></div>
-  </div>
+<p>By implementing the Circuit Breaker Pattern correctly, you can make your applications more robust and <strong>responsive under failure conditions</strong>. In the world of microservices and distributed systems, this pattern is not just an option – it’s often a necessity to keep systems healthy. As you grow in your software engineering journey, you’ll find that building resilient systems is just as important as building functional ones. The Circuit Breaker is a prime example of a design pattern that helps achieve that resilience, ensuring that when things go wrong (and they eventually will), your software can bend without breaking.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Distributed Locking, Leader Election &amp; Fencing Tokens</h1>
@@ -1967,7 +1971,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Distributed Locking, Leader Election &amp; Fencing Tokens): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1983,7 +1986,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1997,7 +1999,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2012,8 +2013,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2023,9 +2022,19 @@
             <h2>2. The Danger of GC Pauses & The Fencing Token Solution</h2>
             <p>A classic bug in distributed locks occurs when a client acquires a lock, undergoes a long Garbage Collection (GC) pause or network freeze, loses its lock TTL lease, and then resumes execution believing it still holds the lock!</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

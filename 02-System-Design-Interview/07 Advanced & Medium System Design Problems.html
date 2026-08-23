@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (18)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul class="sidebar-menu" id="sidebar-menu">
 <li class="sidebar-item active" data-num="01" data-title="design a recommendation system (medium)"><a href="#chapter-01"><span class="chapter-num">01</span> Design a Recommendation System (medium)</a></li>
@@ -969,8 +968,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -989,9 +986,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Design a Recommendation System (medium)</h1>
@@ -1046,7 +1042,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Design a Recommendation System (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1062,7 +1057,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1076,7 +1070,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1091,11 +1084,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradRec" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1147,7 +1143,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Reduces millions of catalog items to 1,000 candidates via two-tower neural embeddings and HNSW ANN search, before applying deep scoring and diversity re-ranking.
   </div>
-</div>
 
     <div><h2>Step 1. System Definition</h2>
 <p>The recommendation system is a core service for a large-scale streaming platform (e.g., Netflix, Amazon Prime, Hulu) that suggests personalized video content to users. Its purpose is to enhance user engagement by helping users discover movies and shows they are likely to enjoy, thereby increasing watch time and satisfaction. The system delivers two types of recommendations: <strong>real-time recommendations</strong> (dynamically generated as users browse, to reflect their immediate context or latest actions) and <strong>batch-processed recommendations</strong> (periodically computed in bulk, e.g,. daily or weekly, to capture long-term preferences and trends). It must serve hundreds of millions of users reliably with low latency.</p>
@@ -1219,7 +1214,7 @@
 <li><strong>Parameters:</strong> <code>user_id</code> (from auth token), <code>device_type</code> (Mobile/TV).</li>
 <li><strong>Response:</strong></li>
 </ul>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;rows&quot;</span><span>:</span><span> </span><span>[</span><span>
 </span><span>    </span><span>{</span><span>
 </span><span>      </span><span>&quot;type&quot;</span><span>:</span><span> </span><span>&quot;continue_watching&quot;</span><span>,</span><span>
@@ -1232,19 +1227,19 @@
 </span><span>      </span><span>&quot;items&quot;</span><span>:</span><span> </span><span>[</span><span> </span><span>{</span><span> </span><span>&quot;video_id&quot;</span><span>:</span><span> </span><span>&quot;vid_555&quot;</span><span>,</span><span> </span><span>&quot;match_score&quot;</span><span>:</span><span> </span><span>0.98</span><span> </span><span>}</span><span> </span><span>]</span><span>
 </span><span>    </span><span>}</span><span>
 </span><span>  </span><span>]</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p><strong>2. Record User Event</strong></p>
 <ul>
 <li><code>POST /v1/events</code></li>
 <li><strong>Body:</strong></li>
 </ul>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;user_id&quot;</span><span>:</span><span> </span><span>&quot;u_999&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;event_type&quot;</span><span>:</span><span> </span><span>&quot;heartbeat&quot;</span><span>,</span><span> </span><span>// or play, pause, rate</span><span>
 </span><span>  </span><span>&quot;video_id&quot;</span><span>:</span><span> </span><span>&quot;vid_123&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;timestamp&quot;</span><span>:</span><span> </span><span>1679000000</span><span>,</span><span>
 </span><span>  </span><span>&quot;position_sec&quot;</span><span>:</span><span> </span><span>455</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <ul>
 <li><strong>Response:</strong> <code>202 Accepted</code> (We accept the event for async processing; no body returned).</li>
 </ul></div><div><h2>Step 4: High-Level System Design</h2>
@@ -1504,11 +1499,18 @@ export class ThompsonSamplingRecommender {
     <h4>Curveball: "How do you solve the cold-start problem for a new user with zero click history?"</h4>
     <p><strong>Mitigation: Multi-Armed Bandit &amp; Contextual Embeddings:</strong> Fallback to location, language, and trending items (Popularity baseline). Use Thompson Sampling to explore 20% random exploratory categories to discover preferences in the first 3 sessions.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Design Google Calendar (medium)</h1>
@@ -1563,7 +1565,6 @@ export class ThompsonSamplingRecommender {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Design Google Calendar (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1579,7 +1580,6 @@ export class ThompsonSamplingRecommender {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1593,7 +1593,6 @@ export class ThompsonSamplingRecommender {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1608,11 +1607,14 @@ export class ThompsonSamplingRecommender {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCal" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1660,7 +1662,6 @@ export class ThompsonSamplingRecommender {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Detects meeting conflicts in O(log N) time using in-memory Interval Trees and enforces transaction consistency across multi-attendee calendars with Google Spanner.
   </div>
-</div>
 
     <div><p>Let&#x27;s design a calendar service similar to <strong>Google Calendar</strong> that lets millions of users schedule meetings and events. In essence, this service lets users create events, invite others, and reserve resources (like meeting rooms) just as one would write plans on a shared calendar. Key entities in the system include:</p>
 <ul>
@@ -1989,11 +1990,18 @@ class CalendarRecurrenceEngine:
     <h4>Curveball: "How do you handle complex recurring meeting exceptions (e.g., 'Repeat every Tuesday except July 4th')?"</h4>
     <p><strong>Mitigation: RFC 5545 EXDATE Specification:</strong> Store the base recurrence rule (RRULE) in a single row. When a single instance is moved or cancelled, store an <code>EXDATE</code> tombstone and create a distinct linked exception event row rather than expanding all future occurrences into millions of rows.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Designing Code Judging System (medium)</h1>
@@ -2041,7 +2049,6 @@ class CalendarRecurrenceEngine:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2057,7 +2064,6 @@ class CalendarRecurrenceEngine:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2071,7 +2077,6 @@ class CalendarRecurrenceEngine:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2086,11 +2091,14 @@ class CalendarRecurrenceEngine:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradJudge" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2138,7 +2146,6 @@ class CalendarRecurrenceEngine:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Executes untrusted user code inside hardened sandboxes (gVisor/Firecracker) with strict seccomp syscall filters and cgroup CPU/memory caps.
   </div>
-</div>
 
     <div><h2>Step 1: System Definition</h2>
 <p>An online coding judge platform (similar to LeetCode) is a web-based system where users solve programming problems by writing code and receiving automated feedback. The primary purpose is to evaluate user-submitted code against predefined test cases in a secure, controlled environment and return the results quickly. Key <strong>entities</strong> in this system include:</p>
@@ -2421,11 +2428,18 @@ class SecureCodeJudgeRunner:
     <h4>Curveball: "How do you prevent malicious user code from executing a fork bomb (':(){ :|:& };:') or consuming all host RAM?"</h4>
     <p><strong>Mitigation: Hard Cgroups &amp; PIDs Limits:</strong> Configure Linux cgroups with <code>pids.max=32</code> (preventing process spawns), <code>memory.max=256M</code>, and unshare mount/network namespaces using gVisor sandbox runtimes.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Designing Flash Sale System (hard)</h1>
@@ -2480,7 +2494,6 @@ class SecureCodeJudgeRunner:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Flash Sale System (hard)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2496,7 +2509,6 @@ class SecureCodeJudgeRunner:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2510,7 +2522,6 @@ class SecureCodeJudgeRunner:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2525,11 +2536,14 @@ class SecureCodeJudgeRunner:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradFlash" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2578,7 +2592,6 @@ class SecureCodeJudgeRunner:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Absorbs traffic surges with a virtual token queue and executes stock decrements atomically in Redis via Lua scripts, keeping database load at zero until payment.
   </div>
-</div>
 
     <div><h2>Step 1: System Definition</h2>
 <p>A <em><strong>flash sale system</strong></em> is an e-commerce component designed to handle short-term sales events where a limited inventory of products is sold to a massive number of buyers in a very short time frame. In such events, traffic spikes dramatically (e.g. hundreds of thousands of users hitting the site simultaneously), and the number of purchase requests far exceeds the available items (for example, millions of requests for only thousands of items). The system must rapidly serve many concurrent users, reliably track inventory, and fairly allocate the product items. This requires a highly scalable and robust architecture that can maintain <strong>consistency</strong> (no overselling of products), <strong>low latency</strong> for user actions, and <strong>high availability</strong> despite extreme load. The flash sale system typically integrates with the broader e-commerce platform (user accounts, product catalog, payment processing) but uses specialized strategies (caching, queuing, etc.) to withstand bursty traffic and ensure a smooth user experience during the sale.</p>
@@ -2772,7 +2785,7 @@ For extreme loads, consider <strong>read-write separation</strong> (primary for 
 <p><strong><code>RESERVED</code> (Inventory Held/Pending Payment):</strong> In this state, the item has been successfully reserved for the order. The Inventory Service decrements the available stock so that no other customer can purchase this item while payment is pending. It also updates the reservation status to <code>RESERVED</code> in the database, and notifies the Order Service, which then alerts the user — typically by redirecting them to a payment page — that their item is locked in. The reservation is <strong>temporary</strong> – the user is given a fixed time window (e.g., 5 minutes, as configured for the flash sale) to complete the payment. During this time, the order is essentially in a <strong>pending payment</strong> state. The system starts an expiration timer for the reservation. No other buyer can claim this inventory during the reserved period, which prevents overselling (selling more items than stock) and also avoids underselling (holding stock indefinitely without purchase). If the item is already sold out by the time of processing, the Order Service will mark this order as <code>FAILED</code> (out-of-stock) and trigger a failure response. Here is how we can atomically decrement the inventory and update the reservation status using a database transaction:</p>
 </li>
 </ol>
-<pre><div><div><code><span>
+<pre><div class="topic-content"><code><span>
 </span><span></span><span>-- @productId : The ID of the product being purchased</span><span>
 </span><span></span><span>-- @orderId   : The ID of the order currently in &#x27;PROCESSING&#x27; state</span><span>
 </span>
@@ -2799,7 +2812,7 @@ For extreme loads, consider <strong>read-write separation</strong> (primary for 
 </span><span>    </span><span>WHERE</span><span> transation_id </span><span>=</span><span> </span><span>@transationId</span><span> </span><span>AND</span><span> </span><span>status</span><span> </span><span>=</span><span> </span><span>&#x27;PROCESSING&#x27;</span><span>;</span><span>
 </span><span></span><span>END</span><span> </span><span>IF</span><span>;</span><span>
 </span>
-<span></span><span>COMMIT</span><span>;</span></code></div></div></pre>
+<span></span><span>COMMIT</span><span>;</span></code></div></pre>
 <p>The above query is possible only when <code>Inventory</code> and <code>Reservation</code> tables are on the same shard, because we can&#x27;t have a DB transaction updating cross-shard tables. In the &#x27;Database Schema&#x27; section, we suggested partitioning the DB based on <code>user_id</code> to distribute reservations onto multiple shards (as compared to partitioning based on <code>product_id</code>, which can overload a partition containing a hot product). To handle partitioning based on <code>user_id</code>, we will update the inventory separately and then update the reservation record. Since this will not be happening in one DB transaction, we could have a failing scenario where the Inventory Service decrements the inventory record but crashes before updating the reservation status to &#x27;RESERVED&#x27;. Now, when another instance of the Inventory Service takes up this request, it will decrement the inventory again, as the reservation is still in &#x27;PROCESSING&#x27; state.</p>
 <p>To handle this scenario, where the Inventory and Reservation tables are on different shards, we will use a helper table called <strong><code>InventoryUpdated</code></strong>. Here’s how it works:</p>
 <ol>
@@ -2845,7 +2858,7 @@ For extreme loads, consider <strong>read-write separation</strong> (primary for 
 <li>Use an <strong>in-memory data structure</strong> (e.g., a <strong>priority queue (min-heap) or sorted set</strong>) to track <code>RESERVED</code> transactions by expiration time.</li>
 <li>This allows <strong>efficient expiration checks</strong>—expired transactions are always at the top.</li>
 <li>Data structure:
-<pre><div><div><code><span>reserved_transactions </span><span>=</span><span> SortedSet</span><span>(</span><span>)</span><span>  </span><span># Store (expiration_time, transaction_id)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>reserved_transactions </span><span>=</span><span> SortedSet</span><span>(</span><span>)</span><span>  </span><span># Store (expiration_time, transaction_id)</span></code></div></pre>
 </li>
 </ul>
 </li>
@@ -2854,9 +2867,9 @@ For extreme loads, consider <strong>read-write separation</strong> (primary for 
 <ul>
 <li>If the service crashes, it will <strong>reload all active <code>RESERVED</code> transactions</strong> from the database at startup.</li>
 <li>Query:
-<pre><div><div><code><span>SELECT</span><span> reservation_id</span><span>,</span><span> expiration_time 
+<pre><div class="topic-content"><code><span>SELECT</span><span> reservation_id</span><span>,</span><span> expiration_time 
 </span><span></span><span>FROM</span><span> Reservation  
-</span><span></span><span>WHERE</span><span> </span><span>status</span><span> </span><span>=</span><span> </span><span>&#x27;RESERVED&#x27;</span><span>;</span></code></div></div></pre>
+</span><span></span><span>WHERE</span><span> </span><span>status</span><span> </span><span>=</span><span> </span><span>&#x27;RESERVED&#x27;</span><span>;</span></code></div></pre>
 </li>
 <li>The service <strong>re-populates the in-memory queue</strong> with these transactions.</li>
 </ul>
@@ -2876,12 +2889,12 @@ For extreme loads, consider <strong>read-write separation</strong> (primary for 
 <p><strong>Polling Mechanism (Worker Loop):</strong></p>
 <ul>
 <li>A loop runs continuously, checking for expired transactions:
-<pre><div><div><code><span>while</span><span> </span><span>True</span><span>:</span><span>
+<pre><div class="topic-content"><code><span>while</span><span> </span><span>True</span><span>:</span><span>
 </span><span>    now </span><span>=</span><span> current_time</span><span>(</span><span>)</span><span>
 </span><span>    </span><span>if</span><span> reserved_transactions </span><span>and</span><span> reserved_transactions</span><span>.</span><span>peek</span><span>(</span><span>)</span><span>[</span><span>0</span><span>]</span><span> </span><span>&lt;=</span><span> now</span><span>:</span><span>
 </span><span>        process_expired_transaction</span><span>(</span><span>reserved_transactions</span><span>.</span><span>pop</span><span>(</span><span>)</span><span>)</span><span>
 </span><span>    </span><span>else</span><span>:</span><span>
-</span><span>        sleep_for_next_expiry</span><span>(</span><span>)</span><span>  </span><span># Sleeps until the next expiry time</span></code></div></div></pre>
+</span><span>        sleep_for_next_expiry</span><span>(</span><span>)</span><span>  </span><span># Sleeps until the next expiry time</span></code></div></pre>
 </li>
 </ul>
 </li>
@@ -2906,9 +2919,9 @@ For extreme loads, consider <strong>read-write separation</strong> (primary for 
 <p><strong>Ensuring Only One Worker Expires a Reservation:</strong></p>
 <ul>
 <li>Use a query like this:
-<pre><div><div><code><span>UPDATE</span><span> Reservation 
+<pre><div class="topic-content"><code><span>UPDATE</span><span> Reservation 
 </span><span></span><span>SET</span><span> </span><span>status</span><span> </span><span>=</span><span> </span><span>&#x27;EXPIRED&#x27;</span><span> 
-</span><span></span><span>WHERE</span><span> reservation_id</span><span>=</span><span> </span><span>&lt;</span><span>reservation_id</span><span>&gt;</span><span> </span><span>AND</span><span> </span><span>status</span><span> </span><span>=</span><span> </span><span>&#x27;RESERVED&#x27;</span><span>;</span></code></div></div></pre>
+</span><span></span><span>WHERE</span><span> reservation_id</span><span>=</span><span> </span><span>&lt;</span><span>reservation_id</span><span>&gt;</span><span> </span><span>AND</span><span> </span><span>status</span><span> </span><span>=</span><span> </span><span>&#x27;RESERVED&#x27;</span><span>;</span></code></div></pre>
 <ul>
 <li>If the query updates <code>0</code> rows, it means another worker already processed the expiration.</li>
 </ul>
@@ -3000,11 +3013,18 @@ export class FlashSaleStockService {
     <h4>Curveball: "How do you handle stock reservation expiration when users abandon their cart during payment?"</h4>
     <p><strong>Mitigation: Atomic Redis Lua Release + Delayed Queue:</strong> When a user reserves an item, set a 15-minute key in a Redis Delayed Queue. If no payment confirmation arrives within 15 minutes, a worker fires: <code>redis.call('INCRBY', 'stock:'..item_id, qty)</code> to immediately restore inventory.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Designing Gmail (medium)</h1>
@@ -3059,7 +3079,6 @@ export class FlashSaleStockService {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Gmail (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3075,7 +3094,6 @@ export class FlashSaleStockService {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3089,7 +3107,6 @@ export class FlashSaleStockService {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3104,11 +3121,14 @@ export class FlashSaleStockService {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradGmail" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3183,7 +3203,6 @@ export class FlashSaleStockService {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Email systems decouple high-throughput SMTP ingress from storage, indexing email metadata in wide-column databases while streaming heavy RFC822 payloads and attachments to distributed object storage.
   </div>
-</div>
 
     <div><p>Let’s design a distributed email service similar to <strong>Gmail</strong> that allows millions of users to send, receive, and organize messages asynchronously. In essence, this service acts as a massive digital post office: it accepts incoming mail, routes it to the correct recipient’s storage, and provides a user-friendly interface for reading, searching, and managing conversations. Key entities in the system include:</p>
 <ul>
@@ -3282,7 +3301,7 @@ export class FlashSaleStockService {
 </li>
 </ul>
 <p><strong>Example Request:</strong></p>
-<pre><div><div><code><span>POST /emails/send
+<pre><div class="topic-content"><code><span>POST /emails/send
 </span><span></span><span>{</span><span>
 </span><span>  </span><span>&quot;to&quot;</span><span>:</span><span> </span><span>[</span><span>&quot;alice@example.com&quot;</span><span>]</span><span>,</span><span>
 </span><span>  </span><span>&quot;cc&quot;</span><span>:</span><span> </span><span>[</span><span>&quot;bob@example.com&quot;</span><span>]</span><span>,</span><span>
@@ -3295,19 +3314,19 @@ export class FlashSaleStockService {
 </span><span>      </span><span>&quot;content&quot;</span><span>:</span><span> </span><span>&quot;&lt;base64-encoded file data&gt;&quot;</span><span>
 </span><span>    </span><span>}</span><span>
 </span><span>  </span><span>]</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>Response Structure</h4>
 <p>On success, the API returns a confirmation that the email was sent (or at least queued for sending). A typical response is <strong>201 Created</strong> (since a new email resource is created in the Sent mailbox) along with the new email’s metadata (e.g. its <code>email_id</code>). For faster client feedback, the server might queue the email for sending and return <strong>202 Accepted</strong> instead – the email will be sent asynchronously, which improves responsiveness for the mobile/web app. The response body could include the <code>email_id</code> and status:</p>
 <p><strong>Example Success Response:</strong></p>
-<pre><div><div><code><span>HTTP/</span><span>1.1</span><span> </span><span>201</span><span> Created
+<pre><div class="topic-content"><code><span>HTTP/</span><span>1.1</span><span> </span><span>201</span><span> Created
 </span><span></span><span>{</span><span>
 </span><span>  </span><span>&quot;email_id&quot;</span><span>:</span><span> </span><span>&quot;12345&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;status&quot;</span><span>:</span><span> </span><span>&quot;sent&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;sent_at&quot;</span><span>:</span><span> </span><span>&quot;2025-02-07T23:08:00Z&quot;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>If the request is missing required fields or is malformed, the server returns <strong>400 Bad Request</strong> with an error message. For example, forgetting the <code>to</code> field or providing an invalid email address would yield a 400 error. The error response body might look like:</p>
-<pre><div><div><code><span>HTTP/</span><span>1.1</span><span> </span><span>400</span><span> Bad Request
-</span><span></span><span>{</span><span> </span><span>&quot;error&quot;</span><span>:</span><span> </span><span>&quot;Recipient list is required.&quot;</span><span> </span><span>}</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>HTTP/</span><span>1.1</span><span> </span><span>400</span><span> Bad Request
+</span><span></span><span>{</span><span> </span><span>&quot;error&quot;</span><span>:</span><span> </span><span>&quot;Recipient list is required.&quot;</span><span> </span><span>}</span></code></div></pre>
 <h3>II. Fetch Emails API (<code>GET /emails/inbox</code>)</h3>
 <p>This endpoint retrieves a list of emails in the user’s inbox. It returns a <strong>paginated</strong> collection, typically sorted by date (newest first by default). The response contains summary information for each email, allowing a client to show an inbox overview (sender, subject, snippet, read/unread status, etc.) without downloading full email bodies. By paginating results, the service avoids sending potentially thousands of emails in one response, which would be slow and resource-intensive. The client can request subsequent pages as the user scrolls or navigates, which is crucial for performance on mobile networks.</p>
 <h4>Request Structure</h4>
@@ -3322,12 +3341,12 @@ export class FlashSaleStockService {
 </li>
 </ul>
 <p><strong>Example Request:</strong></p>
-<pre><div><div><code><span>GET</span><span> </span><span>/</span><span>emails</span><span>/</span><span>inbox</span><span>?</span><span>page</span><span>=</span><span>1</span><span>&amp;</span><span>page_size</span><span>=</span><span>50</span><span>
-</span><span></span><span>Authorization</span><span>:</span><span> </span><span>Bearer</span><span> </span><span>&lt;</span><span>token</span><span>&gt;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>GET</span><span> </span><span>/</span><span>emails</span><span>/</span><span>inbox</span><span>?</span><span>page</span><span>=</span><span>1</span><span>&amp;</span><span>page_size</span><span>=</span><span>50</span><span>
+</span><span></span><span>Authorization</span><span>:</span><span> </span><span>Bearer</span><span> </span><span>&lt;</span><span>token</span><span>&gt;</span></code></div></pre>
 <p>This would fetch the first 50 emails in the inbox. The <code>Authorization</code> header (e.g., an OAuth2 token) is used to identify the user’s account.</p>
 <h4>Response Structure</h4>
 <p>A successful response returns <strong>200 OK</strong> with a JSON body containing an array of email summaries and pagination info (such as a next page token or page number). For example:</p>
-<pre><div><div><code><span>HTTP/</span><span>1.1</span><span> </span><span>200</span><span> OK
+<pre><div class="topic-content"><code><span>HTTP/</span><span>1.1</span><span> </span><span>200</span><span> OK
 </span><span></span><span>{</span><span>
 </span><span>  </span><span>&quot;emails&quot;</span><span>:</span><span> </span><span>[</span><span>
 </span><span>    </span><span>{</span><span>
@@ -3355,7 +3374,7 @@ export class FlashSaleStockService {
 </span><span>  </span><span>&quot;total_count&quot;</span><span>:</span><span> </span><span>1240</span><span>,</span><span>
 </span><span>  </span><span>&quot;total_pages&quot;</span><span>:</span><span> </span><span>25</span><span>,</span><span>
 </span><span>  </span><span>&quot;next_page&quot;</span><span>:</span><span> </span><span>2</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>Each email item is a <strong>summary</strong> that includes fields like <code>email_id</code>, sender (<code>from</code>), <code>subject</code>, a short <code>snippet</code> of the body, the sent/received date, read status, and a flag for attachments. By not including the full body and attachments in this list, the payload stays small and quick to transfer on mobile devices. If the client needs more details, it will call the <strong>Get Email Details API</strong> for a specific email.</p>
 <h3>III. Get Email Details API (<code>GET /emails/{email_id}</code>)</h3>
 <p>This endpoint returns the full content of a specific email, identified by its <code>email_id</code>. A client (web or mobile) would call this when a user opens an email to read it. It returns all relevant details: headers (from, to, cc, date), subject, the body (which may have HTML and/or plain text), and attachment metadata. Attachments themselves can be included or provided via separate links. The goal is to provide everything needed to display or process the email message.</p>
@@ -3367,11 +3386,11 @@ export class FlashSaleStockService {
 <li><strong>Headers:</strong> The usual authentication header to ensure the user has access to this email.</li>
 </ul>
 <p><strong>Example Request:</strong></p>
-<pre><div><div><code><span>GET</span><span> </span><span>/</span><span>emails</span><span>/</span><span>12345</span><span>
-</span><span></span><span>Authorization</span><span>:</span><span> </span><span>Bearer</span><span> </span><span>&lt;</span><span>token</span><span>&gt;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>GET</span><span> </span><span>/</span><span>emails</span><span>/</span><span>12345</span><span>
+</span><span></span><span>Authorization</span><span>:</span><span> </span><span>Bearer</span><span> </span><span>&lt;</span><span>token</span><span>&gt;</span></code></div></pre>
 <h4>Response Structure</h4>
 <p>On success (<strong>200 OK</strong>), the response is a JSON object containing the email’s details. For example:</p>
-<pre><div><div><code><span>HTTP/</span><span>1.1</span><span> </span><span>200</span><span> OK
+<pre><div class="topic-content"><code><span>HTTP/</span><span>1.1</span><span> </span><span>200</span><span> OK
 </span><span></span><span>{</span><span>
 </span><span>  </span><span>&quot;email_id&quot;</span><span>:</span><span> </span><span>&quot;12345&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;from&quot;</span><span>:</span><span> </span><span>&quot;charlie@example.com&quot;</span><span>,</span><span>
@@ -3392,7 +3411,7 @@ export class FlashSaleStockService {
 </span><span>  </span><span>]</span><span>,</span><span>
 </span><span>  </span><span>&quot;is_read&quot;</span><span>:</span><span> </span><span>false</span><span>,</span><span>
 </span><span>  </span><span>&quot;folder&quot;</span><span>:</span><span> </span><span>&quot;INBOX&quot;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h3>IV. Search Emails API (<code>GET /emails/search</code>)</h3>
 <p>This endpoint allows the client to search for emails matching certain criteria. Users can find emails by subject keywords, sender, recipients, or date ranges. The API accepts query parameters as filters and returns a list of emails (in the same summary format as the inbox list) that match.</p>
 <h4>Request Structure</h4>
@@ -3413,11 +3432,11 @@ export class FlashSaleStockService {
 </li>
 </ul>
 <p>The client can mix these parameters. For example:</p>
-<pre><div><div><code><span>GET</span><span> </span><span>/</span><span>emails</span><span>/</span><span>search</span><span>?</span><span>from</span><span>=</span><span>alice@example</span><span>.</span><span>com</span><span>&amp;</span><span>after</span><span>=</span><span>2025</span><span>-</span><span>01</span><span>-</span><span>01</span><span>&amp;</span><span>q</span><span>=</span><span>report</span><span>&amp;</span><span>page</span><span>=</span><span>1</span><span>&amp;</span><span>page_size</span><span>=</span><span>20</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>GET</span><span> </span><span>/</span><span>emails</span><span>/</span><span>search</span><span>?</span><span>from</span><span>=</span><span>alice@example</span><span>.</span><span>com</span><span>&amp;</span><span>after</span><span>=</span><span>2025</span><span>-</span><span>01</span><span>-</span><span>01</span><span>&amp;</span><span>q</span><span>=</span><span>report</span><span>&amp;</span><span>page</span><span>=</span><span>1</span><span>&amp;</span><span>page_size</span><span>=</span><span>20</span></code></div></pre>
 <p>This search would look for emails from Alice, after January 1, 2025, that contain the word “report”, returning the first 20 results. The server should handle the combination of filters gracefully (treating them as AND conditions). If no filters are provided, the API could default to returning an empty result or all emails, though typically at least one filter is used.</p>
 <h4>Response Structure</h4>
 <p>A successful search returns <strong>200 OK</strong> with a JSON body similar to the inbox listing, but containing only emails matching the query. For example:</p>
-<pre><div><div><code><span>HTTP/</span><span>1.1</span><span> </span><span>200</span><span> OK
+<pre><div class="topic-content"><code><span>HTTP/</span><span>1.1</span><span> </span><span>200</span><span> OK
 </span><span></span><span>{</span><span>
 </span><span>  </span><span>&quot;emails&quot;</span><span>:</span><span> </span><span>[</span><span>
 </span><span>    </span><span>{</span><span>
@@ -3444,7 +3463,7 @@ export class FlashSaleStockService {
 </span><span>  </span><span>&quot;page_size&quot;</span><span>:</span><span> </span><span>20</span><span>,</span><span>
 </span><span>  </span><span>&quot;next_page&quot;</span><span>:</span><span> </span><span>2</span><span>,</span><span>
 </span><span>  </span><span>&quot;total_matches&quot;</span><span>:</span><span> </span><span>35</span><span>
-</span><span></span><span>}</span></code></div></div></pre></div><div><h2>Step 4: High-Level System Design</h2>
+</span><span></span><span>}</span></code></div></pre></div><div><h2>Step 4: High-Level System Design</h2>
 <p>At a high level, the email service will use a <strong>distributed, microservices-based architecture</strong>. Different components handle different functions (sending mail, storing mail, searching, spam filtering, etc.), and they communicate over well-defined APIs. Below are the major components and an overview of how an email flows through the system:</p>
 <p><strong>Major Components:</strong></p>
 <ul>
@@ -3557,7 +3576,7 @@ export class FlashSaleStockService {
 <ul>
 <li>
 <p><strong>Email Bodies:</strong> Stored as documents (e.g., in a JSON document store like MongoDB or a wide-column store like BigTable). Each document represents one email’s content. It is identified by the same <code>email_id</code> as in SQL (used as a key or document ID). The document contains fields for the email body, and possibly metadata duplicates like subject or sender for convenience (though not strictly needed since those are in SQL). For example, a document might look like:</p>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;_id&quot;</span><span>:</span><span> </span><span>123456</span><span>,</span><span>
 </span><span>  </span><span>&quot;body&quot;</span><span>:</span><span> </span><span>&quot;&lt;html&gt;Hello, ...&lt;/html&gt;&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;attachments&quot;</span><span>:</span><span> </span><span>[</span><span>
@@ -3570,7 +3589,7 @@ export class FlashSaleStockService {
 </span><span>     </span><span>&quot;subject&quot;</span><span>:</span><span> </span><span>&quot;Meeting Updates&quot;</span><span>,</span><span>
 </span><span>     </span><span>&quot;date_sent&quot;</span><span>:</span><span> </span><span>&quot;2025-02-07T10:00:00Z&quot;</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>This JSON structure is flexible: new fields (for example, a flag for encryption or additional headers) can be added without altering a rigid schema. We keep a <strong>copy of key metadata</strong> (subject, sender, etc.) in the document for easier standalone use and potential NoSQL-side querying, but the authoritative source for those fields is the SQL database.</p>
 </li>
 <li>
@@ -3909,11 +3928,18 @@ class SpannerTwoPhaseCommit:
     <h4>Curveball: "How do you achieve zero data loss (RPO=0) during catastrophic data center power outages?"</h4>
     <p><strong>Mitigation: Multi-Region Spanner 2PC:</strong> Replicate email message manifests across 3 geographical regions using Google Spanner with TrueTime atomic commit timestamps.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Designing Google News (medium)</h1>
@@ -3968,7 +3994,6 @@ class SpannerTwoPhaseCommit:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Google News (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3984,7 +4009,6 @@ class SpannerTwoPhaseCommit:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3998,7 +4022,6 @@ class SpannerTwoPhaseCommit:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -4013,11 +4036,14 @@ class SpannerTwoPhaseCommit:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradNews" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -4065,7 +4091,6 @@ class SpannerTwoPhaseCommit:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Clusters 50,000+ incoming hourly news articles into single distinct topic threads using MinHash shingling and LSH, eliminating near-duplicate coverage.
   </div>
-</div>
 
     <div><p>Let&#x27;s design a news aggregator similar to Google News. This system will collect news articles from many external sources (newspapers, news channels, blogs, etc.) and present them to users in one consolidated feed. The goal is to deliver a <strong>personalized, near-real-time news feed</strong> based on each user’s preferences such as subscribed channels, categories (like politics, sports, tech), or particular entities (e.g. a celebrity, sports team, or artist). The system should support both <strong>pull</strong> (user refreshing a feed) and <strong>push</strong> (notifications for new articles) delivery modes, ensuring users quickly see breaking news or updates in their subscribed topics. We aim to achieve this at <strong>web-scale</strong>, meaning the design must accommodate hundreds of millions of users and very high data throughput, all while maintaining low latency and high availability.</p>
 <h3>Entities and Concepts</h3>
@@ -4674,11 +4699,18 @@ class NewsClusterVelocityTracker:
     <h4>Curveball: "How do you detect breaking news clusters within seconds across 10,000 news RSS feeds?"</h4>
     <p><strong>Mitigation: Real-Time MinHash LSH Velocity Tracking:</strong> Stream incoming article embeddings through an Apache Flink cluster. When an LSH cluster's incoming article rate accelerates by &gt; 500% compared to baseline, promote the cluster to the breaking news banner.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Designing Notification Service (medium)</h1>
@@ -4733,7 +4765,6 @@ class NewsClusterVelocityTracker:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Notification Service (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -4749,7 +4780,6 @@ class NewsClusterVelocityTracker:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -4763,7 +4793,6 @@ class NewsClusterVelocityTracker:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -4778,11 +4807,14 @@ class NewsClusterVelocityTracker:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradNotif" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -4836,7 +4868,6 @@ class NewsClusterVelocityTracker:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Applies user opt-out preferences and anti-fatigue rate limiters before fanning out notifications across APNs, FCM, SMS (Twilio), and Email (SendGrid).
   </div>
-</div>
 
     <div><p>Let&#x27;s design a notification system that works seamlessly for various applications, whether it&#x27;s a social media platform, an e-commerce site, or a productivity tool.</p></div><div><p>A <strong>notification system</strong> is a centralized platform that delivers alerts and messages (notifications) to users on behalf of multiple separate applications (tenants). It acts as a shared service that any application – be it a social network, an e-commerce site, or a productivity tool – can use to send notifications to its users. For example, think of a system like Amazon Simple Notification Service (SNS) or Firebase Cloud Messaging, which many different apps leverage to inform users about events (like a new message, an order shipped, or a calendar reminder).</p>
 <p><strong>Real-world analogy</strong>: Consider how Facebook notifies you of a friend’s post, Amazon notifies you about your package delivery, and Slack alerts you about a new mention. A multi-tenant notification service is a <strong>single system capable of handling all those scenarios</strong> for many companies at once, ensuring each tenant’s data and users stay isolated from each other.</p>
@@ -4951,7 +4982,7 @@ class NewsClusterVelocityTracker:
 <li><code>POST /v1/notifications</code></li>
 <li><strong>Request Body:</strong></li>
 </ul>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;user_id&quot;</span><span>:</span><span> </span><span>&quot;u_12345&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;template_id&quot;</span><span>:</span><span> </span><span>&quot;order_shipped_v1&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;priority&quot;</span><span>:</span><span> </span><span>&quot;high&quot;</span><span>,</span><span> </span><span>// or &quot;low&quot;</span><span>
@@ -4961,12 +4992,12 @@ class NewsClusterVelocityTracker:
 </span><span>    </span><span>&quot;name&quot;</span><span>:</span><span> </span><span>&quot;Alice&quot;</span><span>
 </span><span>  </span><span>}</span><span>
 </span><span></span><span>}</span><span>
-</span></code></div></div></pre>
+</span></code></div></pre>
 <ul>
 <li><strong>Response:</strong> <code>202 Accepted</code></li>
 </ul>
-<pre><div><div><code><span>{</span><span> </span><span>&quot;notification_id&quot;</span><span>:</span><span> </span><span>&quot;notif_abc123&quot;</span><span> </span><span>}</span><span>
-</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>{</span><span> </span><span>&quot;notification_id&quot;</span><span>:</span><span> </span><span>&quot;notif_abc123&quot;</span><span> </span><span>}</span><span>
+</span></code></div></pre>
 <ul>
 <li><strong>Error:</strong> <code>429 Too Many Requests</code> (Quota exceeded).</li>
 </ul>
@@ -5137,11 +5168,18 @@ end</code></pre>
     <h4>Curveball: "How do you prevent notification fatigue (e.g., user receiving 50 push notifications in 10 minutes)?"</h4>
     <p><strong>Mitigation: User-Level Sliding Window Token Bucket:</strong> Rate limit push notifications to a maximum of 3 per hour per user across all non-critical channels, batching non-urgent notifications into a consolidated daily digest.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Designing Payment System (hard)</h1>
@@ -5189,7 +5227,6 @@ end</code></pre>
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Stripe Idempotent Payment Flow: Client Idempotency Key ➔ Redis Lock & Cache Verification ➔ Double-Entry Ledger Commit ➔ Bank Gateway Settlement.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -5205,7 +5242,6 @@ end</code></pre>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -5219,7 +5255,6 @@ end</code></pre>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -5234,11 +5269,14 @@ end</code></pre>
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradPay" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -5286,7 +5324,6 @@ end</code></pre>
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Guarantees exact financial balance through immutable double-entry ledger bookkeeping (Sum Debits == Sum Credits) and idempotency key locking.
   </div>
-</div>
 
     <div><h2>Step 1: System Definition</h2>
 <p>Design a payment processing platform (similar to Stripe) that enables merchants (businesses) to accept online payments from customers securely and reliably. The system will handle the entire lifecycle of a payment transaction – from capturing payment details to authorizing the transaction, transferring funds, and handling post-payment events (like refunds or chargebacks). Ultimately, this “Stripe-like” system serves as a <strong>payment service provider</strong> that combines the functionality of a payment gateway and a payment processor in one integrated platform.</p>
@@ -5643,11 +5680,18 @@ class IdempotentPaymentGateway:
     <h4>Curveball: "What happens if a payment gateway call times out (HTTP 504)? Did the money leave the account or not?"</h4>
     <p><strong>Mitigation: Idempotent Polling &amp; Double-Check:</strong> Never retry a raw payment request on timeout. Instead, call the PSP's <code>GET /charges?idempotency_key=key</code> to determine if the charge succeeded, failed, or is pending before updating the internal double-entry ledger.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Designing Reddit (medium)</h1>
@@ -5702,7 +5746,6 @@ class IdempotentPaymentGateway:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Reddit (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -5718,7 +5761,6 @@ class IdempotentPaymentGateway:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -5732,7 +5774,6 @@ class IdempotentPaymentGateway:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -5747,11 +5788,14 @@ class IdempotentPaymentGateway:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradRed" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -5798,7 +5842,6 @@ class IdempotentPaymentGateway:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Stores threaded discussions as materialized paths ('/1/4/19') for O(1) comment retrieval without recursive joins, ranking posts with the logarithmic Hot formula.
   </div>
-</div>
 
     <div><p>We are building an online social media platform <strong>similar to Reddit</strong>, where users can share content and discuss in community forums. In this system, users create <strong>posts</strong> (which can be text, images, links, or videos) and organize them into topic-based communities called <strong>subreddits</strong> (or communities). Other users can then engage by voting on posts (upvote or downvote) and adding <strong>comments</strong> to discuss the content. A real-world example is Reddit itself – often dubbed “the front page of the internet” – which hosts thousands of active communities for different interests. Each post has a score based on user votes, and posts are ranked within their community and on users’ personalized feeds.</p>
 <p><strong>Key Entities/Terms:</strong></p>
@@ -5900,15 +5943,15 @@ class IdempotentPaymentGateway:
 </li>
 </ul>
 <p><strong>Sample Request:</strong></p>
-<pre><div><div><code><span>GET</span><span> </span><span>/</span><span>feed</span><span>?</span><span>sort</span><span>=</span><span>hot</span><span>&amp;</span><span>limit</span><span>=</span><span>20</span><span>&amp;</span><span>after</span><span>=</span><span>t3_xy123 </span><span>HTTP</span><span>/</span><span>1.1</span><span>  
+<pre><div class="topic-content"><code><span>GET</span><span> </span><span>/</span><span>feed</span><span>?</span><span>sort</span><span>=</span><span>hot</span><span>&amp;</span><span>limit</span><span>=</span><span>20</span><span>&amp;</span><span>after</span><span>=</span><span>t3_xy123 </span><span>HTTP</span><span>/</span><span>1.1</span><span>  
 </span><span></span><span>Host</span><span>:</span><span> api</span><span>.</span><span>internal</span><span>.</span><span>redditclone</span><span>.</span><span>com</span><span>  
-</span><span></span><span>Authorization</span><span>:</span><span> </span><span>Bearer</span><span> </span><span>&lt;</span><span>USER_JWT_TOKEN</span><span>&gt;</span></code></div></div></pre>
+</span><span></span><span>Authorization</span><span>:</span><span> </span><span>Bearer</span><span> </span><span>&lt;</span><span>USER_JWT_TOKEN</span><span>&gt;</span></code></div></pre>
 <p>In this example, the client requests 20 posts from the home feed, sorted by the &quot;hot&quot; algorithm, starting after post ID <code>t3_xy123</code> (as a pagination cursor).</p>
 <p><strong>Response Format:</strong></p>
 <ul>
 <li>
 <p><strong>Success (200 OK):</strong> A JSON object containing an array of posts and pagination info.</p>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;posts&quot;</span><span>:</span><span> </span><span>[</span><span>
 </span><span>    </span><span>{</span><span>
 </span><span>      </span><span>&quot;id&quot;</span><span>:</span><span> </span><span>&quot;t3_xy124&quot;</span><span>,</span><span>
@@ -5937,7 +5980,7 @@ class IdempotentPaymentGateway:
 </span><span>    </span><span>// ... up to 20 posts</span><span>
 </span><span>  </span><span>]</span><span>,</span><span>
 </span><span>  </span><span>&quot;next_page&quot;</span><span>:</span><span> </span><span>&quot;t3_xy145&quot;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <ul>
 <li><code>posts</code> – Array of post objects. Each post includes fields like <code>id</code>, <code>title</code>, the <code>subreddit</code> name, <code>author</code> username, <code>score</code> (net upvotes), <code>num_comments</code>, <code>created_at</code> timestamp, and content-specific fields. For example, <code>content_type</code> indicates if it&#x27;s a text, link, or media post; a link post provides a <code>url</code> and maybe a <code>thumbnail</code>, while a text post might include a <code>text_preview</code> or excerpt.</li>
 <li><code>next_page</code> – A cursor (e.g., the last post ID in this page) to be used as the <code>after</code> parameter for fetching the next page. If <code>next_page</code> is <code>null</code> or absent, it means there are no further posts at the moment.</li>
@@ -5945,18 +5988,18 @@ class IdempotentPaymentGateway:
 </li>
 <li>
 <p><strong>Error (401 Unauthorized):</strong> If authentication is missing or invalid.</p>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;error&quot;</span><span>:</span><span> </span><span>&quot;Unauthorized&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;message&quot;</span><span>:</span><span> </span><span>&quot;Authentication token is missing or invalid.&quot;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>The service returns a 401 status with an error message when the user context is not provided or the token has expired.</p>
 </li>
 <li>
 <p><strong>Error (400 Bad Request):</strong> If query parameters are invalid (e.g., an unsupported <code>sort</code> value).</p>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;error&quot;</span><span>:</span><span> </span><span>&quot;Bad Request&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;message&quot;</span><span>:</span><span> </span><span>&quot;Invalid &#x27;sort&#x27; parameter. Must be one of &#x27;hot&#x27;, &#x27;new&#x27;, &#x27;top&#x27;, &#x27;best&#x27;.&quot;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>This indicates the client supplied a parameter that the service cannot process. The feed service will not return a feed and will instead provide an explanation for the mistake.</p>
 </li>
 </ul>
@@ -6460,11 +6503,18 @@ class MaterializedPathCommentTree:
     <h4>Curveball: "How do you render a 10,000-comment deep discussion thread without recursive database queries?"</h4>
     <p><strong>Mitigation: Materialized Path Enumeration:</strong> Store each comment with a path string: <code>path = '001.004.019'</code>. A single query: <code>SELECT * FROM comments WHERE post_id = 123 ORDER BY path ASC LIMIT 100</code> fetches the exact nested visual tree in chronological order.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-10" class="chapter-section">
+<section  id="chapter-10" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">Designing Reminder Alert System (hard)</h1>
@@ -6519,7 +6569,6 @@ class MaterializedPathCommentTree:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Reminder Alert System (hard)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -6535,7 +6584,6 @@ class MaterializedPathCommentTree:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -6549,7 +6597,6 @@ class MaterializedPathCommentTree:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -6564,11 +6611,14 @@ class MaterializedPathCommentTree:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradRem" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -6616,7 +6666,6 @@ class MaterializedPathCommentTree:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Schedules millions of future alerts using Redis Sorted Sets and hierarchical time-wheels, achieving O(1) tick expiration and sub-second execution accuracy.
   </div>
-</div>
 
     <div><p><strong>A Notification System for Reminders</strong> is a platform that allows users to schedule alerts and delivers them through various channels (email, SMS, push notifications, or in-app) when due. The system acts as a central hub to manage scheduled events and dispatch notifications to users via their preferred methods. A real-world analogy is the reminder feature in Slack or calendar applications; for instance, Slack relies on scheduled jobs to ensure messages reach users at the precise moment. Here, we generalize that concept to a web-scale service capable of handling millions of concurrent users.</p>
 <p><strong>Key Terminology</strong></p>
@@ -6764,14 +6813,14 @@ class MaterializedPathCommentTree:
 </ul>
 <p><strong>Choice of Database:</strong> Given the volume and access patterns, a <strong>NoSQL datastore like Cassandra</strong> is well-suited. It can handle high write throughput (for inserts/updates on schedule table), and its wide-column model allows the composite key approach we outlined. Cassandra’s partitioning will distribute data by the partition key (which we set to time+segment), and replicate for fault tolerance. Another option is Amazon DynamoDB which has similar partition key concepts (we’d use a compound key with time bucket). DynamoDB even supports TTL on items, which could auto-expire past events if we used it for one-time schedules – but for recurring, we keep updating future times. If we prefer SQL for simplicity, we’d likely partition the schedule table by date (e.g., separate physical partitions or tables for each day or hour) to aid performance, and use an index on time. However, the relational approach might become a bottleneck beyond a certain scale or require careful query planning (full table index on millions of rows might handle thousands of lookups per second, but tens of thousands could be tough). Therefore, we lean towards distributed NoSQL for the scheduler data. For the Reminders definition table, relational could work (since user-based lookups are not extremely high volume), but to simplify our stack, using the same store for both is fine. Cassandra can store the reminders by user partition, as described, and it’s efficient as long as no single user has an enormous number of entries (500 max in our case, which is trivial within one partition).</p>
 <p><strong>Example:</strong> A sample entry in the Schedule table might look like:</p>
-<pre><div><div><code><span>Partition</span><span> </span><span>(</span><span>ExecutionMinute</span><span>=</span><span>17084040</span><span>,</span><span> </span><span>Segment</span><span>=</span><span>3</span><span>)</span><span>:</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>Partition</span><span> </span><span>(</span><span>ExecutionMinute</span><span>=</span><span>17084040</span><span>,</span><span> </span><span>Segment</span><span>=</span><span>3</span><span>)</span><span>:</span><span> </span><span>{</span><span>
 </span><span>   </span><span>ReminderID</span><span>:</span><span> </span><span>&quot;rem12345&quot;</span><span>,</span><span> 
 </span><span>   </span><span>UserID</span><span>:</span><span> </span><span>&quot;user6789&quot;</span><span>,</span><span> 
 </span><span>   </span><span>Message</span><span>:</span><span> </span><span>&quot;Meeting in 5 minutes&quot;</span><span>,</span><span> 
 </span><span>   </span><span>Channels</span><span>:</span><span> </span><span>[</span><span>&quot;email&quot;</span><span>,</span><span>&quot;push&quot;</span><span>]</span><span>,</span><span> 
 </span><span>   </span><span>NextExecutionTime</span><span>:</span><span> </span><span>2025</span><span>-</span><span>06</span><span>-</span><span>01T09</span><span>:</span><span>00</span><span>:</span><span>00Z</span><span>,</span><span> 
 </span><span>   </span><span>TimeZone</span><span>:</span><span> </span><span>&quot;America/Los_Angeles&quot;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>This indicates that the reminder <code>rem12345</code> for user 6789 is due at that UTC time. The scheduler querying the partition for 2025-06-01 09:00 UTC, segment 3 will find this. It can then process sending “Meeting in 5 minutes” via email and push. After sending, it will compute the next occurrence (say daily, so nextExecutionTime becomes 2025-06-02 09:00:00Z) and insert a new entry possibly in a different partition (minute and maybe different segment) for the next day.</p></div><div><h2>6.1 Scheduling Algorithm and Reminder Execution Pipeline</h2>
 <p>The <strong>Scheduler Service</strong> is responsible for executing reminders on schedule. It’s essentially a distributed cron engine tailored to our data model. Here’s how it functions in detail:</p>
 <ul>
@@ -6993,11 +7042,18 @@ class HierarchicalTimeWheel:
     <h4>Curveball: "How do you schedule reminders 5 years in the future without clogging the active 1-second delay queue?"</h4>
     <p><strong>Mitigation: Hierarchical Multi-Tiered Time-Wheel:</strong> Maintain separate Year, Month, Day, and Second wheels. Long-term alerts reside in the Year wheel and cascade downward to the active Second wheel only on the day of execution.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-11" class="chapter-section">
+<section  id="chapter-11" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">Designing Unique ID Generator (medium)</h1>
@@ -7052,7 +7108,6 @@ class HierarchicalTimeWheel:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Unique ID Generator (medium)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -7068,7 +7123,6 @@ class HierarchicalTimeWheel:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Twitter Snowflake generates 64-bit k-ordered unique IDs at 10,000+ IDs/ms per node with zero central database coordination.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -7082,7 +7136,6 @@ class HierarchicalTimeWheel:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Generates 4.096M unique IDs/sec per worker node with zero lock contention and 64-bit integer index efficiency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -7097,11 +7150,14 @@ class HierarchicalTimeWheel:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor &lt; 500ms delay during clock sync but guarantees absolute global uniqueness.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradSnow" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -7155,7 +7211,6 @@ class HierarchicalTimeWheel:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Generates roughly 4.09 million monotonic, k-sortable unique IDs per millisecond per node across 1,024 distributed worker machines without coordination locks.
   </div>
-</div>
 
     <div><p>A <strong>Globally Unique Identifier (GUID) Generation System</strong> is a service that produces unique identifiers at scale for use across distributed systems. Its purpose is to generate IDs that never collide (no duplicates) even when issued from multiple data centers or services concurrently. These IDs can serve as database primary keys, event/message IDs, object handles, or any context where a distinct identifier is needed for each entity. The system supports two ID formats: <strong>opaque IDs</strong> and <strong>ordered IDs</strong>. <strong>Opaque IDs</strong> are essentially random or pseudo-random identifiers (like UUIDs) with no intrinsic ordering or meaning, useful for security or purely unique labeling. <strong>Ordered IDs</strong> are time-based or monotonic IDs that encode time or sequence information so that newer IDs are numerically or lexicographically larger than older ones, which is useful for sorting and roughly reflects creation order. “Global uniqueness” means any ID generated on any node or at any time will be different from all others, and <strong>web-scale</strong> implies the system can handle very high request rates (hundreds of thousands per second) and operate across many regions and services. Here are a few Key terms:</p>
 <ul>
@@ -7267,7 +7322,7 @@ In either case, the computation is local and very fast – just a couple of arit
 </ul></div><div><ul>
 <li>
 <p><strong>ID Format Example:</strong> Using this structure, an example 64-bit ID in binary might look like:</p>
-<pre><div><div><code><span>[</span><span>timestamp</span><span>:</span><span> </span><span>41</span><span> bits</span><span>]</span><span>[</span><span>region</span><span>+</span><span>machine</span><span>:</span><span> </span><span>10</span><span> bits</span><span>]</span><span>[</span><span>seq</span><span>:</span><span> </span><span>12</span><span> bits</span><span>]</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>[</span><span>timestamp</span><span>:</span><span> </span><span>41</span><span> bits</span><span>]</span><span>[</span><span>region</span><span>+</span><span>machine</span><span>:</span><span> </span><span>10</span><span> bits</span><span>]</span><span>[</span><span>seq</span><span>:</span><span> </span><span>12</span><span> bits</span><span>]</span></code></div></pre>
 <p>For illustration, suppose the 41-bit timestamp (since epoch) is <code>101010...</code> (some value), region ID = 3 (<code>00011</code> in 5 bits), machine ID = 5 (<code>00101</code> in 5 bits), and sequence = 37 (<code>0000 1001 01</code> in 12 bits). These bits concatenate to form the 64-bit number. In a real example, <strong>Snowflake ID 1922298559865028608</strong> (which is a tweet ID) breaks down to timestamp, machine, sequence as documented. Because of this composition, one can extract the time and other info if they know the format, which is why we categorize it as non-opaque. But it serves the ordering and scaling purpose well.</p>
 </li>
 <li>
@@ -7432,11 +7487,18 @@ class SnowflakeIDGenerator:
     <h4>Curveball: "What happens when a server's NTP clock drifts backward by 200ms? How do you prevent duplicate Snowflake IDs?"</h4>
     <p><strong>Mitigation: Sequence Offset Borrowing:</strong> If current timestamp &lt; last recorded timestamp, do not fail. Instead, wait for the clock to catch up, or borrow the sequence bits from the next millisecond while raising an alert if clock drift exceeds 10ms.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-12" class="chapter-section">
+<section  id="chapter-12" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">Designing YouTube Likes Counter (medium)</h1>
@@ -7484,7 +7546,6 @@ class SnowflakeIDGenerator:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Netflix Distributed Counter Architecture: In-memory worker delta buffering with asynchronous flushes to Cassandra atomic increment columns.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -7500,7 +7561,6 @@ class SnowflakeIDGenerator:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -7514,7 +7574,6 @@ class SnowflakeIDGenerator:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -7529,11 +7588,14 @@ class SnowflakeIDGenerator:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradLike" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -7581,7 +7643,6 @@ class SnowflakeIDGenerator:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Buffers viral like bursts in Redis with atomic HINCRBY and HyperLogLog cardinality estimation, flushing batched counts to database storage every 5 seconds.
   </div>
-</div>
 
     <div><p><strong>Problem Statement:</strong>
 Design a backend system to manage <strong>likes and dislikes</strong> for YouTube videos and comments at scale. The system must handle recording user reactions, updating aggregate counts, and retrieving these counts with low latency. It must be architected to support <strong>millions of concurrent users</strong> and billions of historical data points.</p>
@@ -7681,12 +7742,12 @@ Consider a scenario where user <strong>Alice</strong> watches the video <em>“F
 <li><code>POST /v1/votes</code></li>
 <li><strong>Request Body:</strong></li>
 </ul>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;target_id&quot;</span><span>:</span><span> </span><span>&quot;video_abc123&quot;</span><span>,</span><span>
 </span><span>  </span><span>&quot;target_type&quot;</span><span>:</span><span> </span><span>&quot;video&quot;</span><span>,</span><span> </span><span>// &quot;comment&quot;</span><span>
 </span><span>  </span><span>&quot;action&quot;</span><span>:</span><span> </span><span>&quot;like&quot;</span><span>        </span><span>// &quot;dislike&quot;, &quot;none&quot; (remove)</span><span>
 </span><span></span><span>}</span><span>
-</span></code></div></div></pre>
+</span></code></div></pre>
 <ul>
 <li><strong>Response:</strong> <code>200 OK</code> (Empty body).</li>
 </ul>
@@ -7696,7 +7757,7 @@ Consider a scenario where user <strong>Alice</strong> watches the video <em>“F
 <li><strong>Headers:</strong> <code>Authorization: Bearer &lt;token&gt;</code></li>
 <li><strong>Response:</strong></li>
 </ul>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>  </span><span>&quot;items&quot;</span><span>:</span><span> </span><span>{</span><span>
 </span><span>    </span><span>&quot;video_abc&quot;</span><span>:</span><span> </span><span>{</span><span>
 </span><span>      </span><span>&quot;likes&quot;</span><span>:</span><span> </span><span>1500200</span><span>,</span><span>
@@ -7710,7 +7771,7 @@ Consider a scenario where user <strong>Alice</strong> watches the video <em>“F
 </span><span>    </span><span>}</span><span>
 </span><span>  </span><span>}</span><span>
 </span><span></span><span>}</span><span>
-</span></code></div></div></pre></div><div><h2>5. High-Level Architecture</h2>
+</span></code></div></pre></div><div><h2>5. High-Level Architecture</h2>
 <p>The system comprises multiple decoupled components designed to handle high concurrency, data persistence, and background processing. Below is an overview of the architecture and data flow:</p>
 <ul>
 <li>
@@ -7740,7 +7801,7 @@ Consider a scenario where user <strong>Alice</strong> watches the video <em>“F
 <div><table><thead><tr><th>Field</th><th>Data Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>user_id</strong></td><td>String</td><td>Unique identifier of the user who performed the action. (Part of the composite primary key)</td></tr><tr><td><strong>content_id</strong></td><td>String</td><td>Unique identifier of the content (post or comment) that was liked/disliked. (Part of the composite primary key)</td></tr><tr><td><strong>action_type</strong></td><td>String (enum)</td><td>Type of action: either <code>&quot;like&quot;</code> or <code>&quot;dislike&quot;</code>. Indicates the user&#x27;s latest reaction on the content item.</td></tr><tr><td><strong>timestamp</strong></td><td>DateTime</td><td>Timestamp of the latest action by the user on this item. Used to record when the action occurred (or last changed).</td></tr></tbody></table></div>
 <h3>2. ContentStats Table (Aggregated Likes/Dislikes per content)</h3>
 <p>Maintains the total count of likes and dislikes for each post or comment. This table is keyed by <code>content_id</code> so the like/dislike counts for any item can be fetched in a single, fast lookup. It is updated whenever a user’s like/dislike on that item changes (often via an event or stream).</p>
-<div><table><thead><tr><th>Field</th><th>Data Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>content_id</strong></td><td>String</td><td>Unique identifier of the content (post or comment). Acts as the primary key for this table (one record per item).</td></tr><tr><td><strong>total_likes</strong></td><td>Integer</td><td>Cumulative count of all <code>&quot;like&quot;</code> actions for this item. Updated whenever a new like is added or a dislike is changed to a like.</td></tr><tr><td><strong>total_dislikes</strong></td><td>Integer</td><td>Cumulative count of all <code>&quot;dislike&quot;</code> actions for this item. Updated whenever a new dislike is added or a like is changed to a dislike.</td></tr></tbody></table></div></div><div><h2>Architectural Approaches</h2>
+<div><table><thead><tr><th>Field</th><th>Data Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>content_id</strong></td><td>String</td><td>Unique identifier of the content (post or comment). Acts as the primary key for this table (one record per item).</td></tr><tr><td><strong>total_likes</strong></td><td>Integer</td><td>Cumulative count of all <code>&quot;like&quot;</code> actions for this item. Updated whenever a new like is added or a dislike is changed to a like.</td></tr><tr><td><strong>total_dislikes</strong></td><td>Integer</td><td>Cumulative count of all <code>&quot;dislike&quot;</code> actions for this item. Updated whenever a new dislike is added or a like is changed to a dislike.</td></tr></tbody></table></div><div><h2>Architectural Approaches</h2>
 <p>When designing a scalable <strong>like/dislike system</strong>, various architectural strategies can be employed. Each approaches has its pros/cons, lets look into these:</p>
 <h3>1. Synchronous Updates (Direct Write to DB and Counters Together)</h3>
 <p><strong>How it works:</strong> Every user like/dislike action is immediately written to the database, updating both the individual user-action record and incrementing/decrementing the total like counter in a single, synchronous operation (often within a transaction). For example, clicking &quot;like&quot; will insert a like record and update the post’s like count column <strong>in the same request</strong>.</p>
@@ -7866,11 +7927,19 @@ class LikesCounterAggregator:
     <h4>Curveball: "How do you ensure a user sees their own like incremented immediately even if the write buffer flushes asynchronously?"</h4>
     <p><strong>Mitigation: Optimistic Client-Side UI Update:</strong> Increment the count in the client's local cache immediately upon click. The server responds with an asynchronous <code>202 Accepted</code>, ensuring instant responsiveness without blocking on persistent storage.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-13" class="chapter-section">
+<section  id="chapter-13" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">13</span>
     <h1 class="chapter-title">Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)</h1>
@@ -7925,7 +7994,6 @@ class LikesCounterAggregator:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Distributed Live Video Streaming Platform (Twitch / YouTube Live)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -7941,7 +8009,6 @@ class LikesCounterAggregator:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -7955,7 +8022,6 @@ class LikesCounterAggregator:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -7970,8 +8036,6 @@ class LikesCounterAggregator:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -8036,11 +8100,17 @@ class LiveChunkManifestGenerator:
         <h4>Curveball: "What happens if a broadcaster's internet drops for 5 seconds? Does the live stream tear down for all 100,000 viewers?"</h4>
         <p><strong>Mitigation: Ingest Grace Period &amp; Slate Injection:</strong> The ingest server maintains a 15-second reconnection grace period. If frames stop arriving, the transcoder automatically injects a placeholder 'Stream Reconnecting' slate loop into the CMAF manifest without severing edge viewer connections.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-14" class="chapter-section">
+<section  id="chapter-14" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">14</span>
     <h1 class="chapter-title">Designing an AI Retrieval-Augmented Generation (RAG) &amp; Vector Search Platform</h1>
@@ -8095,7 +8165,6 @@ class LiveChunkManifestGenerator:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -8111,7 +8180,6 @@ class LiveChunkManifestGenerator:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -8125,7 +8193,6 @@ class LiveChunkManifestGenerator:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -8140,11 +8207,14 @@ class LiveChunkManifestGenerator:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradRag" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -8193,7 +8263,6 @@ class LiveChunkManifestGenerator:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Ingests unstructured documents into dense 1536-dim vector embeddings, shards them across distributed HNSW graph indexes with Scalar Quantization (PQ), and executes Hybrid Search (Dense Vector + BM25 Sparse Keyword with RRF) to assemble optimal context for LLMs in < 30ms.
   </div>
-</div>
 
     <h2>1. What is Enterprise RAG &amp; Vector Search?</h2>
     <p>Retrieval-Augmented Generation (RAG) combines dense vector similarity search with large language models (LLMs) to answer natural language queries grounded in private, real-time enterprise knowledge bases, eliminating LLM hallucinations and obsolete training data.</p>
@@ -8278,11 +8347,18 @@ class HNSWVectorSearchReranker:
     <h4>Curveball: "How do you delete vectors in an HNSW graph without degrading search recall accuracy?"</h4>
     <p><strong>Mitigation: Soft Deletion Tombstones &amp; Background Graph Repair:</strong> Mark deleted vectors with a bitmask tombstone. During query traversals, skip tombstoned nodes. A background worker periodically re-links orphaned neighbor edges and reclaims vector memory.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-15" class="chapter-section">
+<section  id="chapter-15" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">15</span>
     <h1 class="chapter-title">Designing a Global Distributed Object Storage Service (AWS S3 Architecture)</h1>
@@ -8337,7 +8413,6 @@ class HNSWVectorSearchReranker:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -8353,7 +8428,6 @@ class HNSWVectorSearchReranker:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -8367,7 +8441,6 @@ class HNSWVectorSearchReranker:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -8382,8 +8455,6 @@ class HNSWVectorSearchReranker:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -8424,11 +8495,17 @@ class StorageNodeScrubber:
         <h4>Curveball: "How do you handle orphaned multipart upload chunks if a client disconnects halfway through uploading a 5TB file?"</h4>
         <p><strong>Mitigation: Automated S3 Lifecycle Abort Policies:</strong> Configure an automated bucket rule: <code>AbortIncompleteMultipartUpload</code> after 7 days, purging uncompleted chunk extents to prevent ghost storage accumulation.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-16" class="chapter-section">
+<section  id="chapter-16" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">16</span>
     <h1 class="chapter-title">Designing a Real-Time Collaborative Canvas &amp; Document Editor (Figma / Google Docs)</h1>
@@ -8483,7 +8560,6 @@ class StorageNodeScrubber:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Real-Time Collaborative Canvas &amp; Document Editor (Figma / Google Docs)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -8499,7 +8575,6 @@ class StorageNodeScrubber:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -8513,7 +8588,6 @@ class StorageNodeScrubber:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -8528,8 +8602,6 @@ class StorageNodeScrubber:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -8566,11 +8638,17 @@ class CanvasShapeCRDT:
         <h4>Curveball: "How do you prevent memory exhaustion when a Figma document accumulates 1,000,000 CRDT deletion tombstones?"</h4>
         <p><strong>Mitigation: State Vector Compaction:</strong> When all connected clients have acknowledged an operation state vector up to timestamp T, the server and clients garbage-collect all tombstones older than T, collapsing the CRDT into a clean snapshot.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-17" class="chapter-section">
+<section  id="chapter-17" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">17</span>
     <h1 class="chapter-title">Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)</h1>
@@ -8625,7 +8703,6 @@ class CanvasShapeCRDT:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Global Distributed Time-Series Database (Datadog / Prometheus / Thanos)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -8641,7 +8718,6 @@ class CanvasShapeCRDT:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -8655,7 +8731,6 @@ class CanvasShapeCRDT:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -8670,8 +8745,6 @@ class CanvasShapeCRDT:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -8706,11 +8779,17 @@ class GorillaTimestampCompressor:
         <h4>Curveball: "How do you prevent high-cardinality label explosion (e.g., metric with 100,000 unique container IDs) from crashing the inverted index?"</h4>
         <p><strong>Mitigation: Ingestion Label Throttling &amp; Rollups:</strong> Enforce hard cardinality quotas (max 5,000 unique series per metric). Excess ephemeral labels are automatically stripped or hashed into generic rollup buckets.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-18" class="chapter-section">
+<section  id="chapter-18" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">18</span>
     <h1 class="chapter-title">Designing an Event-Sourced Banking &amp; Financial Ledger Platform (Stripe)</h1>
@@ -8758,7 +8837,6 @@ class GorillaTimestampCompressor:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Stripe Idempotent Payment Flow: Client Idempotency Key ➔ Redis Lock & Cache Verification ➔ Double-Entry Ledger Commit ➔ Bank Gateway Settlement.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -8774,7 +8852,6 @@ class GorillaTimestampCompressor:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -8788,7 +8865,6 @@ class GorillaTimestampCompressor:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -8803,8 +8879,6 @@ class GorillaTimestampCompressor:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -8879,11 +8953,21 @@ export class FinancialLedgerTransaction {
         <h4>Curveball: "How do you prevent floating-point rounding errors (e.g., 0.1 + 0.2 = 0.30000000000000004) from corrupting financial balances?"</h4>
         <p><strong>Mitigation: Fixed-Point Integer Arithmetic (Micro-Units):</strong> Never store financial balances as FLOAT or DOUBLE. Store amounts as 64-bit integers representing micro-cents (1 USD = 100,000,000 micro-cents) and enforce strict fractional remainder allocation rules.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

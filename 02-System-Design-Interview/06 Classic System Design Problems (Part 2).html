@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="designing twitter search"><a href="#chapter-01"><span class="chapter-num">01</span> Designing Twitter Search</a></li>
@@ -957,8 +956,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -977,9 +974,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Designing Twitter Search</h1>
@@ -1034,7 +1030,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Twitter Search): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1050,7 +1045,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1064,7 +1058,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1079,11 +1072,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1137,7 +1133,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Queries are scattered across in-memory inverted index posting lists and merged by recency/relevance, enabling search results for new tweets within 100ms of posting.
   </div>
-</div>
 
     <div><h2>1. What is Twitter Search?</h2>
 <p>Twitter users can update their status whenever they like. Each status (called a tweet) consists of plain text and our goal is to design a system that allows searching over all the user tweets.</p>
@@ -1162,7 +1157,7 @@
 </center>
 <h2>4. System APIs</h2>
 <p>We can have SOAP or REST APIs to expose the functionality of our service; following could be the definition of the search API:</p>
-<pre><div><div><code><span>search</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_terms</span><span>,</span><span> maximum_results_to_return</span><span>,</span><span> sort</span><span>,</span><span> page_token</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>search</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_terms</span><span>,</span><span> maximum_results_to_return</span><span>,</span><span> sort</span><span>,</span><span> page_token</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
 search_terms (string): A string containing the search terms.<br>
@@ -1310,11 +1305,18 @@ export class EarlybirdInvertedIndex {
       <li><strong>Sharding by Creation Time:</strong> Recent queries only hit the current day's shard. <em>Bottleneck:</em> The newest shard receives 100% of write traffic and 90% of read search traffic (massive hot-spotting). <em>Verdict:</em> Shard by Tweet ID with in-memory recency posting list optimization.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Designing a Web Crawler</h1>
@@ -1369,7 +1371,6 @@ export class EarlybirdInvertedIndex {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Web Crawler): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1385,7 +1386,6 @@ export class EarlybirdInvertedIndex {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1399,7 +1399,6 @@ export class EarlybirdInvertedIndex {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1414,11 +1413,14 @@ export class EarlybirdInvertedIndex {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCrawl" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1474,7 +1476,6 @@ export class EarlybirdInvertedIndex {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Enforces host politeness with per-domain FIFO queues and detects near-duplicate web pages using 64-bit SimHash hamming distances.
   </div>
-</div>
 
     <div><h2>1. What is a Web Crawler?</h2>
 <p>A web crawler is a software program that browses the World Wide Web in a methodical and automated manner. It collects documents by recursively fetching links from a set of starting pages. Many sites, particularly search engines, use web crawling as a means of providing up-to-date data. Search engines download all the pages to create an index on them to perform faster searches.</p>
@@ -1674,11 +1675,18 @@ export class SimHashDetector {
       <li><strong>Per-Domain Page Quotas:</strong> Cap the crawler at a maximum of 50,000 pages per domain per crawl cycle.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Designing Facebook Newsfeed</h1>
@@ -1733,7 +1741,6 @@ export class SimHashDetector {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Facebook Newsfeed): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1749,7 +1756,6 @@ export class SimHashDetector {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1763,7 +1769,6 @@ export class SimHashDetector {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1778,11 +1783,14 @@ export class SimHashDetector {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradFeed" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1831,7 +1839,6 @@ export class SimHashDetector {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Aggregates friend candidate posts from the social graph and feeds them through real-time ML scoring models to personalize the top 50 stories.
   </div>
-</div>
 
     <div><h2>1. What is Facebook’s newsfeed?</h2>
 <p>A Newsfeed is the constantly updating list of stories in the middle of Facebook’s homepage. It includes status updates, photos, videos, links, app activity, and &#x27;likes&#x27; from people, pages, and groups that a user follows on Facebook. In other words, it is a compilation of a complete scrollable version of your friends&#x27; and your life story from photos, videos, locations, status updates, and other activities.</p>
@@ -1860,7 +1867,7 @@ export class SimHashDetector {
 <p>💡 Once we have finalized the requirements, it&#x27;s always a good idea to define the system APIs. This should explicitly state what is expected from the system.</p>
 </blockquote>
 <p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the API for getting the newsfeed:</p>
-<pre><div><div><code><span>getUserFeed</span><span>(</span><span>api_dev_key</span><span>,</span><span> user_id</span><span>,</span><span> since_id</span><span>,</span><span> count</span><span>,</span><span> max_id</span><span>,</span><span> exclude_replies</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>getUserFeed</span><span>(</span><span>api_dev_key</span><span>,</span><span> user_id</span><span>,</span><span> since_id</span><span>,</span><span> count</span><span>,</span><span> max_id</span><span>,</span><span> exclude_replies</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered can be used to, among other things, throttle users based on their allocated quota.<br>
 <strong>user_id (number):</strong> The ID of the user for whom the system will generate the newsfeed.<br>
@@ -1904,7 +1911,7 @@ Returns a JSON object containing a list of feed items.</p>
 <p>Let’s discuss different components of our system in detail.</p>
 <p><strong>a. Feed generation</strong><br>
 Let’s take the simple case of the newsfeed generation service fetching most recent posts from all the users and entities that Jane follows; the query would look like this:</br></p>
-<pre><div><div><code><span>(</span><span>SELECT</span><span> </span><span>FeedItemID</span><span> </span><span>FROM</span><span> </span><span>FeedItem</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>in</span><span> </span><span>(</span><span>
+<pre><div class="topic-content"><code><span>(</span><span>SELECT</span><span> </span><span>FeedItemID</span><span> </span><span>FROM</span><span> </span><span>FeedItem</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>in</span><span> </span><span>(</span><span>
 </span><span>    </span><span>SELECT</span><span> </span><span>EntityOrFriendID</span><span> </span><span>FROM</span><span> </span><span>UserFollow</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>=</span><span> </span><span>&lt;</span><span>current_user_id</span><span>&gt;</span><span> and type </span><span>=</span><span> </span><span>0</span><span>(</span><span>user</span><span>)</span><span>)</span><span>
 </span><span></span><span>)</span><span>
 </span><span></span><span>UNION</span><span>
@@ -1912,7 +1919,7 @@ Let’s take the simple case of the newsfeed generation service fetching most re
 </span><span>    </span><span>SELECT</span><span> </span><span>EntityOrFriendID</span><span> </span><span>FROM</span><span> </span><span>UserFollow</span><span> </span><span>WHERE</span><span> </span><span>UserID</span><span> </span><span>=</span><span> </span><span>&lt;</span><span>current_user_id</span><span>&gt;</span><span> and type </span><span>=</span><span> </span><span>1</span><span>(</span><span>entity</span><span>)</span><span>)</span><span>
 </span><span></span><span>)</span><span>
 </span><span></span><span>ORDER</span><span> </span><span>BY</span><span> </span><span>CreationDate</span><span> </span><span>DESC</span><span> 
-</span><span></span><span>LIMIT</span><span> </span><span>100</span></code></div></div></pre>
+</span><span></span><span>LIMIT</span><span> </span><span>100</span></code></div></pre>
 <p>Here are issues with this design for the feed generation service:</p>
 <ol>
 <li>Crazy slow for users with a lot of friends/follows as we have to perform sorting/merging/ranking of a huge number of posts.</li>
@@ -1923,10 +1930,10 @@ To improve the efficiency, we can pre-generate the timeline and store it in a me
 </ol>
 <p><strong>Offline generation for newsfeed:</strong> We can have dedicated servers that are continuously generating users’ newsfeed and storing them in memory. So, whenever a user requests for the new posts for their feed, we can simply serve it from the pre-generated, stored location. Using this scheme, user&#x27;s newsfeed is not compiled on load, but rather on a regular basis and returned to users whenever they request for it.</p>
 <p>Whenever these servers need to generate the feed for a user, they will first query to see what was the last time the feed was generated for that user. Then, new feed data would be generated from that time onwards. We can store this data in a hash table where the “key” would be UserID and “value” would be a STRUCT like this:</p>
-<pre><div><div><code><span>Struct</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>Struct</span><span> </span><span>{</span><span>
 </span><span>    </span><span>LinkedHashMap</span><span>&lt;</span><span>FeedItemID</span><span>,</span><span> </span><span>FeedItem</span><span>&gt;</span><span> feedItems</span><span>;</span><span>
 </span><span>    </span><span>DateTime</span><span> lastGenerated</span><span>;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>We can store FeedItemIDs in a data structure similar to <a href="https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html" target="_blank">Linked HashMap</a> or <a href="https://docs.oracle.com/javase/6/docs/api/java/util/TreeMap.html" target="_blank">TreeMap</a>, which can allow us to not only jump to any feed item but also iterate through the map easily. Whenever users want to fetch more feed items, they can send the last FeedItemID they currently see in their newsfeed, we can then jump to that FeedItemID in our hash-map and return next batch/page of feed items from there.</p>
 <p><strong>How many feed items should we store in memory for a user’s feed?</strong> Initially, we can decide to store 500 feed items per user, but this number can be adjusted later based on the usage pattern. For example, if we assume that one page of a user’s feed has 20 posts and most of the users never browse more than ten pages of their feed, we can decide to store only 200 posts per user. For any user who wants to see more posts (more than what is stored in memory), we can always query backend servers.</p>
 <p><strong>Should we generate (and keep in memory) newsfeeds for all users?</strong> There will be a lot of users that don’t log-in frequently. Here are a few things we can do to handle this; 1) a more straightforward approach could be, to use an LRU based cache that can remove users from memory that haven’t accessed their newsfeed for a long time 2) a smarter solution can figure out the login pattern of users to pre-generate their newsfeed, e.g., at what time of the day a user is active and which days of the week does a user access their newsfeed? etc.</p>
@@ -2011,11 +2018,18 @@ export class NewsfeedReRanker {
       <li>The re-ranker checks the user's last 5 actions in Redis and applies real-time contextual boosts (e.g., +25% boost to video content if the user recently engaged with video).</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Designing Yelp or Nearby Friends</h1>
@@ -2070,7 +2084,6 @@ export class NewsfeedReRanker {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Yelp or Nearby Friends): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2086,7 +2099,6 @@ export class NewsfeedReRanker {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2100,7 +2112,6 @@ export class NewsfeedReRanker {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2115,11 +2126,14 @@ export class NewsfeedReRanker {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradYelp" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2167,7 +2181,6 @@ export class NewsfeedReRanker {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Recursively subdivides 2D geographical space into hierarchical QuadTree nodes, capping leaf nodes to 500 places for rapid logarithmic radius searches.
   </div>
-</div>
 
     <div><h2>1. Why Yelp or Proximity Server?</h2>
 <p>Proximity servers are used to discover nearby attractions like places, events, etc. If you haven’t used yelp.com before, please try it before proceeding (you can search for nearby restaurants, theaters, etc.) and spend some time understanding different options that the website offers. This will help you a lot in understanding this chapter better.</p>
@@ -2211,7 +2224,7 @@ export class NewsfeedReRanker {
 <p>Similarly, we can have a separate table to store photos for Places and Reviews.</p>
 <h2>5. System APIs</h2>
 <p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the API for searching:</p>
-<pre><div><div><code><span>search</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_terms</span><span>,</span><span> user_location</span><span>,</span><span> radius_filter</span><span>,</span><span> maximum_results_to_return</span><span>,</span><span> category_filter</span><span>,</span><span> sort</span><span>,</span><span> page_token</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>search</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_terms</span><span>,</span><span> user_location</span><span>,</span><span> radius_filter</span><span>,</span><span> maximum_results_to_return</span><span>,</span><span> category_filter</span><span>,</span><span> sort</span><span>,</span><span> page_token</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
 search_terms (string): A string containing the search terms.<br>
@@ -2415,11 +2428,18 @@ export class QuadTreeNode {
       <li>QuadTree nodes in RAM are updated with copy-on-write pointers to allow lock-free concurrent radius traversals.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Designing Uber backend</h1>
@@ -2467,7 +2487,6 @@ export class QuadTreeNode {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Uber Geospatial Dispatch Architecture: Real-time driver GPS ingestion indexed into H3 hexagonal spatial grids with Ringpop cluster coordination.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2483,7 +2502,6 @@ export class QuadTreeNode {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2497,7 +2515,6 @@ export class QuadTreeNode {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2512,11 +2529,14 @@ export class QuadTreeNode {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradUber" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2565,7 +2585,6 @@ export class QuadTreeNode {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Ingests millions of GPS pings per second into an in-memory H3 hexagonal spatial index to compute nearest driver ETAs with zero database bottleneck.
   </div>
-</div>
 
     <div><h2>1. What is Uber?</h2>
 <p>Uber enables its customers to book drivers for taxi rides. Uber drivers use their personal cars to drive customers around. Both customers and drivers communicate with each other through their smartphones using the Uber app.</p>
@@ -2707,11 +2726,18 @@ export class UberSurgeEngine {
       <li>If ratio exceeds 1.5, surge pricing is automatically set and cached in Redis with a 30-second TTL.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Designing Ticketmaster</h1>
@@ -2766,7 +2792,6 @@ export class UberSurgeEngine {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Ticketmaster): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2782,7 +2807,6 @@ export class UberSurgeEngine {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2796,7 +2820,6 @@ export class UberSurgeEngine {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2811,11 +2834,14 @@ export class UberSurgeEngine {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradTicket" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2871,7 +2897,6 @@ export class UberSurgeEngine {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Ticket booking platforms use atomic distributed locks (Redis SETNX with TTL) to reserve seats temporarily while users complete payment, preventing race conditions and double bookings.
   </div>
-</div>
 
     <div><h2>1. What is an online movie ticket booking system?</h2>
 <p>A movie ticket booking system provides its customers the ability to purchase theatre seats online. E-ticketing systems allow the customers to browse through movies currently being played and to book seats, anywhere anytime.</p>
@@ -2915,7 +2940,7 @@ Let’s assume that our service has 3 billion page views per month and sells 10 
 <p>To store five years of this data, we would need around 3.6TB.</p>
 <h2>5. System APIs</h2>
 <p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the APIs to search movie shows and reserve seats.</p>
-<pre><div><div><code><span>SearchMovies</span><span>(</span><span>api_dev_key</span><span>,</span><span> keyword</span><span>,</span><span> city</span><span>,</span><span> lat_long</span><span>,</span><span> radius</span><span>,</span><span> start_datetime</span><span>,</span><span> end_datetime</span><span>,</span><span> postal_code</span><span>,</span><span> includeSpellcheck</span><span>,</span><span> results_per_page</span><span>,</span><span> sorting_order</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>SearchMovies</span><span>(</span><span>api_dev_key</span><span>,</span><span> keyword</span><span>,</span><span> city</span><span>,</span><span> lat_long</span><span>,</span><span> radius</span><span>,</span><span> start_datetime</span><span>,</span><span> end_datetime</span><span>,</span><span> postal_code</span><span>,</span><span> includeSpellcheck</span><span>,</span><span> results_per_page</span><span>,</span><span> sorting_order</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 <strong>api_dev_key (string):</strong> The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
 <strong>keyword (string):</strong> Keyword to search on.<br>
@@ -2930,7 +2955,7 @@ Let’s assume that our service has 3 billion page views per month and sells 10 
 <strong>sorting_order (string):</strong> Sorting order of the search result. Some allowable values : &#x27;name,asc&#x27;, &#x27;name,desc&#x27;, &#x27;date,asc&#x27;, &#x27;date,desc&#x27;, &#x27;distance,asc&#x27;, &#x27;name,date,asc&#x27;, &#x27;name,date,desc&#x27;, &#x27;date,name,asc&#x27;, &#x27;date,name,desc&#x27;.</br></br></br></br></br></br></br></br></br></br></br></p>
 <p><strong>Returns: (JSON)</strong><br>
 Here is a sample list of movies and their shows:</br></p>
-<pre><div><div><code><span>{</span><span>
+<pre><div class="topic-content"><code><span>{</span><span>
 </span><span>    </span><span>&quot;MovieID&quot;</span><span>:</span><span> </span><span>1</span><span>,</span><span>
 </span><span>    </span><span>&quot;ShowID&quot;</span><span>:</span><span> </span><span>1</span><span>,</span><span>
 </span><span>    </span><span>&quot;Title&quot;</span><span>:</span><span> </span><span>&quot;Cars 2&quot;</span><span>,</span><span>
@@ -2981,8 +3006,8 @@ Here is a sample list of movies and their shows:</br></p>
 </span><span>        </span><span>&quot;Status: &quot;</span><span>Almost</span><span> </span><span>Full</span><span>&quot;
 </span><span>    </span><span>}</span><span>
 </span><span>    </span><span>]</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
-<pre><div><div><code><span>ReserveSeats</span><span>(</span><span>api_dev_key</span><span>,</span><span> session_id</span><span>,</span><span> movie_id</span><span>,</span><span> show_id</span><span>,</span><span> seats_to_reserve</span><span>[</span><span>]</span><span>)</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
+<pre><div class="topic-content"><code><span>ReserveSeats</span><span>(</span><span>api_dev_key</span><span>,</span><span> session_id</span><span>,</span><span> movie_id</span><span>,</span><span> show_id</span><span>,</span><span> seats_to_reserve</span><span>[</span><span>]</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 <strong>api_dev_key (string):</strong> same as above<br>
 <strong>session_id (string):</strong> User&#x27;s session ID to track this reservation. Once the reservation time expires, user&#x27;s reservation on the server will be removed using this ID.<br>
@@ -3042,7 +3067,7 @@ On the server, ActiveReservationsService keeps track of expiry (based on reserva
 <h2>9. Concurrency</h2>
 <p><strong>How to handle concurrency, such that no two users are able to book the same seat.</strong>
 We can use transactions in SQL databases to avoid any clashes. For example, if we are using an SQL server we can utilize <a href="https://docs.microsoft.com/en-us/sql/odbc/reference/develop-app/transaction-isolation-levels" target="_blank">Transaction Isolation Levels</a> to lock the rows before we can update them. Here is the sample code:</p>
-<pre><div><div><code><span>SET</span><span> </span><span>TRANSACTION</span><span> </span><span>ISOLATION</span><span> </span><span>LEVEL</span><span> </span><span>SERIALIZABLE</span><span>;</span><span>
+<pre><div class="topic-content"><code><span>SET</span><span> </span><span>TRANSACTION</span><span> </span><span>ISOLATION</span><span> </span><span>LEVEL</span><span> </span><span>SERIALIZABLE</span><span>;</span><span>
 </span>
 <span></span><span>BEGIN</span><span> </span><span>TRANSACTION</span><span>;</span><span>
 </span>
@@ -3054,7 +3079,7 @@ We can use transactions in SQL databases to avoid any clashes. For example, if w
 </span><span>    </span><span>update</span><span> Show_Seat </span><span>.</span><span>.</span><span>.</span><span>
 </span><span>    </span><span>update</span><span> Booking </span><span>.</span><span>.</span><span>.</span><span>
 </span>
-<span></span><span>COMMIT</span><span> </span><span>TRANSACTION</span><span>;</span></code></div></div></pre>
+<span></span><span>COMMIT</span><span> </span><span>TRANSACTION</span><span>;</span></code></div></pre>
 <p>&#x27;Serializable&#x27; is the highest isolation level and guarantees safety from <a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads" target="_blank">Dirty</a>, <a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads" target="_blank">Nonrepeatable</a>, and <a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads" target="_blank">Phantoms</a> reads. One thing to note here; within a transaction, if we read rows, we get a write lock on them so that they can&#x27;t be updated by anyone else.</p>
 <p>Once the above database transaction is successful, we can start tracking the reservation in ActiveReservationService.</p>
 <h2>10. Fault Tolerance</h2>
@@ -3127,11 +3152,22 @@ export class TicketmasterSeatService {
       <li>The single user whose command returns <code>OK</code> receives the reservation; all other 499,999 requests receive an instantaneous <code>409 Seat Taken</code> without touching the persistent database!</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

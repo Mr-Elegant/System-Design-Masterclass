@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item active" data-num="01" data-title="designing chatgpt / claude conversational ai platform at scale"><a href="#chapter-01"><span class="chapter-num">01</span> Designing ChatGPT / Claude Conversational AI Platform at Scale</a></li>
@@ -946,7 +945,7 @@
 
     <main class="content" id="main-content">
 
-        <div class="content-container">
+        <div class="content-inner">
 <!-- Preet Karwal Author Watermark & Navigation Bar -->
         <div class="author-watermark-card">
             <div style="display: flex; align-items: center; gap: 14px;">
@@ -979,9 +978,11 @@
             </div>
         </div>
 
+
+
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Designing ChatGPT / Claude Conversational AI Platform at Scale</h1>
@@ -1036,7 +1037,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing ChatGPT / Claude Conversational AI Platform at Scale): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1052,7 +1052,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1066,7 +1065,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1081,12 +1079,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradGpt" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1129,7 +1130,6 @@
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Combines WebSocket connection gateways with RadixAttention prefix caching to share KV-cache across multi-turn user conversations, routing requests to continuous batching GPU clusters (vLLM) to stream 45+ tokens/sec per user.
       </div>
-    </div>
 
     <h2>1. Requirements &amp; Latency SLOs</h2>
     <ul>
@@ -1160,11 +1160,18 @@
         <h4>Curveball 2: "What happens when GPU cluster capacity reaches 100% during viral peak traffic?"</h4>
         <p><strong>Mitigation: Dynamic Speculative Throttling &amp; Tiered Model Degradation:</strong> Seamlessly downgrade non-paying users to a quantized 8B model or disable speculative verification draft steps, boosting cluster concurrency by 3x without service rejection.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Designing an Enterprise Multimodal RAG Platform</h1>
@@ -1219,7 +1226,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1235,7 +1241,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1249,7 +1254,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1264,8 +1268,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1285,11 +1287,17 @@
         <h4>Curveball: "How do you retrieve tabular financial figures with 100% numeric precision without LLM hallucination?"</h4>
         <p><strong>Mitigation: SQL-Agent Routing over RAG:</strong> Classify queries containing numeric aggregations (e.g., <em>'Sum Q3 revenue across Europe'</em>) and route them to a Text-to-SQL Agent executing exact arithmetic queries against PostgreSQL rather than relying on approximate vector similarity.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Designing AI Code Autocomplete (GitHub Copilot / Cursor)</h1>
@@ -1344,7 +1352,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing AI Code Autocomplete (GitHub Copilot / Cursor)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1360,7 +1367,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1374,7 +1380,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1389,12 +1394,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCode" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1437,7 +1445,6 @@
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Formats editor cursor state into Fill-In-The-Middle (FIM) prompts with AST syntax chunks, executing speculative tree decoding on quantized INT4 models to deliver multi-line ghost text completions in &lt; 50ms.
       </div>
-    </div>
 
     <h2>1. Fill-In-The-Middle (FIM) Engine</h2>
     <p>Models are trained with FIM special tokens to complete missing code surrounded by prefix and suffix code:</p>
@@ -1460,11 +1467,18 @@
         <h4>Curveball: "How do you prevent sending thousands of useless inference requests while a developer types at 100 WPM?"</h4>
         <p><strong>Mitigation: Adaptive Client Debouncing &amp; Request Cancellation:</strong> Only trigger completion requests when typing pauses for &gt; 50ms or at semantic AST triggers (e.g., after <code>.</code>, <code>(</code>, or <code>newline</code>). If the user types another keystroke before inference completes, send an immediate HTTP/2 stream cancellation frame to abort GPU computation.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)</h1>
@@ -1519,7 +1533,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a Real-Time Text-to-Image &amp; Video Pipeline (Midjourney / Sora)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1535,7 +1548,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1549,7 +1561,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1564,8 +1575,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1575,9 +1584,15 @@
     <h2>2. Progressive Latent Streaming</h2>
     <p>The GPU worker decodes the intermediate latent tensor at step 10, 20, 30 and streams lightweight preview JPEG frames over WebSockets, keeping perceived user latency &lt; 1 second.</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Designing an Autonomous AI Coding Agent (Devin / SWE-Agent)</h1>
@@ -1638,7 +1653,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Autonomous AI Agent Architecture: ReAct reasoning loop connecting Short/Long-Term Memory and Vector Databases to standardized Model Context Protocol (MCP) tool execution.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1654,7 +1668,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Model Context Protocol (MCP) standardizes how LLM agents discover and invoke external tools, APIs, and databases via JSON-RPC 2.0.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1668,7 +1681,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-800ms tool execution turnaround, 100% JSON-RPC schema compliance, stateful multi-turn planning memory.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1683,8 +1695,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Prevents runaway LLM API token consumption while guaranteeing graceful failure recovery.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1694,9 +1704,15 @@
     <h2>2. Ephemeral Sandbox &amp; Pytest Reflexion Loop</h2>
     <p>The agent operates inside an ephemeral Docker container executing unit tests, reading stack traces, applying git diffs, and rerunning tests until 100% green.</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Designing an Ultra-Low Latency Voice AI Assistant (Realtime API)</h1>
@@ -1751,7 +1767,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing an Ultra-Low Latency Voice AI Assistant (Realtime API)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1767,7 +1782,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1781,7 +1795,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1796,12 +1809,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradVoice" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1849,7 +1865,6 @@
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> Connects users over full-duplex WebRTC audio channels, cascading streaming Whisper ASR directly into token-level LLM generation and streaming neural TTS to achieve sub-300ms speech-to-speech conversational latency with instant barge-in interruption.
       </div>
-    </div>
 
     <h2>1. End-to-End Latency Breakdown (&lt; 280ms)</h2>
     <ul>
@@ -1870,12 +1885,23 @@
         <h4>Curveball: "How do you handle 'Barge-In' when the user interrupts the voice assistant mid-sentence?"</h4>
         <p><strong>Mitigation: Client-Side VAD &amp; Instant Server Audio Flush:</strong> When client-side Voice Activity Detection detects user speech while audio is playing, it immediately mutes local audio playback and sends a <code>interrupt_signal</code> over the WebRTC data channel. The server immediately aborts the active LLM generation and purges the downstream TTS audio queue in &lt; 20ms.</p>
       </div>
-    </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
         </div>
     
+</div>
+
+
+
 </main>
 
 

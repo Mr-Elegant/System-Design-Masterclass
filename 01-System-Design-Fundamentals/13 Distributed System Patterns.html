@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (8)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="difference between longpolling, websockets, and serversent events"><a href="#chapter-01"><span class="chapter-num">01</span> Difference Between LongPolling, WebSockets, and ServerSent Events</a></li>
@@ -959,8 +958,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -979,11 +976,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Difference Between LongPolling, WebSockets, and ServerSent Events</h1>
@@ -1038,7 +1034,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Difference Between LongPolling, WebSockets, and ServerSent Events): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1054,7 +1049,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1068,7 +1062,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1083,8 +1076,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1124,10 +1115,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <li>The server sends the data to the client whenever there&#x27;s new information available.</li>
 </ol>
 <p>SSEs are best when we need real-time traffic from the server to the client or if the server is generating data in a loop and will be sending multiple events to the client.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">What is Quorum</h1>
@@ -1182,7 +1179,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (What is Quorum): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1198,7 +1194,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1212,7 +1207,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1227,8 +1221,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     <div><h2>Background</h2>
 <p>In Distributed Systems, data is replicated across multiple servers for fault tolerance and high availability. Once a system decides to maintain multiple copies of data, another problem arises: how to make sure that all replicas are consistent, i.e., if they all have the latest copy of the data and that all clients see the same view of the data?</p>
@@ -1290,10 +1282,16 @@ The WebSocket protocol enables communication between a client and a server with 
 </ol>
 <h2>Conclusion</h2>
 <p>Quorum is a fundamental concept in distributed systems, playing a crucial role in ensuring consistency, reliability, and availability in environments where multiple nodes work together. While it enhances fault tolerance, it also introduces additional complexity and requires careful design and management to balance consistency, availability, and performance.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">What is Heartbeat</h1>
@@ -1348,7 +1346,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (What is Heartbeat): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1364,7 +1361,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1378,7 +1374,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1393,8 +1388,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1403,10 +1396,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <h2>Solution</h2>
 <p>Each server periodically sends a heartbeat message to a central monitoring server or other servers in the system to show that it is still alive and functioning.</p>
 <p>Heartbeating is one of the mechanisms for detecting failures in a distributed system. If there is a central server, all servers periodically send a heartbeat message to it. If there is no central server, all servers randomly choose a set of servers and send them a heartbeat message every few seconds. This way, if no heartbeat message is received from a server for a while, the system can suspect that the server might have crashed. If there is no heartbeat within a configured timeout period, the system can conclude that the server is not alive anymore and stop sending requests to it and start working on its replacement.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">What is Checksum</h1>
@@ -1461,7 +1460,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (What is Checksum): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1477,7 +1475,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1491,7 +1488,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1506,8 +1502,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1517,10 +1511,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <p>Calculate a checksum and store it with data.</p>
 <p>To calculate a checksum, a cryptographic hash function like MD5, SHA-1, SHA-256, or SHA-512 is used. The hash function takes the input data and produces a string (containing letters and numbers) of fixed length; this string is called the checksum.</p>
 <p>When a system is storing some data, it computes a checksum of the data and stores the checksum with the data. When a client retrieves data, it verifies that the data it received from the server matches the checksum stored. If not, then the client can opt to retrieve that data from another replica.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Uses of Checksum</h1>
@@ -1575,7 +1575,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Uses of Checksum): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1591,7 +1590,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1605,7 +1603,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1620,8 +1617,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1649,10 +1644,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <p><strong>Preventing Accidental Duplicates</strong>: Systems can use Checksums to prevent accidentally storing duplicate data. If two pieces of data have the same Checksum, they might be duplicates, saving storage space and preventing redundancy!</p>
 </li>
 </ol></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">What is Leader and Follower Pattern</h1>
@@ -1707,7 +1708,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (What is Leader and Follower Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1723,7 +1723,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1737,7 +1736,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1752,11 +1750,14 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradRaft" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1826,17 +1827,23 @@ The WebSocket protocol enables communication between a client and a server with 
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Raft simplifies distributed consensus by decomposing it into leader election, log replication, and safety; heartbeats lease term authority while majority quorum votes elect new leaders upon failure.
   </div>
-</div>
 
     <div><h2>Background</h2>
 <p>Distributed systems keep multiple copies of data for fault tolerance and higher availability. A system can use quorum to ensure data consistency between replicas, i.e., all reads and writes are not considered successful until a majority of nodes participate in the operation. However, using quorum can lead to another problem, that is, lower availability; at any time, the system needs to ensure that at least a majority of replicas are up and available, otherwise the operation will fail. Quorum is also not sufficient, as in certain failure scenarios, the client can still see inconsistent data.</p>
 <h2>Solution</h2>
 <p>Allow only a single server (called leader) to be responsible for data replication and to coordinate work.</p>
 <p>At any time, one server is elected as the leader. This leader becomes responsible for data replication and can act as the central point for all coordination. The followers only accept writes from the leader and serve as a backup. In case the leader fails, one of the followers can become the leader. In some cases, the follower can serve read requests for load balancing.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">What is Security and Privacy</h1>
@@ -1891,7 +1898,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (What is Security and Privacy): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1907,7 +1913,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1921,7 +1926,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1936,8 +1940,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1950,10 +1952,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <p>Secure communication between nodes in a distributed system is vital to prevent eavesdropping, tampering, or forgery of messages. Implementing secure communication protocols, such as TLS/SSL, IPSec, or application-level encryption, can help protect the integrity and confidentiality of data exchanged between nodes.</p>
 <h2>D. Intrusion Detection and Prevention</h2>
 <p>Intrusion detection and prevention systems (IDPS) are designed to monitor network traffic, detect malicious activities or policy violations, and take appropriate actions to mitigate potential threats. By deploying IDPS solutions in your distributed system, you can identify and respond to security incidents more effectively, thus reducing the risk of data breaches and system compromise.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">The Dual-Write Problem, Transactional Outbox &amp; Idempotency Keys</h1>
@@ -2008,7 +2016,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Dual-Write Problem, Transactional Outbox &amp; Idempotency Keys): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2024,7 +2031,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2038,7 +2044,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2053,8 +2058,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     <div class="chapter-body-content">
   <p>In distributed microservices, a service often needs to update its local database <em>and</em> publish an event to a message broker (Kafka/RabbitMQ). Doing both directly in code leads to the notorious <strong>Dual-Write Problem</strong>.</p>
@@ -2067,7 +2070,12 @@ kafka.publish("order", msg); // Step 2: Publish Event</code></pre>
 
   
 
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradOut" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2145,7 +2153,6 @@ kafka.publish("order", msg); // Step 2: Publish Event</code></pre>
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> The Transactional Outbox pattern writes business entities and outbound events atomically into the same database transaction; a dedicated CDC engine tails the write-ahead log to publish events to Kafka with guaranteed at-least-once delivery.
   </div>
-</div>
 
   <h2>2. The Transactional Outbox Solution</h2>
   <p>Instead of publishing directly to Kafka:</p>
@@ -2162,10 +2169,21 @@ kafka.publish("order", msg); // Step 2: Publish Event</code></pre>
     <li>If already processed, it returns the cached response immediately without re-executing the payment or decrementing inventory twice.</li>
   </ul>
 </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

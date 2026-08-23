@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (14)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to caching"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Caching</a></li>
@@ -965,8 +964,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -985,11 +982,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Caching</h1>
@@ -1044,7 +1040,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1060,7 +1055,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1074,7 +1068,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1089,8 +1082,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1104,10 +1095,16 @@
 <p><strong>3. Cache miss:</strong> When a requested data item or computation result is not found in the cache and needs to be fetched from the original data source or recalculated.</p>
 <p><strong>4. Cache eviction:</strong> The process of removing data from the cache, typically to make room for new data or based on a predefined cache eviction policy.</p>
 <p><strong>5. Cache staleness:</strong> When the data in the cache is outdated compared to the original data source.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Why is Caching Important</h1>
@@ -1162,7 +1159,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1178,7 +1174,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1192,7 +1187,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1207,8 +1201,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1223,10 +1215,16 @@
 <p>Caching can improve the scalability of an application by reducing the load on the original source. By storing frequently accessed data in a cache, the original source is less likely to be overwhelmed with requests, making it more scalable.</p>
 <h2>5. Better user experience</h2>
 <p>Faster response times and reduced latency can lead to a better user experience. Applications that load quickly and respond to user requests in a timely manner are more likely to be used and preferred by users.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Types of Caching</h1>
@@ -1281,7 +1279,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1297,7 +1294,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1311,7 +1307,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1326,8 +1321,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1345,10 +1338,16 @@
 <p>CDN caching stores data on a distributed network of servers, reducing the latency of accessing data from remote locations. This type of caching is useful for data that is accessed from multiple locations around the world, such as images, videos, and other static assets. CDN caching is commonly used for content delivery networks and large-scale web applications.</p>
 <h2>7. DNS caching</h2>
 <p>DNS cache is a type of cache used in the Domain Name System (DNS) to store the results of DNS queries for a period of time. When a user requests to access a website, their computer sends a DNS query to a DNS server to resolve the website’s domain name to an IP address. The DNS server responds with the IP address, and the user’s computer can then access the website using the IP address. DNS caching improves the performance of the DNS system by reducing the number of requests made to DNS servers. When a DNS server receives a request for a domain name, it checks its local cache to see if it has the IP address for that domain name. If the IP address is in the cache, the DNS server can immediately respond with the IP address without having to query other servers. This can significantly reduce the response time for DNS queries and improve the overall performance of the system.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Cache Replacement Policies</h1>
@@ -1403,7 +1402,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1419,7 +1417,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1433,7 +1430,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1448,8 +1444,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1464,10 +1458,16 @@
 <p>Random replacement is a cache replacement policy that removes a random item from the cache when it becomes full. This policy doesn’t make any assumptions about the likelihood of future access and can be useful when the access pattern is unpredictable.</p>
 <h1>Comparison of different replacement policies</h1>
 <p>Each cache replacement policy has its advantages and disadvantages, and the best policy to use depends on the specific use case. LRU and LFU are generally more effective than FIFO and random replacement since they take into account the access pattern of the cache. However, LRU and LFU can be more expensive to implement since they require maintaining additional data structures to track access patterns. FIFO and random replacement are simpler to implement but may not be as effective in optimizing cache performance. Overall, the cache replacement policy used should be chosen carefully to balance the trade-off between performance and complexity.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Cache Invalidation</h1>
@@ -1522,7 +1522,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1538,7 +1537,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1552,7 +1550,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1567,8 +1564,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1626,10 +1621,16 @@
 <p>This method involves setting a time-to-live value for cached content, after which the content is considered stale and must be refreshed. When a request is received for the content, the cache checks the time-to-live value and serves the cached content only if the value hasn’t expired. If the value has expired, the cache fetches the latest version of the content from the origin server and caches it.</p>
 <h3>Stale-while-revalidate</h3>
 <p>This method is used in web browsers and CDNs to serve stale content from the cache while the content is being updated in the background. When a request is received for a piece of content, the cached version is immediately served to the user, and an asynchronous request is made to the origin server to fetch the latest version of the content. Once the latest version is available, the cached version is updated. This method ensures that the user is always served content quickly, even if the cached version is slightly outdated.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Cache Read Strategies</h1>
@@ -1684,7 +1685,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1700,7 +1700,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1714,7 +1713,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1729,11 +1727,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCache" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1815,7 +1816,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Cache-Aside lazy-loads entries on demand, Write-Through guarantees synchronous cache-DB consistency, and Write-Behind queues asynchronous batch writes for maximum write throughput.
   </div>
-</div>
 
     <div><p>Here are the two famous cache read strategies:</p>
 <h2>Read through cache</h2>
@@ -1824,10 +1824,17 @@
 <p>A read-aside cache strategy, also known as cache-aside or lazy-loading, is a caching mechanism where the application is responsible for retrieving the data from the underlying data store when a cache miss occurs. In this strategy, the application first checks the cache for the requested data. If the data is found in the cache (cache hit), the application uses the cached data. However, if the data is not present in the cache (cache miss), the application retrieves the data from the data store, updates the cache with the retrieved data, and then uses the data.</p>
 <p>The read-aside cache strategy provides better control over the caching process, as the application can decide when and how to update the cache. However, it also adds complexity to the application code, as the application must handle cache misses and data retrieval logic.</p>
 <p>You should use cache-aside when you need caching but also need to ensure that a failure of the cache won’t take down your whole system – the application can always go to the DB if needed. This approach can also be beneficial in scenarios where the application wants to optimize cache usage based on specific data access patterns.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Cache Coherence and Consistency Models</h1>
@@ -1882,7 +1889,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1898,7 +1904,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1912,7 +1917,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1927,8 +1931,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1961,10 +1963,16 @@
 </li>
 </ul>
 <p>Understanding cache coherence and consistency models is crucial when designing caching strategies for distributed systems or multi-core processors. By selecting the appropriate model for your system, you can strike a balance between performance and data accuracy to meet your specific requirements.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Caching Challenges</h1>
@@ -2019,7 +2027,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2035,7 +2042,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2049,7 +2055,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2064,8 +2069,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2084,10 +2087,16 @@
 <h2>7. Cache Drift</h2>
 <p>Cache drift refers to the inconsistency between cached data and the data on the origin server, typically caused by updates or changes in the data. To handle cache drift, proper cache invalidation strategies should be implemented to ensure that the cache is updated or invalidated when the data on the origin server changes.</p>
 <p>By understanding and addressing these cache-related problems, we can improve the efficiency, performance, and reliability of their caching systems. This, in turn, can enhance the overall performance and user experience of their applications.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Cache Performance Metrics</h1>
@@ -2142,7 +2151,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2158,7 +2166,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2172,7 +2179,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2187,8 +2193,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2201,10 +2205,16 @@
 <p>The cache size is the amount of memory or storage allocated for the cache. The cache size can impact the hit rate and miss rate of the cache. A larger cache size can result in a higher hit rate, but it may also increase the cost and complexity of the caching solution.</p>
 <h2>Cache latency</h2>
 <p>The cache latency is the time it takes to access data from the cache. A lower cache latency indicates that the cache is faster and more effective in reducing latency and improving system performance. The cache latency can be impacted by the caching technology used, the cache size, and the cache replacement and invalidation policies.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-10" class="chapter-section">
+<section  id="chapter-10" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">What is CDN</h1>
@@ -2259,7 +2269,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (What is CDN): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2275,7 +2284,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2289,7 +2297,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2304,8 +2311,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2327,10 +2332,16 @@
 <p><strong>3. Enhanced reliability and availability:</strong> With multiple edge servers in different locations, CDNs can provide built-in redundancy and fault tolerance. If one server becomes unavailable, requests can be automatically rerouted to another server, ensuring continuous content delivery.</p>
 <p><strong>4. Scalability:</strong> CDNs can handle sudden traffic spikes and large volumes of concurrent requests, making it easier to scale web applications to handle growing traffic demands.</p>
 <p><strong>5. Security:</strong> Many CDNs offer additional security features, such as DDoS protection, Web Application Firewalls (WAF), and SSL/TLS termination at the edge, helping to safeguard web applications from various security threats.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-11" class="chapter-section">
+<section  id="chapter-11" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">Origin Server vs Edge Server</h1>
@@ -2378,7 +2389,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2394,7 +2404,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2408,7 +2417,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2423,8 +2431,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2449,10 +2455,16 @@
 <p>Imagine a user from Paris attempting to access a video hosted on a website whose origin server is located in New York. If the website uses a CDN, the user&#x27;s request might be routed to an edge server in Paris. If the requested video is cached on the Paris edge server, it is delivered quickly to the user from there, significantly reducing the time it would take to fetch the video directly from the origin server in New York.</p>
 <h2>Conclusion</h2>
 <p>While the origin server is the source of the original content, edge servers play a crucial role in optimizing content delivery to end-users by caching content closer to where users are located. This architecture significantly improves website performance, reduces latency, and enhances user experience, especially for websites with a global audience.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-12" class="chapter-section">
+<section  id="chapter-12" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">CDN Architecture</h1>
@@ -2507,7 +2519,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (CDN Architecture): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2523,7 +2534,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2537,7 +2547,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2552,8 +2561,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2604,10 +2611,16 @@
 </ul>
 <h2>Summary</h2>
 <p>CDN architecture involves the strategic placement of PoPs and edge servers, efficient routing and request handling mechanisms, effective caching strategies, and the appropriate selection of network topologies to optimize content delivery. By considering these factors, CDNs can provide significant improvements in latency, performance, reliability, and security for web applications.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-13" class="chapter-section">
+<section  id="chapter-13" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">13</span>
     <h1 class="chapter-title">Push CDN vs Pull CDN</h1>
@@ -2662,7 +2675,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Push CDN vs Pull CDN): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2678,7 +2690,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2692,7 +2703,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2707,8 +2717,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2744,10 +2752,16 @@
 <li>The responsibility of cache management and content expiration lies with the content provider.</li>
 </ul>
 <p>In short, Pull CDNs are best suited for frequently accessed content and are easier to set up, while Push CDNs offer more control and are ideal for large or infrequently accessed files.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-14" class="chapter-section">
+<section  id="chapter-14" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">14</span>
     <h1 class="chapter-title">Production Caching Failures: Cache Stampede, Avalanche &amp; Penetration</h1>
@@ -2802,7 +2816,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2818,7 +2831,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2832,7 +2844,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2847,15 +2858,18 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     <div class="chapter-body-content">
   <p>In high-throughput systems serving hundreds of thousands of queries per second, naïve caching introduces severe production failure modes that can crash entire database clusters.</p>
 
   
 
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 270" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCF" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2918,7 +2932,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Cache Stampede crashes databases when hot keys expire under load; mitigate via Distributed Mutex locking, Probabilistic Early Expiration (XFetch), and Jittered TTLs.
   </div>
-</div>
 
   <h2>1. The Four Classic Production Caching Failures</h2>
   
@@ -2945,10 +2958,21 @@
   <h3>D. Cache Breakdown (Hot Key Eviction)</h3>
   <p><strong>Scenario:</strong> An ultra-popular celebrity tweet or breaking news item experiences a cache eviction. Solved by marking hot keys with infinite TTL and updating them via background event-driven message queues.</p>
 </div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

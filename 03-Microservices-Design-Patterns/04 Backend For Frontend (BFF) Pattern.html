@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to bff"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to BFF</a></li>
@@ -957,8 +956,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -977,9 +974,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to BFF</h1>
@@ -1033,7 +1029,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Airbnb Viaduct GraphQL Orchestration: Unified API Gateway executing concurrent downstream microservice data resolution with field-level caching.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1049,7 +1044,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1063,7 +1057,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1078,16 +1071,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Backends For Frontends (BFF) Design Pattern was first conceptualized by <a href="https://samnewman.io/" target="_blank">Sam Newman</a>, primarily to address the challenges in creating backend services for different types of clients like mobile devices, web applications, and other client-side frameworks or technologies. In this pattern, each type of client gets its own unique backend service.</p>
+    <div class="topic-content"><p>The Backends For Frontends (BFF) Design Pattern was first conceptualized by <a href="https://samnewman.io/" target="_blank">Sam Newman</a>, primarily to address the challenges in creating backend services for different types of clients like mobile devices, web applications, and other client-side frameworks or technologies. In this pattern, each type of client gets its own unique backend service.</p>
 <h2><strong>Introduction to BFF</strong></h2>
 <p>Consider a company with several digital platforms: a detailed website, a mobile app, and a smartwatch app. Each platform is a different &quot;frontend,&quot; like diverse sections of a building, serving unique user needs. The website offers extensive information for users on computers, the mobile app provides quick, essential services for on-the-go use, and the smartwatch app delivers core functions in a compact form.</p>
 <p>Traditionally, a single backend (the system&#x27;s processing unit, like a kitchen in a restaurant) might serve all these frontends. However, this one-size-fits-all approach can lead to inefficiencies. The complex backend suitable for a website might overwhelm the simpler needs of mobile or smartwatch apps.</p>
-<p>The Backends for Frontends (BFF) pattern addresses this. It advocates for separate, specialized backends for each frontend, ensuring tailored, efficient services. This not only enhances the user experience on each platform but also simplifies development and maintenance. It&#x27;s like providing a unique kitchen for each section of a diverse restaurant to cater specifically to the varied tastes of its customers.</p></div></div></div></div></div><div><div><div><div><div><div><div></img></div></div></div></div></div></div><div><div><div><div><div><h3><strong>Real-World Example: Netflix</strong></h3>
+<p>The Backends for Frontends (BFF) pattern addresses this. It advocates for separate, specialized backends for each frontend, ensuring tailored, efficient services. This not only enhances the user experience on each platform but also simplifies development and maintenance. It&#x27;s like providing a unique kitchen for each section of a diverse restaurant to cater specifically to the varied tastes of its customers.</p></div><div class="topic-content"></img></div><div class="topic-content"><h3><strong>Real-World Example: Netflix</strong></h3>
 <p>Netflix uses this pattern! They have various frontends: web browsers, mobile apps, and smart TVs. Each of these devices has different capabilities and user interfaces. To provide the best user experience, Netflix creates a unique backend service tailored to each type of frontend.</p>
 <h2><strong>Why Use BFF?</strong></h2>
 <p>BFF is like having a personal assistant for each type of client in your application. It acknowledges the diversity and uniqueness of each client and provides tailored support, ensuring optimized performance, enhanced user experience, and easier maintenance. Here are top benefits of using of this pattern:</p>
@@ -1145,11 +1136,17 @@
 </li>
 </ol>
 <h3><strong>Summing it Up</strong></h3>
-<p>The Backends For Frontends pattern exists to create a user-centric, performance-optimized, and maintainable architecture in the microservices ecosystem. It’s all about giving each frontend exactly what it needs, while keeping things simple, fast, and tailored.</p></div></div></div></div></div></div></div></div>
-  </div>
+<p>The Backends For Frontends pattern exists to create a user-centric, performance-optimized, and maintainable architecture in the microservices ecosystem. It’s all about giving each frontend exactly what it needs, while keeping things simple, fast, and tailored.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Traditional Backend Models</h1>
@@ -1204,7 +1201,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem Traditional Backend Models): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1220,7 +1216,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1234,7 +1229,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1249,12 +1243,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>As we delve deeper into microservices patterns, it&#x27;s important to understand the challenges posed by traditional models that led to the advent of patterns like the Backends for Frontends.</p>
+    <div class="topic-content"><p>As we delve deeper into microservices patterns, it&#x27;s important to understand the challenges posed by traditional models that led to the advent of patterns like the Backends for Frontends.</p>
 <h2>One-Size-Fits-All Approach</h2>
 <p>In traditional backend models, the backend is a monolithic entity serving multiple frontends — desktop, mobile, and other client-facing applications. It provides a uniform set of APIs for all frontends, regardless of their unique requirements.</p>
 <p>Think of a scenario where a desktop application and a mobile application are accessing the same API from a traditional backend. The desktop app with its high processing power and larger display can handle a substantial amount of data. But what about the mobile app? It has limited processing power, a smaller screen, and possibly a restricted data plan. Should it receive the same amount of data as the desktop app? Is it efficient to process all that data in a mobile environment? Not quite.</p>
@@ -1266,11 +1258,17 @@
 <p>Lastly, traditional backends lack flexibility and scalability.</p>
 <p>With rapidly evolving user expectations and technological advancements, applications need to adapt quickly. Traditional backends, with their rigid structure and complexity, make it harder for businesses to innovate and scale.</p>
 <p>Imagine having to sift through a monolithic codebase to change a small feature for one specific frontend. Or scaling the entire backend system just because one frontend is experiencing high traffic. It sounds like an overkill, right? That&#x27;s because it is.</p>
-<p>So, it’s evident that the traditional backend models pose a series of challenges. They&#x27;re like outdated machinery that can&#x27;t keep up with modern demands. We need a new approach, something that caters to the unique requirements of different frontends while ensuring efficiency and scalability. The BFF help us resolve these issues.</p></div></div></div></div></div></div></div>
-  </div>
+<p>So, it’s evident that the traditional backend models pose a series of challenges. They&#x27;re like outdated machinery that can&#x27;t keep up with modern demands. We need a new approach, something that caters to the unique requirements of different frontends while ensuring efficiency and scalability. The BFF help us resolve these issues.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Architecture of the BFF Pattern</h1>
@@ -1324,7 +1322,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Airbnb Viaduct GraphQL Orchestration: Unified API Gateway executing concurrent downstream microservice data resolution with field-level caching.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1340,7 +1337,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1354,7 +1350,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1369,12 +1364,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>The Blueprint</h2>
+    <div class="topic-content"><h2>The Blueprint</h2>
 <p>The architecture of the BFF pattern primarily consists of individual backends (the BFFs), each catering to a specific frontend. These BFFs, in turn, communicate with the underlying microservices to fetch the required data.</p>
 <p>Let&#x27;s break down this structure:</p>
 <ol>
@@ -1387,7 +1380,7 @@
 <li>
 <p><strong>Microservices</strong>: These are the underlying services that the BFFs interact with to fetch data. They are like the kitchen staff, providing the raw materials needed for each dish.</p>
 </li>
-</ol></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>BFF Architecture</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h2>A Closer Look at BFFs</h2>
+</ol></div><div class="topic-content"></img><div><figcaption>BFF Architecture</figcaption></div><div class="topic-content"><h2>A Closer Look at BFFs</h2>
 <p>But what does a BFF (Backend for Frontend) actually do? It takes on several crucial responsibilities:</p>
 <ol>
 <li>
@@ -1399,11 +1392,18 @@
 <li>
 <p><strong>Handling Client-Specific Logic</strong>: Each BFF can also handle logic specific to its frontend, relieving the client from complex computations. It&#x27;s like a personal assistant, taking care of tasks to make the client&#x27;s job easier.</p>
 </li>
-</ol></div></div></div></div></div></div></div></div>
-  </div>
+</ol></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">BFF Pattern An Example</h1>
@@ -1457,7 +1457,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Airbnb Viaduct GraphQL Orchestration: Unified API Gateway executing concurrent downstream microservice data resolution with field-level caching.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1473,7 +1472,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1487,7 +1485,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1502,12 +1499,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let&#x27;s take a look at a simple Java example implementing the BFF pattern.</p>
+    <div class="topic-content"><p>Let&#x27;s take a look at a simple Java example implementing the BFF pattern.</p>
 <h2><strong>Coding Example</strong></h2>
 <p>Let’s say we have an e-commerce application with a web frontend and a mobile app.</p>
 <p><strong>1. Product Service (Main Backend Service):</strong></p>
@@ -1526,7 +1521,7 @@
 </ul>
 <h3><strong>1. Product Service (Main Backend)</strong></h3>
 <p>This is the main backend microservice that deals with products.</p>
-<pre><div><div><code><span>@</span><span>RestController</span><span>
+<pre><div class="topic-content"><code><span>@</span><span>RestController</span><span>
 </span><span>@</span><span>RequestMapping</span><span>(</span><span>&quot;/products&quot;</span><span>)</span><span>
 </span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>ProductServiceController</span><span> </span><span>{</span><span>
 </span>  
@@ -1538,11 +1533,11 @@
 </span><span>    </span><span>return</span><span> productRepository</span><span>.</span><span>findById</span><span>(</span><span>productId</span><span>)</span><span>
 </span><span>                             </span><span>.</span><span>orElseThrow</span><span>(</span><span>(</span><span>)</span><span> </span><span>-</span><span>&gt;</span><span> </span><span>new</span><span> </span><span>ProductNotFoundException</span><span>(</span><span>productId</span><span>)</span><span>)</span><span>;</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In this simple controller, we have a method <code>getProductById</code> that fetches a product based on its ID. It interacts with a <code>ProductRepository</code> to fetch product data from the database. The <code>Product</code> class would contain all the detailed information about a product.</p>
 <h3><strong>2. Web BFF</strong></h3>
 <p>The Web BFF is tailored for the web frontend.</p>
-<pre><div><div><code><span>@</span><span>RestController</span><span>
+<pre><div class="topic-content"><code><span>@</span><span>RestController</span><span>
 </span><span>@</span><span>RequestMapping</span><span>(</span><span>&quot;/web/products&quot;</span><span>)</span><span>
 </span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>WebProductController</span><span> </span><span>{</span><span>
 </span>  
@@ -1559,11 +1554,11 @@
 </span><span>    </span><span>// Logic to convert product to a detailed view suitable for web.</span><span>
 </span><span>    </span><span>// This could include adding more descriptions, images, etc.</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>Here, <code>ProductServiceClient</code> is a Feign client or any HTTP client that you are using to communicate with the Product Service. The <code>getProductDetails</code> method fetches a product and then converts it to a <code>ProductDetails</code> object, which is a detailed view tailored for web users.</p>
 <h3><strong>3. Mobile BFF</strong></h3>
 <p>The Mobile BFF is tailored for the mobile frontend.</p>
-<pre><div><div><code><span>@</span><span>RestController</span><span>
+<pre><div class="topic-content"><code><span>@</span><span>RestController</span><span>
 </span><span>@</span><span>RequestMapping</span><span>(</span><span>&quot;/mobile/products&quot;</span><span>)</span><span>
 </span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>MobileProductController</span><span> </span><span>{</span><span>
 </span>  
@@ -1580,7 +1575,7 @@
 </span><span>    </span><span>// Logic to convert product to a concise view suitable for mobile.</span><span>
 </span><span>    </span><span>// This could include stripping down descriptions, using smaller images, etc.</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In the Mobile BFF, the <code>getProductDetails</code> method fetches the product just like in the Web BFF, but it converts the product to a <code>SimpleProductDetails</code> object, which is a more concise view tailored for mobile users.</p>
 <h3><strong>In Action</strong></h3>
 <p>So in this setup:</p>
@@ -1589,11 +1584,17 @@
 <li>The Web BFF provides a detailed view of the product, suitable for web users.</li>
 <li>The Mobile BFF provides a concise view of the product, suitable for mobile users.</li>
 </ul>
-<p>Each frontend gets exactly what it needs, and the backend logic is tailored to provide the best possible user experience.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Each frontend gets exactly what it needs, and the backend logic is tailored to provide the best possible user experience.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Performance Implications</h1>
@@ -1648,7 +1649,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1664,7 +1664,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1678,7 +1677,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1693,12 +1691,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let’s dig deeper into BFF to unravel some of its complexities, challenges, and how to navigate through them.</p>
+    <div class="topic-content"><p>Let’s dig deeper into BFF to unravel some of its complexities, challenges, and how to navigate through them.</p>
 <h2><strong>Problems Associated with BFF and Their Solutions</strong></h2>
 <h3>1. <strong>Code Duplication</strong>:</h3>
 <ul>
@@ -1737,11 +1733,17 @@
 <li><strong>Solution</strong>: Ensure backend services are scalable, monitor their performance, and implement rate limiting if necessary.</li>
 </ul>
 <h3><strong>Summing it Up</strong></h3>
-<p>While the BFF pattern brings a plethora of benefits, especially in terms of frontend-specific optimization and user experience, it’s not without its challenges. However, with thoughtful design, good practices, and robust solutions, you can navigate through these challenges and reap the benefits of this powerful pattern.</p></div></div></div></div></div></div></div>
-  </div>
+<p>While the BFF pattern brings a plethora of benefits, especially in terms of frontend-specific optimization and user experience, it’s not without its challenges. However, with thoughtful design, good practices, and robust solutions, you can navigate through these challenges and reap the benefits of this powerful pattern.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">System Design Examples</h1>
@@ -1796,7 +1798,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1812,7 +1813,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1826,7 +1826,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1841,12 +1840,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let’s dive into the world of streaming with Netflix, and see how BFF plays a crucial role.</p>
+    <div class="topic-content"><p>Let’s dive into the world of streaming with Netflix, and see how BFF plays a crucial role.</p>
 <h3><strong>Netflix: A Streaming Giant</strong></h3>
 <p>Netflix serves a diverse range of devices: smartphones, tablets, smart TVs, laptops, and even gaming consoles. Each device type has its own unique characteristics, user interactions, and performance considerations.</p>
 <h3><strong>1. The Scenario</strong></h3>
@@ -1903,11 +1900,21 @@
 <li><strong>Consistency</strong>: Ensuring consistent behavior across all BFFs can be challenging.</li>
 </ul>
 <h3><strong>Summing it Up</strong></h3>
-<p>Netflix, with its diverse range of devices and user interactions, is a prime example of where the BFF pattern shines. It ensures that every device, from a smartphone to a smart TV, gets exactly what it needs for an optimal user experience.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Netflix, with its diverse range of devices and user interactions, is a prime example of where the BFF pattern shines. It ensures that every device, from a smartphone to a smart TV, gets exactly what it needs for an optimal user experience.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

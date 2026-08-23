@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -957,8 +956,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -977,9 +974,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1034,7 +1030,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1050,7 +1045,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1064,7 +1058,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1079,12 +1072,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p><strong>What is Strangler Fig Pattern?</strong> It is an approach used in software development when transitioning from a monolithic architecture to a microservices architecture. The pattern is named after the strangler fig tree, which gradually grows around and eventually replaces existing trees. In the context of software engineering, it refers to the gradual process of replacing parts of a legacy system with new applications and services.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Fig Tree</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>Imagine an ancient, humongous tree in a dense forest. This tree represents your old legacy system. One day, a new plant, the Strangler Fig, starts growing at the base of this tree. Over time, the fig grows, wrapping itself around the ancient tree. As it expands, it replaces more and more parts of the original tree until the old tree is entirely enveloped and replaced by the Strangler Fig.</p>
+    <div class="topic-content"><p><strong>What is Strangler Fig Pattern?</strong> It is an approach used in software development when transitioning from a monolithic architecture to a microservices architecture. The pattern is named after the strangler fig tree, which gradually grows around and eventually replaces existing trees. In the context of software engineering, it refers to the gradual process of replacing parts of a legacy system with new applications and services.</p></div><div class="topic-content"></img><div><figcaption>Strangler Fig Tree</figcaption></div><div class="topic-content"><p>Imagine an ancient, humongous tree in a dense forest. This tree represents your old legacy system. One day, a new plant, the Strangler Fig, starts growing at the base of this tree. Over time, the fig grows, wrapping itself around the ancient tree. As it expands, it replaces more and more parts of the original tree until the old tree is entirely enveloped and replaced by the Strangler Fig.</p>
 <p>This tree is a metaphor for legacy systems. These systems, often outdated yet deeply integrated, support critical business operations. They&#x27;re like the old tree - rooted deeply within the organization&#x27;s architecture, its many branches representing the various functions it supports. And replacing these systems can be just as daunting as replacing the old tree.</p>
 <p>So how can we replace such deeply rooted legacy systems? There is a solution that allows you to gradually replace parts of the legacy system without causing business disruption. That solution is the Strangler Fig Pattern. It&#x27;s named after the Strangler Fig, a tree that grows by gradually enveloping other trees, eventually replacing them.</p>
 <p><strong>What&#x27;s It All About?</strong>
@@ -1096,11 +1087,18 @@ The Strangler Fig Pattern in software design mimics the process of gradually rep
 <li><strong>Flexibility</strong>: You can prioritize which parts to replace based on urgency or business needs.</li>
 <li><strong>No Big Bang Releases</strong>: Continuous delivery and gradual replacement mean less potential for massive failures.</li>
 <li><strong>Smooth Transition</strong>: Users might not even notice the shift as it&#x27;s gradual.</li>
-</ol></div></div></div></div></div></div></div></div>
-  </div>
+</ol></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Legacy Systems</h1>
@@ -1155,7 +1153,6 @@ The Strangler Fig Pattern in software design mimics the process of gradually rep
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem Legacy Systems): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1171,7 +1168,6 @@ The Strangler Fig Pattern in software design mimics the process of gradually rep
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1185,7 +1181,6 @@ The Strangler Fig Pattern in software design mimics the process of gradually rep
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1200,12 +1195,10 @@ The Strangler Fig Pattern in software design mimics the process of gradually rep
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p><strong>What are Legacy System?</strong>
+    <div class="topic-content"><p><strong>What are Legacy System?</strong>
 Legacy systems are old softwares, technologies, tools, or infrastructures used by an organization. They were often introduced ages ago and might be based on outdated technologies, but they continue to provide essential functions, and that&#x27;s why they&#x27;ve stuck around.</p>
 <h2>Challenges with Legacy Systems:</h2>
 <ol>
@@ -1267,11 +1260,17 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
 <li>
 <p><strong>End Goal</strong>: Over time, the legacy system&#x27;s functionality is entirely replaced by the new system. Once the old system has no more active users or features, it can be safely retired.</p>
 </li>
-</ol></div></div></div></div></div></div></div>
-  </div>
+</ol></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Strangler Pattern A Solution</h1>
@@ -1326,7 +1325,6 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Strangler Pattern A Solution): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1342,7 +1340,6 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1356,7 +1353,6 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1371,12 +1367,10 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The implementation of the Strangler Pattern begins by identifying a single functionality of the legacy system that can be rebuilt and redirected to the new system.</p>
+    <div class="topic-content"><p>The implementation of the Strangler Pattern begins by identifying a single functionality of the legacy system that can be rebuilt and redirected to the new system.</p>
 <p>Once a functionality is identified, it&#x27;s duplicated in the new system, and traffic is rerouted to the new implementation using a Facade interface. This interface is the gatekeeper, directing incoming requests either to the new system or to the old one. Over time, more and more functionality is migrated to the new system, and traffic to the old system decreases until it&#x27;s finally phased out.</p>
 <p><strong>Steps</strong>:</p>
 <ol>
@@ -1384,11 +1378,18 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
 <li><strong>Route Traffic</strong>: Use a router/proxy to redirect traffic either to the old system or new service, based on what&#x27;s been migrated.</li>
 <li><strong>Incrementally Build &amp; Replace</strong>: Develop the new microservices and slowly replace old functionalities.</li>
 <li><strong>Retire the Old</strong>: Once all functionalities have been taken over by the new system, safely retire the old system.</li>
-</ol></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Fig Pattern</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>This progressive approach minimizes risk and allows for continuous delivery and integration, making it possible to replace the legacy system without disrupting normal business operations.</p></div></div></div></div></div></div></div></div>
-  </div>
+</ol></div><div class="topic-content"></img><div><figcaption>Strangler Fig Pattern</figcaption></div><div class="topic-content"><p>This progressive approach minimizes risk and allows for continuous delivery and integration, making it possible to replace the legacy system without disrupting normal business operations.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Strangler Pattern</h1>
@@ -1443,7 +1444,6 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Architecture of the Strangler Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1459,7 +1459,6 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1473,7 +1472,6 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1488,12 +1486,10 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>A Layered Approach</h2>
+    <div class="topic-content"><h2>A Layered Approach</h2>
 <p>The Strangler Pattern adopts a layered approach in its architecture. Imagine peeling an onion layer by layer, with each layer representing a part of the legacy system being replaced by the new system.</p>
 <h2>Facade Interface: The Gatekeeper</h2>
 <p>The central component in the Strangler Pattern&#x27;s architecture is the Facade Interface. This is the gatekeeper that decides whether a request should be handled by the new system or the legacy system. Let&#x27;s think of it as a traffic controller at an intersection, guiding cars (or in our case, requests) down the correct road.</p>
@@ -1501,9 +1497,9 @@ Legacy systems are old softwares, technologies, tools, or infrastructures used b
 <h2>Phased Migration: One Step at a Time</h2>
 <p>The migration from the legacy system to the new system doesn&#x27;t happen all at once. It happens in a step-by-step process.</p>
 <p>The migration starts by identifying a piece of functionality that can be easily isolated and redirected from the legacy system to the new system. This piece of functionality is then rebuilt in the new system.</p>
-<p>Once it&#x27;s fully tested and ready to go live, the Facade Interface starts redirecting requests for this functionality to the new system, while still sending the remaining requests to the legacy system. This gradual shift of responsibilities from the old system to the new one forms the crux of the Strangler Pattern.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Strangler Pattern - Step by step migration</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p><strong>Strangler Fig: An Example</strong>:
+<p>Once it&#x27;s fully tested and ready to go live, the Facade Interface starts redirecting requests for this functionality to the new system, while still sending the remaining requests to the legacy system. This gradual shift of responsibilities from the old system to the new one forms the crux of the Strangler Pattern.</p></div><div class="topic-content"></img><div><figcaption>Strangler Pattern - Step by step migration</figcaption></div><div class="topic-content"><p><strong>Strangler Fig: An Example</strong>:
 Imagine we have an old system for user management and we want to replace the &quot;getUserDetails&quot; function with a new service. We might use a simple router to decide which service to use:</p>
-<pre><div><div><code><span>class</span><span> </span><span>UserServiceRouter</span><span>:</span><span>
+<pre><div class="topic-content"><code><span>class</span><span> </span><span>UserServiceRouter</span><span>:</span><span>
 </span>
 <span>    def </span><span>getUserDetails</span><span>(</span><span>self</span><span>,</span><span> userID</span><span>)</span><span>:</span><span>
 </span><span>        </span><span>if</span><span> self</span><span>.</span><span>useNewService</span><span>(</span><span>userID</span><span>)</span><span>:</span><span>
@@ -1524,12 +1520,19 @@ Imagine we have an old system for user management and we want to replace the &qu
 <span></span><span>class</span><span> </span><span>NewUserService</span><span>:</span><span>
 </span><span>    def </span><span>getUserDetails</span><span>(</span><span>self</span><span>,</span><span> userID</span><span>)</span><span>:</span><span>
 </span><span>        # </span><span>New</span><span>,</span><span> improved way </span><span>of</span><span> fetching user details
-</span>        pass</code></div></div></pre>
-<p>As we become confident in <code>NewUserService</code>, we can adjust <code>useNewService</code> logic to send more traffic to the new service until <code>OldUserService</code> is no longer used.</p></div></div></div></div></div></div></div></div>
-  </div>
+</span>        pass</code></div></pre>
+<p>As we become confident in <code>NewUserService</code>, we can adjust <code>useNewService</code> logic to send more traffic to the new service until <code>OldUserService</code> is no longer used.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Strangler Pattern A Detailed Example</h1>
@@ -1584,7 +1587,6 @@ Imagine we have an old system for user management and we want to replace the &qu
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Strangler Pattern A Detailed Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1600,7 +1602,6 @@ Imagine we have an old system for user management and we want to replace the &qu
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1614,7 +1615,6 @@ Imagine we have an old system for user management and we want to replace the &qu
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1629,15 +1629,13 @@ Imagine we have an old system for user management and we want to replace the &qu
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let&#x27;s work on a Java code example that puts the Strangler Pattern into action.</p>
+    <div class="topic-content"><p>Let&#x27;s work on a Java code example that puts the Strangler Pattern into action.</p>
 <h2>Setting the Stage: The Legacy System</h2>
 <p>First, let&#x27;s set the stage with a simple example of a legacy system. Imagine a basic class, <code>LegacySystem</code>, which has methods for <code>createAccount()</code>, <code>deposit()</code>, <code>withdraw()</code>, and <code>checkBalance()</code>. Here&#x27;s how this class might look:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>LegacySystem</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>LegacySystem</span><span> </span><span>{</span><span>
 </span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>createAccount</span><span>(</span><span>String</span><span> name</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>// ...Old logic for creating an account...</span><span>
 </span><span>    </span><span>}</span><span>
@@ -1651,10 +1649,10 @@ Imagine we have an old system for user management and we want to replace the &qu
 </span><span>        </span><span>// ...Old logic for checking balance...</span><span>
 </span><span>        </span><span>return</span><span> </span><span>0</span><span>;</span><span> </span><span>// placeholder</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h2>Creating the New System</h2>
 <p>Next, let&#x27;s introduce our new system, appropriately named <code>NewSystem</code>. It will have the same methods but with updated logic:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>NewSystem</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>NewSystem</span><span> </span><span>{</span><span>
 </span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>createAccount</span><span>(</span><span>String</span><span> name</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>// ...New logic for creating an account...</span><span>
 </span><span>    </span><span>}</span><span>
@@ -1668,12 +1666,12 @@ Imagine we have an old system for user management and we want to replace the &qu
 </span><span>        </span><span>// ...New logic for checking balance...</span><span>
 </span><span>        </span><span>return</span><span> </span><span>0</span><span>;</span><span> </span><span>// placeholder</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h2>The Facade Interface</h2>
 <p>Now, it&#x27;s time to bring in our star player, the Facade Interface. This is the class that will be used by the outside world to interact with our system. It has an instance of both the legacy and the new system, and directs the requests accordingly.</p>
 <p>At first, all requests are sent to the legacy system. But as we implement new functionality in the new system, the Facade Interface starts redirecting those requests to the new system.</p>
 <p>Here&#x27;s what our <code>BankingFacade</code> could look like:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>BankingFacade</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>BankingFacade</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>LegacySystem</span><span> legacySystem</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>NewSystem</span><span> newSystem</span><span>;</span><span>
 </span>
@@ -1718,15 +1716,21 @@ Imagine we have an old system for user management and we want to replace the &qu
 </span><span>        </span><span>// ...Check if new system is ready for given functionality...</span><span>
 </span><span>        </span><span>return</span><span> </span><span>false</span><span>;</span><span> </span><span>// placeholder</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>The <code>BankingFacade</code> class directs the flow of operations between the old and new systems.</p>
 <h2>The Gradual Transition: Replacing Functionality</h2>
 <p>Now, let&#x27;s assume that we&#x27;ve replaced the <code>createAccount</code> functionality in the new system. We update the <code>newSystemReadyFor</code> method to return true for the <code>createAccount</code> functionality. And with that all <code>createAccount</code> requests are now directed to the new system.</p>
-<p>As we replace more functionalities, we keep updating the <code>newSystemReadyFor</code> method, and gradually, the new system takes over.</p></div></div></div></div></div></div></div>
-  </div>
+<p>As we replace more functionalities, we keep updating the <code>newSystemReadyFor</code> method, and gradually, the new system takes over.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Key Insights and Implications</h1>
@@ -1781,7 +1785,6 @@ Imagine we have an old system for user management and we want to replace the &qu
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Key Insights and Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1797,7 +1800,6 @@ Imagine we have an old system for user management and we want to replace the &qu
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1811,7 +1813,6 @@ Imagine we have an old system for user management and we want to replace the &qu
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1826,12 +1827,10 @@ Imagine we have an old system for user management and we want to replace the &qu
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Here are some critical insights into implementing Strangler Fig pattern effectively:</p>
+    <div class="topic-content"><p>Here are some critical insights into implementing Strangler Fig pattern effectively:</p>
 <ol>
 <li>
 <p><strong>Proxy Layer</strong>: At the heart of the Strangler Fig Pattern is the proxy or router layer. It&#x27;s like the gatekeeper of a magical castle, directing visitors (requests) to the right chamber (service). This layer needs to be robust and might have logic based on:</p>
@@ -1862,7 +1861,7 @@ Imagine we have an old system for user management and we want to replace the &qu
 <li>
 <p><strong>Decoupling</strong>: The older system might have tightly coupled components. Before introducing the new system, you may need to do some refactoring to decouple these components, making them easier to replace.</p>
 </li>
-</ol></div></div></div></div></div><div><div><div><div><div><ol>
+</ol></div><div class="topic-content"><ol>
 <li>
 <p><strong>State Management</strong>:</p>
 <ul>
@@ -1894,7 +1893,7 @@ Imagine we have an old system for user management and we want to replace the &qu
 <li><strong>Performance Testing</strong>: The new services should not degrade performance. Load test them to make sure they&#x27;re up to the mark!</li>
 </ul>
 </li>
-</ol></div></div></div></div></div><div><div><div><div><div><ol>
+</ol></div><div class="topic-content"><ol>
 <li><strong>Zero-Downtime Migration</strong>:</li>
 </ol>
 <ul>
@@ -1926,11 +1925,21 @@ Imagine we have an old system for user management and we want to replace the &qu
 <li>
 <p><strong>Continuous Learning</strong>: As challenges arise, document them, and create knowledge bases. Encourage teams to learn from mistakes and celebrate successes.</p>
 </li>
-</ol></div></div></div></div></div></div></div>
-  </div>
+</ol></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

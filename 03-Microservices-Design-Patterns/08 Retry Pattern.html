@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (7)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -958,8 +957,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -978,9 +975,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1035,7 +1031,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1051,7 +1046,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1065,7 +1059,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1080,21 +1073,25 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>The World of Distributed Systems and the Retry Pattern</h2>
+    <div class="topic-content"><h2>The World of Distributed Systems and the Retry Pattern</h2>
 <p>Have you ever wondered how modern applications handle failures? Have you ever been curious about the mechanisms that prevent a temporary issue from turning into a system-wide outage? If you&#x27;ve nodded your head in agreement, then this chapter is tailor-made for you! We are going to discuss one of the most fundamental design patterns used in distributed systems – the Retry Pattern.</p>
 <h2>Background &amp; Problem Statement</h2>
 <p>In a distributed microservices architecture, <strong>failures are inevitable</strong>. Services constantly communicate over networks and depend on numerous components, any of which can malfunction. Failures can stem from myriad factors – unreliable networks, transient server outages, overloaded load balancers, software bugs, or even operator mistakes. No matter how well we design systems to minimize failures, it’s virtually impossible to build a system that <em>never</em> fails. Instead, we must design for <strong>resilience</strong>, ensuring that a small hiccup doesn’t snowball into a major outage.</p>
 <p>One common class of issues in such environments is <strong>transient failures</strong>. These are short-lived errors that resolve on their own given a bit of time. For example, a brief network glitch, a momentary loss of connectivity, or a temporary service unavailability can cause a request to fail. Often, these issues are <em>ephemeral</em> – if we simply try the operation again after a short delay, it succeeds on the next attempt. A classic example is a database connection failure due to a spike in concurrent users: at the peak moment the connection is refused, but a few seconds later (after some connections close), a retry will go through. <strong>Network timeouts, transient HTTP 5xx errors, or temporary resource exhaustion</strong> are other common scenarios of this nature.</p>
-<p>Without a strategy to handle such hiccups, microservices can end up propagating errors to end-users or upstream systems unnecessarily. A tiny blip in network connectivity could trigger user-facing errors or require manual intervention even though the system might have recovered milliseconds later. This is where the <strong>Retry Pattern</strong> comes in. By automatically retrying failed operations that are likely transient, the system can <strong>self-heal</strong> from brief interruptions and deliver a smoother experience to the user. In summary, the Retry Pattern is needed to make distributed systems more robust against intermittent faults, preventing one-off glitches from turning into user-visible failures.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Without a strategy to handle such hiccups, microservices can end up propagating errors to end-users or upstream systems unnecessarily. A tiny blip in network connectivity could trigger user-facing errors or require manual intervention even though the system might have recovered milliseconds later. This is where the <strong>Retry Pattern</strong> comes in. By automatically retrying failed operations that are likely transient, the system can <strong>self-heal</strong> from brief interruptions and deliver a smoother experience to the user. In summary, the Retry Pattern is needed to make distributed systems more robust against intermittent faults, preventing one-off glitches from turning into user-visible failures.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Retry Pattern A Solution to Unreliable External Resources</h1>
@@ -1149,7 +1146,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Retry Pattern A Solution to Unreliable External Resources): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1165,7 +1161,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1179,7 +1174,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1194,22 +1188,26 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Retry Pattern addresses transient failures by <strong>attempting the operation again</strong>, giving the system a second (or third, etc.) chance to succeed. The core idea is simple: if an operation fails due to a temporary issue, wait a short period and try it again, on the assumption that the issue may have been resolved in the interim. Many distributed systems fail in <em>partial</em> ways – a subset of requests fail while others succeed – or suffer <em>short-lived</em> outages. In fact, “often, trying the same request again causes the request to succeed.” By re-issuing the request, a client can <strong>ride through brief disruptions</strong>. For example, if a service didn’t respond because of a momentary spike, a retry a few moments later might hit a less-busy instance and succeed. In effect, retries <strong>mask sporadic failures</strong>, increasing the apparent reliability as seen by the user.</p>
+    <div class="topic-content"><p>The Retry Pattern addresses transient failures by <strong>attempting the operation again</strong>, giving the system a second (or third, etc.) chance to succeed. The core idea is simple: if an operation fails due to a temporary issue, wait a short period and try it again, on the assumption that the issue may have been resolved in the interim. Many distributed systems fail in <em>partial</em> ways – a subset of requests fail while others succeed – or suffer <em>short-lived</em> outages. In fact, “often, trying the same request again causes the request to succeed.” By re-issuing the request, a client can <strong>ride through brief disruptions</strong>. For example, if a service didn’t respond because of a momentary spike, a retry a few moments later might hit a less-busy instance and succeed. In effect, retries <strong>mask sporadic failures</strong>, increasing the apparent reliability as seen by the user.</p>
 <h2>How Retries Mitigate Failures</h2>
 <p>Retries work under the assumption that the failure was transient or non-deterministic. Network blips clear up, threads get freed, and services restart – so a subsequent attempt has a good chance of succeeding where the first failed. This dramatically reduces the error rate seen by higher-level services or end-users. Instead of immediately giving up when a downstream call fails, a microservice can retry and often complete the operation without needing any manual fix. The result is fewer errors returned to users and more robust inter-service communication. The Retry Pattern thus <strong>improves overall availability</strong> by leveraging the fact that many failures resolve themselves quickly.</p>
 <h2>Trade-offs and Other Strategies</h2>
 <p>While retrying is powerful, it’s not a universal solution and comes with trade-offs. One alternative strategy is the <strong>fail-fast approach</strong>, often managed via a Circuit Breaker (discussed later). Where the Retry Pattern keeps trying in hopes of eventual success, a Circuit Breaker <em>stops</em> trying after detecting a pattern of failures. The retry approach favors <em>eventual success</em> at the cost of extra wait time and work, whereas a fail-fast strategy favors <em>quickly aborting</em> to conserve resources when a fault is likely persistent. For transient faults, retries are ideal – there’s a high chance the next attempt will succeed. But for long-lasting or permanent faults (e.g. a down service that won’t be back for hours), blindly retrying wastes time and resources. In such cases, other mechanisms like circuit breakers (to cut off calls that are likely to fail) or graceful degradation (serving default responses or cached data) might be more appropriate.</p>
 <p>It’s important to <strong>differentiate transient vs. permanent errors</strong>. The Retry Pattern should typically only kick in for errors that are likely to be temporary. For example, network timeouts, 5xx server errors, or database deadlocks might merit a retry. In contrast, errors like <strong>input validation failures (HTTP 400)</strong> or <strong>authentication errors (HTTP 401)</strong> are permanent for that request – no amount of retrying will fix a bad request or invalid credentials. Retrying on those would just repeat the failure and potentially worsen system load. Therefore, a well-designed retry mechanism checks the error type (or exception type) and <strong>retries only for transient conditions</strong>, while letting permanent errors fail fast.</p>
-<p>In summary, the Retry Pattern solves the problem of intermittent failures by <strong>automatically re-invoking operations that may succeed on a subsequent attempt</strong>, thereby increasing reliability. However, it must be used judiciously. It works best in tandem with other failure-handling patterns: use retries for hiccups, fall back or fail fast for lasting errors. In the next sections, we’ll explore how to implement retries carefully to maximize their benefits while managing the trade-offs.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In summary, the Retry Pattern solves the problem of intermittent failures by <strong>automatically re-invoking operations that may succeed on a subsequent attempt</strong>, thereby increasing reliability. However, it must be used judiciously. It works best in tandem with other failure-handling patterns: use retries for hiccups, fall back or fail fast for lasting errors. In the next sections, we’ll explore how to implement retries carefully to maximize their benefits while managing the trade-offs.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Architecture of the Retry Pattern</h1>
@@ -1264,7 +1262,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Architecture of the Retry Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1280,7 +1277,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1294,7 +1290,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1309,12 +1304,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>At its core, the Retry Pattern is implemented as a <strong>wrapper around an operation</strong> that intercepts failures and repeats the operation according to a policy. There are a few key components and concepts that make up the pattern’s architecture:</p>
+    <div class="topic-content"><p>At its core, the Retry Pattern is implemented as a <strong>wrapper around an operation</strong> that intercepts failures and repeats the operation according to a policy. There are a few key components and concepts that make up the pattern’s architecture:</p>
 <ul>
 <li>
 <p><strong>Retry Policy &amp; Parameters:</strong> This defines <em>when and how</em> to retry. It includes the maximum number of retry attempts, which exceptions or error codes are considered retryable, and the delay strategy between attempts (fixed delay, exponential backoff, etc.). The policy can be simple (e.g. “retry up to 3 times with 2 seconds between tries”) or more sophisticated (e.g. “retry 5 times with exponentially increasing delays, add randomness, and give up on certain error types”).</p>
@@ -1338,11 +1331,17 @@
 <p><strong>Placement in Architecture:</strong> Where do retries happen? In microservices, retries can be implemented at different layers. Often, it’s done at the <strong>client-side</strong> of a service-to-service call – i.e., the caller of a service handles retrying if the callee fails. For example, Service A calls Service B; Service A’s client library (or HTTP client) might implement a retry policy for calls to B. This way, Service B remains stateless and unaware of retries; it just sees repeated incoming requests. Another approach is to use an API gateway or service mesh which can automatically retry failed requests <em>between</em> services. The key is to avoid <em>duplicating retries at multiple layers</em>. If every hop in a chain of microservices did its own retries, a single failure could multiply into a storm of requests. A good architectural practice is to centralize or delegate retries to one layer (for example, only at the edge service or only at the immediate caller) to prevent such <strong>cascading retry explosions</strong>. In practice, this might mean disabling internal retries in lower-level clients and handling it at a higher layer once, or using a coordinated approach like a <strong>token bucket</strong> to limit overall retry rates.</p>
 </li>
 </ul>
-<p>In summary, the Retry Pattern’s inner workings involve a careful choreography of <strong>attempt, detect failure, wait, and retry</strong>, guided by a policy that incorporates backoff delays and jitter. It often works in concert with timeouts (to detect failures quickly) and circuit breakers (to give up when necessary). When designing a retry mechanism for microservices, you must consider how it fits into your architecture: ensure retries are done at the appropriate place, choose sensible limits, and make the retries <em>intelligent</em> (with backoff, jitter, and awareness of what errors to retry on). With these pieces in place, the pattern can significantly increase the resilience of a distributed system.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In summary, the Retry Pattern’s inner workings involve a careful choreography of <strong>attempt, detect failure, wait, and retry</strong>, guided by a policy that incorporates backoff delays and jitter. It often works in concert with timeouts (to detect failures quickly) and circuit breakers (to give up when necessary). When designing a retry mechanism for microservices, you must consider how it fits into your architecture: ensure retries are done at the appropriate place, choose sensible limits, and make the retries <em>intelligent</em> (with backoff, jitter, and awareness of what errors to retry on). With these pieces in place, the pattern can significantly increase the resilience of a distributed system.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Retry Pattern An Example</h1>
@@ -1397,7 +1396,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Retry Pattern An Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1413,7 +1411,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1427,7 +1424,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1442,13 +1438,11 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>To solidify these concepts, let’s examine a simple Java implementation of the Retry pattern <strong>without using any external frameworks</strong>. We’ll implement a utility that retries a given operation with a configurable policy. The code will illustrate a basic retry loop with options for constant vs. exponential backoff and jitter.</p>
-<pre><div><div><code><span>import</span><span> </span><span>java</span><span>.</span><span>util</span><span>.</span><span>concurrent</span><span>.</span><span>Callable</span><span>;</span><span>
+    <div class="topic-content"><p>To solidify these concepts, let’s examine a simple Java implementation of the Retry pattern <strong>without using any external frameworks</strong>. We’ll implement a utility that retries a given operation with a configurable policy. The code will illustrate a basic retry loop with options for constant vs. exponential backoff and jitter.</p>
+<pre><div class="topic-content"><code><span>import</span><span> </span><span>java</span><span>.</span><span>util</span><span>.</span><span>concurrent</span><span>.</span><span>Callable</span><span>;</span><span>
 </span><span></span><span>import</span><span> </span><span>java</span><span>.</span><span>util</span><span>.</span><span>Random</span><span>;</span><span>
 </span>
 <span></span><span>public</span><span> </span><span>class</span><span> </span><span>RetryUtil</span><span> </span><span>{</span><span>
@@ -1513,7 +1507,7 @@
 </span><span>        </span><span>// All attempts exhausted, throw the last caught exception to the caller</span><span>
 </span><span>        </span><span>throw</span><span> lastException</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In the code above, <code>executeWithRetry</code> is a generic utility that takes a <code>Callable&lt;T&gt;</code> (allowing any operation that returns a result of type T or throws an exception). The parameters <code>maxAttempts</code>, <code>baseDelayMillis</code>, <code>backoffFactor</code>, and <code>useJitter</code> define the retry policy:</p>
 <ul>
 <li>
@@ -1549,18 +1543,24 @@
 </li>
 </ul>
 <p>With this code in place, using the Retry Pattern in a microservice becomes as easy as wrapping calls through this utility. For example, if <code>fetchData()</code> is a function that calls an external API and might throw a <code>TimeoutException</code>, you could do:</p>
-<pre><div><div><code><span>String</span><span> result </span><span>=</span><span> </span><span>RetryUtil</span><span>.</span><span>executeWithRetry</span><span>(</span><span>
+<pre><div class="topic-content"><code><span>String</span><span> result </span><span>=</span><span> </span><span>RetryUtil</span><span>.</span><span>executeWithRetry</span><span>(</span><span>
 </span><span>    </span><span>(</span><span>)</span><span> </span><span>-&gt;</span><span> </span><span>fetchData</span><span>(</span><span>url</span><span>)</span><span>,</span><span>
 </span><span>    </span><span>3</span><span>,</span><span>            </span><span>// try up to 3 times</span><span>
 </span><span>    </span><span>1000</span><span>,</span><span>         </span><span>// start with 1 second delay</span><span>
 </span><span>    </span><span>2.0</span><span>,</span><span>          </span><span>// exponential backoff factor (2x)</span><span>
 </span><span>    </span><span>true</span><span>          </span><span>// use jitter to avoid synchronized retries</span><span>
-</span><span></span><span>)</span><span>;</span></code></div></div></pre>
-<p>This would attempt to fetch the data, and on failure, retry up to 2 more times, waiting 1s before the first retry and 2s before the second (with some randomness in those waits). If all attempts fail, it throws the exception after about 3 seconds of total wait. In many cases, that one retry might be all that’s needed to ride out a transient glitch and succeed on the second try, improving the robustness of the service.</p></div></div></div></div></div></div></div>
-  </div>
+</span><span></span><span>)</span><span>;</span></code></div></pre>
+<p>This would attempt to fetch the data, and on failure, retry up to 2 more times, waiting 1s before the first retry and 2s before the second (with some randomness in those waits). If all attempts fail, it throws the exception after about 3 seconds of total wait. In many cases, that one retry might be all that’s needed to ride out a transient glitch and succeed on the second try, improving the robustness of the service.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Performance Implications</h1>
@@ -1615,7 +1615,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1631,7 +1630,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1645,7 +1643,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1660,12 +1657,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>While the Retry Pattern can greatly enhance reliability, it also introduces <strong>performance considerations and risks</strong> that architects must carefully manage:</p>
+    <div class="topic-content"><p>While the Retry Pattern can greatly enhance reliability, it also introduces <strong>performance considerations and risks</strong> that architects must carefully manage:</p>
 <ul>
 <li>
 <p><strong>Increased Load on Dependencies:</strong> Every retry is an additional request. When failures are truly rare, this extra load is negligible (and well worth the improved reliability). However, if a downstream service is failing due to being <em>overloaded</em>, retries can make the problem worse. For instance, imagine Service A is hammering Service B which is slow to respond. If A starts retrying aggressively, B gets even more requests. In the worst case, many clients retrying a struggling service can create a <strong>retry storm</strong> that <strong>amplifies load exponentially</strong>, possibly overwhelming the service completely. This is why <strong>backoff</strong> is crucial – to give breathing room between retries – and why <strong>limited attempts</strong> are important. It’s also a reason to incorporate <strong>circuit breakers or throttling</strong> for protection.</p>
@@ -1699,11 +1694,17 @@
 <li><strong>Test under failure conditions</strong> – it’s important to simulate scenarios (like a dependency going down, or high latency) and see how your retry logic behaves. Make sure it actually improves resilience and doesn’t unintentionally overwhelm the system or time out too late.</li>
 </ul>
 <h2>When <em>Not</em> to Use the Retry Pattern</h2>
-<p>There are scenarios where retries might not be the best approach. If an error is clearly non-transient (e.g. a <strong>configuration error or a fatal exception</strong>), retrying just delays the inevitable. Likewise, if the downstream service is known to be down for an extended period (say a planned outage), a retry loop will only burn resources — a circuit breaker or a fallback response is preferable. <strong>Real-time systems</strong> with strict latency requirements might opt to fail fast rather than retry and violate the latency SLA. Also, if an operation is extremely expensive or has side effects that can’t be repeated, you should avoid automated retries. In such cases, alternative patterns like <strong>manual compensation</strong>, <strong>eventual reconciliation</strong> (for asynchronous processes), or simply alerting a human might be better. In essence, use retries where they make sense (transient, recoverable errors) and avoid them where they don’t (permanent failures or scenarios where retries could cause harm).</p></div></div></div></div></div></div></div>
-  </div>
+<p>There are scenarios where retries might not be the best approach. If an error is clearly non-transient (e.g. a <strong>configuration error or a fatal exception</strong>), retrying just delays the inevitable. Likewise, if the downstream service is known to be down for an extended period (say a planned outage), a retry loop will only burn resources — a circuit breaker or a fallback response is preferable. <strong>Real-time systems</strong> with strict latency requirements might opt to fail fast rather than retry and violate the latency SLA. Also, if an operation is extremely expensive or has side effects that can’t be repeated, you should avoid automated retries. In such cases, alternative patterns like <strong>manual compensation</strong>, <strong>eventual reconciliation</strong> (for asynchronous processes), or simply alerting a human might be better. In essence, use retries where they make sense (transient, recoverable errors) and avoid them where they don’t (permanent failures or scenarios where retries could cause harm).</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Use Cases and System Design Examples</h1>
@@ -1758,7 +1759,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Use Cases and System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1774,7 +1774,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1788,7 +1787,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1803,12 +1801,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let&#x27;s dive right into the real-world use cases and system design examples of the Retry Pattern.</p>
+    <div class="topic-content"><p>Let&#x27;s dive right into the real-world use cases and system design examples of the Retry Pattern.</p>
 <h2>System Design Use Cases</h2>
 <p>Think of the Retry Pattern as a boxer in the ring. It&#x27;s relentless, always ready to take another swing even when it misses the first time. But just like in boxing, strategy and timing matter. Let&#x27;s explore some scenarios where the Retry Pattern steps into the ring.</p>
 <h3>Web Services</h3>
@@ -1846,11 +1842,17 @@
 <h3>IoT Device Data Collection</h3>
 <p>Consider a system that collects data from IoT devices and stores it in a database. The devices send data periodically, and the system processes and stores this data.</p>
 <p>But what if the database is temporarily unavailable, due to a network glitch or a scheduled maintenance? Should the system discard the data? Or should it retry the operation, in the hope that the database will be back online shortly?</p>
-<p>Again, the Retry Pattern provides a resilient solution. It allows the system to handle temporary issues and ensure that no data is lost.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Again, the Retry Pattern provides a resilient solution. It allows the system to handle temporary issues and ensure that no data is lost.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Conclusion</h1>
@@ -1905,7 +1907,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Conclusion): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1921,7 +1922,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1935,7 +1935,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1950,12 +1949,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Retry Pattern is a powerful tool in the microservices and distributed systems toolbox. It <strong>addresses the inherent unreliability of distributed communications</strong>, allowing systems to recover from transient blips automatically. By understanding that failures will happen and designing our calls to <strong>“try again”</strong> when it makes sense, we significantly improve resilience and user experience. Key takeaways and best practices include:</p>
+    <div class="topic-content"><p>The Retry Pattern is a powerful tool in the microservices and distributed systems toolbox. It <strong>addresses the inherent unreliability of distributed communications</strong>, allowing systems to recover from transient blips automatically. By understanding that failures will happen and designing our calls to <strong>“try again”</strong> when it makes sense, we significantly improve resilience and user experience. Key takeaways and best practices include:</p>
 <ul>
 <li><strong>Use retries for transient failures</strong> (network issues, timeouts, throttling, etc.) – they can turn a momentary failure into a success without human intervention.</li>
 <li><strong>Incorporate backoff and jitter</strong> to make retries gentle on your systems – this prevents overload and herd behavior, letting services heal.</li>
@@ -1964,11 +1961,21 @@
 <li><strong>Be mindful of where you implement retries</strong> in an architecture – avoid duplicate layers of retry and coordinate policies across services to prevent cascades.</li>
 <li><strong>Test and tune</strong> your retry policies under failure scenarios. Balance the trade-off between reliability and response time/load. Every system is different, so optimal settings for delays and attempts will vary.</li>
 </ul>
-<p>In microservices and distributed systems, <strong>failures are not an anomaly; they are an expectation</strong>. The Retry Pattern, applied wisely, turns these failures from show-stopping errors into mere speed bumps that the system can nudge over. By following the best practices and considerations outlined in this deep dive, you can leverage the Retry Pattern to build services that remain robust and responsive even when the underlying components are less than perfect. A well-implemented retry strategy contributes to the holy grail of software architecture – a system that is <em>fault-tolerant</em>, resilient, and user-friendly under a wide range of real-world conditions.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In microservices and distributed systems, <strong>failures are not an anomaly; they are an expectation</strong>. The Retry Pattern, applied wisely, turns these failures from show-stopping errors into mere speed bumps that the system can nudge over. By following the best practices and considerations outlined in this deep dive, you can leverage the Retry Pattern to build services that remain robust and responsive even when the underlying components are less than perfect. A well-implemented retry strategy contributes to the holy grail of software architecture – a system that is <em>fault-tolerant</em>, resilient, and user-friendly under a wide range of real-world conditions.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

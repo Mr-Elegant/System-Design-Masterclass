@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (9)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -960,8 +959,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -980,9 +977,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1037,7 +1033,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1053,7 +1048,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1067,7 +1061,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1082,12 +1075,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Have you ever considered how the process of managing configurations can dramatically influence the success of your microservices? Today, we&#x27;re going to delve into a vital aspect of microservices design: the Configuration Externalization Pattern.</p>
+    <div class="topic-content"><p>Have you ever considered how the process of managing configurations can dramatically influence the success of your microservices? Today, we&#x27;re going to delve into a vital aspect of microservices design: the Configuration Externalization Pattern.</p>
 <p>But before we jump into the details, let&#x27;s take a moment to set the scene. Picture yourself as an architect, designing a city. Would you place the blueprint of every building inside each one, hard-coded into the walls? Or would you keep it separate, accessible, and modifiable, so that each building can adapt to changing needs? The answer seems obvious when we consider physical structures, doesn&#x27;t it? The same principle applies in the realm of software development.</p>
 <h2>The Art of Configuration in Microservices</h2>
 <p>In the heart of microservices architecture, configuration is a critical factor that determines how efficiently your applications run and adapt to changes. Whether it&#x27;s network settings, database parameters, or feature toggles, each microservice has a set of configurations that govern its behavior.</p>
@@ -1096,11 +1087,17 @@
 <h2>Why is Externalizing Configuration Essential?</h2>
 <p>So, how can we solve this problem? How can we manage configurations effectively without resorting to a full redeployment cycle for every minor change? The answer lies in externalizing configurations. By separating configurations from the application code, we empower our microservices to adapt to changes swiftly and efficiently.</p>
 <p>Externalizing configurations is like keeping the blueprints of our city in a central, accessible location. You can modify the blueprint without touching the buildings themselves. The result? A more adaptable, scalable city. The same applies to microservices. By externalizing configurations, we create applications that are flexible, manageable, and ready for whatever changes may come.</p>
-<p>Doesn&#x27;t that sound like a recipe for success in the dynamic world of software development? So, let&#x27;s delve deeper into this essential pattern: the Configuration Externalization Pattern.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Doesn&#x27;t that sound like a recipe for success in the dynamic world of software development? So, let&#x27;s delve deeper into this essential pattern: the Configuration Externalization Pattern.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Configuration Management in a Microservices Architecture</h1>
@@ -1155,7 +1152,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem Configuration Management in a Microservices Architecture): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1171,7 +1167,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1185,7 +1180,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1200,12 +1194,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Configuration management is a critical element in the design and maintenance of microservices. With an inadequate configuration management strategy, even the most well-designed microservices architecture can quickly become unmanageable. To truly understand why the Configuration Externalization Pattern is so crucial, we first need to fully comprehend the challenges we face in configuration management within a microservices architecture.</p>
+    <div class="topic-content"><p>Configuration management is a critical element in the design and maintenance of microservices. With an inadequate configuration management strategy, even the most well-designed microservices architecture can quickly become unmanageable. To truly understand why the Configuration Externalization Pattern is so crucial, we first need to fully comprehend the challenges we face in configuration management within a microservices architecture.</p>
 <h2>The Challenge of Volume and Diversity</h2>
 <p>Just picture your architecture as a bustling city, teeming with activity. Each microservice is a building within this city, each with its unique purpose and set of configurations - akin to blueprints. Now imagine each building is from a different era, built with diverse architectural styles and materials. This is what a microservices architecture often looks like. With a multitude of services, each possibly written in different languages and using different technology stacks, managing configurations can quickly become a nightmare.</p>
 <h2>The Drawbacks of Hardcoded Configurations</h2>
@@ -1223,11 +1215,17 @@
 <h2>Security Implications of Poor Configuration Management</h2>
 <p>Lastly, let&#x27;s not forget the security implications. Hard-coded configurations can lead to sensitive information, such as database credentials or API keys, being exposed or leaked. This exposure is a security risk that could have serious consequences for your system and your users&#x27; data.</p>
 <p>In a nutshell, traditional configuration management practices pose significant challenges in a microservices architecture. They can lead to inefficiencies, reduced flexibility, slower response times to changing conditions, and potential security risks. But don&#x27;t worry! There&#x27;s a solution on the horizon: the Configuration Externalization Pattern.</p>
-<p>In the upcoming sections, we&#x27;ll unravel how this pattern can address these challenges head-on and revolutionize the way you manage configurations in your microservices architecture. Are you ready to turn the tables on configuration management issues? Let&#x27;s explore together in our next section!</p></div></div></div></div></div></div></div>
-  </div>
+<p>In the upcoming sections, we&#x27;ll unravel how this pattern can address these challenges head-on and revolutionize the way you manage configurations in your microservices architecture. Are you ready to turn the tables on configuration management issues? Let&#x27;s explore together in our next section!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Solution Configuration Externalization Pattern</h1>
@@ -1282,7 +1280,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Solution Configuration Externalization Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1298,7 +1295,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1312,7 +1308,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1327,12 +1322,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>We&#x27;ve navigated the turbulent seas of configuration management problems, and now it&#x27;s time to anchor ourselves in the calm waters of a solution - the Configuration Externalization Pattern. This pattern is our lighthouse, guiding us to overcome the challenges we previously outlined. But how does it work, and what makes it so efficient? Let&#x27;s delve into its depths together.</p>
+    <div class="topic-content"><p>We&#x27;ve navigated the turbulent seas of configuration management problems, and now it&#x27;s time to anchor ourselves in the calm waters of a solution - the Configuration Externalization Pattern. This pattern is our lighthouse, guiding us to overcome the challenges we previously outlined. But how does it work, and what makes it so efficient? Let&#x27;s delve into its depths together.</p>
 <h2>What is the Configuration Externalization Pattern?</h2>
 <p>Simply put, the Configuration Externalization Pattern takes the principle of <strong>&#x27;separation of concerns&#x27;</strong> and applies it to configuration management. It emphasizes the need to externalize configurations from application code, storing and managing them in a separate, centralized location. Imagine taking all the blueprints of our city&#x27;s buildings and keeping them in a central town hall, away from the buildings themselves. This way, the blueprints become easy to update and review without disturbing the buildings. That&#x27;s exactly what this pattern accomplishes!</p>
 <h2>Externalizing Configurations: The How and Why</h2>
@@ -1348,11 +1341,17 @@
 <h2>Promoting Consistency Across Environments</h2>
 <p>Lastly, the Configuration Externalization Pattern promotes consistency across different environments. Configurations for development, testing, and production can all be centrally managed, ensuring that they are kept in sync and reducing the likelihood of errors creeping in when moving from one environment to another.</p>
 <p>Are you starting to see the potential of the Configuration Externalization Pattern? It&#x27;s more than just a design pattern - it&#x27;s a guiding principle that can revolutionize your approach to configuration management in a microservices architecture.</p>
-<p>In the upcoming sections, we&#x27;ll delve deeper into the architecture of this pattern and provide a practical example using Java. We&#x27;ll also address considerations and potential pitfalls when implementing this pattern. So, are you ready to embark on this journey towards streamlined configuration management?</p></div></div></div></div></div></div></div>
-  </div>
+<p>In the upcoming sections, we&#x27;ll delve deeper into the architecture of this pattern and provide a practical example using Java. We&#x27;ll also address considerations and potential pitfalls when implementing this pattern. So, are you ready to embark on this journey towards streamlined configuration management?</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Unveiling the Architecture How Does Configuration Externalization Work</h1>
@@ -1407,7 +1406,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Unveiling the Architecture How Does Configuration Externalization Work): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1423,7 +1421,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1437,7 +1434,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1452,12 +1448,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>You&#x27;ve heard about the value that the Configuration Externalization Pattern brings to the table, but now let&#x27;s roll up our sleeves and dive into the intricate workings of this pattern. We&#x27;ll start by examining the architecture of the pattern, unveiling its structure, and exploring the mechanisms that make it tick.</p>
+    <div class="topic-content"><p>You&#x27;ve heard about the value that the Configuration Externalization Pattern brings to the table, but now let&#x27;s roll up our sleeves and dive into the intricate workings of this pattern. We&#x27;ll start by examining the architecture of the pattern, unveiling its structure, and exploring the mechanisms that make it tick.</p>
 <h2>A Walkthrough of the Configuration Externalization Architecture</h2>
 <p>At the heart of the Configuration Externalization Pattern, you&#x27;ll find two main components - the microservice itself and the configuration server (or configuration file). These two actors interact harmoniously to manage configurations in a microservices architecture effectively.</p>
 <p>The microservice, at its start-up or at pre-defined intervals, sends a request to the configuration server or file, asking for its configurations. These configurations can include information like database connection settings, API keys, or any other environment-specific data. Once the request is received, the configuration server sends back the configurations that the microservice needs.</p>
@@ -1476,11 +1470,17 @@
 <h2>Consistency: Maintaining Harmony Across Environments</h2>
 <p>In the world of software development, moving from development to testing, and then to production can sometimes feel like entering different countries, each with its own rules and languages. But not when you&#x27;re using the Configuration Externalization Pattern!</p>
 <p>By externalizing configurations, you can maintain consistency across these environments. You just need to switch the configurations as you move through the environments. No more worrying about environment-specific code or configurations getting mixed up!</p>
-<p>How&#x27;s that for a detailed exploration of the Configuration Externalization Pattern&#x27;s architecture? But, we&#x27;re not stopping here. The beauty of this pattern lies in its implementation. Up next, we&#x27;re going to see a concrete example of how to implement this pattern in Java. Ready to code?</p></div></div></div></div></div></div></div>
-  </div>
+<p>How&#x27;s that for a detailed exploration of the Configuration Externalization Pattern&#x27;s architecture? But, we&#x27;re not stopping here. The beauty of this pattern lies in its implementation. Up next, we&#x27;re going to see a concrete example of how to implement this pattern in Java. Ready to code?</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Delving into Code An Example</h1>
@@ -1535,7 +1535,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Delving into Code An Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1551,7 +1550,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1565,7 +1563,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1580,48 +1577,52 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>After a deep dive into the architecture and design of the Configuration Externalization Pattern, you&#x27;re probably curious about its implementation. And what better way to see it in action than through a real-world Java example? So, let&#x27;s get our hands dirty with some code.</p>
+    <div class="topic-content"><p>After a deep dive into the architecture and design of the Configuration Externalization Pattern, you&#x27;re probably curious about its implementation. And what better way to see it in action than through a real-world Java example? So, let&#x27;s get our hands dirty with some code.</p>
 <h2>The Set-Up: Using Spring Cloud Config</h2>
 <p>To demonstrate the Configuration Externalization Pattern in Java, we&#x27;re going to utilize Spring Cloud Config, an excellent tool for centralized configuration management. It&#x27;s widely adopted in the Java community for microservices architecture due to its simplicity and efficiency. Ready to see the magic it can do?</p>
 <p>To start, we need to set up our configuration server. The configuration server will act as the centralized store for all of our configurations. With Spring Cloud Config, it&#x27;s as easy as adding a few dependencies to our build file and some annotations in our code. Let&#x27;s begin.</p>
-<pre><div><div><code><span>@</span><span>SpringBootApplication</span><span>
+<pre><div class="topic-content"><code><span>@</span><span>SpringBootApplication</span><span>
 </span><span>@</span><span>EnableConfigServer</span><span>
 </span><span></span><span>public</span><span> </span><span>class</span><span> </span><span>ConfigServer</span><span> </span><span>{</span><span>
 </span><span>    </span><span>public</span><span> </span><span>static</span><span> </span><span>void</span><span> </span><span>main</span><span>(</span><span>String</span><span>[</span><span>]</span><span> args</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>SpringApplication</span><span>.</span><span>run</span><span>(</span><span>ConfigServer</span><span>.</span><span>class</span><span>,</span><span> args</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>With just these few lines of code, we&#x27;ve turned our application into a configuration server. See the <code>@EnableConfigServer</code> annotation? That&#x27;s Spring Cloud magic at work!</p>
 <h2>Setting Up the Configuration Store</h2>
 <p>Now that we have our configuration server ready, we need to tell it where to find the configurations. We do this by setting up the configuration store.</p>
 <p>In this example, we&#x27;ll use a Git repository as our configuration store. To do this, we need to add the following to our <code>application.properties</code> file:</p>
-<pre><div><div><code><span>spring</span><span>.</span><span>cloud</span><span>.</span><span>config</span><span>.</span><span>server</span><span>.</span><span>git</span><span>.</span><span>uri</span><span>=</span><span>https</span><span>:</span><span>/</span><span>/</span><span>github</span><span>.</span><span>com</span><span>/</span><span>yourusername</span><span>/</span><span>config</span><span>-</span><span>repo</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>spring</span><span>.</span><span>cloud</span><span>.</span><span>config</span><span>.</span><span>server</span><span>.</span><span>git</span><span>.</span><span>uri</span><span>=</span><span>https</span><span>:</span><span>/</span><span>/</span><span>github</span><span>.</span><span>com</span><span>/</span><span>yourusername</span><span>/</span><span>config</span><span>-</span><span>repo</span></code></div></pre>
 <p>This tells the configuration server to fetch the configurations from the specified Git repository. And there you have it - a centralized configuration store!</p>
 <h2>Feeding Our Microservices: The Client Setup</h2>
 <p>Now that we have our configuration server and store set up, it&#x27;s time to make our microservices consume these configurations. For this, we need to set up the configuration client. Let&#x27;s walk through this.</p>
 <p>In the build file of our microservice, we add the Spring Cloud Config Client dependency. Then, in our code, we simply annotate our main class with <code>@EnableConfigClient</code>. And voila, our microservice is now a configuration client ready to consume configurations from the server.</p>
 <h2>Pulling Configurations: The &quot;@Value&quot; Annotation</h2>
 <p>To pull configurations into our code, we can use the <code>@Value</code> annotation. This annotation allows us to inject properties from our configuration store directly into our fields.</p>
-<pre><div><div><code><span>@</span><span>Value</span><span>(</span><span>&quot;${my.property}&quot;</span><span>)</span><span>
-</span><span></span><span>private</span><span> </span><span>String</span><span> myProperty</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>@</span><span>Value</span><span>(</span><span>&quot;${my.property}&quot;</span><span>)</span><span>
+</span><span></span><span>private</span><span> </span><span>String</span><span> myProperty</span><span>;</span></code></div></pre>
 <p>In this example, <code>my.property</code> is a property defined in our configuration store. The <code>@Value</code> annotation fetches the property&#x27;s value and assigns it to the <code>myProperty</code> field.</p>
 <h2>Refreshing Configurations: The &quot;/actuator/refresh&quot; Endpoint</h2>
 <p>But what about refreshing configurations without restarting our microservice? That&#x27;s where the <code>/actuator/refresh</code> endpoint comes in. By sending a POST request to this endpoint, we trigger the configuration client to re-fetch the configurations from the server.</p>
 <p><strong>Security Measures: Using Spring Cloud Config&#x27;s Encryption and Decryption Features</strong></p>
 <p>We mentioned earlier how security is an integral part of the Configuration Externalization Pattern. Spring Cloud Config supports this with its encryption and decryption features.</p>
 <p>To encrypt our configurations, we add the following to our <code>application.properties</code> file:</p>
-<pre><div><div><code><span>encrypt</span><span>.</span><span>key</span><span>=</span><span>MySuperSecretKey</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>encrypt</span><span>.</span><span>key</span><span>=</span><span>MySuperSecretKey</span></code></div></pre>
 <p>This sets the encryption key used to encrypt and decrypt our properties. To encrypt a property, we can use the <code>/encrypt</code> endpoint, and to decrypt, we use the <code>/decrypt</code> endpoint.</p>
-<p>There you have it - a full-fledged Configuration Externalization Pattern implementation in Java using Spring Cloud Config. With just a few lines of code and configurations, we&#x27;ve drastically improved the scalability, maintainability, and security of our microservices.</p></div></div></div></div></div></div></div>
-  </div>
+<p>There you have it - a full-fledged Configuration Externalization Pattern implementation in Java using Spring Cloud Config. With just a few lines of code and configurations, we&#x27;ve drastically improved the scalability, maintainability, and security of our microservices.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Considerations and Implications</h1>
@@ -1676,7 +1677,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Considerations and Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1692,7 +1692,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1706,7 +1705,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1721,12 +1719,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>So, we&#x27;ve seen the power of the Configuration Externalization Pattern. Its ability to simplify and secure configuration management is impressive, isn&#x27;t it? However, before you jump into implementing this pattern, let&#x27;s put our critical thinking hats on. It&#x27;s important to understand some considerations and implications. Ready to delve deeper?</p>
+    <div class="topic-content"><p>So, we&#x27;ve seen the power of the Configuration Externalization Pattern. Its ability to simplify and secure configuration management is impressive, isn&#x27;t it? However, before you jump into implementing this pattern, let&#x27;s put our critical thinking hats on. It&#x27;s important to understand some considerations and implications. Ready to delve deeper?</p>
 <h2>Data Security</h2>
 <p>While we&#x27;ve already discussed how the Configuration Externalization Pattern aids security, it also introduces a new surface area for potential attacks. Think about it. You&#x27;re now storing sensitive configuration data remotely. How secure is your storage? Is your data transfer secure? To ensure the security of our configurations, we need to consider encryption. Remember our &#x27;MySuperSecretKey&#x27; example from earlier? That&#x27;s just the tip of the iceberg. From using secure and encrypted connections to regularly rotating keys, you need to stay one step ahead in the security game.</p>
 <h2>The Configuration Server as a Single Point of Failure</h2>
@@ -1737,11 +1733,17 @@
 <p>In a dynamic microservices environment, services may come up or down, scale up or down depending on the load or other factors. How do the new services discover the config service? Hardcoding the configuration server&#x27;s address in each microservice isn&#x27;t a scalable solution. This is where service discovery comes into play. Tools like Netflix&#x27;s Eureka or HashiCorp&#x27;s Consul can be used to dynamically discover services in your architecture, including the configuration server.</p>
 <h2>Performance Implications</h2>
 <p>Last but certainly not least, let&#x27;s discuss performance. Fetching configurations remotely may introduce latency, especially if the configuration server is under heavy load or if network issues arise. Caching can help reduce this latency. For example, Spring Cloud Config clients cache remote properties by default. However, this comes with its own considerations. How often do you refresh the cache? What&#x27;s the impact on memory usage? It&#x27;s a balancing act between performance and freshness of configurations.</p>
-<p>The Configuration Externalization Pattern is indeed a powerful tool in the microservices toolbox. However, like all tools, it must be used judiciously. By understanding these considerations and implications, you&#x27;re now armed with the knowledge to make informed decisions. Remember, the best architectures aren&#x27;t just about adopting the right patterns, but understanding when and how to use them.</p></div></div></div></div></div></div></div>
-  </div>
+<p>The Configuration Externalization Pattern is indeed a powerful tool in the microservices toolbox. However, like all tools, it must be used judiciously. By understanding these considerations and implications, you&#x27;re now armed with the knowledge to make informed decisions. Remember, the best architectures aren&#x27;t just about adopting the right patterns, but understanding when and how to use them.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Use Cases and Real-world Examples</h1>
@@ -1796,7 +1798,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Use Cases and Real-world Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1812,7 +1813,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1826,7 +1826,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1841,12 +1840,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>By now, you&#x27;ve learned a lot about the Configuration Externalization Pattern, right? But, as you know, abstract theory isn&#x27;t enough. We need to see this pattern in action. So let&#x27;s dive into some real-world examples and use cases that bring the power and utility of this pattern to life.</p>
+    <div class="topic-content"><p>By now, you&#x27;ve learned a lot about the Configuration Externalization Pattern, right? But, as you know, abstract theory isn&#x27;t enough. We need to see this pattern in action. So let&#x27;s dive into some real-world examples and use cases that bring the power and utility of this pattern to life.</p>
 <h2>E-commerce Platform</h2>
 <p>Imagine you&#x27;re working on an e-commerce platform. You have several microservices - Inventory, Order, User Management, etc. Each of these services needs to interface with various databases and APIs, each with its own set of configuration. With hundreds of services running in production, staging, and development environments, managing configurations can be a nightmare.</p>
 <p>Enter Configuration Externalization Pattern. The pattern solves these issues by externalizing all the configurations to a central server. Each service fetches the required configuration from this server. Changes can be done at one place and they are reflected across the system. Isn&#x27;t this a breeze?</p>
@@ -1862,11 +1859,17 @@
 <h2>Telecommunications Giant</h2>
 <p>Lastly, think about a telecommunications giant with a complex network infrastructure managed by numerous microservices. Network parameters like bandwidth, routing information, and security protocols need to be meticulously managed.</p>
 <p>Once again, the Configuration Externalization Pattern saves the day. The giant can store all network configurations in a central server. Each microservice fetches the configuration as per its need. This leads to efficient management of the complex configurations.</p>
-<p>These real-world examples bring to light the immense versatility and utility of the Configuration Externalization Pattern. Regardless of the industry or the scale, this pattern proves to be an efficient solution for configuration management in a microservices architecture.</p></div></div></div></div></div></div></div>
-  </div>
+<p>These real-world examples bring to light the immense versatility and utility of the Configuration Externalization Pattern. Regardless of the industry or the scale, this pattern proves to be an efficient solution for configuration management in a microservices architecture.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Conclusion</h1>
@@ -1921,7 +1924,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Conclusion): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1937,7 +1939,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1951,7 +1952,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1966,12 +1966,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>The Power of Externalization</h2>
+    <div class="topic-content"><h2>The Power of Externalization</h2>
 <p>What is it that makes the Configuration Externalization Pattern so compelling? It&#x27;s the promise of simplicity and elegance in the face of complexity. Remember the days when managing configurations across your microservices was like a high-stakes juggling act? When a minor change could lead to a cascade of updates, and things could go wrong in a blink of an eye?</p>
 <p>By externalizing configurations, we&#x27;ve removed this complexity. Each microservice fetches its configuration from a central location, making changes easier and more manageable. Sounds simple, right? That&#x27;s the beauty of this pattern.</p>
 <h2>Flexibility at its Finest</h2>
@@ -1979,11 +1977,17 @@
 <p>That&#x27;s a powerful feature, isn&#x27;t it? The ability to adapt and thrive in various contexts, catering to different needs, and still delivering exceptional results. That&#x27;s what makes this pattern an indispensable asset in a microservices-based application.</p>
 <h2>A Better Tomorrow</h2>
 <p>Microservices are not just a trend. They&#x27;re the future of software development. As more and more organizations transition to a microservices architecture, the need for efficient configuration management is only going to increase. And who&#x27;s there to meet this challenge? It&#x27;s our trusted friend, the Configuration Externalization Pattern.</p>
-<p>We&#x27;ve seen how the pattern shines in various real-world scenarios. It&#x27;s reasonable to expect that as the landscape of microservices evolves, so will the use cases for this pattern. We can look forward to a future where managing configurations is no longer a chore, but a smooth, streamlined process, thanks to this pattern.</p></div></div></div></div></div></div></div>
-  </div>
+<p>We&#x27;ve seen how the pattern shines in various real-world scenarios. It&#x27;s reasonable to expect that as the landscape of microservices evolves, so will the use cases for this pattern. We can look forward to a future where managing configurations is no longer a chore, but a smooth, streamlined process, thanks to this pattern.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Embrace the Future of Software Architecture</h1>
@@ -2038,7 +2042,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Embrace the Future of Software Architecture): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2054,7 +2057,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2068,7 +2070,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2083,12 +2084,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>As we reach the end of our journey through the vibrant landscape of microservice design patterns, it&#x27;s time for some reflection. From understanding why every service needs its own database, to learning how an API Gateway simplifies client interaction, to mitigating service failures with the Circuit Breaker Pattern, we&#x27;ve explored a plethora of concepts that can transform your perspective on software architecture.</p>
+    <div class="topic-content"><p>As we reach the end of our journey through the vibrant landscape of microservice design patterns, it&#x27;s time for some reflection. From understanding why every service needs its own database, to learning how an API Gateway simplifies client interaction, to mitigating service failures with the Circuit Breaker Pattern, we&#x27;ve explored a plethora of concepts that can transform your perspective on software architecture.</p>
 <p>But what does it all boil down to? Why should you, as an IT professional, software developer or architect, invest your valuable time in understanding these patterns?</p>
 <h2>The Ever-Evolving Tech World</h2>
 <p>The world of technology is ever-changing, and to stay relevant in this dynamic landscape, one must continue learning and evolving. Microservices are not just a passing trend; they represent a paradigm shift in how we think about and build software systems. This shift comes with its own set of challenges and problems, and the patterns we&#x27;ve explored in this course equip you to tackle these challenges head-on.</p>
@@ -2099,11 +2098,21 @@
 <h2>Final Thoughts</h2>
 <p>In conclusion, this course isn&#x27;t just about learning the nuts and bolts of microservices. It&#x27;s about embracing a new way of thinking about software architecture. It&#x27;s about staying ahead of the curve in an ever-changing tech landscape. But most importantly, it&#x27;s about empowering yourself with the knowledge and skills you need to excel in your career.</p>
 <p>So, as we wrap up, remember: in the world of technology, the learning never stops. Carry forward the insights you&#x27;ve gained and let them guide your journey through the fascinating world of microservices.</p>
-<p>Thank you for being a part of this course!</p></div></div></div></div></div></div></div>
-  </div>
+<p>Thank you for being a part of this course!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (8)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to the sidecar pattern"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to the Sidecar Pattern</a></li>
@@ -959,8 +958,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -979,9 +976,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to the Sidecar Pattern</h1>
@@ -1033,7 +1029,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Service Mesh Sidecar Pattern: Ingress/Egress Envoy proxy sidecars managing automatic mutual TLS (mTLS 1.3), rate limiting, and telemetry.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1049,7 +1044,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1063,7 +1057,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1078,20 +1071,25 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Sidecar Pattern is a popular design pattern, where a helper service is attached to a primary application service, providing supplementary features or handling cross-cutting concerns. This pattern takes its name from the concept of a motorcycle sidecar, where the sidecar is attached to and operates alongside the motorcycle.</p>
+    <div class="topic-content"><p>The Sidecar Pattern is a popular design pattern, where a helper service is attached to a primary application service, providing supplementary features or handling cross-cutting concerns. This pattern takes its name from the concept of a motorcycle sidecar, where the sidecar is attached to and operates alongside the motorcycle.</p>
 <h2>The Sidekick Your Application Needs</h2>
-<p>The Sidecar Pattern, as the name suggests, is like having a sidekick, but for your service or application. It&#x27;s like Batman having Robin at his side, or Sherlock Holmes having Dr. Watson. Imagine having an aide that can handle specific tasks, operate autonomously, and yet be a part of a single, larger entity - wouldn&#x27;t that be a great asset? That&#x27;s essentially what the Sidecar Pattern brings to the table.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Sidecar</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><p>The Sidecar Pattern encapsulates the concept of modularity and separation of concerns. It involves deploying components of an application as separate processes that run alongside the main application. Each sidecar is dedicated to a specific function and provides its service to the main application. This allows developers to encapsulate the logic and complexities related to these functions in the sidecar, thus reducing the complexity of the main application.</p>
+<p>The Sidecar Pattern, as the name suggests, is like having a sidekick, but for your service or application. It&#x27;s like Batman having Robin at his side, or Sherlock Holmes having Dr. Watson. Imagine having an aide that can handle specific tasks, operate autonomously, and yet be a part of a single, larger entity - wouldn&#x27;t that be a great asset? That&#x27;s essentially what the Sidecar Pattern brings to the table.</p></div><div class="topic-content"></img><div><figcaption>Sidecar</figcaption></div><div class="topic-content"><p>The Sidecar Pattern encapsulates the concept of modularity and separation of concerns. It involves deploying components of an application as separate processes that run alongside the main application. Each sidecar is dedicated to a specific function and provides its service to the main application. This allows developers to encapsulate the logic and complexities related to these functions in the sidecar, thus reducing the complexity of the main application.</p>
 <h2>Modularity, Scalability, and Versatility: The Strengths of the Sidecar Pattern</h2>
-<p>The beauty of the Sidecar Pattern lies in its simplicity and modularity. By keeping each function isolated in its own environment, it&#x27;s easier to develop, manage, and scale each component independently. This not only leads to cleaner and more maintainable code but also makes it possible to employ different technologies for different tasks, even within the same application.</p></div></div></div></div></div></div></div></div>
-  </div>
+<p>The beauty of the Sidecar Pattern lies in its simplicity and modularity. By keeping each function isolated in its own environment, it&#x27;s easier to develop, manage, and scale each component independently. This not only leads to cleaner and more maintainable code but also makes it possible to employ different technologies for different tasks, even within the same application.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Monolithic Application Management</h1>
@@ -1146,7 +1144,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem Monolithic Application Management): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1162,7 +1159,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1176,7 +1172,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1191,12 +1186,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>One of the most significant challenges with monolithic applications is their lack of isolation. Since all components are closely intertwined, a failure in one component can potentially bring down the entire application. It&#x27;s like having all your eggs in one basket - if the basket falls, all the eggs break. This lack of fault isolation makes monolithic applications highly vulnerable and risky. It&#x27;s one of the reasons why developers started seeking alternatives.</p>
+    <div class="topic-content"><p>One of the most significant challenges with monolithic applications is their lack of isolation. Since all components are closely intertwined, a failure in one component can potentially bring down the entire application. It&#x27;s like having all your eggs in one basket - if the basket falls, all the eggs break. This lack of fault isolation makes monolithic applications highly vulnerable and risky. It&#x27;s one of the reasons why developers started seeking alternatives.</p>
 <h2>Moving the Mountain: The Problem of Scalability</h2>
 <p>In today&#x27;s dynamic digital world, scalability is a must-have feature for any application. However, with monolithic applications, scaling is akin to moving a mountain. You cannot just scale a particular component or functionality; you need to scale the entire application, even if only one component needs it. This leads to unnecessary resource consumption and inefficient scaling, making it a significant roadblock in the path of application growth.</p>
 <h2>A Tangled Web: The Complexity Conundrum</h2>
@@ -1204,11 +1197,17 @@
 <h2>One Size Does Not Fit All: The Technology Constraint</h2>
 <p>With a monolithic application, you&#x27;re pretty much stuck with the technology stack you chose at the beginning. Want to integrate a new technology or switch to a more efficient one? Well, that&#x27;s going to be a mammoth task with a monolithic application. This lack of flexibility in choosing technologies is a significant constraint, especially considering the rapid pace at which technology evolves.</p>
 <p>So, it&#x27;s clear that while monolithic applications served us well in the past, they are not quite cut out for the demands of modern software development. We needed a hero, a solution that could take these challenges head-on and still come out on top. That&#x27;s where architectural patterns like the Sidecar Pattern step in.</p>
-<p>Just like a sidecar provides flexibility, isolation, and autonomy to the rider, the Sidecar Pattern promises to address the challenges posed by monolithic applications.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Just like a sidecar provides flexibility, isolation, and autonomy to the rider, the Sidecar Pattern promises to address the challenges posed by monolithic applications.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">A Solution to the Monolithic Mayhem</h1>
@@ -1263,7 +1262,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (A Solution to the Monolithic Mayhem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1279,7 +1277,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1293,7 +1290,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1308,27 +1304,32 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Sidecar Pattern proposes that each service in an application should be paired with a secondary component – a &#x27;sidecar&#x27; – that takes over some of the responsibilities of the main service. The sidecar and the main service run in the same process and communicate with each other directly, creating a self-contained module that&#x27;s easy to manage and scale.</p>
+    <div class="topic-content"><p>The Sidecar Pattern proposes that each service in an application should be paired with a secondary component – a &#x27;sidecar&#x27; – that takes over some of the responsibilities of the main service. The sidecar and the main service run in the same process and communicate with each other directly, creating a self-contained module that&#x27;s easy to manage and scale.</p>
 <h2>Sidecar: The Flexible Warrior</h2>
 <p>Remember how we talked about the lack of flexibility being a major issue with monolithic applications. Well, the Sidecar Pattern tackles this head-on. By separating the main service from its secondary functions, the Sidecar Pattern makes it easier to update, modify, or replace individual components without affecting the others.</p>
 <p>Let&#x27;s say you want to update a specific functionality of your service. Instead of having to redeploy the entire application, you can simply update the relevant sidecar, leaving the rest of the application untouched.</p>
 <h2>Enhanced Scalability</h2>
 <p>Scalability was another mountain we needed to climb with monolithic applications. However, with the Sidecar Pattern, scaling becomes as easy as riding a motorcycle. Since each sidecar is a separate entity, you can scale each one independently, depending on the needs of your application.</p>
-<p>Do you need to handle a surge in user logins? Just scale up the authentication sidecar. Experiencing a high load on your data processing functions? Simply scale up the data processing sidecar. This independent scalability not only makes the process more efficient but also saves valuable resources.</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>Sidecar Pattern</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h2>The Isolation Idol</h2>
+<p>Do you need to handle a surge in user logins? Just scale up the authentication sidecar. Experiencing a high load on your data processing functions? Simply scale up the data processing sidecar. This independent scalability not only makes the process more efficient but also saves valuable resources.</p></div><div class="topic-content"></img><div><figcaption>Sidecar Pattern</figcaption></div><div class="topic-content"><h2>The Isolation Idol</h2>
 <p>With monolithic applications, the lack of isolation was like putting all your eggs in one basket. However, the Sidecar Pattern changes the game by providing fault isolation. Since each sidecar is independent, a failure in one does not affect the others. It&#x27;s like having separate baskets for each of your eggs - if one basket falls, the rest are still safe!</p>
 <h2>The Complexity Conqueror</h2>
 <p>Remember the tangled web of complexity we faced with monolithic applications? Well, the Sidecar Pattern helps us cut through this web by reducing complexity. By breaking down the application into self-contained modules, each with its own sidecar, it makes the application easier to understand, manage, and maintain. It&#x27;s like clearing a path through the dense forest – you can finally see where you&#x27;re going!</p>
 <h2>The Tech-Savvy Trendsetter</h2>
-<p>One of the biggest constraints with monolithic applications was the inability to integrate new technologies. However, the Sidecar Pattern, with its independent and flexible structure, makes it possible to use different technologies for different sidecars. This allows you to always stay ahead of the curve and make the most of the latest technological advances.</p></div></div></div></div></div></div></div></div>
-  </div>
+<p>One of the biggest constraints with monolithic applications was the inability to integrate new technologies. However, the Sidecar Pattern, with its independent and flexible structure, makes it possible to use different technologies for different sidecars. This allows you to always stay ahead of the curve and make the most of the latest technological advances.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Sidecar Pattern</h1>
@@ -1380,7 +1381,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Service Mesh Sidecar Pattern: Ingress/Egress Envoy proxy sidecars managing automatic mutual TLS (mTLS 1.3), rate limiting, and telemetry.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1396,7 +1396,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1410,7 +1409,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1425,12 +1423,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>The Containerized Confluence</h2>
+    <div class="topic-content"><h2>The Containerized Confluence</h2>
 <p>One of the most distinctive features of the Sidecar Pattern&#x27;s architecture is its use of containers. The main application and its sidecar are deployed together in the same container, allowing them to share resources and communicate efficiently. This shared environment enables them to operate as a single unit while maintaining their individuality.</p>
 <h2>Sidecars Galore: A Multifaceted Approach</h2>
 <p>In the architecture of the Sidecar Pattern, you are not restricted to one sidecar per main application. In fact, you can have multiple sidecars, each addressing a specific functionality. This allows you to modularize your application, making it easier to manage and scale.</p>
@@ -1438,11 +1434,17 @@
 <h2>The Network Navigator</h2>
 <p>In the Sidecar Pattern architecture, the sidecar also plays an instrumental role in network communication. It intercepts all incoming and outgoing network traffic from the main application, effectively acting as a proxy. This means it can handle responsibilities such as load balancing, circuit breaking, and security, leaving the main application free to focus on delivering the primary service.</p>
 <h2>The Lifespan Link</h2>
-<p>The sidecar and the main application, while separate entities, share the same lifespan in the Sidecar Pattern architecture. This means they are created, deployed, and destroyed together. This synchronized lifespan ensures that the main application always has its sidecar at its side, ready to serve.</p></div></div></div></div></div></div></div>
-  </div>
+<p>The sidecar and the main application, while separate entities, share the same lifespan in the Sidecar Pattern architecture. This means they are created, deployed, and destroyed together. This synchronized lifespan ensures that the main application always has its sidecar at its side, ready to serve.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Sidecar Pattern Bringing Theory to Practice with an Example</h1>
@@ -1490,7 +1492,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1506,7 +1507,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1520,7 +1520,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1535,16 +1534,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In this section, we&#x27;ll bring the Sidecar Pattern to life, showing you just how it operates in a real-world scenario.</p>
+    <div class="topic-content"><p>In this section, we&#x27;ll bring the Sidecar Pattern to life, showing you just how it operates in a real-world scenario.</p>
 <h2>Creating the Main Application</h2>
 <p>First things first, we need an application. Let&#x27;s create a simple Java web application. This application will expose a RESTful API and will serve as our main application.</p>
 <p>Here is a simple Java web service using Spring Boot:</p>
-<pre><div><div><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
+<pre><div class="topic-content"><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>autoconfigure</span><span>.</span><span>SpringBootApplication</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>GetMapping</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>RestController</span><span>;</span><span>
@@ -1561,11 +1558,11 @@
 </span><span>  </span><span>public</span><span> </span><span>String</span><span> </span><span>getData</span><span>(</span><span>)</span><span> </span><span>{</span><span>
 </span><span>    </span><span>return</span><span> </span><span>&quot;Hello, Sidecar!&quot;</span><span>;</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>This web service will return the string &quot;Hello, Sidecar!&quot; whenever we hit the &quot;/api&quot; endpoint.</p>
 <h2>Introducing the Sidecar</h2>
 <p>Now that we have our main application, it&#x27;s time to introduce the sidecar. In our case, let&#x27;s create a sidecar that will log every request to our &quot;/api&quot; endpoint. For simplicity, our sidecar will also be a Java application:</p>
-<pre><div><div><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
+<pre><div class="topic-content"><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>autoconfigure</span><span>.</span><span>SpringBootApplication</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>GetMapping</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>RestController</span><span>;</span><span>
@@ -1583,12 +1580,12 @@
 </span><span>    </span><span>System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Request received at /api endpoint&quot;</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>return</span><span> </span><span>&quot;Logged!&quot;</span><span>;</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>This sidecar will print a log message every time the &quot;/log&quot; endpoint is hit. We&#x27;ll use this endpoint to log requests to our main application&#x27;s &quot;/api&quot; endpoint.</p>
 <h2>Making the Sidecar and Main Application Work Together</h2>
 <p>Now, let&#x27;s make our main application and sidecar work together. We need to modify our main application to call the &quot;/log&quot; endpoint of the sidecar whenever the &quot;/api&quot; endpoint is hit.</p>
 <p>We&#x27;ll use <code>RestTemplate</code>, a Spring utility class for calling RESTful services:</p>
-<pre><div><div><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
+<pre><div class="topic-content"><code><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>SpringApplication</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>boot</span><span>.</span><span>autoconfigure</span><span>.</span><span>SpringBootApplication</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>http</span><span>.</span><span>ResponseEntity</span><span>;</span><span>
 </span><span></span><span>import</span><span> org</span><span>.</span><span>springframework</span><span>.</span><span>web</span><span>.</span><span>bind</span><span>.</span><span>annotation</span><span>.</span><span>GetMapping</span><span>;</span><span>
@@ -1611,15 +1608,21 @@
 </span><span>    </span><span>System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Response from sidecar: &quot;</span><span> </span><span>+</span><span> response</span><span>.</span><span>getBody</span><span>(</span><span>)</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>return</span><span> </span><span>&quot;Hello, Sidecar!&quot;</span><span>;</span><span>
 </span><span>  </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>Now, whenever the &quot;/api&quot; endpoint of our main application is hit, it will call the &quot;/log&quot; endpoint of our sidecar. The sidecar will log the request, and the main application will continue to process the request.</p>
 <h2>Keep in Mind: The Docker Factor</h2>
 <p>Remember, the sidecar and the main application need to be deployed within the same container to achieve the benefits of the Sidecar Pattern. While our Java example didn&#x27;t cover this aspect, in a production scenario, you&#x27;d use a container platform like Docker to deploy the main application and the sidecar in the same container.</p>
-<p>You&#x27;d also likely use Kubernetes as an orchestration tool to manage the deployment and scaling of your application and its sidecar. Kubernetes also has built-in support for sidecar containers, making it an ideal tool for implementing the Sidecar Pattern.</p></div></div></div></div></div></div></div>
-  </div>
+<p>You&#x27;d also likely use Kubernetes as an orchestration tool to manage the deployment and scaling of your application and its sidecar. Kubernetes also has built-in support for sidecar containers, making it an ideal tool for implementing the Sidecar Pattern.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Performance Implications</h1>
@@ -1674,7 +1677,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1690,7 +1692,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1704,7 +1705,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1719,12 +1719,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Sidecar Pattern comes with unique performance implications and special considerations that you must be aware of when using this pattern. Understanding these details is key to leveraging the full potential of the Sidecar Pattern.</p>
+    <div class="topic-content"><p>The Sidecar Pattern comes with unique performance implications and special considerations that you must be aware of when using this pattern. Understanding these details is key to leveraging the full potential of the Sidecar Pattern.</p>
 <h2>Understanding the Performance Implications</h2>
 <p>You might wonder, &quot;Does adding a sidecar to my application slow things down?&quot; A legitimate question, indeed. Let&#x27;s break it down.</p>
 <p>The Sidecar Pattern can have some impact on performance, but it&#x27;s a trade-off you need to consider. Remember, each sidecar is an additional process running alongside your main application. This means more CPU, more memory, and more network bandwidth.</p>
@@ -1741,11 +1739,17 @@
 <p>Sidecars often need to have similar security permissions as the main application to perform their tasks. This increases the attack surface and is something you need to carefully consider when designing your sidecar.</p>
 <p><strong>4. Complexity:</strong></p>
 <p>Sidecars, while solving many problems, also add complexity. Developers and operators now need to understand and manage multiple parts instead of a single monolithic application.</p>
-<p>By now, you might be thinking, &quot;Is the Sidecar Pattern worth all these considerations?&quot; But remember, the Sidecar Pattern is not a one-size-fits-all solution. Like any architectural pattern, it has its strengths and weaknesses, and its effectiveness depends on your specific use case.</p></div></div></div></div></div></div></div>
-  </div>
+<p>By now, you might be thinking, &quot;Is the Sidecar Pattern worth all these considerations?&quot; But remember, the Sidecar Pattern is not a one-size-fits-all solution. Like any architectural pattern, it has its strengths and weaknesses, and its effectiveness depends on your specific use case.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">System Design Examples Bringing the Sidecar Pattern to Life</h1>
@@ -1793,7 +1797,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1809,7 +1812,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1823,7 +1825,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1838,12 +1839,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>You might be wondering, &quot;Where can I use this pattern?&quot; or &quot;How does it fit into my system&#x27;s design?&quot; Let&#x27;s explore this together through practical use cases and system design examples.</p>
+    <div class="topic-content"><p>You might be wondering, &quot;Where can I use this pattern?&quot; or &quot;How does it fit into my system&#x27;s design?&quot; Let&#x27;s explore this together through practical use cases and system design examples.</p>
 <h2>Use Cases: Where Does the Sidecar Pattern Shine?</h2>
 <p>The Sidecar Pattern is an incredible tool that can be used in a variety of scenarios. Here are some common use cases where the pattern truly shines:</p>
 <p><strong>1. Monitoring and Metrics Collection:</strong></p>
@@ -1863,11 +1862,17 @@
 <p><strong>2. Kubernetes and Istio:</strong></p>
 <p>Another excellent example is Kubernetes, an open-source platform for managing containerized applications. In Kubernetes, the Sidecar Pattern is used extensively. One notable example is Istio, a service mesh for Kubernetes. Istio uses a sidecar proxy (Envoy) deployed alongside each service to handle all network communication, enforce policies, and collect telemetry data.</p>
 <p>Picture this as a busy highway system, where each car (service) has a dedicated assistant (Envoy sidecar) for navigation, communication, and safety, enabling the driver to concentrate on driving.</p>
-<p>In conclusion, the Sidecar Pattern is an incredibly powerful tool, but like all tools, it should be used wisely. As we&#x27;ve seen, it can greatly simplify your application and infrastructure management, but it also introduces new complexities. As always, it&#x27;s all about choosing the right tool for the job!</p></div></div></div></div></div></div></div>
-  </div>
+<p>In conclusion, the Sidecar Pattern is an incredibly powerful tool, but like all tools, it should be used wisely. As we&#x27;ve seen, it can greatly simplify your application and infrastructure management, but it also introduces new complexities. As always, it&#x27;s all about choosing the right tool for the job!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Service Mesh Architecture &amp; Ambassador Pattern</h1>
@@ -1919,7 +1924,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Service Mesh Sidecar Pattern: Ingress/Egress Envoy proxy sidecars managing automatic mutual TLS (mTLS 1.3), rate limiting, and telemetry.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1935,7 +1939,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1949,7 +1952,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1964,8 +1966,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1997,9 +1997,19 @@
                 </tbody>
             </table>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

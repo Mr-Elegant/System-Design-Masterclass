@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to cap theorem"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to CAP Theorem</a></li>
@@ -957,8 +956,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -977,11 +974,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to CAP Theorem</h1>
@@ -1036,7 +1032,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction to CAP Theorem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1052,7 +1047,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1066,7 +1060,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1081,11 +1074,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCAP" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1145,7 +1141,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> In any distributed system subject to network partitions (P), architects must trade between Consistency (CP) and Availability (AP); during normal operation (E), they must trade between Latency (L) and Consistency (C).
   </div>
-</div>
 
     <div><p>The CAP theorem is a fundamental concept in distributed system architecture that describes an unavoidable trade-off between three core requirements: Consistency, Availability, and Partition Tolerance. In simple terms, it states that a distributed system cannot guarantee all three at the same time. This principle, introduced by computer scientist Eric Brewer, matters because it guides how we design reliable systems. If you’ve ever wondered why a banking app would rather go offline than show incorrect data, or why a social media feed might show slightly stale posts during outages, the CAP theorem provides the answer. It’s a must-know concept for system design interviews and real-world technical decision-making.</p>
 <h2>Overview of the CAP theorem</h2>
@@ -1161,10 +1156,17 @@
 <p><strong>Partition Tolerance (P):</strong> Partition tolerance means the system <strong>continues to operate despite network partitions</strong> or communication failures between nodes. A <em>partition</em> is a break in connectivity that splits the network into disjoint parts. In a partition-tolerant system, even if nodes are cut off from each other due to network issues, each part can keep working (possibly in a degraded mode). Essentially, the system can lose arbitrarily many messages between nodes (or even whole nodes) and still keep going. In modern distributed systems, <strong>network partitions <em>will</em> happen</strong> (due to outages, delays, etc.), so tolerance to partitions is a must.</p>
 </li>
 </ul></div><div><p>CAP theorem tells us that when a network partition occurs, a system must choose between being Consistent or being Available – it cannot be both. If there is no partition, you can have both C and A. But you <em>must</em> design assuming a partition will eventually happen. At that point, <strong>you sacrifice either consistency or availability</strong>. This is the crux of CAP: in the presence of a partition, you can only guarantee two of the three properties (since partition tolerance is usually non-negotiable, the real choice is between C and A). We’ll explore this trade-off and what it means for real systems in the next sections.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Components of CAP Theorem</h1>
@@ -1219,7 +1221,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Components of CAP Theorem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1235,7 +1236,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1249,7 +1249,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1264,8 +1263,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1282,10 +1279,16 @@
 <p><strong>Partition tolerance</strong> is arguably the least negotiable of the three in distributed systems. It means the system can keep working even if network links between nodes fail or some nodes crash. In a distributed system spread across machines or data centers, you <em>will</em> encounter situations where nodes can’t talk to each other (packets get dropped, switches fail, data centers catch fire, etc.). Partition tolerance is the property that <strong>the system as a whole survives these events</strong>.</p>
 <p>For example, imagine a system with nodes in New York and London. If the transatlantic link goes down (a network partition), a partition-tolerant design would allow each side to continue operating (perhaps serving local reads/writes) rather than completely locking up. Without partition tolerance, a network blip could bring your entire service down.</p>
 <p>Practically, almost all <em>modern distributed systems require P</em>. If you give up partition tolerance (i.e., choose CA in CAP terms), it means your system is not built to handle network failures between nodes. The only realistic way to be “CA” is to have all components so tightly coupled (or even running on one node) that a partition can’t happen. For instance, a single-instance database on one server can be consistent and available (until that server crashes, of course) – this is a <strong>CA scenario</strong> but not a distributed system by CAP’s definition. In distributed scenarios, you don’t really get to choose P or not; you <em>must</em> tolerate partitions, so the real-world choice is between C and A when P occurs.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Tradeoffs in CAP Theorem</h1>
@@ -1340,7 +1343,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Tradeoffs in CAP Theorem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1356,7 +1358,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1370,7 +1371,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1385,8 +1385,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1413,10 +1411,16 @@
 <p><strong>CA (Consistency + Availability, no Partition tolerance):</strong> These systems provide consistency and availability <em>as long as the system is whole</em>, but they are not partition-tolerant. In practice this means the system will fail or become totally unavailable if a partition occurs, so it can only run in scenarios where partitions are negligible (e.g., within a single server or local cluster with reliable network). A common example: a <strong>single-node relational database</strong> can be viewed as CA – it is consistent (thanks to ACID properties) and available (when the node is up), but if that one node fails, or if you consider a partition between the app and the db, the system doesn’t gracefully tolerate it (it just fails). Some <strong>relational DB clusters</strong> that use synchronous replication can also be seen as CA <em>until</em> a network split happens – at which point they usually stop functioning rather than allow divergence. Partition tolerance plays a “less important role” in these systems, but in a true distributed environment you can’t really avoid P. It’s important to note that <strong>pure CA systems are theoretical in distributed context</strong>, as for all practical purposes a fully CA distributed database cannot exist because you can’t avoid network faults. Thus, CA is usually only achievable in a single-site or tightly coupled system.</p>
 </li>
 </ul></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Examples of CAP Theorem in Practice</h1>
@@ -1471,7 +1475,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Examples of CAP Theorem in Practice): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1487,7 +1490,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1501,7 +1503,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1516,8 +1517,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1537,10 +1536,16 @@
 </li>
 </ul>
 <p>These examples show that <strong>different systems make different trade-offs</strong>. There is no free lunch – you pick the two properties that matter most for your use case. Next, we’ll see an important extension to CAP that considers another dimension: latency.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Beyond CAP Theorem</h1>
@@ -1595,7 +1600,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Beyond CAP Theorem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1611,7 +1615,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1625,7 +1628,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1640,8 +1642,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1672,10 +1672,16 @@
 <p>The CAP theorem and its extensions provide valuable insights into the fundamental trade-offs in distributed systems design. However, it is crucial to remember that real-world systems often involve more complex and application-specific trade-offs. As a system designer, it is important to understand the unique requirements and constraints of your application and make informed decisions about the trade-offs that best meet those needs.</p>
 <h1>Summary</h1>
 <p>While the CAP theorem has been foundational to understanding the trade-offs in distributed systems, it is essential to explore and consider more nuanced models and techniques to design systems that effectively address the challenges and requirements of modern applications.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">System Design Tradeoffs in Interviews</h1>
@@ -1730,7 +1736,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Tradeoffs in Interviews): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1746,7 +1751,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1760,7 +1764,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1775,8 +1778,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1791,10 +1792,20 @@
 <p>A strong answer doesn’t just pick C or A blindly; it discusses the impact and how to mitigate downsides. For example, <em>“If we choose availability, we’ll need to handle conflicts from concurrent updates (perhaps using timestamps or last-write-wins). The data might be temporarily inconsistent, so we must ensure eventual reconciliation.”</em> Or <em>“If we choose consistency, we should implement retries or graceful degradation for when the service is unavailable during a partition, so that users see a friendly error or limited functionality instead of total failure.”</em> This shows you understand the practical implications.</p>
 <h3>5. Mention tunable or nuanced approaches if relevant</h3>
 <p>Modern systems often allow tuning the consistency level per request (for instance, Cassandra lets you choose consistency level per query). In an interview, you could mention this: <em>“We could even make it tunable – e.g., a read that absolutely must be up-to-date can be routed to the leader (sacrificing some latency), whereas other reads can go to any replica for speed. This way the system isn’t strictly one or the other, but offers a spectrum depending on the operation.”</em> Eric Brewer himself noted that within one system, some operations can be handled in a more available way and others in a more consistent way. This kind of answer shows maturity – real systems often mix approaches.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (5)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item active" data-num="01" data-title="ai gateway &amp; multi-provider routing pattern"><a href="#chapter-01"><span class="chapter-num">01</span> AI Gateway &amp; Multi-Provider Routing Pattern</a></li>
@@ -945,7 +944,7 @@
 
     <main class="content" id="main-content">
 
-        <div class="content-container">
+        <div class="content-inner">
 <!-- Preet Karwal Author Watermark & Navigation Bar -->
         <div class="author-watermark-card">
             <div style="display: flex; align-items: center; gap: 14px;">
@@ -978,7 +977,9 @@
             </div>
         </div>
 
-<section id="chapter-01" class="chapter-section active">
+
+
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">AI Gateway &amp; Multi-Provider Routing Pattern</h1>
@@ -1033,7 +1034,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (AI Gateway &amp; Multi-Provider Routing Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1049,7 +1049,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1063,7 +1062,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1078,12 +1076,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradAiGw" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1133,7 +1134,6 @@
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> The AI Gateway abstracts downstream LLM providers, providing token-bucket rate limits, PII guardrails, and automated fallback chains across Anthropic, OpenAI, and self-hosted vLLM clusters.
       </div>
-    </div>
 
     <h2>1. The Problem: Direct LLM Coupling in Microservices</h2>
     <p>When multiple microservices independently invoke external LLM providers (e.g., OpenAI, Anthropic), significant architectural liabilities emerge:</p>
@@ -1180,9 +1180,16 @@ return {1, "ALLOWED"}</code></pre>
       <li><strong>Tier 3 (Self-Hosted Fallback):</strong> Internal vLLM cluster hosting Llama-3 70B (Guarantees 100% uptime even during total internet/SaaS outages).</li>
     </ol>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Agentic Workflow &amp; Multi-Agent Orchestrator Pattern</h1>
@@ -1243,7 +1250,6 @@ return {1, "ALLOWED"}</code></pre>
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Autonomous AI Agent Architecture: ReAct reasoning loop connecting Short/Long-Term Memory and Vector Databases to standardized Model Context Protocol (MCP) tool execution.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1259,7 +1265,6 @@ return {1, "ALLOWED"}</code></pre>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Model Context Protocol (MCP) standardizes how LLM agents discover and invoke external tools, APIs, and databases via JSON-RPC 2.0.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1273,7 +1278,6 @@ return {1, "ALLOWED"}</code></pre>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-800ms tool execution turnaround, 100% JSON-RPC schema compliance, stateful multi-turn planning memory.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1288,12 +1292,15 @@ return {1, "ALLOWED"}</code></pre>
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Prevents runaway LLM API token consumption while guaranteeing graceful failure recovery.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradAgent" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1343,7 +1350,6 @@ return {1, "ALLOWED"}</code></pre>
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> A central Supervisor Agent decomposes complex user goals into subtasks, delegates them to specialized worker agents (Coder, Tester, DevOps), and runs Reflexion self-correction loops to achieve autonomous execution.
       </div>
-    </div>
 
     <h2>1. ReAct: Complete Python Execution Loop</h2>
     <p>The ReAct pattern alternates between reasoning and action execution. Below is a production Python implementation with tool sandboxing:</p>
@@ -1387,9 +1393,16 @@ class ReActAgent:
             
         return "Failed to resolve goal within maximum step limit."</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">AI Tool Calling &amp; Sandboxed Execution Pattern</h1>
@@ -1444,7 +1457,6 @@ class ReActAgent:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> SQL Query Execution Pipeline: Parser AST ➔ Cost-Based Query Optimizer ➔ Hash/Merge Join Engine ➔ 8KB Buffer Pool Manager ➔ Write-Ahead Log (WAL).
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1460,7 +1472,6 @@ class ReActAgent:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1474,7 +1485,6 @@ class ReActAgent:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1489,8 +1499,6 @@ class ReActAgent:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1535,9 +1543,15 @@ class ReActAgent:
     <h2>2. Schema Enforcement &amp; Output Sanitization</h2>
     <p>All LLM tool arguments are converted to strict Pydantic models. Any argument failing type validation or regex constraints is rejected before reaching the micro-VM runner.</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Hierarchical Agent Memory Pattern (MemGPT &amp; GraphRAG)</h1>
@@ -1598,7 +1612,6 @@ class ReActAgent:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Autonomous AI Agent Architecture: ReAct reasoning loop connecting Short/Long-Term Memory and Vector Databases to standardized Model Context Protocol (MCP) tool execution.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1614,7 +1627,6 @@ class ReActAgent:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Model Context Protocol (MCP) standardizes how LLM agents discover and invoke external tools, APIs, and databases via JSON-RPC 2.0.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1628,7 +1640,6 @@ class ReActAgent:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-800ms tool execution turnaround, 100% JSON-RPC schema compliance, stateful multi-turn planning memory.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1643,8 +1654,6 @@ class ReActAgent:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Prevents runaway LLM API token consumption while guaranteeing graceful failure recovery.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1657,9 +1666,15 @@ class ReActAgent:
       <li><strong>Archival Knowledge Graph (GraphRAG):</strong> Entity-relation triplets extracted by an offline LLM pipeline into Neo4j, enabling multi-hop associative recall.</li>
     </ul>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Continuous Fine-Tuning &amp; LLM Evaluation Pipeline</h1>
@@ -1714,7 +1729,6 @@ class ReActAgent:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Continuous Fine-Tuning &amp; LLM Evaluation Pipeline): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1730,7 +1744,6 @@ class ReActAgent:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1744,7 +1757,6 @@ class ReActAgent:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1759,8 +1771,6 @@ class ReActAgent:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1774,10 +1784,20 @@ class ReActAgent:
       <li><strong>Answer Relevance:</strong> Semantic alignment between the user's intent and final output.</li>
     </ul>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
         </div>
     
+</div>
+
+
+
 </main>
 
 

@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (6)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -979,7 +978,9 @@
             </div>
         </div>
 
-<section id="chapter-01" class="chapter-section active">
+
+
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1034,7 +1035,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1050,7 +1050,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1064,7 +1063,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1079,16 +1077,16 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
-    
-
-    
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Inner Workings of the CQRS Pattern</h1>
@@ -1143,7 +1141,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Inner Workings of the CQRS Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1159,7 +1156,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1173,7 +1169,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1188,12 +1183,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>A Journey of a Command</h2>
+    <div class="topic-content"><h2>A Journey of a Command</h2>
 <p>A command signifies an intention to change the state of our system. Let&#x27;s follow the journey of a command to understand how CQRS processes it.</p>
 <p>Imagine a user wants to update their address in an e-commerce application. The command would be something like &#x27;Update User Address&#x27;. This command would trigger a chain of events within the system.</p>
 <h3>Validation</h3>
@@ -1207,11 +1200,17 @@
 <p>Unlike commands, queries don&#x27;t require validation or event generation. They&#x27;re simply processed by the query handler, which fetches the required data. In this case, it fetches the user&#x27;s address from the system and displays it to the user.</p>
 <h2>Synchronizing Commands and Queries</h2>
 <p>We&#x27;ve explored the separate journeys of commands and queries. But how do these two sides stay synchronized? This is where Event Sourcing comes into play.</p>
-<p>Remember the &#x27;User Address Updated&#x27; event generated when the user updated their address? This event is replayed on the query side to update its state. In other words, the user&#x27;s updated address is reflected in the query model. Thus, Event Sourcing ensures that despite working separately, the command and query sides are always in sync.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Remember the &#x27;User Address Updated&#x27; event generated when the user updated their address? This event is replayed on the query side to update its state. In other words, the user&#x27;s updated address is reflected in the query model. Thus, Event Sourcing ensures that despite working separately, the command and query sides are always in sync.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">CQRS Pattern An Example</h1>
@@ -1266,7 +1265,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (CQRS Pattern An Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1282,7 +1280,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1296,7 +1293,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1311,12 +1307,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let&#x27;s consider a simple application that manages user profiles. In this application, you can create a new user (command), update their email (command), and view user details (query).</p>
+    <div class="topic-content"><p>Let&#x27;s consider a simple application that manages user profiles. In this application, you can create a new user (command), update their email (command), and view user details (query).</p>
 <h3>1. Command Model (Write Model)</h3>
 <ol>
 <li><strong>Command Class</strong>: Defines an action to be performed. For instance, <code>CreateUserCommand</code> with fields like <code>userId</code>, <code>name</code>, and <code>email</code>.</li>
@@ -1339,7 +1333,7 @@
 <p>Here is the sample code for the aforementioned components:</p>
 <h2>Command Model (Write Model)</h2>
 <h4>1. Command Class</h4>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>CreateUserCommand</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>CreateUserCommand</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> userId</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> name</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> email</span><span>;</span><span>
@@ -1352,9 +1346,9 @@
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> newEmail</span><span>;</span><span>
 </span>
 <span>    </span><span>// Constructor, Getters, and Setters</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>2. Command Handler</h4>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>CreateUserCommandHandler</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>CreateUserCommandHandler</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>UserRepository</span><span> userRepository</span><span>;</span><span>
 </span>
 <span>    </span><span>public</span><span> </span><span>CreateUserCommandHandler</span><span>(</span><span>UserRepository</span><span> userRepository</span><span>)</span><span> </span><span>{</span><span>
@@ -1389,35 +1383,35 @@
 </span><span>        </span><span>// Simple email validation logic</span><span>
 </span><span>        </span><span>return</span><span> email </span><span>!=</span><span> </span><span>null</span><span> </span><span>&amp;&amp;</span><span> email</span><span>.</span><span>contains</span><span>(</span><span>&quot;@&quot;</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>3. Domain Model</h4>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>User</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>User</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> id</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> name</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> email</span><span>;</span><span>
 </span>
 <span>    </span><span>// Constructor, Getters, and Setters</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>4. Repository</h4>
-<pre><div><div><code><span>public</span><span> </span><span>interface</span><span> </span><span>UserRepository</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>interface</span><span> </span><span>UserRepository</span><span> </span><span>{</span><span>
 </span><span>    </span><span>void</span><span> </span><span>save</span><span>(</span><span>User</span><span> user</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>User</span><span> </span><span>findById</span><span>(</span><span>String</span><span> id</span><span>)</span><span>;</span><span>
 </span><span></span><span>}</span><span>
 </span>
 <span></span><span>public</span><span> </span><span>class</span><span> </span><span>UserRepositoryImpl</span><span> </span><span>implements</span><span> </span><span>UserRepository</span><span> </span><span>{</span><span>
 </span><span>    </span><span>// Implementation of save and findById methods</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h2>Query Model (Read Model)</h2>
 <h4>1. DTO (Data Transfer Object)</h4>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>UserProfileDTO</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>UserProfileDTO</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> id</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> name</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> email</span><span>;</span><span>
 </span>
 <span>    </span><span>// Constructor, Getters, and Setters</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>2. Query Class</h4>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>GetUserProfileQuery</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>GetUserProfileQuery</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> userId</span><span>;</span><span>
 </span>
 <span>    </span><span>// Constructor, Getters, and Setters</span><span>
@@ -1428,9 +1422,9 @@
 </span><span>    </span><span>private</span><span> </span><span>String</span><span> userId</span><span>;</span><span>
 </span>
 <span>    </span><span>// Constructor, Getters, and Setters</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>3. Query Handler</h4>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>GetUserProfileQueryHandler</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>GetUserProfileQueryHandler</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>UserRepository</span><span> userRepository</span><span>;</span><span>
 </span>
 <span>    </span><span>public</span><span> </span><span>GetUserProfileQueryHandler</span><span>(</span><span>UserRepository</span><span> userRepository</span><span>)</span><span> </span><span>{</span><span>
@@ -1455,10 +1449,10 @@
 </span><span>        </span><span>User</span><span> user </span><span>=</span><span> userRepository</span><span>.</span><span>findById</span><span>(</span><span>query</span><span>.</span><span>getUserId</span><span>(</span><span>)</span><span>)</span><span>;</span><span>
 </span><span>        </span><span>return</span><span> user </span><span>!=</span><span> </span><span>null</span><span> </span><span>?</span><span> user</span><span>.</span><span>getEmail</span><span>(</span><span>)</span><span> </span><span>:</span><span> </span><span>null</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h2>Infrastructure</h2>
 <h4>1. Command Bus</h4>
-<pre><div><div><code><span>public</span><span> </span><span>interface</span><span> </span><span>CommandBus</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>interface</span><span> </span><span>CommandBus</span><span> </span><span>{</span><span>
 </span><span>    </span><span>void</span><span> </span><span>dispatch</span><span>(</span><span>CreateUserCommand</span><span> command</span><span>)</span><span>;</span><span>
 </span><span></span><span>}</span><span>
 </span>
@@ -1473,9 +1467,9 @@
 </span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>dispatch</span><span>(</span><span>CreateUserCommand</span><span> command</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        handler</span><span>.</span><span>handle</span><span>(</span><span>command</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>2. Query Bus</h4>
-<pre><div><div><code><span>public</span><span> </span><span>interface</span><span> </span><span>QueryBus</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>interface</span><span> </span><span>QueryBus</span><span> </span><span>{</span><span>
 </span><span>    </span><span>UserProfileDTO</span><span> </span><span>dispatch</span><span>(</span><span>GetUserProfileQuery</span><span> query</span><span>)</span><span>;</span><span>
 </span><span></span><span>}</span><span>
 </span>
@@ -1490,9 +1484,9 @@
 </span><span>    </span><span>public</span><span> </span><span>UserProfileDTO</span><span> </span><span>dispatch</span><span>(</span><span>GetUserProfileQuery</span><span> query</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>return</span><span> handler</span><span>.</span><span>handle</span><span>(</span><span>query</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <h4>3. Event Store (Simplified Example)</h4>
-<pre><div><div><code><span>public</span><span> </span><span>interface</span><span> </span><span>EventStore</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>interface</span><span> </span><span>EventStore</span><span> </span><span>{</span><span>
 </span><span>    </span><span>void</span><span> </span><span>storeEvent</span><span>(</span><span>UserEvent</span><span> event</span><span>)</span><span>;</span><span>
 </span><span></span><span>}</span><span>
 </span>
@@ -1503,18 +1497,25 @@
 </span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>storeEvent</span><span>(</span><span>UserEvent</span><span> event</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        events</span><span>.</span><span>add</span><span>(</span><span>event</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
-<h2>Putting It All Together</h2></div></div></div></div></div><div><div><div><div><div><div><div><div>Java<svg focusable="false" viewbox="0 0 24 24" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-10dohqv" data-testid="ArrowDropDownIcon"><path d="m7 10 5 5 5-5z"></path></svg></div></div></div></div></div><div><span><div><section><div><div><div><div><div><div><div>1</div></div><div><div>2</div></div><div><div>3</div></div><div><div>4</div></div><div><div>5</div></div><div><div>6</div></div><div><div>7</div></div><div><div>8</div></div><div><div>9</div></div><div><div>10</div></div><div><div>11</div></div><div><div>12</div></div><div><div>13</div></div><div><div>14</div></div><div><div>15</div></div><div><div>16</div></div><div><div>17</div></div><div><div>18</div></div><div><div>19</div></div><div><div>20</div></div><div><div>21</div></div><div><div>22</div></div><div><div>23</div></div><div><div>24</div></div><div><div>25</div></div><div><div>26</div></div><div><div>27</div></div><div><div>28</div></div><div><div>29</div></div><div><div>30</div></div></div></div><div><div><div><div><span><span>public</span><span> </span><span>class</span><span> CQRSApplication </span><span>{</span></span></div><div><span><span>    </span><span>public</span><span> </span><span>static</span><span> </span><span>void</span><span> main</span><span>(</span><span>String</span><span>[</span><span>]</span><span> args</span><span>)</span><span> </span><span>{</span></span></div><div><span><span>        UserRepository userRepository </span><span>=</span><span> </span><span>new</span><span> UserRepositoryImpl</span><span>(</span><span>)</span><span>;</span></span></div><div><span><span>        CreateUserCommandHandler createHandler </span><span>=</span><span> </span><span>new</span><span> CreateUserCommandHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span>        UpdateUserEmailCommandHandler updateEmailH</span><span>andler </span><span>=</span><span> </span><span>new</span><span> UpdateUserEmailCommandHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span>        GetUserProfileQueryHandler queryHandler </span><span>=</span><span> </span><span>new</span><span> GetUserProfileQueryHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span>        ReadUserEmailQueryHandler readEmailHandler</span><span> </span><span>=</span><span> </span><span>new</span><span> ReadUserEmailQueryHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        CommandBus commandBus </span><span>=</span><span> </span><span>new</span><span> SimpleCommandBus</span><span>(</span><span>createHandler</span><span>,</span><span> updateEmailHandler</span><span>)</span><span>;</span></span></div><div><span><span>        QueryBus queryBus </span><span>=</span><span> </span><span>new</span><span> SimpleQueryBus</span><span>(</span><span>queryHandler</span><span>,</span><span> readEmailHandler</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Create User</span></span></div><div><span><span>        CreateUserCommand createCommand </span><span>=</span><span> </span><span>new</span><span> CreateUserCommand</span><span>(</span><span>&quot;1&quot;</span><span>,</span><span> </span><span>&quot;Alice&quot;</span><span>,</span><span> </span><span>&quot;alice@example.com&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        commandBus</span><span>.</span><span>dispatch</span><span>(</span><span>createCommand</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Update Email</span></span></div><div><span><span>        UpdateUserEmailCommand updateEmailCommand </span><span>=</span><span> </span><span>new</span><span> UpdateUserEmailCommand</span><span>(</span><span>&quot;1&quot;</span><span>,</span><span> </span><span>&quot;alice_new@example.com&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        commandBus</span><span>.</span><span>dispatch</span><span>(</span><span>updateEmailCommand</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Read Updated Email</span></span></div><div><span><span>        ReadUserEmailQuery readEmailQuery </span><span>=</span><span> </span><span>new</span><span> ReadUserEmailQuery</span><span>(</span><span>&quot;1&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        String updatedEmail </span><span>=</span><span> queryBus</span><span>.</span><span>dispatch</span><span>(</span><span>readEmailQuery</span><span>)</span><span>;</span></span></div><div><span><span>        System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Updated Email: &quot;</span><span> </span><span>+</span><span> updatedEmail</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Read User Profile</span></span></div><div><span><span>        GetUserProfileQuery profileQuery </span><span>=</span><span> </span><span>new</span><span> GetUserProfileQuery</span><span>(</span><span>&quot;1&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        UserProfileDTO userProfile </span><span>=</span><span> queryBus</span><span>.</span><span>dispatch</span><span>(</span><span>profileQuery</span><span>)</span><span>;</span></span></div><div><span><span>        System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>userProfile</span><span>)</span><span>;</span></span></div><div><span><span>    </span><span>}</span></span></div><div><span><span>}</span></span></div></div></div><canvas></canvas></div><textarea>public class CQRSApplication {
+</span><span></span><span>}</span></code></div></pre>
+<h2>Putting It All Together</h2></div><div class="topic-content">Java<svg focusable="false" viewbox="0 0 24 24" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-10dohqv" data-testid="ArrowDropDownIcon"><path d="m7 10 5 5 5-5z"></path></svg></div><div><span><div><div><div class="topic-content">1</div><div class="topic-content">2</div><div class="topic-content">3</div><div class="topic-content">4</div><div class="topic-content">5</div><div class="topic-content">6</div><div class="topic-content">7</div><div class="topic-content">8</div><div class="topic-content">9</div><div class="topic-content">10</div><div class="topic-content">11</div><div class="topic-content">12</div><div class="topic-content">13</div><div class="topic-content">14</div><div class="topic-content">15</div><div class="topic-content">16</div><div class="topic-content">17</div><div class="topic-content">18</div><div class="topic-content">19</div><div class="topic-content">20</div><div class="topic-content">21</div><div class="topic-content">22</div><div class="topic-content">23</div><div class="topic-content">24</div><div class="topic-content">25</div><div class="topic-content">26</div><div class="topic-content">27</div><div class="topic-content">28</div><div class="topic-content">29</div><div class="topic-content">30</div><div class="topic-content"><span><span>public</span><span> </span><span>class</span><span> CQRSApplication </span><span>{</span></span></div><div><span><span>    </span><span>public</span><span> </span><span>static</span><span> </span><span>void</span><span> main</span><span>(</span><span>String</span><span>[</span><span>]</span><span> args</span><span>)</span><span> </span><span>{</span></span></div><div><span><span>        UserRepository userRepository </span><span>=</span><span> </span><span>new</span><span> UserRepositoryImpl</span><span>(</span><span>)</span><span>;</span></span></div><div><span><span>        CreateUserCommandHandler createHandler </span><span>=</span><span> </span><span>new</span><span> CreateUserCommandHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span>        UpdateUserEmailCommandHandler updateEmailH</span><span>andler </span><span>=</span><span> </span><span>new</span><span> UpdateUserEmailCommandHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span>        GetUserProfileQueryHandler queryHandler </span><span>=</span><span> </span><span>new</span><span> GetUserProfileQueryHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span>        ReadUserEmailQueryHandler readEmailHandler</span><span> </span><span>=</span><span> </span><span>new</span><span> ReadUserEmailQueryHandler</span><span>(</span><span>userRepository</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        CommandBus commandBus </span><span>=</span><span> </span><span>new</span><span> SimpleCommandBus</span><span>(</span><span>createHandler</span><span>,</span><span> updateEmailHandler</span><span>)</span><span>;</span></span></div><div><span><span>        QueryBus queryBus </span><span>=</span><span> </span><span>new</span><span> SimpleQueryBus</span><span>(</span><span>queryHandler</span><span>,</span><span> readEmailHandler</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Create User</span></span></div><div><span><span>        CreateUserCommand createCommand </span><span>=</span><span> </span><span>new</span><span> CreateUserCommand</span><span>(</span><span>&quot;1&quot;</span><span>,</span><span> </span><span>&quot;Alice&quot;</span><span>,</span><span> </span><span>&quot;alice@example.com&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        commandBus</span><span>.</span><span>dispatch</span><span>(</span><span>createCommand</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Update Email</span></span></div><div><span><span>        UpdateUserEmailCommand updateEmailCommand </span><span>=</span><span> </span><span>new</span><span> UpdateUserEmailCommand</span><span>(</span><span>&quot;1&quot;</span><span>,</span><span> </span><span>&quot;alice_new@example.com&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        commandBus</span><span>.</span><span>dispatch</span><span>(</span><span>updateEmailCommand</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Read Updated Email</span></span></div><div><span><span>        ReadUserEmailQuery readEmailQuery </span><span>=</span><span> </span><span>new</span><span> ReadUserEmailQuery</span><span>(</span><span>&quot;1&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        String updatedEmail </span><span>=</span><span> queryBus</span><span>.</span><span>dispatch</span><span>(</span><span>readEmailQuery</span><span>)</span><span>;</span></span></div><div><span><span>        System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Updated Email: &quot;</span><span> </span><span>+</span><span> updatedEmail</span><span>)</span><span>;</span></span></div><div><span><span></span></span></div><div><span><span>        </span><span>// Read User Profile</span></span></div><div><span><span>        GetUserProfileQuery profileQuery </span><span>=</span><span> </span><span>new</span><span> GetUserProfileQuery</span><span>(</span><span>&quot;1&quot;</span><span>)</span><span>;</span></span></div><div><span><span>        UserProfileDTO userProfile </span><span>=</span><span> queryBus</span><span>.</span><span>dispatch</span><span>(</span><span>profileQuery</span><span>)</span><span>;</span></span></div><div><span><span>        System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>userProfile</span><span>)</span><span>;</span></span></div><div><span><span>    </span><span>}</span></span></div><div><span><span>}</span></span></div><canvas></canvas></div><textarea>public class CQRSApplication {
     public static void main(String[] args) {
         UserRepository userRepository = new UserRepositoryImpl();
         CreateUserCommandHandler createHandler = new CreateUserCommandHandler(userRepository);
         UpdateUserEmailCommandHandler updateEmailHandler = new UpdateUserEmailCommandHandler(userRepository);
         GetUserProfileQueryHandler queryHandler = new GetUserProfileQueryHandler(userRepository);
-        ReadUserEmailQueryHandler readEmailHandle</textarea><div><canvas></canvas><canvas></canvas></div></div></div>
-  </div>
+        ReadUserEmailQueryHandler readEmailHandle</textarea><div><canvas></canvas><canvas></canvas></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Issues, Special Considerations, and Performance Implications</h1>
@@ -1569,7 +1570,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Issues, Special Considerations, and Performance Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1585,7 +1585,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1599,7 +1598,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1614,12 +1612,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>CQRS, like all patterns, has its challenges and caveats. It does not resolve all the issues and is not suitable for all cases.</p>
+    <div class="topic-content"><p>CQRS, like all patterns, has its challenges and caveats. It does not resolve all the issues and is not suitable for all cases.</p>
 <h2>Understanding the Complexity</h2>
 <p>To implement the CQRS pattern, a fair amount of complexity is introduced into the system. It’s like weaving a basket; the more intricate the design, the more complex the weaving process becomes. To maintain two separate models - the command model and the query model - becomes a complex task. This complexity could be a roadblock for developers unfamiliar with the pattern, and the learning curve could be steep.</p>
 <h2>Managing Data Consistency</h2>
@@ -1630,11 +1626,17 @@
 <h2>Handling Transactions</h2>
 <p>In traditional CRUD operations, handling transactions is relatively straightforward. But, in the CQRS pattern, it can get complicated. Imagine a situation where you need to perform multiple commands as part of a single transaction. What if one command fails? How will you roll back the changes from previous commands? Remember, our commands change the state of the system. It&#x27;s like painting a wall; if you make a mistake with one color, you can&#x27;t just erase it. You might need to repaint the entire wall.</p>
 <h2>Dealing with Asynchronicity</h2>
-<p>The CQRS pattern often comes with asynchronous operations. This aspect makes error handling and debugging a more complex task. In a system where operations are performed asynchronously, tracking down the source of an error can be challenging.</p></div></div></div></div></div></div></div>
-  </div>
+<p>The CQRS pattern often comes with asynchronous operations. This aspect makes error handling and debugging a more complex task. In a system where operations are performed asynchronously, tracking down the source of an error can be challenging.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">System Design Examples</h1>
@@ -1689,7 +1691,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1705,7 +1706,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1719,7 +1719,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1734,12 +1733,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>Use Cases</h2>
+    <div class="topic-content"><h2>Use Cases</h2>
 <p>Firstly, it’s essential to understand that the CQRS pattern isn’t a one-size-fits-all solution. It’s important to recognize where CQRS shines and where it might be an overkill.</p>
 <h3>High-Performance Applications</h3>
 <p>One of the compelling use cases of CQRS is in high-performance applications where the number of reads significantly outweighs the number of writes. Imagine an e-commerce platform where millions of users are browsing products (queries) compared to the much fewer number of transactions (commands) being made. Doesn&#x27;t it make sense to optimize the system for handling a higher volume of reads in this scenario?</p>
@@ -1755,11 +1752,17 @@
 <h3>Real-Time Analytics</h3>
 <p>Real-time analytics is another fantastic scenario where CQRS can prove beneficial. Imagine a social media platform where users are constantly posting updates (commands). Simultaneously, the platform provides real-time analytics about user engagement (queries).</p>
 <p>The commands and queries have different performance needs: commands must be fast and reliable to provide a smooth user experience, while queries require heavy computations but are not time-critical. By segregating these responsibilities, the system can optimize resource allocation to meet these differing needs.</p>
-<p>To conclude, the key to effectively using the CQRS pattern is identifying the right situations. Just like a skilled chef knows when to use a paring knife and when to use a chef’s knife, a good software architect recognizes where CQRS fits and where it doesn’t.</p></div></div></div></div></div></div></div>
-  </div>
+<p>To conclude, the key to effectively using the CQRS pattern is identifying the right situations. Just like a skilled chef knows when to use a paring knife and when to use a chef’s knife, a good software architect recognizes where CQRS fits and where it doesn’t.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Write-Ahead Logging (WAL) &amp; Append-Only Log Engines</h1>
@@ -1807,7 +1810,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1823,7 +1825,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1837,7 +1838,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1852,17 +1852,25 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
     <h2>1. The Foundation of Database Durability (ACID)</h2>
             <p>Writing random data mutations directly to disk indexes (like B+ Trees) is extremely slow and susceptible to corruption if power fails mid-write. Databases like PostgreSQL, MySQL, and storage engines like RocksDB solve this via <strong>Write-Ahead Logging (WAL)</strong>.</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+
+
 </main>
 
 

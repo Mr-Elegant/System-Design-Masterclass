@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (9)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="designing a url shortening service like tinyurl"><a href="#chapter-01"><span class="chapter-num">01</span> Designing a URL Shortening Service like TinyURL</a></li>
@@ -960,8 +959,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -980,11 +977,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Designing a URL Shortening Service like TinyURL</h1>
@@ -1039,7 +1035,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing a URL Shortening Service like TinyURL): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1055,7 +1050,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1069,7 +1063,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1084,11 +1077,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradTiny" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1142,7 +1138,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> KGS pre-computes 6-character Base62 keys offline and stores them in memory, guaranteeing zero hash collisions and sub-10ms URL shortening and redirection.
   </div>
-</div>
 
     <div><h2>1. Why do we need URL shortening?</h2>
 <p>URL shortening is used to create shorter aliases for long URLs. We call these shortened aliases “short links.” Users are redirected to the original URL when they hit these short links. Short links save a lot of space when displayed, printed, messaged, or tweeted. Additionally, users are less likely to mistype shorter URLs.</p>
@@ -1543,11 +1538,18 @@ class KeyGenerationService {
       <li><strong>HTTP 302 (Found / Temporary):</strong> Every click routes through the TinyURL gateway, enabling real-time analytics, user-agent parsing, and referrer logging. <em>Industry Standard:</em> Use 302 if analytics tracking is required; use 301 with edge CDN caching if raw redirection throughput is prioritized.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Designing Pastebin</h1>
@@ -1602,7 +1604,6 @@ class KeyGenerationService {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Pastebin): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1618,7 +1619,6 @@ class KeyGenerationService {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1632,7 +1632,6 @@ class KeyGenerationService {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1647,11 +1646,14 @@ class KeyGenerationService {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradPaste" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1704,7 +1706,6 @@ class KeyGenerationService {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Large text payloads are streamed to scalable object storage (AWS S3) while metadata is stored in distributed wide-column DBs (Cassandra) with automated TTL background cleanup.
   </div>
-</div>
 
     <div><h2>1. What is Pastebin?</h2>
 <p>Pastebin like services enable users to store plain text or images over the network (typically the Internet) and generate unique URLs to access the uploaded data. Such services are also used to share data over the network quickly, as users would just need to pass the URL to let other users see it.</p>
@@ -1780,7 +1781,7 @@ We can cache some of the hot pastes that are frequently accessed. Following the 
 </center>
 <h2>5. System APIs</h2>
 <p>We can have SOAP or REST APIs to expose the functionality of our service. Following could be the definitions of the APIs to create/retrieve/delete Pastes:</p>
-<pre><div><div><code><span>addPaste</span><span>(</span><span>api_dev_key</span><span>,</span><span> paste_data</span><span>,</span><span> custom_url</span><span>=</span><span>None</span><span> user_name</span><span>=</span><span>None</span><span>,</span><span> paste_name</span><span>=</span><span>None</span><span>,</span><span> expire_date</span><span>=</span><span>None</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>addPaste</span><span>(</span><span>api_dev_key</span><span>,</span><span> paste_data</span><span>,</span><span> custom_url</span><span>=</span><span>None</span><span> user_name</span><span>=</span><span>None</span><span>,</span><span> paste_name</span><span>=</span><span>None</span><span>,</span><span> expire_date</span><span>=</span><span>None</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
 paste_data (string): Textual data of the paste.<br>
@@ -1791,9 +1792,9 @@ expire_date (string): Optional expiration date for the paste.</br></br></br></br
 <p><strong>Returns:</strong> (string)<br>
 A successful insertion returns the URL through which the paste can be accessed, otherwise, it will return an error code.</br></p>
 <p>Similarly, we can have Retrieve and Delete Paste APIs:</p>
-<pre><div><div><code><span>getPaste</span><span>(</span><span>api_dev_key</span><span>,</span><span> api_paste_key</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>getPaste</span><span>(</span><span>api_dev_key</span><span>,</span><span> api_paste_key</span><span>)</span></code></div></pre>
 <p>Where &quot;api_paste_key&quot; is a string representing the  Paste Key of the paste to be retrieved. This API will return the textual data of the paste.</p>
-<pre><div><div><code><span>deletePaste</span><span>(</span><span>api_dev_key</span><span>,</span><span> api_paste_key</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>deletePaste</span><span>(</span><span>api_dev_key</span><span>,</span><span> api_paste_key</span><span>)</span></code></div></pre>
 <p>A successful deletion returns &#x27;true&#x27;, otherwise returns &#x27;false&#x27;.</p>
 <h2>6. Database Design</h2>
 <p>A few observations about the nature of the data we are storing:</p>
@@ -1996,11 +1997,18 @@ export class PastebinStorageService {
     <h4>Curveball 2: "How do you handle multi-megabyte large pastes without exhausting API Gateway memory?"</h4>
     <p><strong>Mitigation:</strong> Use <strong>S3 Pre-Signed Upload URLs</strong>. Instead of routing 10MB text payloads through application servers, the client requests a pre-signed S3 upload URL from the metadata server and streams the payload directly to Amazon S3, offloading 100% of network byte streaming from backend instances.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Designing Instagram</h1>
@@ -2048,7 +2056,6 @@ export class PastebinStorageService {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Instagram 2B User Sharding Architecture: 64-bit Snowflake ID generator ➔ Sharded PostgreSQL via User_ID % 1024 ➔ Memcached timeline feed cache.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2064,7 +2071,6 @@ export class PastebinStorageService {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2078,7 +2084,6 @@ export class PastebinStorageService {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2093,11 +2098,14 @@ export class PastebinStorageService {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradInsta" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2153,7 +2161,6 @@ export class PastebinStorageService {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Decouples photo ingestion (async resizing to thumbnail/HD) from feed generation, utilizing Kafka and Redis timeline queues to achieve instantaneous feed renders.
   </div>
-</div>
 
     <div><h2>1. What is Instagram?</h2>
 <p>Instagram is a social networking service that enables its users to upload and share their photos and videos with other users. Instagram users can choose to share information either publicly or privately. Anything shared publicly can be seen by any other user, whereas privately shared content can only be accessed by the specified set of people. Instagram also enables its users to share through many other social networking platforms, such as Facebook, Twitter, Flickr, and Tumblr.</p>
@@ -2260,13 +2267,13 @@ Let&#x27;s assume we shard based on the &#x27;UserID&#x27; so that we can keep a
 If we can generate unique PhotoIDs first and then find a shard number through &quot;PhotoID % 10&quot;, the above problems will have been solved. We would not need to append ShardID with PhotoID in this case, as PhotoID will itself be unique throughout the system.</p>
 <p><strong>How can we generate PhotoIDs?</strong> Here, we cannot have an auto-incrementing sequence in each shard to define PhotoID because we need to know PhotoID first to find the shard where it will be stored. One solution could be that we dedicate a separate database instance to generate auto-incrementing IDs. If our PhotoID can fit into 64 bits, we can define a table containing only a 64 bit ID field. So whenever we would like to add a photo in our system, we can insert a new row in this table and take that ID to be our PhotoID of the new photo.</p>
 <p><strong>Wouldn&#x27;t this key generating DB be a single point of failure?</strong> Yes, it would be. A workaround for that could be to define two such databases, one generating even-numbered IDs and the other odd-numbered. For MySQL, the following script can define such sequences:</p>
-<pre><div><div><code><span>KeyGeneratingServer1</span><span>:</span><span>
+<pre><div class="topic-content"><code><span>KeyGeneratingServer1</span><span>:</span><span>
 </span><span>auto</span><span>-</span><span>increment</span><span>-</span><span>increment </span><span>=</span><span> </span><span>2</span><span>
 </span><span>auto</span><span>-</span><span>increment</span><span>-</span><span>offset </span><span>=</span><span> </span><span>1</span><span>
 </span>
 <span></span><span>KeyGeneratingServer2</span><span>:</span><span>
 </span><span>auto</span><span>-</span><span>increment</span><span>-</span><span>increment </span><span>=</span><span> </span><span>2</span><span>
-</span><span>auto</span><span>-</span><span>increment</span><span>-</span><span>offset </span><span>=</span><span> </span><span>2</span></code></div></div></pre>
+</span><span>auto</span><span>-</span><span>increment</span><span>-</span><span>offset </span><span>=</span><span> </span><span>2</span></code></div></pre>
 <p>We can put a load balancer in front of both of these databases to round-robin between them and to deal with downtime. Both these servers could be out of sync, with one generating more keys than the other, but this will not cause any issue in our system. We can extend this design by defining separate ID tables for Users, Photo-Comments, or other objects present in our system.</p>
 <p><strong>Alternately,</strong> we can implement a &#x27;key&#x27; generation scheme similar to what we have discussed in &#x27;Designing a URL Shortening service like TinyURL&#x27;.</p>
 <p><strong>How can we plan for the future growth of our system?</strong>
@@ -2385,11 +2392,18 @@ export class InstagramTimelineAggregator {
     <h4>Curveball 2: "How do you ensure smooth photo loading on spotty 3G cellular connections?"</h4>
     <p><strong>Mitigation: Progressive JPEG &amp; BlurHash:</strong> The async image worker computes a 30-character <code>BlurHash</code> string and low-resolution thumbnail. The mobile client renders the lightweight BlurHash placeholder instantaneously (&lt; 10ms) while streaming the full-resolution progressive JPEG over the network.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Designing Dropbox</h1>
@@ -2444,7 +2458,6 @@ export class InstagramTimelineAggregator {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Dropbox): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2460,7 +2473,6 @@ export class InstagramTimelineAggregator {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2474,7 +2486,6 @@ export class InstagramTimelineAggregator {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2489,11 +2500,14 @@ export class InstagramTimelineAggregator {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradDrop" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2551,7 +2565,6 @@ export class InstagramTimelineAggregator {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Files are split into 4MB immutable chunks hashed with SHA-256; only net-new chunks are uploaded to S3, reducing global bandwidth and storage costs by 60%+.
   </div>
-</div>
 
     <div><h2>1. Why Cloud Storage?</h2>
 <p>Cloud file storage services have become very popular recently as they simplify the storage and exchange of digital resources among multiple devices. The shift from using single personal computers to using multiple devices with different platforms and operating systems such as smartphones and tablets each with portable access from various geographical locations at any time, is believed to be accountable for the huge popularity of cloud storage services. Following are some of the top benefits of such services:</p>
@@ -2744,11 +2757,18 @@ export class ContentDefinedChunker {
     <h4>Curveball 2: "How do you handle hash collisions if two distinct files produce the same SHA-256 hash?"</h4>
     <p><strong>Mitigation:</strong> SHA-256 has $2^{256}$ combinations (virtually zero collision probability). However, for mission-critical file stores, use a two-tiered hash: <code>SHA-256 + Blake3</code>. If both hashes match, the storage node executes an optional byte-by-byte comparison before finalizing deduplication.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Designing Facebook Messenger</h1>
@@ -2803,7 +2823,6 @@ export class ContentDefinedChunker {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Facebook Messenger): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2819,7 +2838,6 @@ export class ContentDefinedChunker {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2833,7 +2851,6 @@ export class ContentDefinedChunker {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2848,11 +2865,14 @@ export class ContentDefinedChunker {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradMess" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2905,7 +2925,6 @@ export class ContentDefinedChunker {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Maintains millions of concurrent persistent WebSocket connections across gateway nodes, using an in-memory Redis session map for O(1) user-to-server routing.
   </div>
-</div>
 
     <div><h2>1. What is Facebook Messenger?</h2>
 <p>Facebook Messenger is a software application that provides text-based instant messaging services to its users. Messenger users can chat with their Facebook friends both from cell phones and Facebook’s website.</p>
@@ -3115,11 +3134,18 @@ export class MessengerConnectionManager {
     <h4>Curveball 2: "How do you handle ephemeral disappearing messages without leaving traces in disk backups?"</h4>
     <p><strong>Mitigation:</strong> Ephemeral messages are encrypted with ephemeral session keys in memory. When the TTL expires, the encryption key is deleted from the key store. Even if encrypted ciphertext resides in cold backups, it is permanently undecryptable.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Designing Twitter</h1>
@@ -3174,7 +3200,6 @@ export class MessengerConnectionManager {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Twitter): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3190,7 +3215,6 @@ export class MessengerConnectionManager {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3204,7 +3228,6 @@ export class MessengerConnectionManager {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3219,11 +3242,14 @@ export class MessengerConnectionManager {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradTwit" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3279,7 +3305,6 @@ export class MessengerConnectionManager {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Applies Fanout-on-Write for standard users (pre-generating followers' Redis timelines) and Fanout-on-Read for high-follower celebrities to prevent severe write amplification.
   </div>
-</div>
 
     <div><h2>1. What is Twitter?</h2>
 <p>Twitter is an online social networking service where users post and read short messages called &quot;tweets.&quot; Registered users can post and read tweets, but those who are not registered can only read them. Users access Twitter through their website interface, SMS, or mobile app.</p>
@@ -3344,7 +3369,7 @@ Since total ingress is 24TB per day, this would translate into 290MB/sec.</p>
 <p>💡 Once we&#x27;ve finalized the requirements, it&#x27;s always a good idea to define the system APIs. This should explicitly state what is expected from the system.</p>
 </blockquote>
 <p>We can have SOAP or REST APIs to expose the functionality of our service. Following could be the definition of the API for posting a new tweet:</p>
-<pre><div><div><code><span>tweet</span><span>(</span><span>api_dev_key</span><span>,</span><span> tweet_data</span><span>,</span><span> tweet_location</span><span>,</span><span> user_location</span><span>,</span><span> media_ids</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>tweet</span><span>(</span><span>api_dev_key</span><span>,</span><span> tweet_data</span><span>,</span><span> tweet_location</span><span>,</span><span> user_location</span><span>,</span><span> media_ids</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
 tweet_data (string): The text of the tweet, typically up to 140 characters.<br>
@@ -3385,11 +3410,11 @@ This approach has a couple of issues:</p>
 86400 sec/day * 365 (days a year) * 50 (years) =&gt; 1.6B
 </center></div><div><p>We would need 31 bits to store this number. Since on average we are expecting 1150 new tweets per second, we can allocate 17 bits to store auto incremented sequence; this will make our TweetID 48 bits long. So, every second we can store (2^17 =&gt; 130K) new tweets. We can reset our auto incrementing sequence every second. For fault tolerance and better performance, we can have two database servers to generate auto-incrementing keys for us, one generating even numbered keys and the other generating odd numbered keys.</p>
 <p>If we assume our current epoch seconds are &quot;1483228800,&quot; our TweetID will look like this:</p>
-<pre><div><div><code><span>1483228800</span><span> </span><span>000001</span><span>  
+<pre><div class="topic-content"><code><span>1483228800</span><span> </span><span>000001</span><span>  
 </span><span></span><span>1483228800</span><span> </span><span>000002</span><span>  
 </span><span></span><span>1483228800</span><span> </span><span>000003</span><span>  
 </span><span></span><span>1483228800</span><span> </span><span>000004</span><span>  
-</span><span></span><span>...</span><span>  </span></code></div></div></pre>
+</span><span></span><span>...</span><span>  </span></code></div></pre>
 <p>If we make our TweetID 64bits (8 bytes) long, we can easily store tweets for the next 100 years and also store them for mili-seconds granularity.</p>
 <p>In the above approach, we still have to query all the servers for timeline generation, but our reads (and writes) will be substantially quicker.</p>
 <ol>
@@ -3503,11 +3528,18 @@ export class TwitterTimelineService {
       <li>A background worker lazily purges stale tweet IDs during routine timeline maintenance.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Designing Youtube or Netflix</h1>
@@ -3555,7 +3587,6 @@ export class TwitterTimelineService {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Netflix Distributed Counter Architecture: In-memory worker delta buffering with asynchronous flushes to Cassandra atomic increment columns.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3571,7 +3602,6 @@ export class TwitterTimelineService {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3585,7 +3615,6 @@ export class TwitterTimelineService {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3600,11 +3629,14 @@ export class TwitterTimelineService {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradYt" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3652,7 +3684,6 @@ export class TwitterTimelineService {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Videos are chunked and encoded into multi-bitrate HLS/DASH streams in parallel, cached at ISP-colocated edge CDN nodes for smooth, buffer-free playback.
   </div>
-</div>
 
     <div><h2>1. Why Youtube?</h2>
 <p>Youtube is one of the most popular video sharing websites in the world. Users of the service can upload, view, share, rate, and report videos as well as add comments on videos.</p>
@@ -3696,7 +3727,7 @@ export class TwitterTimelineService {
 <p>Assuming an upload:view ratio of 1:200, we would need 1TB/s outgoing bandwidth.</p>
 <h2>4. System APIs</h2>
 <p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definitions of the APIs for uploading and searching videos:</p>
-<pre><div><div><code><span>uploadVideo</span><span>(</span><span>api_dev_key</span><span>,</span><span> video_title</span><span>,</span><span> video_description</span><span>,</span><span> tags</span><span>[</span><span>]</span><span>,</span><span> category_id</span><span>,</span><span> default_language</span><span>,</span><span> recording_details</span><span>,</span><span> video_contents</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>uploadVideo</span><span>(</span><span>api_dev_key</span><span>,</span><span> video_title</span><span>,</span><span> video_description</span><span>,</span><span> tags</span><span>[</span><span>]</span><span>,</span><span> category_id</span><span>,</span><span> default_language</span><span>,</span><span> recording_details</span><span>,</span><span> video_contents</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.<br>
 video_title (string): Title of the video.<br>
@@ -3708,7 +3739,7 @@ recording_details (string): Location where the video was recorded.<br>
 video_contents (stream): Video to be uploaded.</br></br></br></br></br></br></br></br></p>
 <p><strong>Returns:</strong> (string)<br>
 A successful upload will return HTTP 202 (request accepted) and once the video encoding is completed the user is notified through email with a link to access the video. We can also expose a queryable API to let users know the current status of their uploaded video.</br></p>
-<pre><div><div><code><span>searchVideo</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_query</span><span>,</span><span> user_location</span><span>,</span><span> maximum_videos_to_return</span><span>,</span><span> page_token</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>searchVideo</span><span>(</span><span>api_dev_key</span><span>,</span><span> search_query</span><span>,</span><span> user_location</span><span>,</span><span> maximum_videos_to_return</span><span>,</span><span> page_token</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account of our service.<br>
 search_query (string): A string containing the search terms.<br>
@@ -3717,7 +3748,7 @@ maximum_videos_to_return (number): Maximum number of results returned in one req
 page_token (string): This token will specify a page in the result set that should be returned.</br></br></br></br></br></p>
 <p><strong>Returns:</strong> (JSON)<br>
 A JSON containing information about the list of video resources matching the search query. Each video resource will have a video title, a thumbnail, a video creation date, and a view count.</br></p>
-<pre><div><div><code><span>streamVideo</span><span>(</span><span>api_dev_key</span><span>,</span><span> video_id</span><span>,</span><span> offset</span><span>,</span><span> codec</span><span>,</span><span> resolution</span><span>)</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>streamVideo</span><span>(</span><span>api_dev_key</span><span>,</span><span> video_id</span><span>,</span><span> offset</span><span>,</span><span> codec</span><span>,</span><span> resolution</span><span>)</span></code></div></pre>
 <p><strong>Parameters:</strong><br>
 api_dev_key (string): The API developer key of a registered account of our service.<br>
 video_id (string): A string to identify the video.<br>
@@ -3876,11 +3907,18 @@ export class AdaptiveBitrateSelector {
     <p><strong>Mitigation: Adaptive Bitrate Streaming (ABR):</strong> The client video player continuously measures the download time of 2-second video chunks. If chunk download duration exceeds 1.5 seconds, the player automatically requests the next chunk at a lower bitrate rendition (e.g., 720p $
 ightarrow$ 480p) before its buffer runs empty, preventing video freezing.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Designing Typeahead Suggestion</h1>
@@ -3935,7 +3973,6 @@ ightarrow$ 480p) before its buffer runs empty, preventing video freezing.</p>
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing Typeahead Suggestion): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3951,7 +3988,6 @@ ightarrow$ 480p) before its buffer runs empty, preventing video freezing.</p>
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3965,7 +4001,6 @@ ightarrow$ 480p) before its buffer runs empty, preventing video freezing.</p>
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3980,11 +4015,14 @@ ightarrow$ 480p) before its buffer runs empty, preventing video freezing.</p>
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradTrie" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -4034,7 +4072,6 @@ ightarrow$ 480p) before its buffer runs empty, preventing video freezing.</p>
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Stores the top-10 frequency suggestions directly in Trie nodes in memory, combining client-side debouncing and Redis prefix caching to respond within 20ms per keystroke.
   </div>
-</div>
 
     <div><h2>1. What is Typeahead Suggestion?</h2>
 <p>Typeahead suggestions enable users to search for known and frequently searched terms. As the user types into the search box, it tries to predict the query based on the characters the user has entered and gives a list of suggestions to complete the query. Typeahead suggestions help the user to articulate their search queries better. It’s not about speeding up the search process but rather about guiding the users and lending them a helping hand in constructing their search query.</p>
@@ -4212,11 +4249,18 @@ export class TypeaheadTrie {
     <h4>Curveball 2: "How do you personalize suggestions based on the user's country and search history?"</h4>
     <p><strong>Mitigation:</strong> Store country-specific top-10 frequencies inside each Trie node (e.g., <code>node.top_terms['US']</code> vs <code>node.top_terms['IN']</code>) and merge the user's local recent search history cache client-side.</p>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Designing an API Rate Limiter</h1>
@@ -4271,7 +4315,6 @@ export class TypeaheadTrie {
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Designing an API Rate Limiter): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -4287,7 +4330,6 @@ export class TypeaheadTrie {
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -4301,7 +4343,6 @@ export class TypeaheadTrie {
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -4316,11 +4357,14 @@ export class TypeaheadTrie {
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradRate" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -4372,7 +4416,6 @@ export class TypeaheadTrie {
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Evaluates token bucket quotas inside Redis using single-threaded atomic Lua scripts, preventing race conditions across distributed gateway clusters.
   </div>
-</div>
 
     <div><h2>1. What is a Rate Limiter?</h2>
 <p>Imagine we have a service which is receiving a huge number of requests, but it can only serve a limited number of requests per second. To handle this problem we would need some kind of throttling or rate limiting mechanism that would allow only a certain number of requests so our service can respond to all of them. A rate limiter, at a high-level, limits the number of events an entity (user, device, IP, etc.) can perform in a particular time window. For example:</p>
@@ -4561,11 +4604,22 @@ export class RedisRateLimiter {
       <li>Regions synchronize aggregate counts asynchronously every 5 seconds via Kafka/CRDT counters to rebalance regional token allocations dynamically.</li>
     </ul>
   </div>
+
 </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

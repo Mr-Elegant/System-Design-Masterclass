@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (9)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -960,8 +959,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -980,9 +977,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1037,7 +1033,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1053,7 +1048,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1067,7 +1061,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1082,12 +1075,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>A Peek into the Evolution of System Architecture Patterns</h2>
+    <div class="topic-content"><h2>A Peek into the Evolution of System Architecture Patterns</h2>
 <p>When we look at the world of software development, it&#x27;s clear that things have evolved rapidly over the last few decades. In the early days, we had simple monolithic systems that were easy to manage and maintain. However, as software complexity grew and the demands on systems increased, these monolithic structures began to buckle under the strain. This is where architectural patterns entered the picture.</p>
 <p>In the simplest terms, an architectural pattern represents a set of guidelines designed to address specific problems that repeatedly occur in a given context. They provide a structured solution to these issues, making it easier to design more reliable and effective systems. And as we&#x27;ve advanced technologically, these patterns have adapted to meet the changing demands of system architecture.</p>
 <p>The last few years have seen an increasing trend towards distributed systems due to the scalability and resilience they offer. But this shift has not been without its challenges. Increased system complexity, managing data consistency, and handling asynchronous communication have all become significant issues. This is where the Event-Driven Architecture pattern comes into play.</p>
@@ -1095,11 +1086,17 @@
 <p>Have you ever wondered how large-scale systems handle millions of requests efficiently and effectively? Or how a change in one part of a system triggers specific actions in other parts without any significant delay or any manual intervention? The secret often lies in the Event-Driven Architecture pattern.</p>
 <p>The EDA pattern is a popular architectural approach where the design is contingent on events. An &quot;event&quot; is a change in state that holds some significance for the objects in the system. These events trigger specific actions, allowing for more efficient communication and interaction between different system components.</p>
 <p>In the world of software architecture, EDA is a breath of fresh air. It&#x27;s an innovative and elegant solution to many of the issues plaguing complex distributed systems. But how does it work? How does it compare to more traditional architectural patterns? And, more importantly, how can you implement it in your own projects? These are the questions we&#x27;ll be addressing in the rest of this blog.</p>
-<p>Stay with us as we unpack the complexities of the EDA pattern, providing insights into how it can help revolutionize the way we design and manage systems. We&#x27;ll be discussing its key components, demonstrating how to implement it with a practical Java example, and shedding light on the challenges that come with this approach.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Stay with us as we unpack the complexities of the EDA pattern, providing insights into how it can help revolutionize the way we design and manage systems. We&#x27;ll be discussing its key components, demonstrating how to implement it with a practical Java example, and shedding light on the challenges that come with this approach.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Managing Complex Interactions in Distributed Systems</h1>
@@ -1147,7 +1144,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1163,7 +1159,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1177,7 +1172,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1192,12 +1186,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>As the complexity of software applications grew over time, developers embraced distributed systems due to their inherent capabilities for scalability and resilience. But as with any technology shift, distributed systems brought with them a host of challenges. One major problem we encounter in the world of distributed systems is managing complex interactions.</p>
+    <div class="topic-content"><p>As the complexity of software applications grew over time, developers embraced distributed systems due to their inherent capabilities for scalability and resilience. But as with any technology shift, distributed systems brought with them a host of challenges. One major problem we encounter in the world of distributed systems is managing complex interactions.</p>
 <h2>When Simplicity is no longer the Norm</h2>
 <p>In a simple system, you might have a small number of components interacting in predictable ways. This straightforward environment becomes a lot more complex as we scale up. In a distributed system, you have a multitude of components that need to interact and communicate. It&#x27;s not hard to imagine the complexity involved in managing these interactions. How can these components communicate effectively? How do you ensure that changes in one part of the system are reflected in others?</p>
 <p>Have you ever stopped to consider how an email notification system works? When you receive an email saying that a product you ordered has been shipped, or that a blog you follow has a new post, it&#x27;s all thanks to systems efficiently handling complex interactions.</p>
@@ -1212,11 +1204,17 @@
 <p>When we talk about distributed systems, we can&#x27;t overlook the issue of data consistency. With multiple components potentially reading and writing data concurrently, how do we ensure consistency? If one component updates a piece of data, how do we ensure that other components working with that data are aware of the change?</p>
 <p>Think about an online banking system. When you make a transaction, it&#x27;s critical that your account balance is updated promptly and accurately. But what if, at the same moment, another transaction is being processed on your account? Ensuring data consistency in such scenarios is crucial.</p>
 <p>To sum it up, managing complex interactions, ensuring efficient asynchronous communication, real-time responsiveness, and data consistency are all significant challenges in distributed systems. But what if we told you that there&#x27;s an architectural pattern that can address these issues? A pattern that could make managing complex interactions in distributed systems a breeze?</p>
-<p>Enter the world of Event-Driven Architecture. Are you ready to discover how it can change the game for distributed systems? Let&#x27;s dive right in!</p></div></div></div></div></div></div></div>
-  </div>
+<p>Enter the world of Event-Driven Architecture. Are you ready to discover how it can change the game for distributed systems? Let&#x27;s dive right in!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Event-Driven Architecture A Promising Solution</h1>
@@ -1271,7 +1269,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Event-Driven Architecture A Promising Solution): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1287,7 +1284,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1301,7 +1297,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1316,12 +1311,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In a world where systems are becoming increasingly complex, we need a solution that can handle multiple interactions seamlessly. Enter Event-Driven Architecture, or EDA. But what is EDA, and how does it solve our problem? Let&#x27;s find out.</p>
+    <div class="topic-content"><p>In a world where systems are becoming increasingly complex, we need a solution that can handle multiple interactions seamlessly. Enter Event-Driven Architecture, or EDA. But what is EDA, and how does it solve our problem? Let&#x27;s find out.</p>
 <p>EDA is a design pattern that revolves around the production, detection, consumption of, and reaction to events. An event is a change in state, or an update, that is produced by a component, often referred to as the event producer. This event is then detected and consumed by one or more components, known as event consumers.</p>
 <p>Doesn&#x27;t it sound simple? An event occurs, it gets transmitted, and then it&#x27;s handled. It&#x27;s like a courier service where a package (event) is sent by the sender (producer) and received by the recipient (consumer). The delivery service (event bus) takes care of delivering the package. The beauty of this analogy lies in its simplicity. Even when we scale it up - with multiple senders and receivers - the core concept remains the same.</p>
 <p>But, what makes EDA a worthy solution for managing complex interactions in distributed systems?</p>
@@ -1342,11 +1335,17 @@
 <p>In conclusion, Event-Driven Architecture emerges as a robust solution to the challenges posed by complex interactions in distributed systems. It not only offers efficient handling of events but also provides flexibility, scalability, and real-time processing, making it a compelling choice for modern software architecture.</p>
 <p>However, before we rush to implement EDA, let&#x27;s consider a few things. Just like any architectural pattern, EDA is not a silver bullet. It&#x27;s suited for specific use cases and scenarios and understanding where to implement it is just as important as understanding how to implement it.</p>
 <p>Moreover, while EDA brings significant advantages, it also comes with its own set of challenges. In the upcoming sections, we will discuss these challenges, the special considerations needed when implementing EDA, and look at a Java-based example for a clearer understanding.</p>
-<p>Now, you might be wondering, what exactly is the architecture of an Event-Driven system? How do the different components work together? Let&#x27;s dive deeper into these topics in the following sections.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Now, you might be wondering, what exactly is the architecture of an Event-Driven system? How do the different components work together? Let&#x27;s dive deeper into these topics in the following sections.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Event-Driven Architecture Pattern</h1>
@@ -1401,7 +1400,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Architecture of the Event-Driven Architecture Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1417,7 +1415,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1431,7 +1428,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1446,12 +1442,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Event-Driven Architecture (EDA) is a profound and powerful design pattern that offers significant benefits in terms of flexibility, responsiveness, and scalability. But to truly appreciate its value, we must delve into its architecture and understand how its various components work together. Buckle up, because we are about to embark on an architectural tour of EDA!</p>
+    <div class="topic-content"><p>Event-Driven Architecture (EDA) is a profound and powerful design pattern that offers significant benefits in terms of flexibility, responsiveness, and scalability. But to truly appreciate its value, we must delve into its architecture and understand how its various components work together. Buckle up, because we are about to embark on an architectural tour of EDA!</p>
 <h2>Understanding the Components</h2>
 <p>The Event-Driven Architecture pattern comprises several components working together seamlessly. To begin with, let&#x27;s reiterate what these components are:</p>
 <ol>
@@ -1484,11 +1478,17 @@
 <p>Event Consumers are constantly listening to their subscribed channels on the Event Bus. When an event arrives, the consumer processes it, leading to a change in the system state.</p>
 <p>To better visualize the interaction, imagine a home automation system. A temperature sensor (Event Producer) detects a change in room temperature and generates an event. This event is passed to the Event Bus and routed via a specific channel. The air conditioner (Event Consumer) is listening to this channel, receives the event, and adjusts its settings accordingly.</p>
 <p>While this architecture may seem simple, it’s extremely powerful. However, it also comes with its unique set of challenges and considerations. As we journey further into understanding the Event-Driven Architecture, it’s crucial to keep these in mind.</p>
-<p>We have now dissected the Event-Driven Architecture and gained insights into its anatomy. It’s time to dive deeper and witness this architecture in action. Are you ready to take a look at a Java-based implementation of the EDA pattern? Let’s go!</p></div></div></div></div></div></div></div>
-  </div>
+<p>We have now dissected the Event-Driven Architecture and gained insights into its anatomy. It’s time to dive deeper and witness this architecture in action. Are you ready to take a look at a Java-based implementation of the EDA pattern? Let’s go!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">The Inner Workings of the Event-Driven Architecture Pattern</h1>
@@ -1543,7 +1543,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Inner Workings of the Event-Driven Architecture Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1559,7 +1558,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1573,7 +1571,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1588,12 +1585,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Peeling back the layers of Event-Driven Architecture (EDA) offers us insights into its inner workings and helps us appreciate its elegance. We&#x27;ve grasped the basic architecture, but how does it all come together in a running system? Let&#x27;s find out!</p>
+    <div class="topic-content"><p>Peeling back the layers of Event-Driven Architecture (EDA) offers us insights into its inner workings and helps us appreciate its elegance. We&#x27;ve grasped the basic architecture, but how does it all come together in a running system? Let&#x27;s find out!</p>
 <h2>Event Generation and Propagation</h2>
 <p>The life of an event starts with a change in state in the system. This could be a user action, a sensor reading, or even an internal system update. An event is then generated to encapsulate this change in state. But how does this process occur?</p>
 <p>Event Producers are responsible for generating these events. In essence, an event is a bundle of data representing a significant occurrence in the system. Once an event is generated, it needs to be propagated through the system. Here&#x27;s where the Event Bus comes into play.</p>
@@ -1616,11 +1611,17 @@
 <p>CQRS, on the other hand, involves separating the read and write operations of a system. This can be especially useful in an EDA, as it allows us to model our event handlers (write operations) separately from our views (read operations).</p>
 <h2>Wrapping Up The Inner Workings</h2>
 <p>Unraveling the inner workings of the Event-Driven Architecture helps us grasp its operation on a more profound level. From the creation of events to their consumption, we&#x27;ve traced the lifecycle of an event in an EDA. However, understanding this architecture isn&#x27;t just about appreciating its operation but also about recognizing its strengths and potential pitfalls.</p>
-<p>Do you feel ready to delve into a Java-based example of the Event-Driven Architecture? Are there questions about the operation of the EDA that you still want to explore? Let&#x27;s proceed on our journey and see this elegant architecture in action in the world of code.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Do you feel ready to delve into a Java-based example of the Event-Driven Architecture? Are there questions about the operation of the EDA that you still want to explore? Let&#x27;s proceed on our journey and see this elegant architecture in action in the world of code.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Event-Driven Architecture Pattern An Example</h1>
@@ -1675,7 +1676,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Event-Driven Architecture Pattern An Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1691,7 +1691,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1705,7 +1704,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1720,15 +1718,13 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Exploring an Event-Driven Architecture (EDA) theoretically gives us a good understanding of its principles and operation. But, there&#x27;s nothing quite like a hands-on example to cement these concepts. In this section, we&#x27;ll explore a simple EDA using Java, covering the creation of event producers, event consumers, the event bus, and event channels.</p>
+    <div class="topic-content"><p>Exploring an Event-Driven Architecture (EDA) theoretically gives us a good understanding of its principles and operation. But, there&#x27;s nothing quite like a hands-on example to cement these concepts. In this section, we&#x27;ll explore a simple EDA using Java, covering the creation of event producers, event consumers, the event bus, and event channels.</p>
 <h2>Creating an Event</h2>
 <p>Our journey begins with an Event. In Java, we can represent an event as a simple class. This class would typically hold information relevant to the event. For our example, let&#x27;s create a basic <code>VehicleEvent</code> for a traffic management system.</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>VehicleEvent</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>VehicleEvent</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> final </span><span>String</span><span> vehicleId</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> final </span><span>String</span><span> type</span><span>;</span><span>
 </span>
@@ -1744,11 +1740,11 @@
 <span>    </span><span>public</span><span> </span><span>String</span><span> </span><span>getType</span><span>(</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>return</span><span> type</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>This event represents a vehicle&#x27;s action (like &#x27;entering&#x27; or &#x27;leaving&#x27; a zone) in our system.</p>
 <h2>Creating an Event Producer</h2>
 <p>An Event Producer generates events. In our example, let&#x27;s consider sensors at traffic signals as event producers. Every time a vehicle passes, the sensor generates a <code>VehicleEvent</code>.</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>Sensor</span><span> </span><span>implements</span><span> </span><span>EventProducer</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>Sensor</span><span> </span><span>implements</span><span> </span><span>EventProducer</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>EventBus</span><span> eventBus</span><span>;</span><span>
 </span>
 <span>    </span><span>public</span><span> </span><span>Sensor</span><span>(</span><span>EventBus</span><span> eventBus</span><span>)</span><span> </span><span>{</span><span>
@@ -1759,11 +1755,11 @@
 </span><span>        </span><span>VehicleEvent</span><span> event </span><span>=</span><span> </span><span>new</span><span> </span><span>VehicleEvent</span><span>(</span><span>vehicleId</span><span>,</span><span> action</span><span>)</span><span>;</span><span>
 </span><span>        eventBus</span><span>.</span><span>publish</span><span>(</span><span>event</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In the <code>vehicleDetected</code> method, we generate a new <code>VehicleEvent</code> and publish it to the <code>EventBus</code>.</p>
 <h2>Creating an Event Bus and Event Channels</h2>
 <p>The <code>EventBus</code> is the main communication channel in our system. It holds <code>EventChannels</code> and provides a publish mechanism for producers. An <code>EventChannel</code>, in turn, holds a list of consumers and a method to add an event to the channel.</p>
-<pre><div><div><code><span>public</span><span> </span><span>interface</span><span> </span><span>EventBus</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>interface</span><span> </span><span>EventBus</span><span> </span><span>{</span><span>
 </span><span>    </span><span>void</span><span> </span><span>publish</span><span>(</span><span>VehicleEvent</span><span> event</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>void</span><span> </span><span>addChannel</span><span>(</span><span>EventChannel</span><span> channel</span><span>)</span><span>;</span><span>
 </span><span></span><span>}</span><span>
@@ -1811,11 +1807,11 @@
 </span><span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>addConsumer</span><span>(</span><span>EventConsumer</span><span> consumer</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        consumers</span><span>.</span><span>add</span><span>(</span><span>consumer</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In our simple implementation, when an event is published to the <code>EventBus</code>, it is added to all the <code>EventChannels</code> on the bus. Each <code>EventChannel</code> then passes the event to all its consumers.</p>
 <h2>Creating an Event Consumer</h2>
 <p>Finally, we need Event Consumers that will process the events. In our traffic management system, let&#x27;s consider traffic lights as consumers. They respond to vehicle events by adjusting their timings.</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>TrafficLight</span><span> </span><span>implements</span><span> </span><span>Event</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>TrafficLight</span><span> </span><span>implements</span><span> </span><span>Event</span><span>
 </span>
 <span></span><span>Consumer</span><span> </span><span>{</span><span>
 </span><span>    @</span><span>Override</span><span>
@@ -1826,14 +1822,20 @@
 </span><span>            </span><span>System</span><span>.</span><span>out</span><span>.</span><span>println</span><span>(</span><span>&quot;Vehicle &quot;</span><span> </span><span>+</span><span> event</span><span>.</span><span>getVehicleId</span><span>(</span><span>)</span><span> </span><span>+</span><span> </span><span>&quot; has left. Resetting traffic light timings.&quot;</span><span>)</span><span>;</span><span>
 </span><span>        </span><span>}</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>Our <code>TrafficLight</code> consumer reacts to <code>VehicleEvent</code>s by adjusting its timings.</p>
 <p>With this, our basic Event-Driven Architecture in Java is complete. We have created events, producers, consumers, an event bus, and event channels.</p>
-<p>Have you grasped the flow of events in our traffic management system? Can you appreciate how this code reflects the principles of the Event-Driven Architecture we have been discussing? Let&#x27;s move on to explore the issues, special considerations, and performance implications of this pattern.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Have you grasped the flow of events in our traffic management system? Can you appreciate how this code reflects the principles of the Event-Driven Architecture we have been discussing? Let&#x27;s move on to explore the issues, special considerations, and performance implications of this pattern.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Performance Implications and Special Considerations</h1>
@@ -1888,7 +1890,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications and Special Considerations): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1904,7 +1905,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1918,7 +1918,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1933,12 +1932,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Event-Driven Architecture (EDA) brings a number of impressive benefits to the table. However, it&#x27;s essential to also be aware of the performance implications and special considerations that come into play when using this architectural pattern. Whether it&#x27;s issues related to scalability, processing speed, error handling, or system complexity, there are many factors to consider when opting for an EDA.</p>
+    <div class="topic-content"><p>Event-Driven Architecture (EDA) brings a number of impressive benefits to the table. However, it&#x27;s essential to also be aware of the performance implications and special considerations that come into play when using this architectural pattern. Whether it&#x27;s issues related to scalability, processing speed, error handling, or system complexity, there are many factors to consider when opting for an EDA.</p>
 <h2>Scalability</h2>
 <p>One of the first things you&#x27;ll appreciate about EDA is its scalability. Remember, each component in an EDA is decoupled from the others. This means you can scale them independently based on demand. Is there a high volume of events being produced but your consumers are unable to keep up? Simply scale up your consumers without affecting the producers or the event channels. However, ensuring a balance to avoid overwhelming certain parts of the system requires careful consideration.</p>
 <h2>Processing Speed and Latency</h2>
@@ -1954,11 +1951,17 @@
 <h2>Testing</h2>
 <p>How do you test an event-driven system? Unit testing individual components might not be enough, as it won&#x27;t cover the interactions between the different parts of your system. You might need to rely on comprehensive integration and end-to-end tests. While it ensures your system works as a whole, it also brings in added complexity in terms of writing and maintaining these tests.</p>
 <p>By no means should these considerations deter you from using EDA. Rather, these points should serve as a guide to navigate the challenges you may face in implementing an EDA, helping you build a more robust, resilient, and performant system. After all, every architecture has its trade-offs. The trick lies in understanding them and making informed decisions.</p>
-<p>Having walked through these considerations, are you wondering where you can apply this architecture? Let&#x27;s now look at some of the common use cases and system design examples where the Event-Driven Architecture pattern shines.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Having walked through these considerations, are you wondering where you can apply this architecture? Let&#x27;s now look at some of the common use cases and system design examples where the Event-Driven Architecture pattern shines.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">Use Cases and System Design Examples</h1>
@@ -2013,7 +2016,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Use Cases and System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2029,7 +2031,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2043,7 +2044,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2058,12 +2058,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Event-Driven Architecture (EDA) is not a one-size-fits-all solution, but it is incredibly powerful when applied to the right situations. With its inherent benefits of scalability, loose coupling, and real-time responsiveness, EDA finds itself a natural fit in various scenarios. Let&#x27;s dive deeper into these contexts to understand the applicability of this architectural pattern better.</p>
+    <div class="topic-content"><p>Event-Driven Architecture (EDA) is not a one-size-fits-all solution, but it is incredibly powerful when applied to the right situations. With its inherent benefits of scalability, loose coupling, and real-time responsiveness, EDA finds itself a natural fit in various scenarios. Let&#x27;s dive deeper into these contexts to understand the applicability of this architectural pattern better.</p>
 <h2>Real-Time Analytics</h2>
 <p>In a world that&#x27;s becoming increasingly data-driven, the ability to process and analyze data in real-time is a powerful advantage. Here&#x27;s where EDA shines brightly. As events are generated, they can be instantly consumed and processed, allowing the system to provide real-time insights. This is especially useful in domains like finance, where real-time stock market data can be processed to make instantaneous trading decisions.</p>
 <h2>IoT Systems</h2>
@@ -2078,11 +2076,17 @@
 <p>During the ride, the driver&#x27;s app continuously sends events about the current location. The rider&#x27;s app consumes these events and updates the rider&#x27;s display in real-time. Once the ride ends, the driver&#x27;s app sends a ride completion event. The billing service consumes this event, calculates the fare and triggers a payment event.</p>
 <p>This example showcases the power of EDA in handling complex workflows and promoting real-time, asynchronous processing, and loosely coupled system design.</p>
 <p>By now, you&#x27;ve likely realized that EDA is more than an abstract concept. It&#x27;s a practical architectural pattern that, when applied correctly, can solve complex challenges elegantly and efficiently. However, the decision to use EDA should not be taken lightly, as it comes with its own set of considerations that must be understood and navigated.</p>
-<p>Does this all mean that EDA is the end-all solution for designing robust, scalable systems? Let&#x27;s wrap up our discussion and find the answer in the conclusion.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Does this all mean that EDA is the end-all solution for designing robust, scalable systems? Let&#x27;s wrap up our discussion and find the answer in the conclusion.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Conclusion</h1>
@@ -2137,7 +2141,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Conclusion): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2153,7 +2156,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2167,7 +2169,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2182,12 +2183,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In our journey through the intricate world of the Event-Driven Architecture pattern, we&#x27;ve covered considerable ground. From understanding the foundational problem that it seeks to solve, to diving deep into its inner workings and dissecting a Java example, we&#x27;ve seen the EDA pattern in all its glory. But now, let&#x27;s take a step back and reflect. Is EDA the solution to all our distributed system challenges? Does it come with a guarantee of scalability, performance, and ease of implementation?</p>
+    <div class="topic-content"><p>In our journey through the intricate world of the Event-Driven Architecture pattern, we&#x27;ve covered considerable ground. From understanding the foundational problem that it seeks to solve, to diving deep into its inner workings and dissecting a Java example, we&#x27;ve seen the EDA pattern in all its glory. But now, let&#x27;s take a step back and reflect. Is EDA the solution to all our distributed system challenges? Does it come with a guarantee of scalability, performance, and ease of implementation?</p>
 <p>As with most architectural decisions, the answer is - it depends. It depends on the specific needs of your system, the nature of the interactions between your services, the level of complexity you&#x27;re dealing with, and the resources at your disposal.</p>
 <p>EDA certainly brings a plethora of benefits to the table. Its ability to facilitate loose coupling between services, provide real-time processing, and handle asynchronous operations makes it a strong contender in many scenarios, particularly where systems are event-heavy or require significant scale.</p>
 <p>But the EDA pattern isn&#x27;t without its challenges. As we&#x27;ve seen, the pattern requires careful thought and planning around event design, error handling, and transaction management. Plus, the complexity of tracking and debugging in an event-driven environment should not be underestimated.</p>
@@ -2195,11 +2194,21 @@
 <p>You&#x27;ve probably heard the famous quote by the software architect Grady Booch - &quot;A good architecture is not one that uses every pattern known to mankind but one that elegantly solves the problem at hand.&quot; The EDA pattern, like any other pattern, is a tool in your architectural toolbox. And knowing when to use which tool is the essence of good software design.</p>
 <p>If your system&#x27;s requirements align with the strengths of EDA, and you&#x27;re willing to navigate its associated challenges, then EDA can indeed be a powerful pattern to adopt. From real-time analytics and IoT systems to microservices and beyond, EDA has proven its mettle in numerous scenarios.</p>
 <p>Finally, let&#x27;s remember that architectural patterns don&#x27;t exist in isolation. They often complement each other and can be used in conjunction to create robust, scalable, and efficient systems. So while we&#x27;ve deep-dived into EDA in this chapter, let&#x27;s not forget to consider it in the broader context of your overall system architecture.</p>
-<p>In conclusion, the Event-Driven Architecture pattern is a compelling and versatile tool for managing complex interactions in distributed systems. It&#x27;s not without its challenges, but with careful planning and understanding, it can be a game-changer in the right scenario. We hope that this chapter has provided you with a comprehensive understanding of EDA and how it can be leveraged to build efficient, scalable systems.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In conclusion, the Event-Driven Architecture pattern is a compelling and versatile tool for managing complex interactions in distributed systems. It&#x27;s not without its challenges, but with careful planning and understanding, it can be a game-changer in the right scenario. We hope that this chapter has provided you with a comprehensive understanding of EDA and how it can be leveraged to build efficient, scalable systems.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

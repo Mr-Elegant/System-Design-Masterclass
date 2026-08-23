@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (4)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item active" data-num="01" data-title="gpu clusters &amp; distributed training / inference parallelism"><a href="#chapter-01"><span class="chapter-num">01</span> GPU Clusters &amp; Distributed Training / Inference Parallelism</a></li>
@@ -944,7 +943,7 @@
 
     <main class="content" id="main-content">
 
-        <div class="content-container">
+        <div class="content-inner">
 <!-- Preet Karwal Author Watermark & Navigation Bar -->
         <div class="author-watermark-card">
             <div style="display: flex; align-items: center; gap: 14px;">
@@ -977,9 +976,11 @@
             </div>
         </div>
 
+
+
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">GPU Clusters &amp; Distributed Training / Inference Parallelism</h1>
@@ -1034,7 +1035,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (GPU Clusters &amp; Distributed Training / Inference Parallelism): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1050,7 +1050,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1064,7 +1063,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1079,12 +1077,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradGpu" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1131,7 +1132,6 @@
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> 3D Parallelism coordinates Tensor Parallelism (TP) across intra-node NVLink (900 GB/s), Pipeline Parallelism (PP) across inter-node InfiniBand (400 Gbps), and ZeRO-3/FSDP Data Parallelism to scale models beyond single-GPU VRAM limits.
       </div>
-    </div>
 
     <h2>1. The Hardware Physics &amp; The Memory Wall</h2>
     <p>State-of-the-art Large Language Models (e.g., Llama-3 70B, GPT-4 with ~1.8 Trillion mixture-of-experts parameters) fundamentally challenge modern computing hardware. To design AI systems at scale, an architect must understand the physical constraints of GPU memory bandwidth, compute FLOPS, and interconnect topology.</p>
@@ -1224,9 +1224,16 @@ class RowParallelLinear(nn.Module):
       </tbody>
     </table>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">LLM Inference Optimization &amp; KV-Cache Architecture</h1>
@@ -1281,7 +1288,6 @@ class RowParallelLinear(nn.Module):
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1297,7 +1303,6 @@ class RowParallelLinear(nn.Module):
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1311,7 +1316,6 @@ class RowParallelLinear(nn.Module):
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1326,12 +1330,15 @@ class RowParallelLinear(nn.Module):
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-      <div class="diagram-body">
-        <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
+    <svg class="diagram-svg" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradPaged" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
@@ -1377,7 +1384,6 @@ class RowParallelLinear(nn.Module):
       <div class="diagram-caption">
         💡 <strong>Key Architecture Takeaway:</strong> PagedAttention divides contiguous logical token sequences into non-contiguous physical GPU memory pages, eliminating 96% of VRAM fragmentation and enabling 4x higher request concurrency.
       </div>
-    </div>
 
     <h2>1. Full VRAM Allocation Breakdown in Production Serving</h2>
     <p>When deploying an LLM inference server (vLLM / TensorRT-LLM), total GPU VRAM is partitioned into four critical segments:</p>
@@ -1451,9 +1457,16 @@ class BlockTableManager:
       <li><strong>Hardware Asynchrony:</strong> FlashAttention-3 utilizes Nvidia Hopper Tensor Memory Accelerator (TMA) and FP8 Tensor Core hardware pipelines to overlap computation with memory movement.</li>
     </ul>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Speculative Decoding &amp; Model Quantization</h1>
@@ -1508,7 +1521,6 @@ class BlockTableManager:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Speculative Decoding &amp; Model Quantization): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1524,7 +1536,6 @@ class BlockTableManager:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1538,7 +1549,6 @@ class BlockTableManager:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1553,8 +1563,6 @@ class BlockTableManager:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1601,9 +1609,15 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
     <h3>B. AWQ (Activation-aware Weight Quantization - INT4)</h3>
     <p>AWQ observes that not all weights are equally important: protecting the top 1% salient weight channels (determined by average activation magnitude) prevents perplexity degradation. AWQ scales salient channels by factor s &gt; 1 before per-group INT4 quantization without requiring expensive backpropagation retraining.</p>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Semantic Vector Caching &amp; Prompt Engineering Systems</h1>
@@ -1658,7 +1672,6 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Hybrid RAG Pipeline: Semantic chunking with Dense Vector HNSW and Sparse BM25 keyword retrieval, unified by Cross-Encoder Reranking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1674,7 +1687,6 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1688,7 +1700,6 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1703,8 +1714,6 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1727,10 +1736,20 @@ def verify_speculative_tokens(draft_tokens, draft_probs, target_probs):
       <li><strong>Multi-Turn Chat Reuse:</strong> In a 10-turn chat, Turn N reuses the KV blocks of Turns 1 ... N-1 directly from memory, reducing TTFT from 1,200ms to &lt; 60ms.</li>
     </ul>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
         </div>
     
+</div>
+
+
+
 </main>
 
 

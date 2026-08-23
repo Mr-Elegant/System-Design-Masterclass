@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (7)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to the api gateway pattern"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to the API Gateway Pattern</a></li>
@@ -958,8 +957,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -978,9 +975,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to the API Gateway Pattern</h1>
@@ -1035,7 +1031,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction to the API Gateway Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1051,7 +1046,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1065,7 +1059,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1080,19 +1073,17 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Imagine for a moment you’re ordering a burger at a fast-food restaurant. You go to the counter, place your order, pay for it, and then wait for your burger. Here, the counter where you place your order is like an API Gateway in microservices. It’s the single point where you, as a customer, interact with the restaurant&#x27;s services (kitchen, billing, etc.).</p>
+    <div class="topic-content"><p>Imagine for a moment you’re ordering a burger at a fast-food restaurant. You go to the counter, place your order, pay for it, and then wait for your burger. Here, the counter where you place your order is like an API Gateway in microservices. It’s the single point where you, as a customer, interact with the restaurant&#x27;s services (kitchen, billing, etc.).</p>
 <p><strong>What is API Gateway Pattern?</strong>
 In microservice architecture, you have lots of different services doing their own thing. The API Gateway Pattern is about having a single entry point for external consumers to access these various services. This makes it easier to manage, secures your services, and provides a unified interface for the external world.</p>
 <h2>Why API Gateway Pattern?</h2>
 <p>In the world of software architecture, one trend that has become increasingly dominant over the past few years is the shift from monolithic structures to microservices architecture. This change, much like the shift from landlines to smartphones in telecommunications, has brought forth an array of benefits - enhanced scalability, increased flexibility, and more. However, as with any technological advancement, it also presents its own unique set of challenges.</p>
 <p>One of the biggest challenges of microservices is: How can we ensure effective and efficient communication between these large number of services? How do we manage the growing complexity that comes with the increasing number of interactions between services? This is where the API Gateway Pattern steps in. Let&#x27;s understand this with an example.</p>
 <p><strong>Example:</strong></p>
-<p>Think about Netflix. When you open Netflix on your TV or phone, it needs to get data like movie lists, user preferences, subtitles, etc. Netflix has a ton of microservices for these different pieces of data. Instead of your TV app calling each microservice separately, it calls a Netflix API Gateway, which then talks to the necessary microservices. Simpler for your TV app, right?</p></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>API Gateway</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h3>API Gateway Pattern: The Master Orchestrator</h3>
+<p>Think about Netflix. When you open Netflix on your TV or phone, it needs to get data like movie lists, user preferences, subtitles, etc. Netflix has a ton of microservices for these different pieces of data. Instead of your TV app calling each microservice separately, it calls a Netflix API Gateway, which then talks to the necessary microservices. Simpler for your TV app, right?</p></div><div class="topic-content"></img><div><figcaption>API Gateway</figcaption></div><div class="topic-content"><h3>API Gateway Pattern: The Master Orchestrator</h3>
 <p>The API Gateway Pattern operates much like the conductor of an orchestra. It oversees and directs the entire ensemble of services, ensuring that each plays its part at the right time to produce a harmonious output. It serves as the single entry point for all client requests and routes these requests to the appropriate microservices. It then gathers the responses from the concerned microservices and delivers a unified response back to the client.</p>
 <p>The beauty of this pattern lies in its ability to mask the underlying complexity from the clients. As a client, you wouldn&#x27;t need to know how many services are involved or how they communicate with each other. All you need to do is make a request, and the API Gateway takes care of the rest. Isn&#x27;t that marvelously efficient and convenient?</p>
 <p><strong>Advantages of API Gateway</strong></p>
@@ -1101,11 +1092,18 @@ In microservice architecture, you have lots of different services doing their ow
 <li><strong>Security</strong>: You can add authentication and authorization at the gateway level.</li>
 <li><strong>Performance</strong>: You can add caching, compress responses, and manage load balancing.</li>
 <li><strong>Cross-Cutting Concerns</strong>: Handle logging, analytics, and other stuff at one place.</li>
-</ul></div></div></div></div></div></div></div></div>
-  </div>
+</ul></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Advantages of API Gateway Pattern</h1>
@@ -1160,7 +1158,6 @@ In microservice architecture, you have lots of different services doing their ow
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Advantages of API Gateway Pattern): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1176,7 +1173,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1190,7 +1186,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1205,12 +1200,10 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Imagine a city with lots of different services and places to visit. If you are a tourist and you have to interact with each service individually, it can get confusing and overwhelming very quickly. But, if there is a single information center that guides you and helps you interact with all these services, your life becomes a whole lot easier. That’s what the API Gateway does in the world of microservices.</p>
+    <div class="topic-content"><p>Imagine a city with lots of different services and places to visit. If you are a tourist and you have to interact with each service individually, it can get confusing and overwhelming very quickly. But, if there is a single information center that guides you and helps you interact with all these services, your life becomes a whole lot easier. That’s what the API Gateway does in the world of microservices.</p>
 <p>The API Gateway Pattern really is a powerhouse when it comes to organizing and simplifying interactions in a microservices architecture. Here are a few problems that it helps to solve:</p>
 <h3><strong>1. Complexity of Interactions</strong>:</h3>
 <ul>
@@ -1226,7 +1219,7 @@ In microservice architecture, you have lots of different services doing their ow
 <ul>
 <li><strong>Problem</strong>: Handling security for each service individually can be a nightmare. You need to make sure each service is secure, and that’s a lot of work.</li>
 <li><strong>API Gateway Solution</strong>: It can handle authentication and authorization centrally. Clients authenticate with the Gateway, and then the Gateway ensures that the clients are who they say they are.</li>
-</ul></div></div></div></div></div><div><div><div><div><div><div><div></img><div><figcaption>API Gateway</figcaption></div></div></div></div></div></div></div><div><div><div><div><div><h3><strong>4. Load Balancing</strong>:</h3>
+</ul></div><div class="topic-content"></img><div><figcaption>API Gateway</figcaption></div><div class="topic-content"><h3><strong>4. Load Balancing</strong>:</h3>
 <ul>
 <li><strong>Problem</strong>: Some services might get more traffic than others, and you need to manage this traffic efficiently.</li>
 <li><strong>API Gateway Solution</strong>: It can distribute the incoming traffic evenly across services, ensuring no single service is overwhelmed.</li>
@@ -1286,11 +1279,18 @@ In microservice architecture, you have lots of different services doing their ow
 <li><strong>Problem</strong>: Some operations might take a long time to complete and shouldn’t block the client.</li>
 <li><strong>API Gateway Solution</strong>: The Gateway can handle these asynchronous operations, providing clients with a way to check on progress or receive a callback when the operation is complete.</li>
 </ul>
-<p>By addressing these issues, the API Gateway Pattern helps create a smoother, more reliable interaction layer for clients to communicate with a microservices architecture. It’s like having a super-efficient helper that takes care of all the nitty-gritty details, letting you enjoy a seamless experience.</p></div></div></div></div></div></div></div></div>
-  </div>
+<p>By addressing these issues, the API Gateway Pattern helps create a smoother, more reliable interaction layer for clients to communicate with a microservices architecture. It’s like having a super-efficient helper that takes care of all the nitty-gritty details, letting you enjoy a seamless experience.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">API Gateway Pattern An Example</h1>
@@ -1345,7 +1345,6 @@ In microservice architecture, you have lots of different services doing their ow
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (API Gateway Pattern An Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1361,7 +1360,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1375,7 +1373,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1390,12 +1387,10 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let&#x27;s go through a Java code example to demonstrate how the API Gateway pattern comes to life.</p>
+    <div class="topic-content"><p>Let&#x27;s go through a Java code example to demonstrate how the API Gateway pattern comes to life.</p>
 <h2>Setting Up the Scenario</h2>
 <p>Picture a library system where various clients – library users, staff, and management – interact with different microservices like the Catalogue Service, User Service, and Inventory Service. We&#x27;ll implement the API Gateway pattern in this scenario to handle and route client requests efficiently.</p>
 <h2>Defining the Services</h2>
@@ -1404,7 +1399,7 @@ In microservice architecture, you have lots of different services doing their ow
 <h2>Creating the API Gateway</h2>
 <p>Next, we&#x27;ll create our API Gateway. This will be a separate Java class that acts as a single point of contact for all client requests. Think of it as a receptionist at the library, fielding questions from visitors and directing them to the right place.</p>
 <p>Our <code>ApiGateway</code> class will have methods corresponding to each client request, similar to the services. However, rather than handling these requests directly, these methods will delegate the work to the appropriate service.</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>ApiGateway</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>ApiGateway</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>UserService</span><span> userService</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>CatalogueService</span><span> catalogueService</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>InventoryService</span><span> inventoryService</span><span>;</span><span>
@@ -1424,12 +1419,18 @@ In microservice architecture, you have lots of different services doing their ow
 </span><span>    </span><span>}</span><span>
 </span>    
 <span>    </span><span>// ...additional methods as needed...</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
-<p>In this snippet, the <code>ApiGateway</code> class receives a request for user details and passes it along to the <code>UserService</code>. The same process applies to a book title search, which is routed to the <code>CatalogueService</code>.</p></div></div></div></div></div></div></div>
-  </div>
+</span><span></span><span>}</span></code></div></pre>
+<p>In this snippet, the <code>ApiGateway</code> class receives a request for user details and passes it along to the <code>UserService</code>. The same process applies to a book title search, which is routed to the <code>CatalogueService</code>.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Performance Implications</h1>
@@ -1484,7 +1485,6 @@ In microservice architecture, you have lots of different services doing their ow
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1500,7 +1500,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1514,7 +1513,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1529,12 +1527,10 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Every rose has its thorn, and the API Gateway Pattern is no different. While it solves many problems, it also introduces some challenges. Let’s take a closer look.</p>
+    <div class="topic-content"><p>Every rose has its thorn, and the API Gateway Pattern is no different. While it solves many problems, it also introduces some challenges. Let’s take a closer look.</p>
 <h2>Problems Associated with API Gateway Pattern</h2>
 <h3>1. <strong>Single Point of Failure:</strong></h3>
 <ul>
@@ -1592,11 +1588,17 @@ In microservice architecture, you have lots of different services doing their ow
 <li><strong>Implication</strong>: Managing asynchronous operations at the Gateway can be complex and might affect performance.</li>
 <li><strong>Solution</strong>: Optimize the handling of asynchronous operations. Provide clear mechanisms for clients to check operation status or receive callbacks.</li>
 </ul>
-<p>In essence, while the API Gateway Pattern introduces some challenges and performance implications, with careful design, monitoring, and optimization, you can mitigate these issues and ensure a smooth, efficient system.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In essence, while the API Gateway Pattern introduces some challenges and performance implications, with careful design, monitoring, and optimization, you can mitigate these issues and ensure a smooth, efficient system.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">System Design Example</h1>
@@ -1651,7 +1653,6 @@ In microservice architecture, you have lots of different services doing their ow
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1667,7 +1668,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1681,7 +1681,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1696,12 +1695,10 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Let&#x27;s understand how a complex application like Instagram can utilize the API Gateway pattern.</p>
+    <div class="topic-content"><p>Let&#x27;s understand how a complex application like Instagram can utilize the API Gateway pattern.</p>
 <p>Instagram is a fantastic example to explain the API Gateway Pattern because it&#x27;s a complex application with millions of users and a myriad of features. Imagine Instagram as a bustling city with various services like user management, photo processing, notifications, etc. The API Gateway is like the main entrance to this city, directing traffic and making sure everything runs smoothly.</p>
 <h2><strong>Instagram System Design with API Gateway Pattern:</strong></h2>
 <h3><strong>1. API Gateway:</strong></h3>
@@ -1751,11 +1748,17 @@ In microservice architecture, you have lots of different services doing their ow
 <li><strong>Step 5</strong>: The API Gateway aggregates the responses from these services.</li>
 <li><strong>Step 6</strong>: The API Gateway sends a consolidated response back to the user&#x27;s app, showing the feed and notifications.</li>
 </ul>
-<p>By using the API Gateway Pattern, Instagram ensures that there’s a consistent, efficient, and secure way to handle all the interactions required to deliver a seamless experience to its millions of users. It also makes it easier to manage and scale the system as it grows.</p></div></div></div></div></div></div></div>
-  </div>
+<p>By using the API Gateway Pattern, Instagram ensures that there’s a consistent, efficient, and secure way to handle all the interactions required to deliver a seamless experience to its millions of users. It also makes it easier to manage and scale the system as it grows.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Distributed Idempotency &amp; Deduplication Engine</h1>
@@ -1803,7 +1806,6 @@ In microservice architecture, you have lots of different services doing their ow
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1819,7 +1821,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1833,7 +1834,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1848,8 +1848,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1886,9 +1884,15 @@ In microservice architecture, you have lots of different services doing their ow
                 </tbody>
             </table>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Distributed Rate Limiting &amp; Throttling Algorithms</h1>
@@ -1943,7 +1947,6 @@ In microservice architecture, you have lots of different services doing their ow
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Distributed Rate Limiting &amp; Throttling Algorithms): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1959,7 +1962,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1973,7 +1975,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1988,8 +1989,6 @@ In microservice architecture, you have lots of different services doing their ow
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2028,9 +2027,19 @@ In microservice architecture, you have lots of different services doing their ow
                 </tbody>
             </table>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

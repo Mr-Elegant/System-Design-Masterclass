@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (17)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="load balancing"><a href="#chapter-01"><span class="chapter-num">01</span> Load Balancing</a></li>
@@ -968,8 +967,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -988,9 +985,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Load Balancing</h1>
@@ -1045,7 +1041,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Load Balancing): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1061,7 +1056,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1075,7 +1069,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1090,8 +1083,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1111,10 +1102,16 @@
 </ul>
 <h2>Redundant Load Balancers</h2>
 <p>The load balancer can be a single point of failure; to overcome this, a second load balancer can be connected to the first to form a cluster. Each LB monitors the health of the other and, since both of them are equally capable of serving traffic and failure detection, in the event the main load balancer fails, the second load balancer takes over.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Load Balancing Algorithms</h1>
@@ -1169,7 +1166,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Load Balancing Algorithms): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1185,7 +1181,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1199,7 +1194,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1214,8 +1208,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1423,10 +1415,16 @@
 <li><strong>Highly Dynamic Environments</strong>: Suitable for environments where workloads and server performance can change rapidly and unpredictably.</li>
 <li><strong>Custom Requirements</strong>: Useful when standard load balancing algorithms do not meet the specific needs of the application.</li>
 </ul></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Caching</h1>
@@ -1481,7 +1479,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Multi-Tier Caching & Singleflight Stampede Defense: In-Memory Bloom Filter ➔ Redis Cluster ➔ Distributed Mutex Singleflight protecting primary database.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1497,7 +1494,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1511,7 +1507,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1526,8 +1521,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1629,10 +1622,16 @@
 <li>Least Frequently Used (LFU): Counts how often an item is needed. Those that are used least often are discarded first.</li>
 <li>Random Replacement (RR): Randomly selects a candidate item and discards it to make space when necessary.</li>
 </ol></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Data Partitioning</h1>
@@ -1681,7 +1680,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Consistent Hashing Ring with Virtual Nodes (V-Nodes): Distributes key hashes evenly across physical database shard nodes with minimal rebalancing churn.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1697,7 +1695,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1711,7 +1708,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1726,8 +1722,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1761,10 +1755,16 @@ Vertical data partitioning involves splitting a database table into multiple par
 <li>There is a lot of load on a partition, e.g., there are too many requests being handled by the DB partition dedicated to user photos.</li>
 </ol>
 <p>In such cases, either we have to create more DB partitions or have to rebalance existing partitions, which means the partitioning scheme changed and all existing data moved to new locations. Doing this without incurring downtime is extremely difficult. Using a scheme like directory-based Partitioning does make rebalancing a more palatable experience at the cost of increasing the complexity of the system and creating a new single point of failure (i.e. the lookup service/database).</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Indexes</h1>
@@ -1812,7 +1812,6 @@ Vertical data partitioning involves splitting a database table into multiple par
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1828,7 +1827,6 @@ Vertical data partitioning involves splitting a database table into multiple par
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1842,7 +1840,6 @@ Vertical data partitioning involves splitting a database table into multiple par
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1857,8 +1854,6 @@ Vertical data partitioning involves splitting a database table into multiple par
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1902,9 +1897,15 @@ class ConsistentHashRing:
             idx = 0  # Wrap around ring
         return self.node_map[self.ring[idx]]</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Proxies</h1>
@@ -1959,7 +1960,6 @@ class ConsistentHashRing:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Proxies): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1975,7 +1975,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1989,7 +1988,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2004,8 +2002,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2019,10 +2015,16 @@ class ConsistentHashRing:
 <p>A reverse proxy retrieves resources from one or more servers on behalf of a client. These resources are then returned to the client, appearing as if they originated from the proxy server itself, thus anonymizing the server. Contrary to the forward proxy, which hides the client&#x27;s identity, a reverse proxy hides the server&#x27;s identity.</p></div><div><p>In the above diagram, the reverse proxy hides the final server that served the request from the client. The client makes a request for some content from facebook.com; this request is served by facebook’s reverse proxy server, which gets the response from one of the backend servers and returns it to the client.</p>
 <p>A reverse proxy, just like a forward proxy, can be used for caching, load balancing, or routing requests to the appropriate servers.</p></div><div><h2>Summary</h2>
 <p>A proxy is a piece of software or hardware that sits between a client and a server to facilitate traffic. A forward proxy hides the identity of the client, whereas a reverse proxy conceals the identity of the server. So, when you want to protect your clients on your internal network, you should put them behind a forward proxy; on the other hand, when you want to protect your servers, you should put them behind a reverse proxy.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Redundancy and Replication</h1>
@@ -2077,7 +2079,6 @@ class ConsistentHashRing:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Redundancy and Replication): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2093,7 +2094,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2107,7 +2107,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2122,8 +2121,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2138,10 +2135,16 @@ class ConsistentHashRing:
 <p>However, asynchronous replication can also have performance benefits, as write operations can be completed quickly without waiting for confirmation from the replica databases. In addition, if one or more replica databases are unavailable, the write operation can still be completed on the primary database, ensuring that the system remains available.</p>
 <p><strong>Semi-synchronous replication</strong> is a type of database replication that combines elements of both synchronous and asynchronous replication. In semi-synchronous replication, changes made to the primary database are immediately replicated to at least one replica database, while other replicas may be updated asynchronously.</p>
 <p>In semi-synchronous replication, the write operation on the primary is not considered complete until at least one replica database has confirmed that it has received and processed the changes. This ensures that there is some level of strong consistency between the primary and replica databases, while also providing improved performance compared to fully synchronous replication.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">SQL vs NoSQL</h1>
@@ -2196,7 +2199,6 @@ class ConsistentHashRing:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (SQL vs NoSQL): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2212,7 +2214,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2226,7 +2227,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2241,8 +2241,6 @@ class ConsistentHashRing:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2573,9 +2571,15 @@ class BloomFilter:
                 return False  # Definitely not present
         return True  # Probably present</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">CAP Theorem</h1>
@@ -2630,7 +2634,6 @@ class BloomFilter:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (CAP Theorem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2646,7 +2649,6 @@ class BloomFilter:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2660,7 +2662,6 @@ class BloomFilter:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2675,11 +2676,14 @@ class BloomFilter:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradCAP" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2739,7 +2743,6 @@ class BloomFilter:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> In any distributed system subject to network partitions (P), architects must trade between Consistency (CP) and Availability (AP).
   </div>
-</div>
 
     <div><h2>Background</h2>
 <p>In distributed systems, different types of failures can occur, e.g., servers can crash or fail permanently, disks can go bad resulting in data losses, or network connection can be lost, making a part of the system inaccessible. How can a distributed system model itself to get the maximum benefits out of different resources available?</p>
@@ -2749,10 +2752,17 @@ class BloomFilter:
 <p><strong>Availability ( A ):</strong> Availability means every request received by a non-failing node in the system must result in a response. Even when severe network failures occur, every request must terminate. In simple terms, availability refers to a system&#x27;s ability to remain accessible even if one or more nodes in the system go down.</p>
 <p><strong>Partition tolerance ( P ):</strong> A partition is a communication break (or a network failure) between any two nodes in the system, i.e., both nodes are up but cannot communicate with each other. A partition-tolerant system continues to operate even if there are partitions in the system. Such a system can sustain any network failure that does not result in the failure of the entire network. Data is sufficiently replicated across combinations of nodes and networks to keep the system up through intermittent outages.</p>
 <p>According to the CAP theorem, any distributed system needs to pick two out of the three properties. The three options are CA, CP, and AP. However, CA is not really a coherent option, as a system that is not partition-tolerant will be forced to give up either Consistency or Availability in the case of a network partition. Therefore, the theorem can really be stated as: <strong>In the presence of a network partition, a distributed system must choose either Consistency or Availability.</strong></p></div><div><p>We cannot build a general data store that is continually available, sequentially consistent, and tolerant to any partition failures. We can only build a system that has any two of these three properties. Because, to be consistent, all nodes should see the same set of updates in the same order. But if the network loses a partition, updates in one partition might not make it to the other partitions before a client reads from the out-of-date partition after having read from the up-to-date one. The only thing that can be done to cope with this possibility is to stop serving requests from the out-of-date partition, but then the service is no longer 100% available.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-10" class="chapter-section">
+<section  id="chapter-10" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">PACELC Theorem</h1>
@@ -2807,7 +2817,6 @@ class BloomFilter:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (PACELC Theorem): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2823,7 +2832,6 @@ class BloomFilter:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2837,7 +2845,6 @@ class BloomFilter:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2852,8 +2859,6 @@ class BloomFilter:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2900,9 +2905,15 @@ class RedisDistributedLock:
         """
         return bool(self.redis.eval(lua_release, 1, self.key, self.identifier))</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-11" class="chapter-section">
+<section  id="chapter-11" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">11</span>
     <h1 class="chapter-title">Consistent Hashing</h1>
@@ -2951,7 +2962,6 @@ class RedisDistributedLock:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Consistent Hashing Ring with Virtual Nodes (V-Nodes): Distributes key hashes evenly across physical database shard nodes with minimal rebalancing churn.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2967,7 +2977,6 @@ class RedisDistributedLock:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2981,7 +2990,6 @@ class RedisDistributedLock:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2996,11 +3004,14 @@ class RedisDistributedLock:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 310" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradHashRing" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3069,7 +3080,6 @@ class RedisDistributedLock:
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Consistent hashing distributes keys around a 360° integer ring using virtual nodes, ensuring that adding or removing a cluster node only migrates k/N keys rather than triggering a full rehash.
   </div>
-</div>
 
     <div><h2>Background</h2>
 <p>While designing a scalable system, the most important aspect is defining how the data will be partitioned and replicated across servers. Let&#x27;s first define these terms before moving on:</p>
@@ -3129,10 +3139,17 @@ class RedisDistributedLock:
 </ul>
 <h2>Consistent Hashing use cases</h2>
 <p>Amazon&#x27;s <a href="https://www.allthingsdistributed.com/2007/10/amazons_dynamo.html" target="_blank">Dynamo</a> and Apache <a href="https://en.wikipedia.org/wiki/Apache_Cassandra" target="_blank">Cassandra</a> use Consistent Hashing to distribute and replicate data across nodes.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-12" class="chapter-section">
+<section  id="chapter-12" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">12</span>
     <h1 class="chapter-title">LongPolling vs WebSockets vs ServerSent Events</h1>
@@ -3187,7 +3204,6 @@ class RedisDistributedLock:
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (LongPolling vs WebSockets vs ServerSent Events): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3203,7 +3219,6 @@ class RedisDistributedLock:
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3217,7 +3232,6 @@ class RedisDistributedLock:
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3232,8 +3246,6 @@ class RedisDistributedLock:
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3273,10 +3285,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <li>The server sends the data to the client whenever there&#x27;s new information available.</li>
 </ol>
 <p>SSEs are best when we need real-time traffic from the server to the client or if the server is generating data in a loop and will be sending multiple events to the client.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-13" class="chapter-section">
+<section  id="chapter-13" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">13</span>
     <h1 class="chapter-title">Bloom Filters</h1>
@@ -3331,7 +3349,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Bloom Filters): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3347,7 +3364,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3361,7 +3377,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3376,8 +3391,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3427,10 +3440,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <p><strong>Why do false positives happen?</strong> It’s because different items <strong>overlap</strong> in the bits they set. With <em>k</em> hash functions, each item marks <em>k</em> bits. As more items are added, the bit array gets more filled up with 1s. Sometimes, an unlucky combination of other items can fill <em>all</em> the bits that a query item <em>would</em> require. The Bloom filter has no way to tell that those bits were set by other items, so it can only report “probably present.” Essentially, a Bloom filter <strong>compresses information</strong> about the set – that compression is what saves space, but it also means we lose the ability to distinguish some different combinations of items (hence the confusion that causes false positives).</p>
 <p><strong>Controlling the false positive rate:</strong> The probability of a false positive can be tuned by adjusting the size of the bit array and the number of hash functions. A larger bit array means bits are more sparsely filled for the same number of items, reducing the chance of accidental overlaps. More hash functions mean each item covers more bits (which paradoxically can either increase or decrease false positives depending on balance – too few hashes and each item doesn’t mark enough territory, too many and you fill the array too quickly). In fact, there is an optimal <em>k</em> for a given array size and number of items that minimizes false positives. In practical terms, designers choose parameters so that the false positive probability is very low (say 1% or 0.1% or even less) based on what’s acceptable for the application. If an application can tolerate 1 in 1000 queries being a false alarm, the Bloom filter can be sized accordingly (with more bits per item to make that unlikely). There’s a clear trade-off: <strong>more memory = fewer false positives</strong>. Many systems let you configure this trade-off; for example, Apache Cassandra (a distributed database) allows tuning the Bloom filter’s target false-positive rate, using more RAM to get it as low as needed.</p>
 <p>In summary, false positives are the price we pay for massive space and time savings. In exchange for <em>never missing an actual member</em> and using very little memory, we accept a slim chance of getting a “maybe” for something that isn’t really there. In scenarios where a false positive only causes a minor extra step (like an unnecessary database lookup), Bloom filters are a huge win.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-14" class="chapter-section">
+<section  id="chapter-14" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">14</span>
     <h1 class="chapter-title">Quorum</h1>
@@ -3485,7 +3504,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Quorum): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3501,7 +3519,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3515,7 +3532,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3530,8 +3546,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     <div><h2>Background</h2>
 <p>In Distributed Systems, data is replicated across multiple servers for fault tolerance and high availability. Once a system decides to maintain multiple copies of data, another problem arises: how to make sure that all replicas are consistent, i.e., if they all have the latest copy of the data and that all clients see the same view of the data?</p>
@@ -3593,10 +3607,16 @@ The WebSocket protocol enables communication between a client and a server with 
 </ol>
 <h2>Conclusion</h2>
 <p>Quorum is a fundamental concept in distributed systems, playing a crucial role in ensuring consistency, reliability, and availability in environments where multiple nodes work together. While it enhances fault tolerance, it also introduces additional complexity and requires careful design and management to balance consistency, availability, and performance.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-15" class="chapter-section">
+<section  id="chapter-15" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">15</span>
     <h1 class="chapter-title">Leader and Follower</h1>
@@ -3651,7 +3671,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Leader and Follower): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3667,7 +3686,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3681,7 +3699,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3696,8 +3713,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3706,10 +3721,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <h2>Solution</h2>
 <p>Allow only a single server (called leader) to be responsible for data replication and to coordinate work.</p>
 <p>At any time, one server is elected as the leader. This leader becomes responsible for data replication and can act as the central point for all coordination. The followers only accept writes from the leader and serve as a backup. In case the leader fails, one of the followers can become the leader. In some cases, the follower can serve read requests for load balancing.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-16" class="chapter-section">
+<section  id="chapter-16" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">16</span>
     <h1 class="chapter-title">Heartbeat</h1>
@@ -3764,7 +3785,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Heartbeat): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3780,7 +3800,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3794,7 +3813,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3809,8 +3827,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3819,10 +3835,16 @@ The WebSocket protocol enables communication between a client and a server with 
 <h2>Solution</h2>
 <p>Each server periodically sends a heartbeat message to a central monitoring server or other servers in the system to show that it is still alive and functioning.</p>
 <p>Heartbeating is one of the mechanisms for detecting failures in a distributed system. If there is a central server, all servers periodically send a heartbeat message to it. If there is no central server, all servers randomly choose a set of servers and send them a heartbeat message every few seconds. This way, if no heartbeat message is received from a server for a while, the system can suspect that the server might have crashed. If there is no heartbeat within a configured timeout period, the system can conclude that the server is not alive anymore and stop sending requests to it and start working on its replacement.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-17" class="chapter-section">
+<section  id="chapter-17" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">17</span>
     <h1 class="chapter-title">Checksum</h1>
@@ -3877,7 +3899,6 @@ The WebSocket protocol enables communication between a client and a server with 
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Checksum): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -3893,7 +3914,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -3907,7 +3927,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -3922,8 +3941,6 @@ The WebSocket protocol enables communication between a client and a server with 
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -3933,10 +3950,20 @@ The WebSocket protocol enables communication between a client and a server with 
 <p>Calculate a checksum and store it with data.</p>
 <p>To calculate a checksum, a cryptographic hash function like MD5, SHA-1, SHA-256, or SHA-512 is used. The hash function takes the input data and produces a string (containing letters and numbers) of fixed length; this string is called the checksum.</p>
 <p>When a system is storing some data, it computes a checksum of the data and stores the checksum with the data. When a client retrieves data, it verifies that the data it received from the server matches the checksum stored. If not, then the client can opt to retrieve that data from another replica.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

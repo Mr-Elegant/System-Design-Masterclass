@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (9)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction</a></li>
@@ -960,8 +959,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -980,9 +977,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction</h1>
@@ -1037,7 +1033,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1053,7 +1048,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1067,7 +1061,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1082,20 +1075,24 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Bulkhead pattern is a strategy used in the design of distributed systems to prevent failures from propagating across different parts of the system. The name &quot;bulkhead&quot; is inspired by a nautical term. On a ship, bulkheads are compartments designed to contain water in case of a hull breach. If water enters one compartment, the bulkhead prevents it from flooding the entire ship, hence limiting the damage.</p>
+    <div class="topic-content"><p>The Bulkhead pattern is a strategy used in the design of distributed systems to prevent failures from propagating across different parts of the system. The name &quot;bulkhead&quot; is inspired by a nautical term. On a ship, bulkheads are compartments designed to contain water in case of a hull breach. If water enters one compartment, the bulkhead prevents it from flooding the entire ship, hence limiting the damage.</p>
 <p>How does this concept relate to distributed systems? In a distributed system, a bulkhead is a mechanism that isolates different parts of the system so that if one part fails, it doesn&#x27;t cause the rest of the system to fail.</p>
 <h2>The Challenge of Cascading Failures</h2>
 <p>Think of a common scenario in a distributed system where you have multiple services interacting with each other. Each service has its own responsibilities, resources, and potential failure modes. In an ideal world, these services would operate perfectly all the time. But in real world, services can and do fail, for a variety of reasons - bugs, resource exhaustion, network issues, and more.</p>
-<p>When a service fails, it can cause a ripple effect, where the failure of one service leads to the failure of other services that depend on it. This is what we call a cascading failure, and it&#x27;s one of the biggest challenges in distributed systems design. How can we prevent such cascading failures? How can we contain the impact of a failure to the part of the system where it originated? This is where the Bulkhead pattern comes into play.</p></div></div></div></div></div></div></div>
-  </div>
+<p>When a service fails, it can cause a ripple effect, where the failure of one service leads to the failure of other services that depend on it. This is what we call a cascading failure, and it&#x27;s one of the biggest challenges in distributed systems design. How can we prevent such cascading failures? How can we contain the impact of a failure to the part of the system where it originated? This is where the Bulkhead pattern comes into play.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Failure Propagation in Distributed Systems</h1>
@@ -1150,7 +1147,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem Failure Propagation in Distributed Systems): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1166,7 +1162,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1180,7 +1175,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1195,22 +1189,26 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Imagine you&#x27;re on a large ship, cruising across the vast ocean. Suddenly, there&#x27;s a breach in the hull, and water starts pouring into the ship. What do you think will happen? The ship will start to sink, right? But, does the whole ship sink immediately? Thanks to the architecture of modern ships, the answer is no. The ship is divided into several watertight compartments or &#x27;bulkheads&#x27;. If water floods one compartment, the others remain unaffected, at least for some time, buying valuable time for rescue efforts.</p>
+    <div class="topic-content"><p>Imagine you&#x27;re on a large ship, cruising across the vast ocean. Suddenly, there&#x27;s a breach in the hull, and water starts pouring into the ship. What do you think will happen? The ship will start to sink, right? But, does the whole ship sink immediately? Thanks to the architecture of modern ships, the answer is no. The ship is divided into several watertight compartments or &#x27;bulkheads&#x27;. If water floods one compartment, the others remain unaffected, at least for some time, buying valuable time for rescue efforts.</p>
 <p>But what if our ship didn&#x27;t have these bulkheads? The water would quickly flood the entire ship, causing it to sink rapidly. The failure (hull breach) would propagate across the entire ship, leading to a total system failure (the ship sinking). This is an example of a cascading failure in a physical system.</p>
 <p>Now, let&#x27;s bring this concept back to distributed systems. Like our ship, a distributed system consists of multiple components (services, processes, etc.). Ideally, these components work together seamlessly to provide a functional system. But, in reality, failures can and do occur.</p>
 <h2>Cascading Failures in Distributed Systems</h2>
 <p>A cascading failure in a distributed system is similar to a ship sinking. When one component fails, the failure can propagate to other components, leading to a widespread system failure.</p>
 <p>Let&#x27;s take an example to illustrate this point. Imagine a microservices-based e-commerce platform. You have separate services for user management, inventory management, payment processing, and so on. Now, suppose the inventory service fails due to a database outage. The user service, which relies on the inventory service to display product availability, also starts failing. The payment service, which checks inventory before processing payments, likewise fails.</p>
-<p>In a short time, the entire platform becomes unavailable, all because of a failure in one service. This is a classic example of a cascading failure.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In a short time, the entire platform becomes unavailable, all because of a failure in one service. This is a classic example of a cascading failure.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Bulkhead Pattern A Solution</h1>
@@ -1265,7 +1263,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Bulkhead Pattern A Solution): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1281,7 +1278,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1295,7 +1291,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1310,12 +1305,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The essence of the Bulkhead pattern lies in isolation. Like the watertight compartments in a ship, the Bulkhead pattern partitions the components of a system into isolated units or &#x27;bulkheads&#x27;. Each bulkhead is designed to operate independently of the others. So, if one bulkhead fails, the others can continue to function, thus preventing the failure from spreading across the system.</p>
+    <div class="topic-content"><p>The essence of the Bulkhead pattern lies in isolation. Like the watertight compartments in a ship, the Bulkhead pattern partitions the components of a system into isolated units or &#x27;bulkheads&#x27;. Each bulkhead is designed to operate independently of the others. So, if one bulkhead fails, the others can continue to function, thus preventing the failure from spreading across the system.</p>
 <p>You can think of bulkheads as a form of &#x27;failure containment&#x27;. By isolating different parts of the system, bulkheads limit the scope of any potential failures. A failure in one part of the system doesn&#x27;t automatically mean a failure in the entire system. The unaffected parts can still provide some level of service, maintaining system availability as much as possible.</p>
 <h2>A Solution to the Problem of Failure Propagation</h2>
 <p>The Bulkhead pattern directly addresses the problem of failure propagation. By isolating system components, it prevents a failure in one component from impacting the others. In doing so, it significantly reduces the risk of a cascading failure.</p>
@@ -1323,11 +1316,17 @@
 <p>Moreover, by preventing the inventory service failure from consuming system-wide resources (like CPU or memory), the Bulkhead pattern ensures that these resources are available for the remaining services. This further helps to maintain system availability in the face of component failures.</p>
 <h2>Real-world Analogy Continued: Compartments in a Ship</h2>
 <p>Continuing with our ship analogy, you can think of the Bulkhead pattern as creating watertight compartments within your distributed system. Just as the ship&#x27;s compartments contain water and prevent it from flooding the entire ship, your system&#x27;s bulkheads contain failures and prevent them from impacting the entire system.</p>
-<p>Of course, bulkheads aren&#x27;t a magic solution that makes failures disappear. If our ship has a significant hull breach, it might eventually sink, despite its bulkheads. Likewise, if a distributed system experiences a major failure (like a network outage), it might become unavailable, despite its bulkheads. However, by buying time and maintaining some level of service, bulkheads can significantly mitigate the impact of failures.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Of course, bulkheads aren&#x27;t a magic solution that makes failures disappear. If our ship has a significant hull breach, it might eventually sink, despite its bulkheads. Likewise, if a distributed system experiences a major failure (like a network outage), it might become unavailable, despite its bulkheads. However, by buying time and maintaining some level of service, bulkheads can significantly mitigate the impact of failures.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture</h1>
@@ -1382,7 +1381,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Architecture): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1398,7 +1396,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1412,7 +1409,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1427,12 +1423,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Now that we understand the basics of the Bulkhead pattern, it&#x27;s time to explore its architecture. How are bulkheads designed within a distributed system? How do they interact with other components? Let&#x27;s explore these questions and more in this section.</p>
+    <div class="topic-content"><p>Now that we understand the basics of the Bulkhead pattern, it&#x27;s time to explore its architecture. How are bulkheads designed within a distributed system? How do they interact with other components? Let&#x27;s explore these questions and more in this section.</p>
 <h2>The Building Blocks of the Bulkhead Pattern</h2>
 <p>The architecture of the Bulkhead pattern revolves around two key concepts: isolation and resources. To implement the Bulkhead pattern, we need to create isolated units within our system (the bulkheads) and allocate resources to these units.</p>
 <p>At a high level, a bulkhead is simply a partition within the system. It could be a separate service, a group of related processes, a set of threads, or even a dedicated CPU or memory area. The key is that each bulkhead operates independently of the others.</p>
@@ -1459,11 +1453,17 @@
 <h2>Summary</h2>
 <p>So far, we&#x27;ve looked at the architecture of the Bulkhead pattern, delving into the concepts of isolation and resource allocation. We&#x27;ve seen how bulkheads are created within a distributed system and how resources are allocated to them. We&#x27;ve also discussed how interactions between bulkheads are managed and the role of resilience in the pattern.</p>
 <p>In the next section, we&#x27;ll dive deeper into the inner workings of the Bulkhead pattern. We&#x27;ll explore how the pattern operates in real time, handling failures and maintaining system function. We&#x27;ll also provide a practical example of the Bulkhead pattern implemented in Java, giving you a first-hand look at how this powerful pattern works in practice.</p>
-<p>Remember, while the Bulkhead pattern is a powerful tool for managing failures in distributed systems, it&#x27;s not a silver bullet. It requires careful design and implementation, and it should be used as part of a broader strategy for system resilience. But with the right approach, it can make a significant difference in how your system handles failures. Stay tuned as we explore this further.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Remember, while the Bulkhead pattern is a powerful tool for managing failures in distributed systems, it&#x27;s not a silver bullet. It requires careful design and implementation, and it should be used as part of a broader strategy for system resilience. But with the right approach, it can make a significant difference in how your system handles failures. Stay tuned as we explore this further.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">The Inner Workings</h1>
@@ -1518,7 +1518,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Inner Workings): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1534,7 +1533,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1548,7 +1546,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1563,12 +1560,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Understanding the architecture of the Bulkhead pattern is one thing, but to truly appreciate its power and utility, we need to dive into its inner workings. How does this pattern function in real-time in a running system? How does it handle the inevitable failures that arise in distributed systems? Let&#x27;s take a closer look.</p>
+    <div class="topic-content"><p>Understanding the architecture of the Bulkhead pattern is one thing, but to truly appreciate its power and utility, we need to dive into its inner workings. How does this pattern function in real-time in a running system? How does it handle the inevitable failures that arise in distributed systems? Let&#x27;s take a closer look.</p>
 <h2>Isolation in Practice: Maintaining Independence</h2>
 <p>In the context of the Bulkhead pattern, the concept of isolation is fundamental. Each bulkhead within the system needs to operate independently of others. This independence is what enables the bulkheads to contain failures and prevent them from spreading.</p>
 <p>In practice, maintaining this independence often involves careful design and implementation choices. For instance, each bulkhead might run in its own process or container, have its own database and cache, use its own thread pool, and so on.</p>
@@ -1583,11 +1578,17 @@
 <p>For example, if a bulkhead fails and starts consuming resources excessively, the system might automatically throttle its resource usage or restart it. If the bulkhead remains unresponsive, the system might reroute its traffic to other bulkheads or bring up new instances of the bulkhead to handle the load.</p>
 <h2>The Reality of the Bulkhead Pattern: It&#x27;s Not a Silver Bullet</h2>
 <p>While the Bulkhead pattern offers a powerful way to manage failures in distributed systems, it&#x27;s important to understand that it&#x27;s not a silver bullet. It can&#x27;t prevent failures from happening, and it can&#x27;t guarantee 100% uptime or performance.</p>
-<p>The Bulkhead pattern is just one tool in the toolbox of distributed system design. It needs to be complemented with other techniques and strategies, such as redundancy, replication, load balancing, caching, and so on.</p></div></div></div></div></div></div></div>
-  </div>
+<p>The Bulkhead pattern is just one tool in the toolbox of distributed system design. It needs to be complemented with other techniques and strategies, such as redundancy, replication, load balancing, caching, and so on.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Bulkhead Pattern An Example</h1>
@@ -1642,7 +1643,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Bulkhead Pattern An Example): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1658,7 +1658,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1672,7 +1671,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1687,24 +1685,22 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Seeing the Bulkhead pattern in practice helps us to understand how it functions in a live setting. Here, we will use Java to create a basic representation of this pattern. As we progress, we will analyze each segment and discuss how it contributes to the whole mechanism. However, remember that the example is for demonstrative purposes and might not cover all real-world considerations for a production-grade system. Let&#x27;s get started!</p>
+    <div class="topic-content"><p>Seeing the Bulkhead pattern in practice helps us to understand how it functions in a live setting. Here, we will use Java to create a basic representation of this pattern. As we progress, we will analyze each segment and discuss how it contributes to the whole mechanism. However, remember that the example is for demonstrative purposes and might not cover all real-world considerations for a production-grade system. Let&#x27;s get started!</p>
 <h2>Conceptualizing the Example</h2>
 <p>For our illustration, let&#x27;s imagine a typical microservice-based application where different microservices are responsible for different tasks. We are focusing on the &quot;Order Service&quot; which is primarily responsible for creating orders and has to communicate with two other services: the &quot;Inventory Service&quot; and the &quot;Shipping Service&quot;.</p>
 <p>Both of these services have varying loads, with the Inventory Service often getting high traffic while the Shipping Service usually has less load. Without the Bulkhead pattern, a spike in requests to the Inventory Service could clog our Order Service, hindering it from completing its tasks involving the Shipping Service.</p>
 <h2>Laying the Groundwork</h2>
 <p>To implement the Bulkhead pattern, we would need to create separate thread pools for each dependent service interaction within the Order Service. By doing so, we ensure that a slowdown or issue in one service doesn&#x27;t affect the other&#x27;s performance.</p>
 <p>Java&#x27;s <code>ExecutorService</code> is perfect for creating thread pools. We&#x27;ll create two services - <code>inventoryExecutor</code> and <code>shippingExecutor</code>.</p>
-<pre><div><div><code><span>ExecutorService</span><span> inventoryExecutor </span><span>=</span><span> </span><span>Executors</span><span>.</span><span>newFixedThreadPool</span><span>(</span><span>100</span><span>)</span><span>;</span><span>
-</span><span></span><span>ExecutorService</span><span> shippingExecutor </span><span>=</span><span> </span><span>Executors</span><span>.</span><span>newFixedThreadPool</span><span>(</span><span>50</span><span>)</span><span>;</span></code></div></div></pre>
+<pre><div class="topic-content"><code><span>ExecutorService</span><span> inventoryExecutor </span><span>=</span><span> </span><span>Executors</span><span>.</span><span>newFixedThreadPool</span><span>(</span><span>100</span><span>)</span><span>;</span><span>
+</span><span></span><span>ExecutorService</span><span> shippingExecutor </span><span>=</span><span> </span><span>Executors</span><span>.</span><span>newFixedThreadPool</span><span>(</span><span>50</span><span>)</span><span>;</span></code></div></pre>
 <p>The numbers of threads in the pools should ideally be determined based on the load each service is expected to handle. In this scenario, we&#x27;ve assigned a larger pool for the Inventory Service, as it typically faces more traffic.</p>
 <h2>Implementing the Bulkheads</h2>
 <p>Now that we have different thread pools, we can use them to interact with the respective services. Below is a simplified version of how we can use them to make sure the interactions are happening within their &quot;bulkhead&quot;.</p>
-<pre><div><div><code><span>public</span><span> </span><span>void</span><span> </span><span>createOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>void</span><span> </span><span>createOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
 </span><span>    inventoryExecutor</span><span>.</span><span>submit</span><span>(</span><span>(</span><span>)</span><span> </span><span>-</span><span>&gt;</span><span> </span><span>{</span><span>
 </span><span>        inventoryService</span><span>.</span><span>checkAndUpdateInventory</span><span>(</span><span>order</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>)</span><span>;</span><span>
@@ -1712,16 +1708,22 @@
 <span>    shippingExecutor</span><span>.</span><span>submit</span><span>(</span><span>(</span><span>)</span><span> </span><span>-</span><span>&gt;</span><span> </span><span>{</span><span>
 </span><span>        shippingService</span><span>.</span><span>scheduleShipping</span><span>(</span><span>order</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>)</span><span>;</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>In the above code, the <code>createOrder</code> function initiates tasks that interact with the Inventory and Shipping services. These tasks are submitted to their respective executors, thereby ensuring that a slowdown in one service doesn&#x27;t affect the other.</p>
 <h2>The Bulkhead in Action</h2>
 <p>With this setup, if a significant number of requests start slowing down the Inventory Service, the threads interacting with it might be stuck or slowed down. However, this won&#x27;t affect the threads interacting with the Shipping Service, as they are separate. Hence, the <code>createOrder</code> method can continue scheduling shippings even when the inventory check and update are getting delayed, thereby utilizing the system resources efficiently and providing a faster response when possible.</p>
 <p>We&#x27;ve successfully implemented the Bulkhead pattern in our Order Service!</p>
-<p>Now, isn&#x27;t that simple and yet powerful? But hold on. Do you think we&#x27;re missing something? What about error handling? What if a service doesn&#x27;t respond at all, or throws an error? And how would you tune the sizes of the thread pools for optimal performance? Those considerations lead us to the next part of our discussion: performance implications and special considerations. Keep these questions in mind as we venture forward in our exploration of the Bulkhead pattern. The road ahead is as exciting as it is enlightening!</p></div></div></div></div></div></div></div>
-  </div>
+<p>Now, isn&#x27;t that simple and yet powerful? But hold on. Do you think we&#x27;re missing something? What about error handling? What if a service doesn&#x27;t respond at all, or throws an error? And how would you tune the sizes of the thread pools for optimal performance? Those considerations lead us to the next part of our discussion: performance implications and special considerations. Keep these questions in mind as we venture forward in our exploration of the Bulkhead pattern. The road ahead is as exciting as it is enlightening!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Performance Implications and Special Considerations</h1>
@@ -1776,7 +1778,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications and Special Considerations): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1792,7 +1793,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1806,7 +1806,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1821,12 +1820,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>While the Bulkhead pattern undoubtedly enhances the resilience of our distributed systems, like every design pattern, it comes with its considerations and potential pitfalls. Understanding these is critical to effectively leveraging the pattern and avoiding undesired side effects.</p>
+    <div class="topic-content"><p>While the Bulkhead pattern undoubtedly enhances the resilience of our distributed systems, like every design pattern, it comes with its considerations and potential pitfalls. Understanding these is critical to effectively leveraging the pattern and avoiding undesired side effects.</p>
 <h2>Performance Implications</h2>
 <h3>Efficient Resource Utilization</h3>
 <p>One significant advantage of the Bulkhead pattern is that it promotes efficient resource utilization. As we saw in our Java example, even when one service is sluggish or non-responsive, the system continues processing other tasks. The risk of the entire system freezing or significantly slowing down due to one faulty component is mitigated.</p>
@@ -1844,11 +1841,17 @@
 <h3>Scalability Concerns</h3>
 <p>While the Bulkhead pattern improves system resilience, it doesn&#x27;t directly address scalability. If the system load increases significantly, simply creating more threads might lead to excessive context switching and eventually decrease performance. In such cases, it&#x27;s worth exploring other scalability strategies, like horizontal scaling (adding more machines) or using asynchronous processing.</p>
 <p>Do these implications make the Bulkhead pattern less attractive? Absolutely not! On the contrary, understanding these considerations equips us to use the pattern more effectively. It&#x27;s like knowing the strengths and weaknesses of a chess piece. The queen is undoubtedly powerful, but a player who also knows when to strategically use a pawn or a knight has the upper hand.</p>
-<p>Likewise, the Bulkhead pattern, despite its considerations, is a potent tool in building robust distributed systems. Can you think of scenarios in your projects where the Bulkhead pattern could enhance resilience? As we explore some common use cases in the next part of this chapter, you might identify situations where the Bulkhead pattern could be your knight (or queen!) in the strategic game of distributed systems design. Let&#x27;s continue our journey!</p></div></div></div></div></div></div></div>
-  </div>
+<p>Likewise, the Bulkhead pattern, despite its considerations, is a potent tool in building robust distributed systems. Can you think of scenarios in your projects where the Bulkhead pattern could enhance resilience? As we explore some common use cases in the next part of this chapter, you might identify situations where the Bulkhead pattern could be your knight (or queen!) in the strategic game of distributed systems design. Let&#x27;s continue our journey!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">System Design Examples</h1>
@@ -1903,7 +1906,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1919,7 +1921,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1933,7 +1934,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1948,12 +1948,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>The Bulkhead pattern finds its footing in an array of distributed system scenarios. It&#x27;s a pattern that parallels real-world applications, as it&#x27;s inspired by a naval architecture concept. But how do these ship compartments translate into software systems? Let&#x27;s illustrate this through some real-world use cases.</p>
+    <div class="topic-content"><p>The Bulkhead pattern finds its footing in an array of distributed system scenarios. It&#x27;s a pattern that parallels real-world applications, as it&#x27;s inspired by a naval architecture concept. But how do these ship compartments translate into software systems? Let&#x27;s illustrate this through some real-world use cases.</p>
 <h2>Use Cases</h2>
 <h3>E-Commerce Platforms</h3>
 <p>Let&#x27;s imagine an e-commerce platform, where customer actions can span searching for products, adding items to their carts, and placing orders. While these operations are interconnected, they can be performed independently.</p>
@@ -1972,11 +1970,17 @@
 <h3>Bulkheading at a Lower Level</h3>
 <p>We could also implement bulkheading at a lower level within a service. For example, within the music streaming service, we could separate the task of fetching a song from the task of streaming the song to the user into separate thread pools. So if fetching songs becomes slow due to a delay in accessing the song database, this won&#x27;t slow down the streaming of already fetched songs to the users.</p>
 <p>In both examples, applying the Bulkhead pattern can dramatically increase the resilience of the system. While one service or task is slow or failing, others continue functioning normally, providing an uninterrupted user experience.</p>
-<p>Whether it&#x27;s an e-commerce platform, a gaming platform, or a music streaming service, the Bulkhead pattern can enhance system resilience significantly. So, can you think of any services in your system that could benefit from this isolation? Or perhaps you can see now how existing slowdowns or failures could have been prevented with the Bulkhead pattern.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Whether it&#x27;s an e-commerce platform, a gaming platform, or a music streaming service, the Bulkhead pattern can enhance system resilience significantly. So, can you think of any services in your system that could benefit from this isolation? Or perhaps you can see now how existing slowdowns or failures could have been prevented with the Bulkhead pattern.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Conclusion</h1>
@@ -2031,7 +2035,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Conclusion): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2047,7 +2050,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2061,7 +2063,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2076,12 +2077,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h2>The Value of the Bulkhead Pattern in Distributed Systems</h2>
+    <div class="topic-content"><h2>The Value of the Bulkhead Pattern in Distributed Systems</h2>
 <p>In the world of distributed systems, the Bulkhead pattern has proven itself as an effective strategy to prevent failure propagation, enhancing the system&#x27;s overall resilience. This pattern, borrowed from naval architecture, has brought us a long way in ensuring a healthy segregation of resources and operations, ensuring that a failure in one part doesn&#x27;t sink the entire ship — or in our case, the entire system.</p>
 <p>This chapter took you on a deep dive into the Bulkhead pattern, its rationale, implementation, and its working mechanism. We started with the problem statement, describing the challenges faced in distributed systems when a single service failure can lead to a cascade of issues across the system. It is akin to a single weak link compromising the strength of the entire chain.</p>
 <p>Then we introduced the Bulkhead pattern as a solution to this issue. The Bulkhead pattern promotes the idea of dividing the system into isolated sections or &#x27;bulkheads&#x27;, much like compartments in a ship. If one service fails or is overwhelmed, the impact is limited to that specific bulkhead, leaving other services unaffected and available.</p>
@@ -2090,11 +2089,21 @@
 <p>As with any design pattern, we must consider certain trade-offs when implementing the Bulkhead pattern. We discussed the performance implications, special considerations, and even potential pitfalls to be mindful of when designing your systems with this pattern. Understanding these nuances is essential for effectively using the Bulkhead pattern and avoiding unwanted side-effects.</p>
 <p>We then illustrated real-world use cases and system design examples that benefit from the Bulkhead pattern. Whether it&#x27;s an e-commerce platform, a gaming service, or a music streaming platform, we showed how using the Bulkhead pattern can significantly increase the resilience of the system.</p>
 <p>Reflecting on everything we&#x27;ve covered, it&#x27;s clear that the Bulkhead pattern brings significant advantages in building robust, scalable distributed systems. But it&#x27;s also clear that it&#x27;s not a one-size-fits-all solution. As we emphasized, understanding the problem you&#x27;re trying to solve, the trade-offs involved, and the specifics of your system are all critical factors in successfully applying this pattern.</p>
-<p>Looking ahead, how can you apply what you&#x27;ve learned about the Bulkhead pattern in your work? Do you see areas where it could improve the resilience of your systems? Remember, the value of these design patterns lies in their application. A deeper understanding of these patterns will enable you to apply them more effectively and make better design decisions.</p></div></div></div></div></div></div></div>
-  </div>
+<p>Looking ahead, how can you apply what you&#x27;ve learned about the Bulkhead pattern in your work? Do you see areas where it could improve the resilience of your systems? Remember, the value of these design patterns lies in their application. A deeper understanding of these patterns will enable you to apply them more effectively and make better design decisions.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (4)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to bloom filters"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Bloom Filters</a></li>
@@ -955,8 +954,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -975,11 +972,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
   <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Bloom Filters</h1>
@@ -1034,7 +1030,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Introduction to Bloom Filters): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1050,7 +1045,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1064,7 +1058,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1079,11 +1072,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradBloom" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1195,7 +1191,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Bloom filters hash keys across k independent hash functions to set bits in an in-memory array, guaranteeing zero false negatives ('Definitely No') with a mathematically bounded false positive rate.
   </div>
-</div>
 
     <div><p>Imagine needing to check if something is in a huge collection <strong>without storing the entire collection</strong> in memory. Bloom filters offer a clever solution to this problem. A <strong>Bloom filter</strong> is a <em>space-efficient probabilistic</em> data structure for set membership tests – it can quickly tell you if an item is <em>definitely not</em> in a set or if it is <em>probably</em> in the set. In other words, <strong>false negatives are impossible</strong> (it never misses an item that was added), but it can sometimes return a <strong>false positive</strong> (claim an item is in the set when it isn’t, due to its probabilistic nature). This trade-off of a tiny error rate for big gains in space and speed often pays off in real-world systems where memory is precious and an occasional false alarm is acceptable.</p>
 <p>Bloom filters were invented by Burton Bloom in 1970, but they’re more relevant than ever in today’s data-intensive applications. They shine in scenarios where maintaining a full list or hash set of all items would be impractical. Bloom filters use a fixed-size bit array as a kind of “signature” or <strong>fingerprint of a set</strong>, and they use multiple hash functions to distribute items across that fingerprint. The result is a super-fast, memory-thrifty check for membership that doesn’t grow significantly with the number of items. Before diving into use cases, let’s build an intuition for <strong>how Bloom filters work</strong> and why they sometimes say “maybe.”</p>
@@ -1243,10 +1238,17 @@
 <p><strong>Why do false positives happen?</strong> It’s because different items <strong>overlap</strong> in the bits they set. With <em>k</em> hash functions, each item marks <em>k</em> bits. As more items are added, the bit array gets more filled up with 1s. Sometimes, an unlucky combination of other items can fill <em>all</em> the bits that a query item <em>would</em> require. The Bloom filter has no way to tell that those bits were set by other items, so it can only report “probably present.” Essentially, a Bloom filter <strong>compresses information</strong> about the set – that compression is what saves space, but it also means we lose the ability to distinguish some different combinations of items (hence the confusion that causes false positives).</p>
 <p><strong>Controlling the false positive rate:</strong> The probability of a false positive can be tuned by adjusting the size of the bit array and the number of hash functions. A larger bit array means bits are more sparsely filled for the same number of items, reducing the chance of accidental overlaps. More hash functions mean each item covers more bits (which paradoxically can either increase or decrease false positives depending on balance – too few hashes and each item doesn’t mark enough territory, too many and you fill the array too quickly). In fact, there is an optimal <em>k</em> for a given array size and number of items that minimizes false positives. In practical terms, designers choose parameters so that the false positive probability is very low (say 1% or 0.1% or even less) based on what’s acceptable for the application. If an application can tolerate 1 in 1000 queries being a false alarm, the Bloom filter can be sized accordingly (with more bits per item to make that unlikely). There’s a clear trade-off: <strong>more memory = fewer false positives</strong>. Many systems let you configure this trade-off; for example, Apache Cassandra (a distributed database) allows tuning the Bloom filter’s target false-positive rate, using more RAM to get it as low as needed.</p>
 <p>In summary, false positives are the price we pay for massive space and time savings. In exchange for <em>never missing an actual member</em> and using very little memory, we accept a slim chance of getting a “maybe” for something that isn’t really there. In scenarios where a false positive only causes a minor extra step (like an unnecessary database lookup), Bloom filters are a huge win.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Benefits &amp; Limitations of Bloom Filters</h1>
@@ -1301,7 +1303,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Benefits &amp; Limitations of Bloom Filters): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1317,7 +1318,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1331,7 +1331,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1346,8 +1345,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     <div><h1>Benefits of Bloom Filters</h1>
 <p>Here are the top benefits of using Bloom Filters:</p>
@@ -1376,10 +1373,16 @@
         
 
     </style></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Variants and Extensions of Bloom Filters</h1>
@@ -1434,7 +1437,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Variants and Extensions of Bloom Filters): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1450,7 +1452,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1464,7 +1465,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1479,8 +1479,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1495,10 +1493,16 @@
 <p>Scalable Bloom filters address the issue of dynamically growing datasets by automatically adjusting the filter&#x27;s size and parameters as the number of elements increases. This variant maintains a series of Bloom filters, each with different parameters, and new filters are added as required. Scalable Bloom filters can maintain a target false positive rate while accommodating an unpredictable number of elements.</p>
 <h2>5. Cuckoo Filters</h2>
 <p>Cuckoo filters are a more recent variant of Bloom filters, designed to provide similar functionality with improved space efficiency and support for element removal. Cuckoo filters use a combination of cuckoo hashing and a compact fingerprint representation of elements to achieve these benefits. In many scenarios, cuckoo filters can outperform standard Bloom filters in terms of space efficiency and overall performance.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">Applications of Bloom Filters</h1>
@@ -1553,7 +1557,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Applications of Bloom Filters): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1569,7 +1572,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1583,7 +1585,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1598,8 +1599,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1614,10 +1613,20 @@
 <p>In spam filtering and malware detection applications, Bloom filters can be used to maintain a compact representation of known spam or malware signatures. By querying the filter, incoming messages or files can be quickly checked against the known signatures, allowing for efficient filtering of unwanted content. The space-efficient nature of Bloom filters makes them well-suited for these applications, where large sets of signatures must be maintained and updated.</p>
 <h2>5. Distributed Systems Membership Testing</h2>
 <p>In distributed systems, Bloom filters can be utilized to perform efficient membership testing for sets shared among multiple nodes. By exchanging Bloom filters that represent their local sets, nodes can quickly determine the differences between their datasets and synchronize accordingly. This approach can significantly reduce the amount of data that needs to be exchanged during synchronization, improving the overall performance and scalability of the system.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

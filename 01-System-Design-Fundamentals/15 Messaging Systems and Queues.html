@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (7)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to kafka"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Kafka</a></li>
@@ -958,8 +957,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -978,11 +975,10 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
     
     
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Kafka</h1>
@@ -1031,7 +1027,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Apache Kafka Partitioned Commit Log: Producer write batching ➔ Append-Only Partition Logs with zero-copy OS sendfile ➔ Consumer Group offset tracking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1047,7 +1042,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1061,7 +1055,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1076,8 +1069,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1124,10 +1115,16 @@
 <p>Kafka is deployed as a cluster of one or more servers, where each server is responsible for running one Kafka broker.</p>
 <h3>ZooKeeper</h3>
 <p>ZooKeeper is a distributed key-value store and is used for coordination and storing configurations. It is highly optimized for reads. Kafka uses ZooKeeper to coordinate between Kafka brokers; ZooKeeper maintains metadata information about the Kafka cluster. We will be looking into this in detail later.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
   <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">Messaging patterns</h1>
@@ -1175,7 +1172,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1191,7 +1187,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1205,7 +1200,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1220,11 +1214,14 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
-  <div class="diagram-body">
+  <div class="diagram-card">
+        <div class="diagram-header">
+            <span class="diagram-badge">ENTERPRISE ARCHITECTURE</span>
+            <span class="diagram-title">System Architecture Flow</span>
+        </div>
+        <div class="diagram-body">
     <svg class="diagram-svg" viewBox="0 0 840 290" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="gradKafka" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1331,7 +1328,6 @@
   <div class="diagram-caption">
     💡 <strong>Key Architecture Takeaway:</strong> Kafka achieves massive horizontal throughput by partitioning topics into append-only sequential commit logs on disk, allowing independent consumer groups to track individual read offsets without mutating messages.
   </div>
-</div>
 
     <div><p>In distributed systems, <strong>messaging patterns</strong> define how components communicate via asynchronous messages. Understanding these patterns is crucial for designing scalable and reliable systems. Below, we cover five key messaging patterns, each with its core idea, characteristics, and practical examples.</p>
 <h2>1. Point-to-Point (Direct Messaging)</h2>
@@ -1375,10 +1371,17 @@
 <li><strong>Use case:</strong> Any critical system with asynchronous processing should use DLQs as a best practice. For instance, in an order processing system, if an order message has corrupt data and the order service throws exceptions every time it tries that message, after a few retries the message goes to the Dead Letter Queue. This allows the system to continue with other orders, and later the faulty message can be examined or fixed without data loss.</li>
 <li><strong>Technologies:</strong> Nearly all enterprise messaging systems support DLQs. In RabbitMQ, you set a <em>Dead Letter Exchange</em> on a queue to route failed messages to a dead-letter queue. Kafka doesn’t have a built-in DLQ mechanism at the broker level, but patterns using separate “error topics” are used (for example, consumers or Kafka Streams can send bad records to a designated dead-letter topic). AWS SQS and Azure Service Bus both natively support DLQs with configurable retry thresholds. The key is configuring the threshold for moving to DLQ (e.g., after 5 failed attempts) and ensuring someone or something processes or monitors the DLQ.</li>
 </ul></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">Popular Messaging Queue Systems</h1>
@@ -1426,7 +1429,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Database Index Structures: B+ Tree balanced range traversal vs Inverted GIN Index for JSON/Text vs BRIN block-range compression.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1442,7 +1444,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1456,7 +1457,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1471,8 +1471,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1508,10 +1506,16 @@
 <li>Message persistence: ActiveMQ supports various persistence options, such as file-based, in-memory, and JDBC-based storage.</li>
 <li>Integration: ActiveMQ can be easily integrated with various platforms, such as Java EE and Spring.</li>
 </ul></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">RabbitMQ vs Kafka vs ActiveMQ</h1>
@@ -1560,7 +1564,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Apache Kafka Partitioned Commit Log: Producer write batching ➔ Append-Only Partition Logs with zero-copy OS sendfile ➔ Consumer Group offset tracking.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1576,7 +1579,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1590,7 +1592,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1605,8 +1606,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1644,10 +1643,16 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 <p><strong>License:</strong> RabbitMQ is licensed under the Mozilla Public License, while both Kafka and ActiveMQ are licensed under the Apache 2.0 License.</p>
 </li>
 </ol></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">Scalability and Performance (2)</h1>
@@ -1702,7 +1707,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Scalability and Performance (2)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1718,7 +1722,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Design stateless worker tiers so adding more cheap commodity nodes increases system throughput linearly.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1732,7 +1735,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% uptime during 10x load surges, 1.27M req/sec peak ingestion, sub-25ms checkout latencies.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1747,8 +1749,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Trading immediate disk consistency for sub-10ms checkout response times.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1761,10 +1761,16 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 <p>Load balancing refers to distributing incoming messages evenly among multiple consumers or processing units, while parallel processing involves processing multiple messages simultaneously. In messaging systems, load balancing and parallel processing are achieved through techniques like partitioning, sharding, and consumer groups. For instance, RabbitMQ uses a round-robin algorithm to distribute messages among available consumers, ensuring that the workload is balanced and messages are processed in parallel.</p>
 <h2>d. Message Batching and Compression</h2>
 <p>Message batching is the process of combining multiple messages into a single batch before processing or transmitting them. This approach can improve throughput and reduce the overhead of processing individual messages. Compression, on the other hand, reduces the size of the messages, leading to less network bandwidth usage and faster transmission. For example, Apache Kafka supports both batching and compression: Producers can batch messages together, and the system can compress these batches using various compression algorithms like Snappy or Gzip, reducing the amount of data transmitted and improving overall performance.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">What is a Distributed File System</h1>
@@ -1812,7 +1818,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Amazon S3 Erasure Coding (Reed-Solomon 8+4): Chunks object into 8 data blocks + 4 parity blocks across 12 failure domains, surviving 4 disk losses.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1828,7 +1833,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1842,7 +1846,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1857,8 +1860,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -1925,10 +1926,16 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 </ul>
 <h2>Conclusion</h2>
 <p>Distributed File Systems are crucial for modern computing environments where large-scale data storage, high availability, and remote access are required. They provide an effective solution for managing data across multiple locations but come with challenges that need careful management, especially regarding synchronization, security, and performance.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Architecture of a Distributed File System</h1>
@@ -1976,7 +1983,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Amazon S3 Erasure Coding (Reed-Solomon 8+4): Chunks object into 8 data blocks + 4 parity blocks across 12 failure domains, surviving 4 disk losses.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1992,7 +1998,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2006,7 +2011,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2021,8 +2025,6 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2083,10 +2085,20 @@ RabbitMQ offers stream processing too, while ActiveMQ relies on third-party libr
 <li><strong>YARN (Yet Another Resource Negotiator)</strong>: Responsible for managing resources in the Hadoop cluster and scheduling tasks.</li>
 </ul></div><div><h2>Conclusion</h2>
 <p>The architecture of a distributed file system is complex and involves multiple components working together to manage, store, and retrieve data efficiently across a network. This architecture allows DFS to provide high availability, scalability, and reliability, making it suitable for storing and processing large amounts of data in distributed computing environments.</p></div>
-  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 

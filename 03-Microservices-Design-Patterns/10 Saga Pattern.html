@@ -356,7 +356,7 @@
 
         .content-inner, .content-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1040px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -929,7 +929,6 @@
                 <button id="tab-chapters" class="tab-btn active">Topics (10)</button>
                 <button id="tab-bookmarks" class="tab-btn">Bookmarks</button>
             </div>
-        </div>
         <div class="sidebar-menu-container">
             <ul id="sidebar-menu" class="sidebar-menu">
 <li class="sidebar-item" data-num="01" data-title="introduction to saga pattern"><a href="#chapter-01"><span class="chapter-num">01</span> Introduction to Saga Pattern</a></li>
@@ -961,8 +960,6 @@
                 <div>
                     <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;">System Design &amp; Architecture Masterclass</div>
                     <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #ffffff;">Curated &amp; Architected by <span style="color: #38bdf8; text-shadow: 0 0 12px rgba(56,189,248,0.4);">Preet Karwal</span></div>
-                </div>
-            </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/preetkarwal/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(14, 118, 168, 0.2); border: 1px solid rgba(14, 118, 168, 0.45); color: #38bdf8; text-decoration: none; padding: 6px 13px; border-radius: 9px; font-size: 0.82rem; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 0 0 0-2.92 1.46 1.46 0 0 0 0 2.92M7.86 18.5v-8.37H5.07v8.37h2.79z"/></svg>
@@ -981,9 +978,8 @@
                     Instagram
                 </a>
             </div>
-        </div>
 
-<section id="chapter-01" class="chapter-section active">
+<section  id="chapter-01" class="chapter-section active">
 <div class="chapter-header">
     <span class="chapter-number">01</span>
     <h1 class="chapter-title">Introduction to Saga Pattern</h1>
@@ -1039,7 +1035,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Distributed Saga Orchestration: Central workflow orchestrator executing multi-service state transitions with automated compensating rollback triggers.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1055,7 +1050,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1069,7 +1063,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1084,12 +1077,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h1>The Saga Pattern: Mastering Transactions in a Microservices World</h1>
+    <div class="topic-content"><h1>The Saga Pattern: Mastering Transactions in a Microservices World</h1>
 <p>Have you ever been intrigued by the intricacies of transaction management in distributed systems? Ever wondered how complex transactions are handled so seamlessly in the world of microservices? In this chapter, we&#x27;ll try to find answers to these questions. We&#x27;ll embark on a journey to unravel the mysteries of the Saga Pattern - an ingenious solution to managing transactions in the world of distributed systems.</p>
 <p>Before diving in, let&#x27;s ask ourselves a simple question - why should we care about transactions in distributed systems? Whether you&#x27;re an experienced software engineer, an up-and-coming developer, or a tech enthusiast, the principles and practices of transaction management are crucial to understand. Efficient transaction management is the heartbeat of any system, ensuring that data remains consistent and operations run smoothly. But things get complicated when we move from a single, unified system to a distributed one. That&#x27;s where our protagonist, the Saga Pattern, enters the scene.</p>
 <h2>Grasping the Basics: Transaction Management and Distributed Systems</h2>
@@ -1102,11 +1093,17 @@
 <p>Here&#x27;s where the real problem lurks. Ensuring data consistency across multiple, independent microservices during a transaction is a Herculean task. How can we coordinate multiple services to ensure that they all agree on the outcome of a transaction? This challenge, my friends, is the heart of the problem that the Saga Pattern aims to solve.</p>
 <h2>Peeking into the Future: The Solution - The Saga Pattern</h2>
 <p>The Saga Pattern is a powerful strategy for managing transactions across multiple microservices, ensuring data consistency while respecting the autonomy of each service. It is designed to handle complex, distributed transactions by breaking them down into a series of local transactions, each with its own compensation transaction to undo the changes in case of failure. But how does this really work? What does a Saga look like? How does it ensure data consistency across services?</p>
-<p>In essence, the saga pattern is a crucial tool for handling complex transactions in distributed systems. Understanding its mechanics and potential benefits can greatly enhance your abilities as a developer or system architect.</p></div></div></div></div></div></div></div>
-  </div>
+<p>In essence, the saga pattern is a crucial tool for handling complex transactions in distributed systems. Understanding its mechanics and potential benefits can greatly enhance your abilities as a developer or system architect.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-02" class="chapter-section">
+<section  id="chapter-02" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">02</span>
     <h1 class="chapter-title">The Problem Traditional Transaction Models</h1>
@@ -1161,7 +1158,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (The Problem Traditional Transaction Models): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1177,7 +1173,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1191,7 +1186,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1206,12 +1200,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Diving deeper into the transactional labyrinth of distributed systems, we first need to look back and understand the roots of the problem. This journey takes us back to the traditional transaction models that were the norm in the era of monolithic applications.</p>
+    <div class="topic-content"><p>Diving deeper into the transactional labyrinth of distributed systems, we first need to look back and understand the roots of the problem. This journey takes us back to the traditional transaction models that were the norm in the era of monolithic applications.</p>
 <h2>A Trip Down Memory Lane: Traditional Transaction Models</h2>
 <p>In the world of monolithic systems, transactions were simple. Recall the e-commerce checkout example we discussed earlier. In a monolithic application, this transaction would usually be handled using ACID transactions. ACID, standing for Atomicity, Consistency, Isolation, and Durability, is a set of properties that guarantee that database transactions are processed reliably.</p>
 <p>Atomicity ensures that a transaction is treated as a single unit, which either succeeds completely, or fails completely. If any part of the transaction fails, the entire transaction fails, and the database is left unchanged.</p>
@@ -1228,11 +1220,17 @@
 <h2>The Call for a Hero: The Need for a Distributed Transactions Solution</h2>
 <p>So, we find ourselves at a crossroads. On one side, we have the ever-growing world of distributed systems, with its promise of scalability, resilience, and flexibility. On the other side, we have the need for reliable and consistent transactions - a non-negotiable requirement for any application.</p>
 <p>There is a clear gap that needs to be bridged here. The traditional transaction model is not capable of handling this new world order. This is where the need for a distributed transactions solution arises, one that can handle the unique challenges of distributed systems while ensuring data consistency.</p>
-<p>And this is where our hero, the Saga Pattern, comes to the rescue. But, before we jump to the solution, it&#x27;s crucial to fully understand the depth of the problem. Let&#x27;s dig deeper.</p></div></div></div></div></div></div></div>
-  </div>
+<p>And this is where our hero, the Saga Pattern, comes to the rescue. But, before we jump to the solution, it&#x27;s crucial to fully understand the depth of the problem. Let&#x27;s dig deeper.</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-03" class="chapter-section">
+<section  id="chapter-03" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">03</span>
     <h1 class="chapter-title">The Saga Pattern A Solution</h1>
@@ -1288,7 +1286,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Distributed Saga Orchestration: Central workflow orchestrator executing multi-service state transitions with automated compensating rollback triggers.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1304,7 +1301,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1318,7 +1314,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1333,12 +1328,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>As we&#x27;ve seen, the challenge is real, and the need for a solution is urgent. Enter the Saga Pattern, a design pattern that has proven to be a highly effective way to manage transactions in the complex landscape of distributed systems.</p>
+    <div class="topic-content"><p>As we&#x27;ve seen, the challenge is real, and the need for a solution is urgent. Enter the Saga Pattern, a design pattern that has proven to be a highly effective way to manage transactions in the complex landscape of distributed systems.</p>
 <h2>A New Hope: Introduction to the Saga Pattern</h2>
 <p>In the simplest terms, a saga is a sequence of local transactions. Each local transaction updates the database and publishes an event to trigger the next local transaction in the saga. If a local transaction fails because it violates a business rule, the saga executes a series of compensating transactions that undo the changes that were made by the preceding local transactions.</p>
 <p>Can you imagine a team of skilled surgeons performing a complicated operation? Each surgeon has a specific task to perform, but they&#x27;re all part of a larger coordinated effort. That&#x27;s a useful metaphor for understanding the Saga pattern. Each service in a distributed system performs its local transaction, but all these transactions are coordinated to achieve the larger goal of maintaining data consistency across services.</p>
@@ -1363,11 +1356,17 @@
 <p>But what happens when you want to connect two buildings? You can&#x27;t just extend the internal wiring – it wouldn&#x27;t be safe or efficient. You need a different solution, like a power line. That&#x27;s what the Saga Pattern does. It&#x27;s the power line connecting our buildings, allowing them to work together, while also ensuring safety and consistency.</p>
 <h2>A Peep into the Future: The Saga Pattern and Microservices</h2>
 <p>With the growing adoption of microservices architecture, the Saga pattern is gaining popularity. This pattern provides a viable solution to manage transactions and ensure data consistency in a microservice architecture, where each microservice has its own database.</p>
-<p>By now, you should have a good understanding of the problems posed by distributed transactions, and how the Saga pattern provides a solution. But theory is only the start - let&#x27;s see how this would work in practice, shall we?</p></div></div></div></div></div></div></div>
-  </div>
+<p>By now, you should have a good understanding of the problems posed by distributed transactions, and how the Saga pattern provides a solution. But theory is only the start - let&#x27;s see how this would work in practice, shall we?</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-04" class="chapter-section">
+<section  id="chapter-04" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">04</span>
     <h1 class="chapter-title">The Architecture of the Saga Pattern</h1>
@@ -1423,7 +1422,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Distributed Saga Orchestration: Central workflow orchestrator executing multi-service state transitions with automated compensating rollback triggers.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1439,7 +1437,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1453,7 +1450,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1468,12 +1464,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>We&#x27;ve discussed what the Saga Pattern is and why it&#x27;s essential in distributed systems. We&#x27;ve also seen how the pattern works in general. Now, let&#x27;s get under the hood and understand the architecture that powers this ingenious pattern. But before we begin, let&#x27;s recall that in the world of distributed systems, the Saga Pattern is our &quot;power line&quot; — it&#x27;s the element that ensures transactions across different services are consistent and reliable. So, how does it do it?</p>
+    <div class="topic-content"><p>We&#x27;ve discussed what the Saga Pattern is and why it&#x27;s essential in distributed systems. We&#x27;ve also seen how the pattern works in general. Now, let&#x27;s get under the hood and understand the architecture that powers this ingenious pattern. But before we begin, let&#x27;s recall that in the world of distributed systems, the Saga Pattern is our &quot;power line&quot; — it&#x27;s the element that ensures transactions across different services are consistent and reliable. So, how does it do it?</p>
 <h2>The Backbone: Local Transactions</h2>
 <p>A saga is composed of multiple local transactions. Each of these transactions is executed within a single service and its corresponding database. These local transactions form the backbone of the Saga Pattern, akin to the individual sections of a power line. Each local transaction carries its own responsibilities but when strung together, they work towards a common objective — maintaining data consistency across the system.</p>
 <p>Remember, every local transaction in a saga has an associated compensating transaction. The compensating transaction is capable of undoing the changes made by its corresponding local transaction. Together, these transactions ensure that even if a step in the saga fails, the system can still maintain its integrity.</p>
@@ -1492,11 +1486,17 @@
 <p>To keep track of the saga&#x27;s progress and state, a saga log is maintained. This log records every local transaction</p>
 <p>and compensating transaction executed in the saga. In our city analogy, think of the saga log as the city blueprint. It gives a detailed view of what has been done and what needs to be done next.</p>
 <p>This brings us to the end of our exploration of the Saga Pattern&#x27;s architecture. It&#x27;s not a simple path, but then again, nothing worth doing ever is, right? Armed with this understanding, you&#x27;re now ready to delve into the specifics of implementing the Saga Pattern in Java.</p>
-<p>In our next section, we will walk you through a detailed Java code example illustrating the Saga Pattern in action. Ready to take the plunge? Let&#x27;s dive in!</p></div></div></div></div></div></div></div>
-  </div>
+<p>In our next section, we will walk you through a detailed Java code example illustrating the Saga Pattern in action. Ready to take the plunge? Let&#x27;s dive in!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-05" class="chapter-section">
+<section  id="chapter-05" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">05</span>
     <h1 class="chapter-title">The Inner Workings of the Saga Pattern</h1>
@@ -1552,7 +1552,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Distributed Saga Orchestration: Central workflow orchestrator executing multi-service state transitions with automated compensating rollback triggers.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1568,7 +1567,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1582,7 +1580,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1597,12 +1594,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Now that we&#x27;ve explored the architecture of the Saga Pattern, let&#x27;s delve deeper into how the magic happens, how this pattern manages to maintain data consistency in complex distributed systems. This section will be your &quot;behind the scenes&quot; tour, revealing the inner workings of the Saga Pattern.</p>
+    <div class="topic-content"><p>Now that we&#x27;ve explored the architecture of the Saga Pattern, let&#x27;s delve deeper into how the magic happens, how this pattern manages to maintain data consistency in complex distributed systems. This section will be your &quot;behind the scenes&quot; tour, revealing the inner workings of the Saga Pattern.</p>
 <h2>A Saga&#x27;s Life Journey: The Sequence of Transactions</h2>
 <p>A saga is essentially a sequence of local transactions. Each transaction is like a step in a journey. But remember, the Saga Pattern is not just about taking those steps; it&#x27;s also about knowing when to step back.</p>
 <p>What does this mean? Each local transaction has a corresponding compensating transaction. If a transaction fails, the compensating transactions for the previous local transactions are executed. This &quot;step back&quot; process ensures the system&#x27;s eventual consistency.</p>
@@ -1623,11 +1618,17 @@
 <p>Despite the best planning, things can go wrong. That&#x27;s why the Saga Pattern includes compensating transactions. When a local transaction fails, the saga executes compensating transactions to &quot;undo&quot; the changes made by the previous local transactions. It&#x27;s the saga&#x27;s way of saying, &quot;No worries. We&#x27;ve got this covered.&quot;</p>
 <p>Picture this as driving. If</p>
 <p>you miss a turn, you don&#x27;t just stop there, right? You take a U-turn or find an alternative route. Similarly, compensating transactions are the Saga Pattern&#x27;s way of finding an alternative route to data consistency.</p>
-<p>We&#x27;ve now explored the inner workings of the Saga Pattern, but how do we implement it? How does it look in real-world Java code? Stay tuned, as our next section will provide a complete Java code example illustrating the Saga Pattern in action. Are you ready to take the next step in this journey? Let&#x27;s go!</p></div></div></div></div></div></div></div>
-  </div>
+<p>We&#x27;ve now explored the inner workings of the Saga Pattern, but how do we implement it? How does it look in real-world Java code? Stay tuned, as our next section will provide a complete Java code example illustrating the Saga Pattern in action. Are you ready to take the next step in this journey? Let&#x27;s go!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-06" class="chapter-section">
+<section  id="chapter-06" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">06</span>
     <h1 class="chapter-title">Saga Pattern A Example</h1>
@@ -1683,7 +1684,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Distributed Saga Orchestration: Central workflow orchestrator executing multi-service state transitions with automated compensating rollback triggers.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1699,7 +1699,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1713,7 +1712,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1728,17 +1726,15 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>Understanding the concept is great, but seeing it in action is even better! Let&#x27;s now illustrate the Saga Pattern using Java. We will create a simple online shopping scenario, involving two services: the Order Service and the Inventory Service. Ready to turn theory into code? Let&#x27;s go!</p>
+    <div class="topic-content"><p>Understanding the concept is great, but seeing it in action is even better! Let&#x27;s now illustrate the Saga Pattern using Java. We will create a simple online shopping scenario, involving two services: the Order Service and the Inventory Service. Ready to turn theory into code? Let&#x27;s go!</p>
 <h2>Setting the Stage: The Scenario</h2>
 <p>Picture yourself shopping online. You add items to your cart and proceed to checkout, creating an order. The Inventory Service then checks if the items are available. If yes, it updates the inventory, and the order is completed. If not, the order is cancelled. Seems simple, right? But under the hood, it&#x27;s a perfect use case for the Saga Pattern.</p>
 <h2>The Actors: Defining Services</h2>
 <p>We will first define our services. Both the Order Service and the Inventory Service will have their local databases, adhering to the database per service principle. Let&#x27;s first look at the Order Service:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>OrderService</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>OrderService</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>OrderDatabase</span><span> orderDatabase </span><span>=</span><span> </span><span>new</span><span> </span><span>OrderDatabase</span><span>(</span><span>)</span><span>;</span><span>
 </span>
 <span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>createOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
@@ -1749,10 +1745,10 @@
 <span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>cancelOrder</span><span>(</span><span>String</span><span> orderId</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>//...</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>The <code>createOrder</code> method saves the order in the database. The <code>cancelOrder</code> method will be used for our compensating transaction if the inventory check fails.</p>
 <p>Now, let&#x27;s define the Inventory Service:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>InventoryService</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>InventoryService</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>InventoryDatabase</span><span> inventoryDatabase </span><span>=</span><span> </span><span>new</span><span> </span><span>InventoryDatabase</span><span>(</span><span>)</span><span>;</span><span>
 </span>
 <span>    </span><span>public</span><span> boolean </span><span>checkAndReduceInventory</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
@@ -1762,28 +1758,28 @@
 <span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>addBackInventory</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>//...</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>The <code>checkAndReduceInventory</code> method checks the inventory and reduces it if the items are available. The <code>addBackInventory</code> method will serve as our compensating transaction.</p>
 <h2>The Conductor: The Orchestrator</h2>
 <p>In our example, we will use an Orchestration Saga, where an orchestrator directs the sequence of transactions. Here&#x27;s our orchestrator:</p>
-<pre><div><div><code><span>public</span><span> </span><span>class</span><span> </span><span>OrderOrchestrator</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>class</span><span> </span><span>OrderOrchestrator</span><span> </span><span>{</span><span>
 </span><span>    </span><span>private</span><span> </span><span>OrderService</span><span> orderService </span><span>=</span><span> </span><span>new</span><span> </span><span>OrderService</span><span>(</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>private</span><span> </span><span>InventoryService</span><span> inventoryService </span><span>=</span><span> </span><span>new</span><span> </span><span>InventoryService</span><span>(</span><span>)</span><span>;</span><span>
 </span>
 <span>    </span><span>public</span><span> </span><span>void</span><span> </span><span>processOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        </span><span>//...</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>The <code>processOrder</code> method is where the saga takes place. It first creates an order, then checks and reduces the inventory. If the inventory check fails, it cancels the order.</p>
 <h2>The Saga in Action: The Process Method</h2>
 <p>Here&#x27;s how the <code>processOrder</code> method would look:</p>
-<pre><div><div><code><span>public</span><span> </span><span>void</span><span> </span><span>processOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
+<pre><div class="topic-content"><code><span>public</span><span> </span><span>void</span><span> </span><span>processOrder</span><span>(</span><span>Order</span><span> order</span><span>)</span><span> </span><span>{</span><span>
 </span><span>    orderService</span><span>.</span><span>createOrder</span><span>(</span><span>order</span><span>)</span><span>;</span><span>
 </span>
 <span>    </span><span>if</span><span> </span><span>(</span><span>!</span><span>inventoryService</span><span>.</span><span>checkAndReduceInventory</span><span>(</span><span>order</span><span>)</span><span>)</span><span> </span><span>{</span><span>
 </span><span>        orderService</span><span>.</span><span>cancelOrder</span><span>(</span><span>order</span><span>.</span><span>getId</span><span>(</span><span>)</span><span>)</span><span>;</span><span>
 </span><span>    </span><span>}</span><span>
-</span><span></span><span>}</span></code></div></div></pre>
+</span><span></span><span>}</span></code></div></pre>
 <p>And there you have it! The Saga Pattern in a nutshell. But our journey doesn&#x27;t end here.</p>
 <h2>Expecting the Unexpected: Handling Failures</h2>
 <p>You might be thinking, &quot;What if something goes wrong? What if a service fails in the middle of the saga?&quot; That&#x27;s a great question and this is where the Saga Log comes in.</p>
@@ -1792,11 +1788,17 @@
 <p>We have now seen a complete Java example of the Saga Pattern, demonstrating how it can maintain data consistency in a distributed system. Wasn&#x27;t that a fun journey from online shopping to coding?</p>
 <p>However, this is only a basic illustration. In a real-world application, there would</p>
 <p>be more complexity, more services involved, and more potential for failures. But don&#x27;t be intimidated! The Saga Pattern is well-equipped to handle these complexities. It allows us to split a large transaction into manageable, independent parts that can be executed and compensated for separately.</p>
-<p>But as with everything, the Saga Pattern is not a silver bullet. There are considerations and implications when using it. And that is exactly what we will explore next. Are you ready to dig deeper into the world of the Saga Pattern? Let&#x27;s jump right in!</p></div></div></div></div></div></div></div>
-  </div>
+<p>But as with everything, the Saga Pattern is not a silver bullet. There are considerations and implications when using it. And that is exactly what we will explore next. Are you ready to dig deeper into the world of the Saga Pattern? Let&#x27;s jump right in!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-07" class="chapter-section">
+<section  id="chapter-07" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">07</span>
     <h1 class="chapter-title">Performance Implications</h1>
@@ -1851,7 +1853,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Performance Implications): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1867,7 +1868,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Optimize for Tail Latency (p99/p99.9). Keep frequently accessed hot state in L1/L2 CPU cache or local RAM.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -1881,7 +1881,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Sub-15ms p50 latency, sub-45ms p99 latency across 100,000 concurrent user streams.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -1896,12 +1895,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Increases memory footprint by 20% but drops p99.9 tail latency below 2ms.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><h1>Issues, Special Considerations, and Performance Implications</h1>
+    <div class="topic-content"><h1>Issues, Special Considerations, and Performance Implications</h1>
 <p>As we saw in our Java example, the Saga Pattern elegantly tackles the problem of data consistency in microservices. But, just like any other pattern or technology, it&#x27;s not without its issues and special considerations. You&#x27;re curious about what these are, right? So, let&#x27;s dive in!</p>
 <h2>Issue 1: Complexity</h2>
 <p>The first issue is complexity. Remember how we split a large transaction into several smaller ones? That does ensure data consistency, but it also adds complexity. Each service in our saga now needs to handle its local transaction and provide a compensating transaction.</p>
@@ -1923,11 +1920,17 @@
 <p>As you can see, the Saga Pattern, while powerful, comes with its set of challenges. It&#x27;s a trade-off, like most things in software architecture.</p>
 <p>But then, isn&#x27;t that the very essence of software architecture - making trade-offs and finding the right balance? With a solid understanding of the Saga Pattern and its considerations, you&#x27;re now well-equipped to make an informed decision. Would you choose consistency over complexity, or would you prefer speed over distributed</p>
 <p>transactions? The choice, my friend, is all yours!</p>
-<p>Stay tuned as we explore some real-world use cases and system design examples of the Saga Pattern in our next section. Remember, the best way to understand a pattern is to see it in action! Are you ready to dive deeper? Let&#x27;s go!</p></div></div></div></div></div></div></div>
-  </div>
+<p>Stay tuned as we explore some real-world use cases and system design examples of the Saga Pattern in our next section. Remember, the best way to understand a pattern is to see it in action! Are you ready to dive deeper? Let&#x27;s go!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-08" class="chapter-section">
+<section  id="chapter-08" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">08</span>
     <h1 class="chapter-title">System Design Examples</h1>
@@ -1982,7 +1985,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (System Design Examples): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -1998,7 +2000,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2012,7 +2013,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2027,12 +2027,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In the vast realm of distributed systems, the Saga Pattern emerges as a knight in shining armor, resolving consistency issues and ensuring successful transactions. But where is this knight most effective? Which battles are best fought using this strategy? And how does it look like in a real-world battlefield? To answer these, we will delve into the use cases and system design examples where the Saga Pattern truly shines.</p>
+    <div class="topic-content"><p>In the vast realm of distributed systems, the Saga Pattern emerges as a knight in shining armor, resolving consistency issues and ensuring successful transactions. But where is this knight most effective? Which battles are best fought using this strategy? And how does it look like in a real-world battlefield? To answer these, we will delve into the use cases and system design examples where the Saga Pattern truly shines.</p>
 <h2>Use Case 1: E-commerce Systems</h2>
 <p>Consider an e-commerce platform, a bustling marketplace brimming with transactions. An order placement in this system is a perfect example of a distributed transaction. What does it entail?</p>
 <p>First, an Order service creates an order. Then, a Payment service charges the customer. Finally, an Inventory service checks and reduces the stock. But what if the inventory check fails? The order must be cancelled, and the customer&#x27;s payment refunded. A complex web of operations, isn&#x27;t it? That&#x27;s where the Saga Pattern steps in, ensuring that if any step fails, the transaction is rolled back successfully.</p>
@@ -2051,11 +2049,17 @@
 <p>As you&#x27;ve seen, the Saga Pattern is a powerful tool in distributed systems. But remember, with great power comes great responsibility. While it ensures data consistency and handles failures, it also introduces complexity and longer latency. It&#x27;s a trade-off, a delicate balancing act.</p>
 <p>But then, isn&#x27;t that the beauty of software architecture? The ability to make informed decisions, to weigh the pros and cons, and choose the right tool for the job. With this in-depth understanding of the Saga Pattern, you&#x27;re now ready to do just that.</p>
 <p>So, will you don the Saga Pattern&#x27;s armor the next time you&#x27;re faced with a distributed transaction? Will you call upon this knight in your next distributed system battle? With the knowledge and understanding you now possess, the choice is in your hands.</p>
-<p>In the ever-evolving realm of software architecture, the Saga Pattern is a robust solution to the distributed transaction problem. By now, you should be able to understand why it&#x27;s used and how to implement it in various scenarios. However, the journey of learning doesn&#x27;t stop here. What other patterns and practices can we explore to further improve our systems? The world of software architecture is vast, with countless patterns and practices waiting to be discovered. Are you ready to continue exploring?</p></div></div></div></div></div></div></div>
-  </div>
+<p>In the ever-evolving realm of software architecture, the Saga Pattern is a robust solution to the distributed transaction problem. By now, you should be able to understand why it&#x27;s used and how to implement it in various scenarios. However, the journey of learning doesn&#x27;t stop here. What other patterns and practices can we explore to further improve our systems? The world of software architecture is vast, with countless patterns and practices waiting to be discovered. Are you ready to continue exploring?</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-09" class="chapter-section">
+<section  id="chapter-09" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">09</span>
     <h1 class="chapter-title">Conclusion</h1>
@@ -2110,7 +2114,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Conclusion): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2126,7 +2129,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> Decouple components, eliminate single points of failure (SPOF), and optimize for linear scalability.
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2140,7 +2142,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> 99.999% availability, 10x throughput scaling under burst loads, &lt; 5ms p99 latency.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2155,12 +2156,10 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> Adds minor operational complexity but guarantees zero service crashes during peak load.
             </div>
-        </div>
-    </div>
 
     
 
-    <div><div><div><div><div><div><div><div><p>In the grand scheme of software architecture, the Saga Pattern stands as an innovative and robust approach to handle distributed transactions. By this point in our journey, we have not only discovered the reasons behind its conception but also examined its inner workings and witnessed its implementation in real-world scenarios. However, the beauty of learning lies in revisiting the crux of our newfound knowledge. Let&#x27;s embark on a recap of our journey and reflect upon the essence of the Saga Pattern.</p>
+    <div class="topic-content"><p>In the grand scheme of software architecture, the Saga Pattern stands as an innovative and robust approach to handle distributed transactions. By this point in our journey, we have not only discovered the reasons behind its conception but also examined its inner workings and witnessed its implementation in real-world scenarios. However, the beauty of learning lies in revisiting the crux of our newfound knowledge. Let&#x27;s embark on a recap of our journey and reflect upon the essence of the Saga Pattern.</p>
 <h2>Revisiting The Saga Pattern</h2>
 <p>We began our exploration with an understanding of traditional transaction models and their limitations in distributed systems. Remember how our knight, the Saga Pattern, came into existence to challenge the reign of these monolithic systems? By allowing us to perform a series of local transactions, each with their own compensation transactions, Saga gave us a newfound way to ensure consistency across microservices. But, was this transformation seamless?</p>
 <p>Transitioning from a monolithic to a microservice architecture was indeed a significant shift. It meant leaving behind the comfort of ACID transactions and embracing the complexities of distributed systems. But then again, the best solutions are often born from confronting the hardest challenges, aren&#x27;t they?</p>
@@ -2182,11 +2181,17 @@
 <p>As we wrap up our deep dive into the Saga Pattern, we hope you&#x27;re walking away with a richer understanding and a renewed curiosity about distributed systems. Whether you&#x27;re an architect designing complex systems, a developer implementing microservices, or a student just beginning your journey into software architecture, this knowledge is a powerful tool.</p>
 <p>So, where will you apply the Saga Pattern? Will it find a place in your next project? Will it spark a discussion in your next team meeting? Or will it be the focus of your next research paper? The choice is yours, and the possibilities are endless. Keep exploring, keep learning, and most importantly, enjoy the journey!</p>
 <p>Isn&#x27;t it amazing how the world of software architecture is full of endless possibilities? We&#x27;ve just explored one pattern, and there are countless more out there waiting to be discovered.</p>
-<p>So, what&#x27;s next on your learning journey? The world of software architecture awaits your discovery!</p></div></div></div></div></div></div></div>
-  </div>
+<p>So, what&#x27;s next on your learning journey? The world of software architecture awaits your discovery!</p></div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section id="chapter-10" class="chapter-section">
+<section  id="chapter-10" class="chapter-section">
 <div class="chapter-header">
     <span class="chapter-number">10</span>
     <h1 class="chapter-title">Transactional Outbox &amp; Change Data Capture (CDC)</h1>
@@ -2241,7 +2246,6 @@
         <div class="diagram-caption">
             <strong>Architecture Deep Dive:</strong> Enterprise Multi-Tier Architecture (Transactional Outbox &amp; Change Data Capture (CDC)): High-availability stateless ingress, distributed memory caching, resilient microservices, and replicated databases.
         </div>
-    </div>
 
     <!-- Compact 3-Pillar Concept Grid (Zero Bad Whitespace, Perfectly Aligned) -->
     <div class="concept-grid-3">
@@ -2257,7 +2261,6 @@
             <div class="pillar-footer footer-eli5">
                 💡 <strong>Core Takeaway:</strong> In a distributed system, network partitions (P) are unavoidable. You must trade Consistency (CP) vs Availability (AP).
             </div>
-        </div>
 
         <!-- Pillar 2: Real-World Case Study & Scale Metrics -->
         <div class="pillar-card pillar-rw">
@@ -2271,7 +2274,6 @@
             <div class="pillar-footer footer-rw">
                 📊 <strong>Scale Metrics:</strong> Spanner: Strict serializability across 5 global regions. DynamoDB: 99.999% write availability under network partitions.
             </div>
-        </div>
 
         <!-- Pillar 3: Situational Pivot & Tradeoff Tweak -->
         <div class="pillar-card pillar-tweak">
@@ -2286,8 +2288,6 @@
             <div class="pillar-footer footer-tweak">
                 🎯 <strong>Tradeoff:</strong> PA/EL provides sub-5ms local reads/writes in normal state, accepting eventual consistency.
             </div>
-        </div>
-    </div>
 
     
 
@@ -2341,9 +2341,19 @@ CREATE TABLE outbox_events (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );</code></pre>
   </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
         </div>
     
+</div>
+</div>
+</div>
+</div>
 </main>
 
 
